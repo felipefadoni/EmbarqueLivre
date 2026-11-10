@@ -14,10 +14,12 @@ import { entityOfTable, tableOf, type SyncEntity } from '@/sync/mapping'
 import {
   correctionTarget,
   describeRejection,
-  discardRejection,
+  discardRejectionGroup,
   ENTITY_ROUTES,
+  groupRejections,
   REJECTIONS_LIST_SQL,
   type Rejection,
+  type RejectionGroup,
 } from '@/sync/rejections'
 import { TOQUE_MINIMO } from '../../../../tamagui.config'
 
@@ -36,7 +38,8 @@ function formatDateTime(iso: string) {
 export default function PendenciasScreen() {
   const isDark = useColorScheme() === 'dark'
   const result = useQuery<Rejection>(REJECTIONS_LIST_SQL)
-  const [discarding, setDiscarding] = useState<Rejection | null>(null)
+  const groups = groupRejections(result.data)
+  const [discarding, setDiscarding] = useState<RejectionGroup | null>(null)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -59,7 +62,7 @@ export default function PendenciasScreen() {
     if (!discarding) return
     setBusy(true)
     try {
-      await discardRejection(db, discarding.id)
+      await discardRejectionGroup(db, discarding)
       setDiscarding(null)
     } catch {
       setError('Não foi possível descartar a pendência. Tente novamente.')
@@ -71,8 +74,8 @@ export default function PendenciasScreen() {
   return (
     <YStack flex={1} bg="appBg">
       <FlatList
-        data={result.data}
-        keyExtractor={(item) => item.id}
+        data={groups}
+        keyExtractor={(item) => item.primary.id}
         contentContainerStyle={{ paddingHorizontal: 20, paddingTop: 12, paddingBottom: 28, flexGrow: 1, gap: 12 }}
         ListHeaderComponent={
           <YStack gap={12} pb={4}>
@@ -100,7 +103,7 @@ export default function PendenciasScreen() {
           />
         }
         renderItem={({ item }) => {
-          const { title, subtitle } = describeRejection(item)
+          const { title, subtitle } = describeRejection(item.primary)
           return (
             <AppCard>
               <YStack gap={8}>
@@ -111,11 +114,16 @@ export default function PendenciasScreen() {
                   </Text>
                 </XStack>
                 <Text fontSize={15} fontWeight="700" color="brandMuted">
-                  {subtitle} · {formatDateTime(item.createdAt)}
+                  {subtitle} · {formatDateTime(item.primary.createdAt)}
                 </Text>
                 <Text fontSize={16} fontWeight="600" color="brandFg">
-                  {item.message}
+                  {item.primary.message}
                 </Text>
+                {item.dependentsLabel ? (
+                  <Text fontSize={15} fontWeight="700" color="brandMuted">
+                    {item.dependentsLabel}
+                  </Text>
+                ) : null}
                 <XStack gap={12} pt={4}>
                   <XStack
                     flex={1}
@@ -125,7 +133,7 @@ export default function PendenciasScreen() {
                     rounded={14}
                     bg="brandPrimary"
                     opacity={{ press: 0.85 }}
-                    onPress={() => void onCorrect(item)}
+                    onPress={() => void onCorrect(item.primary)}
                     accessibilityRole="button"
                     accessibilityLabel={`Corrigir ${title}`}>
                     <Text fontSize={17} fontWeight="800" color="brandPrimaryFg">
@@ -157,7 +165,11 @@ export default function PendenciasScreen() {
       <ConfirmDialog
         open={discarding != null}
         title="Descartar esta alteração?"
-        message="O registro volta a ficar como está no servidor. Esta ação não pode ser desfeita."
+        message={
+          discarding?.dependents.length
+            ? `${discarding.dependentsLabel}. O rebanho e esses vínculos voltam a ficar como estão no servidor. Esta ação não pode ser desfeita.`
+            : 'O registro volta a ficar como está no servidor. Esta ação não pode ser desfeita.'
+        }
         confirmLabel="Descartar"
         onCancel={() => setDiscarding(null)}
         onConfirm={() => void onDiscard()}

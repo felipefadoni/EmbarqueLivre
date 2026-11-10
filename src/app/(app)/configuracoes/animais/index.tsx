@@ -10,7 +10,7 @@ import { SelectField } from '@/components/cadastros/SelectField'
 import { WithdrawalBadge } from '@/components/cadastros/WithdrawalBadge'
 import { AppCard } from '@/components/dashboard/AppCard'
 import { formatDayMonthPtBr, todayIso } from '@/features/cadastros/dates'
-import { useLocalAnimalTypes, useLocalFarms, useLocalList } from '@/sync/hooks'
+import { useLocalAnimalTypes, useLocalFarms, useLocalHerds, useLocalList } from '@/sync/hooks'
 import { firstParam } from '@/sync/params'
 import { animalsListQuery, isAnimalSituation, rowToAnimal, type AnimalRow as LocalAnimalRow, type AnimalSituation } from '@/sync/queries'
 import { TOQUE_MINIMO } from '../../../../../tamagui.config'
@@ -29,30 +29,34 @@ export default function AnimaisListScreen() {
   const farms = useLocalFarms()
   const types = useLocalAnimalTypes()
   // Filtros podem vir do Dashboard: ?situacao=carencia&farmId=...&animalTypeId=...
-  const params = useLocalSearchParams<{ situacao?: string; farmId?: string; animalTypeId?: string }>()
+  const params = useLocalSearchParams<{ situacao?: string; farmId?: string; animalTypeId?: string; herdId?: string }>()
   const paramSituation = firstParam(params.situacao)
   const paramFarm = firstParam(params.farmId)
   const paramType = firstParam(params.animalTypeId)
+  const paramHerd = firstParam(params.herdId)
   const [farmId, setFarmId] = useState(paramFarm ?? '')
   const [typeId, setTypeId] = useState(paramType ?? '')
   const [situacao, setSituacao] = useState<'' | AnimalSituation>(isAnimalSituation(paramSituation) ? paramSituation : '')
+  const [herdId, setHerdId] = useState(paramHerd ?? '')
   // A tela pode já estar montada na pilha: parâmetros novos substituem os filtros (ajuste durante o render).
-  const paramsKey = `${paramSituation ?? ''}|${paramFarm ?? ''}|${paramType ?? ''}`
+  const paramsKey = `${paramSituation ?? ''}|${paramFarm ?? ''}|${paramType ?? ''}|${paramHerd ?? ''}`
   const [appliedParams, setAppliedParams] = useState(paramsKey)
   if (appliedParams !== paramsKey) {
     setAppliedParams(paramsKey)
     setSituacao(isAnimalSituation(paramSituation) ? paramSituation : '')
     setFarmId(paramFarm ?? '')
     setTypeId(paramType ?? '')
+    setHerdId(paramHerd ?? '')
   }
+  const herds = useLocalHerds(farmId || undefined)
   const today = todayIso()
 
   // Lista local reativa: carência (SUM/MAX) calculada no SQLite do aparelho.
   const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useLocalList(
     (limit) =>
-      animalsListQuery({ farmId: farmId || undefined, animalTypeId: typeId || undefined, situacao: situacao || undefined }, today, limit),
+      animalsListQuery({ farmId: farmId || undefined, animalTypeId: typeId || undefined, herdId: herdId || undefined, situacao: situacao || undefined }, today, limit),
     (row: LocalAnimalRow) => rowToAnimal(row),
-    [farmId, typeId, situacao, today],
+    [farmId, typeId, herdId, situacao, today],
   )
 
   const farmName = (animal: Animal) =>
@@ -81,13 +85,22 @@ export default function AnimaisListScreen() {
           label="Filtrar por fazenda"
           value={farmId}
           options={[{ value: '', label: 'Todas as fazendas' }, ...farms.map((farm) => ({ value: farm.id, label: farm.name }))]}
-          onChange={setFarmId}
+          onChange={(value) => {
+            setFarmId(value)
+            setHerdId('')
+          }}
         />
         <SelectField
           label="Filtrar por tipo"
           value={typeId}
           options={[{ value: '', label: 'Todos os tipos' }, ...types.map((item) => ({ value: item.id, label: item.name }))]}
           onChange={setTypeId}
+        />
+        <SelectField
+          label="Filtrar por rebanho"
+          value={herdId}
+          options={[{ value: '', label: 'Todos os rebanhos' }, ...herds.map((herd) => ({ value: herd.id, label: farmId ? herd.name : `${herd.name} · ${herd.farmName ?? 'Fazenda'}` }))]}
+          onChange={setHerdId}
         />
         <SelectField
           label="Situação"
@@ -154,7 +167,7 @@ function AnimalRow({
             {animal.code}
           </Text>
           <Text fontSize={16} fontWeight="500" color="brandMuted">
-            {farmName} · {typeName}
+            {farmName} · {typeName}{animal.herdName ? ` · ${animal.herdName}` : ''}
           </Text>
           {animal.withdrawalSummary?.inWithdrawal ? (
             <XStack mt={4}>

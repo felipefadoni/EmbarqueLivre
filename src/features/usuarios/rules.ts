@@ -57,7 +57,7 @@ export function deleteBlockReason(input: {
 }
 
 export const DELETE_BLOCK_MESSAGES: Record<Exclude<DeleteBlock, null>, string> = {
-  CANNOT_DELETE_SELF: 'Você não pode excluir o seu próprio usuário.',
+  CANNOT_DELETE_SELF: 'Você não pode remover o seu próprio usuário.',
   LAST_MASTER: 'Não é possível excluir o último Usuário Master da conta.',
   ADMIN_USER: 'Administradores não podem ser excluídos por aqui.',
 }

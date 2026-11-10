@@ -7,11 +7,14 @@ import {
   ALL_ROWS,
   animalTypesListQuery,
   farmsListQuery,
+  herdsListQuery,
   LOCAL_PAGE_SIZE,
   rowToAnimalType,
   rowToFarm,
+  rowToHerd,
   sliceLimit,
   type FarmRow,
+  type HerdRow,
   type SqlQuery,
 } from './queries'
 import { REJECTIONS_COUNT_SQL } from './rejections'
@@ -159,3 +162,11 @@ export function useLocalAnimalTypes() {
   const result = useQuery<{ id: string; name: string }>(query.sql, query.params as unknown[])
   return useMemo(() => result.data.map(rowToAnimalType), [result.data])
 }
+
+/** Rebanhos para selects/filtros, opcionalmente só os de uma fazenda. */
+export function useLocalHerds(farmId?: string) {
+  const query = herdsListQuery({ farmId: farmId || undefined }, ALL_ROWS)
+  const result = useQuery<HerdRow>(query.sql, query.params as unknown[])
+  return useMemo(() => result.data.map(rowToHerd), [result.data])
+}
+

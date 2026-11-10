@@ -18,6 +18,8 @@ import { http } from './client'
  * - Se `totalPages` vier ausente, é calculado como ceil(total/limit)
  * - O parser também aceita array puro, `{ items }`, `{ results }` e `nextCursor`
  */
+export { HERDS_CONTRACT } from './herdsContract'
+
 export const RESOURCE_CONTRACT = {
   updateMethod: 'patch' as const,
   idField: 'id' as const,

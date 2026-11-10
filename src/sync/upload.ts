@@ -94,6 +94,11 @@ export function toUploadOp(entry: CrudLike): UploadOp {
       if (opData[accountCol]) delete opData[ownerCol]
     }
   }
+  if (opData && entityOfTable(entry.table) === 'animals' && op === 'PUT') {
+    // PUT /animals sem herd_id desvincula o animal. Se o opData local tem a coluna, ela segue; o repositório sempre a grava.
+    const herdCol = colOf('animals', 'herdId')
+    if (!(herdCol in opData) && entry.opData && herdCol in entry.opData) opData[herdCol] = entry.opData[herdCol]
+  }
   if (op === 'DELETE') opData = undefined
   return { op, table: entry.table, id: String(entry.id).toUpperCase(), ...(opData ? { opData } : {}) }
 }
@@ -153,6 +158,7 @@ export function resolvePowerSyncEndpoint(envUrl: string | undefined | null, toke
 const DUPLICATE_NAME_CODE: Record<string, string> = {
   vaccines: 'VACCINE_NAME_ALREADY_EXISTS',
   animalTypes: 'ANIMAL_TYPE_NAME_ALREADY_EXISTS',
+  herds: 'HERD_NAME_ALREADY_EXISTS',
 }
 
 export function messageCodeFor(table: string, code: string): string {

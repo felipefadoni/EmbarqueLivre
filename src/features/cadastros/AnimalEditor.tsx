@@ -24,13 +24,16 @@ import {
   animalByIdQuery,
   animalTypesListQuery,
   farmsListQuery,
+  herdsListQuery,
   rowToAnimal,
   rowToAnimalType,
   rowToFarm,
+  rowToHerd,
   rowsToWithdrawal,
   type AnimalRow,
   type ApplicationRow,
   type FarmRow,
+  type HerdRow,
 } from '@/sync/queries'
 
 const SEX_OPTIONS = [
@@ -52,6 +55,7 @@ export function AnimalEditor({ animalId, pendenciaId }: AnimalEditorProps) {
   const [sex, setSex] = useState('')
   const [breed, setBreed] = useState('')
   const [birthDate, setBirthDate] = useState<string | null>(null)
+  const [herdId, setHerdId] = useState('')
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [formError, setFormError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
@@ -67,6 +71,9 @@ export function AnimalEditor({ animalId, pendenciaId }: AnimalEditorProps) {
   const typeRows = useQuery<{ id: string; name: string }>(typesQuery.sql, typesQuery.params)
   const farms = useMemo(() => farmRows.data.map(rowToFarm), [farmRows.data])
   const types = useMemo(() => typeRows.data.map(rowToAnimalType), [typeRows.data])
+  const herdsQuery = herdsListQuery({ farmId: farmId || undefined }, ALL_ROWS)
+  const herdRows = useQuery<HerdRow>(herdsQuery.sql, herdsQuery.params)
+  const herds = useMemo(() => herdRows.data.map(rowToHerd), [herdRows.data])
   const today = todayIso()
   const applicationsQuery = animalApplicationsQuery(animalId ?? '')
   const applicationRows = useQuery<ApplicationRow>(applicationsQuery.sql, applicationsQuery.params)
@@ -96,7 +103,8 @@ export function AnimalEditor({ animalId, pendenciaId }: AnimalEditorProps) {
       setSex(draftString(draft, 'sex') ?? animal?.sex ?? '')
       setBreed(draftString(draft, 'breed') ?? animal?.breed ?? '')
       setBirthDate((draftString(draft, 'birthDate') ?? animal?.birthDate ?? '') || null)
-      showRejection(source.rejection, setFieldErrors, setFormError, ['code', 'farmId', 'animalTypeId', 'sex', 'breed', 'birthDate'])
+      setHerdId(draftString(draft, 'herdId') ?? animal?.herdId ?? '')
+      showRejection(source.rejection, setFieldErrors, setFormError, ['code', 'farmId', 'animalTypeId', 'sex', 'breed', 'birthDate', 'herdId'])
     } catch (error) {
       setLoadError(editorErrorMessage(error, 'Não foi possível carregar os dados do animal.'))
     } finally {
@@ -140,6 +148,7 @@ export function AnimalEditor({ animalId, pendenciaId }: AnimalEditorProps) {
       sex: sex === 'M' || sex === 'F' ? sex : null,
       breed: breed.trim() ? breed.trim() : null,
       birthDate,
+      herdId: herdId || null,
     }
     setSaving(true)
     try {
@@ -245,9 +254,22 @@ export function AnimalEditor({ animalId, pendenciaId }: AnimalEditorProps) {
           error={fieldErrors.farmId}
           onChange={(value) => {
             setFarmId(value)
-            setFieldErrors((current) => ({ ...current, farmId: '' }))
+            setHerdId('')
+            setFieldErrors((current) => ({ ...current, farmId: '', herdId: '' }))
           }}
           disabled={farms.length === 0}
+        />
+        <SelectField
+          label="Rebanho"
+          value={herdId}
+          options={[{ value: '', label: 'Nenhum' }, ...herds.map((herd) => ({ value: herd.id, label: herd.name }))]}
+          placeholder={farmId ? (herds.length ? 'Opcional' : 'Nenhum rebanho nesta fazenda') : 'Selecione a fazenda primeiro'}
+          error={fieldErrors.herdId}
+          onChange={(value) => {
+            setHerdId(value)
+            setFieldErrors((current) => ({ ...current, herdId: '' }))
+          }}
+          disabled={!farmId}
         />
         <SelectField
           label="Tipo de animal"

@@ -282,7 +282,7 @@ export function FarmEditor({ farmId, pendenciaId }: FarmEditorProps) {
       <ConfirmDialog
         open={confirmOpen}
         title="Excluir fazenda?"
-        message="Fazendas com animais vinculados não podem ser excluídas. Esta ação não pode ser desfeita."
+        message="Fazendas com animais ou rebanhos vinculados não podem ser excluídas. Se houver os dois, a recusa é por causa dos animais (transfira ou remova os animais primeiro; depois, os rebanhos). Esta ação não pode ser desfeita."
         onCancel={() => setConfirmOpen(false)}
         onConfirm={() => void onDelete()}
         busy={deleting}

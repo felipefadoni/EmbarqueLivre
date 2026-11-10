@@ -43,6 +43,100 @@ export async function discardRejection(db: RejectionExecutor, id: string) {
   await db.execute(`DELETE FROM ${R} WHERE id = ?`, [id])
 }
 
+/** Recusa de animal cujo opData aponta para um rebanho (vínculo feito no mesmo cadastro/envio). */
+export function herdIdFromAnimalOpData(data: Record<string, unknown>): string | null {
+  const value = data.herd_id ?? data.herdId
+  return typeof value === 'string' && value.trim() ? String(value).toUpperCase() : null
+}
+
+export function isHerdLinkRejection(rejection: Pick<Rejection, 'entity' | 'tableName' | 'opData'>): boolean {
+  const entity = entityOfTable(rejection.tableName) ?? rejection.entity
+  return entity === 'animals' && Boolean(herdIdFromAnimalOpData(parseOpData(rejection)))
+}
+
+export function herdLinksWaitingLabel(count: number): string {
+  return count === 1 ? '1 animal aguarda este rebanho' : `${count} animais aguardam este rebanho`
+}
+
+export type RejectionGroup = {
+  primary: Rejection
+  dependents: Rejection[]
+  dependentsLabel: string | null
+}
+
+/**
+ * Agrupa recusas de vínculo de animal debaixo da recusa do rebanho quando o opData.herd_id
+ * é o id daquele rebanho. As demais pendências seguem avulsas, na ordem original.
+ */
+export function groupRejections(rows: readonly Rejection[]): RejectionGroup[] {
+  const herdRowIds = new Set(
+    rows.filter((row) => (entityOfTable(row.tableName) ?? row.entity) === 'herds').map((row) => String(row.rowId).toUpperCase()),
+  )
+  const dependentsByHerd = new Map<string, Rejection[]>()
+  const groupedAnimalIds = new Set<string>()
+  for (const row of rows) {
+    if (!isHerdLinkRejection(row)) continue
+    const herdId = herdIdFromAnimalOpData(parseOpData(row))
+    if (!herdId || !herdRowIds.has(herdId)) continue
+    const list = dependentsByHerd.get(herdId) ?? []
+    list.push(row)
+    dependentsByHerd.set(herdId, list)
+    groupedAnimalIds.add(row.id)
+  }
+  const groups: RejectionGroup[] = []
+  const used = new Set<string>()
+  for (const row of rows) {
+    if (used.has(row.id) || groupedAnimalIds.has(row.id)) continue
+    const entity = entityOfTable(row.tableName) ?? row.entity
+    if (entity === 'herds') {
+      const dependents = dependentsByHerd.get(String(row.rowId).toUpperCase()) ?? []
+      dependents.forEach((item) => used.add(item.id))
+      used.add(row.id)
+      groups.push({
+        primary: row,
+        dependents,
+        dependentsLabel: dependents.length ? herdLinksWaitingLabel(dependents.length) : null,
+      })
+    }
+  }
+  for (const row of rows) {
+    if (used.has(row.id) || groupedAnimalIds.has(row.id)) continue
+    used.add(row.id)
+    groups.push({ primary: row, dependents: [], dependentsLabel: null })
+  }
+  return groups
+}
+
+export function dependentAnimalIds(group: Pick<RejectionGroup, 'dependents'>): string[] {
+  return group.dependents.map((item) => item.rowId)
+}
+
+export async function listRejectionGroups(db: RejectionExecutor): Promise<RejectionGroup[]> {
+  const rows = await db.getAll<Rejection>(REJECTIONS_LIST_SQL)
+  return groupRejections(rows)
+}
+
+/** Descarte do item principal também remove os vínculos dependentes (avisos). A linha local volta ao servidor no checkpoint. */
+export async function discardRejectionGroup(db: RejectionExecutor, group: Pick<RejectionGroup, 'primary' | 'dependents'>) {
+  for (const row of [group.primary, ...group.dependents]) {
+    await discardRejection(db, row.id)
+  }
+}
+
+export async function discardRejectionByIdWithDependents(db: RejectionExecutor, id: string) {
+  const rows = await db.getAll<Rejection>(REJECTIONS_LIST_SQL)
+  const groups = groupRejections(rows)
+  const group = groups.find((item) => item.primary.id === id) ?? groups.find((item) => item.dependents.some((d) => d.id === id))
+  if (group) await discardRejectionGroup(db, group)
+  else await discardRejection(db, id)
+}
+
+export function groupForHerdRow(rows: readonly Rejection[], herdRowId: string): RejectionGroup | null {
+  const groups = groupRejections(rows)
+  const id = herdRowId.toUpperCase()
+  return groups.find((item) => (entityOfTable(item.primary.tableName) ?? item.primary.entity) === 'herds' && String(item.primary.rowId).toUpperCase() === id) ?? null
+}
+
 /** Após corrigir e salvar, remove todas as pendências daquela linha. */
 export async function resolveRejectionsForRow(db: RejectionExecutor, tableName: string, rowId: string) {
   await db.execute(`DELETE FROM ${R} WHERE ${C.tableName.name} = ? AND ${C.rowId.name} = ?`, [tableName, rowId])
@@ -64,6 +158,7 @@ const ENTITY_LABEL: Record<string, string> = {
   animalTypes: 'Tipo de animal',
   animals: 'Animal',
   vaccinations: 'Lançamento de vacina',
+  herds: 'Rebanho',
 }
 
 const OP_LABEL: Record<string, string> = { PUT: 'Cadastro', PATCH: 'Alteração', DELETE: 'Exclusão' }
@@ -86,6 +181,7 @@ export const ENTITY_ROUTES = {
   animalTypes: { list: '/configuracoes/tipos-de-animais', edit: '/configuracoes/tipos-de-animais/[id]', create: '/configuracoes/tipos-de-animais/nova' },
   animals: { list: '/configuracoes/animais', edit: '/configuracoes/animais/[id]', create: '/configuracoes/animais/nova' },
   vaccinations: { list: '/lancamentos', edit: '/lancamentos/[id]', create: '/lancamentos/nova' },
+  herds: { list: '/configuracoes/rebanhos', edit: '/configuracoes/rebanhos/[id]', create: '/configuracoes/rebanhos/nova' },
 } as const
 
 /**
@@ -118,6 +214,13 @@ const CODE_FIELD: Record<string, string> = {
   FARM_OWNER_REQUIRED: 'accountId',
   INVALID_FARM_OWNER: 'accountId',
   FARM_OWNER_FORBIDDEN: 'accountId',
+  HERD_NAME_ALREADY_EXISTS: 'name',
+  INVALID_HERD_NAME: 'name',
+  INVALID_HERD_DESCRIPTION: 'description',
+  INVALID_HERD_FORMED_AT: 'formedAt',
+  HERD_FARM_MISMATCH: 'herdId',
+  HERD_FARM_IMMUTABLE: 'farmId',
+  FARM_NOT_FOUND: 'farmId',
 }
 
 /**
@@ -130,6 +233,6 @@ export function rejectionFormField(rejection: Pick<Rejection, 'entity' | 'tableN
     const field = SYNC_TABLES[entity as SyncEntity] ? fieldOfColumn(entity as SyncEntity, rejection.field) : null
     if (field) return field
   }
-  if (rejection.errorCode === 'CONFLICT' && (entity === 'vaccines' || entity === 'animalTypes')) return 'name'
+  if (rejection.errorCode === 'CONFLICT' && (entity === 'vaccines' || entity === 'animalTypes' || entity === 'herds')) return 'name'
   return CODE_FIELD[rejection.errorCode] ?? null
 }

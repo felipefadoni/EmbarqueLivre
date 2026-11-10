@@ -3,7 +3,7 @@ import { isApiError, publicApiMessage } from '@/api/errors'
 import { db } from './database'
 import { fromColumns, tableOf, type SyncEntity } from './mapping'
 import type { SqlQuery } from './queries'
-import { discardRejection, getRejection, parseOpData, rejectionFormField, resolveRejectionsForRow, type Rejection } from './rejections'
+import { REJECTIONS_LIST_SQL, dependentAnimalIds, discardRejectionByIdWithDependents, getRejection, groupRejections, parseOpData, rejectionFormField, resolveRejectionsForRow, type Rejection } from './rejections'
 
 export type EditorSource<T> = {
   /** Registro local atual (null em criação ou se ainda não existe neste aparelho). */
@@ -63,5 +63,14 @@ export function editorErrorMessage(error: unknown, fallback: string): string {
 /** Remove a pendência que originou o "Corrigir" (a correção gera uma nova operação). */
 export async function clearPendencia(pendenciaId: string | undefined) {
   if (!pendenciaId) return
-  await discardRejection(db, pendenciaId).catch(() => undefined)
+  // Rebanho recusado: descarta também os vínculos de animais que dependiam desse cadastro.
+  await discardRejectionByIdWithDependents(db, pendenciaId).catch(() => undefined)
+}
+
+/** Ao Corrigir um rebanho recusado, os animais que aguardavam o vínculo devem voltar à seleção. */
+export async function pendingHerdAnimalIds(pendenciaId: string | undefined): Promise<string[]> {
+  if (!pendenciaId) return []
+  const rows = await db.getAll<Rejection>(REJECTIONS_LIST_SQL)
+  const group = groupRejections(rows).find((item) => item.primary.id === pendenciaId)
+  return group ? dependentAnimalIds(group) : []
 }

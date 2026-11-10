@@ -4,7 +4,8 @@
  * e os mappers convertem a linha nos tipos já usados pelas telas.
  * Puro (sem React Native) para testes no Node com SQLite real.
  */
-import type { Animal, AnimalType, Farm, Vaccine } from '../api/catalog'
+import type { Animal, AnimalType, Farm, Herd, Vaccine } from '../api/catalog'
+import { HERDS_CONTRACT } from '../api/herdsContract'
 import type { AnimalWithdrawal, VaccinationEntry, WithdrawalApplication } from '../api/contract'
 import { colOf as c, tableOf as t } from './mapping'
 import { isActiveOn, summarizeWithdrawal } from './withdrawal'
@@ -20,6 +21,7 @@ const V = t('vaccines')
 const T = t('animalTypes')
 const A = t('animals')
 const AV = t('vaccinations')
+const H = t('herds')
 
 /** Data efetiva de fim de carência: a gravada; se ausente, applied_at + days no SQLite. */
 function untilExpr(alias: string) {
@@ -109,12 +111,14 @@ export const withdrawalAgg = `SELECT av.${c('vaccinations', 'animalId')} AS aid,
 function animalSelect(todayParam = '?') {
   return `SELECT a.id AS id, a.${c('animals', 'code')} AS code, a.${c('animals', 'farmId')} AS farmId,
   a.${c('animals', 'animalTypeId')} AS animalTypeId, a.${c('animals', 'sex')} AS sex, a.${c('animals', 'breed')} AS breed,
-  a.${c('animals', 'birthDate')} AS birthDate, f.${c('farms', 'name')} AS farmName, at.${c('animalTypes', 'name')} AS animalTypeName,
+  a.${c('animals', 'birthDate')} AS birthDate, a.${c('animals', 'herdId')} AS herdId, h.${c('herds', 'name')} AS herdName,
+  f.${c('farms', 'name')} AS farmName, at.${c('animalTypes', 'name')} AS animalTypeName,
   COALESCE(w.total, 0) AS totalWithdrawalDays, w.freeAt AS freeAt,
   CASE WHEN w.freeAt IS NOT NULL AND ${todayParam} < w.freeAt THEN 1 ELSE 0 END AS inWithdrawal
   FROM ${A} a
   LEFT JOIN ${F} f ON f.id = a.${c('animals', 'farmId')}
   LEFT JOIN ${T} at ON at.id = a.${c('animals', 'animalTypeId')}
+  LEFT JOIN ${H} h ON h.id = a.${c('animals', 'herdId')}
   LEFT JOIN (${withdrawalAgg}) w ON w.aid = a.id`
 }
 
@@ -131,7 +135,7 @@ export function isAnimalSituation(value: unknown): value is AnimalSituation {
   return typeof value === 'string' && (ANIMAL_SITUATIONS as readonly string[]).includes(value)
 }
 
-export type AnimalFilters = { farmId?: string; animalTypeId?: string; code?: string; situacao?: AnimalSituation }
+export type AnimalFilters = { farmId?: string; animalTypeId?: string; herdId?: string; code?: string; situacao?: AnimalSituation }
 
 export function animalsListQuery(filters: AnimalFilters, today: string, limit?: number): SqlQuery {
   const where: string[] = []
@@ -143,6 +147,10 @@ export function animalsListQuery(filters: AnimalFilters, today: string, limit?: 
   if (filters.animalTypeId) {
     where.push(`a.${c('animals', 'animalTypeId')} = ?`)
     params.push(filters.animalTypeId)
+  }
+  if (filters.herdId) {
+    where.push(`a.${c('animals', 'herdId')} = ?`)
+    params.push(filters.herdId)
   }
   const code = filters.code?.trim()
   if (code) {
@@ -183,6 +191,8 @@ export type AnimalRow = {
   sex: string | null
   breed: string | null
   birthDate: string | null
+  herdId: string | null
+  herdName: string | null
   farmName: string | null
   animalTypeName: string | null
   totalWithdrawalDays: number
@@ -200,6 +210,8 @@ export function rowToAnimal(row: AnimalRow, withdrawal: AnimalWithdrawal | null 
     sex: sex === 'M' || sex === 'F' ? sex : null,
     breed: row.breed ?? null,
     birthDate: row.birthDate ? String(row.birthDate).slice(0, 10) : null,
+    herdId: row.herdId ?? null,
+    herdName: row.herdName ?? undefined,
     farmName: row.farmName ?? undefined,
     animalTypeName: row.animalTypeName ?? undefined,
     withdrawal,
@@ -343,12 +355,87 @@ export function rowsToWithdrawal(rows: ApplicationRow[], today: string): AnimalW
   return { applications, ...summarizeWithdrawal(applications, today) }
 }
 
+
+// ---------- Rebanhos (contrato final: HERDS_CONTRACT) ----------
+
+const herdSelect = `SELECT h.id AS id, h.${c('herds', 'farmId')} AS farmId, f.${c('farms', 'name')} AS farmName,
+  h.${c('herds', 'name')} AS name, h.${c('herds', 'description')} AS description,
+  h.${c('herds', 'formedAt')} AS formedAt,
+  COUNT(a.id) AS animalCount
+  FROM ${H} h
+  LEFT JOIN ${F} f ON f.id = h.${c('herds', 'farmId')}
+  LEFT JOIN ${A} a ON a.${c('animals', 'herdId')} = h.id`
+
+export type HerdFilters = { farmId?: string; search?: string }
+
+export function herdsListQuery(filters: HerdFilters = {}, limit?: number): SqlQuery {
+  const where: string[] = []
+  const params: unknown[] = []
+  if (filters.farmId) {
+    where.push(`h.${c('herds', 'farmId')} = ?`)
+    params.push(filters.farmId)
+  }
+  const search = filters.search?.trim()
+  if (search) {
+    where.push(`instr(lower(h.${c('herds', 'name')}), lower(?)) > 0`)
+    params.push(search)
+  }
+  params.push(limitClause(limit) + 1)
+  return {
+    sql: `${herdSelect} ${where.length ? `WHERE ${where.join(' AND ')}` : ''} GROUP BY h.id
+      ORDER BY h.${c('herds', 'name')} COLLATE NOCASE, h.id LIMIT ?`,
+    params,
+  }
+}
+
+export function herdByIdQuery(id: string): SqlQuery {
+  return { sql: `${herdSelect} WHERE h.id = ? GROUP BY h.id`, params: [id] }
+}
+
+export type HerdRow = {
+  id: string
+  farmId: string
+  farmName: string | null
+  name: string
+  description: string | null
+  formedAt: string | null
+  animalCount: number
+}
+
+export function rowToHerd(row: HerdRow): Herd {
+  return {
+    id: row.id,
+    farmId: row.farmId ?? '',
+    farmName: row.farmName ?? undefined,
+    name: row.name ?? '',
+    description: row.description ?? null,
+    formedAt: row.formedAt ? String(row.formedAt).slice(0, 10) : '',
+    animalCount: Number(row.animalCount ?? 0),
+  }
+}
+
+export function herdNameTakenQuery(farmId: string, name: string, excludeId?: string): SqlQuery {
+  const nameCol = c('herds', 'name')
+  const farmCol = c('herds', 'farmId')
+  const nameCmp = HERDS_CONTRACT.nameUniqueCaseInsensitive ? `lower(${nameCol}) = lower(?)` : `${nameCol} = ?`
+  const scope = HERDS_CONTRACT.nameUniquePerFarm ? ` AND ${farmCol} = ?` : ''
+  const params: unknown[] = HERDS_CONTRACT.nameUniquePerFarm
+    ? [name.trim(), farmId, excludeId ?? '']
+    : [name.trim(), excludeId ?? '']
+  return {
+    sql: `SELECT id FROM ${H} WHERE ${nameCmp}${scope} AND id <> ? LIMIT 1`,
+    params,
+  }
+}
+
 // ---------- Regras locais (equivalentes baratos dos 409) ----------
 
-export function countQuery(entity: 'animals' | 'vaccinations', field: string, value: string): SqlQuery {
+export function countQuery(entity: 'animals' | 'vaccinations' | 'herds', field: string, value: string): SqlQuery {
   const columns: Record<string, string> = {
     'animals.farmId': `${A}.${c('animals', 'farmId')}`,
     'animals.animalTypeId': `${A}.${c('animals', 'animalTypeId')}`,
+    'animals.herdId': `${A}.${c('animals', 'herdId')}`,
+    'herds.farmId': `${H}.${c('herds', 'farmId')}`,
     'vaccinations.vaccineId': `${AV}.${c('vaccinations', 'vaccineId')}`,
     'vaccinations.animalId': `${AV}.${c('vaccinations', 'animalId')}`,
   }

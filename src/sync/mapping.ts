@@ -14,7 +14,10 @@
  * - Inteiros (dias de carência) são `integer`.
  *
  * Este arquivo é puro (sem React Native) para poder ser testado no Node.
+ * Rebanho: nomes do contrato final em `HERDS_CONTRACT` (`src/api/herdsContract.ts`, §17.10 e §19).
  */
+
+import { HERDS_CONTRACT } from '../api/herdsContract'
 
 export type ColumnType = 'text' | 'integer' | 'real'
 
@@ -65,8 +68,21 @@ export const SYNC_TABLES = {
       sex: col('sex'),
       breed: col('breed'),
       birthDate: col('birth_date'),
+      /** Nullable; ausente num PUT de animal = null (desvincula). Sempre enviar quando o animal tem rebanho. */
+      herdId: col(HERDS_CONTRACT.animalHerdColumn),
       createdAt: col('created_at'),
       updatedAt: col('updated_at'),
+    },
+  },
+  herds: {
+    table: HERDS_CONTRACT.table,
+    columns: {
+      farmId: col(HERDS_CONTRACT.columns.farmId),
+      name: col(HERDS_CONTRACT.columns.name),
+      description: col(HERDS_CONTRACT.columns.description),
+      formedAt: col(HERDS_CONTRACT.columns.formedAt),
+      createdAt: col(HERDS_CONTRACT.columns.createdAt),
+      updatedAt: col(HERDS_CONTRACT.columns.updatedAt),
     },
   },
   vaccinations: {
@@ -89,7 +105,7 @@ export const SYNC_TABLES = {
 } as const
 
 /** Entidades que o app escreve localmente. */
-export const WRITABLE_ENTITIES = ['farms', 'vaccines', 'animalTypes', 'animals', 'vaccinations'] as const
+export const WRITABLE_ENTITIES = ['farms', 'vaccines', 'animalTypes', 'animals', 'herds', 'vaccinations'] as const
 
 /** Limite de operações por POST /powersync/upload. */
 export const UPLOAD_BATCH_LIMIT = 500
@@ -215,6 +231,11 @@ export const LOCAL_INDEXES: Partial<Record<SyncEntity, Record<string, string[]>>
     farm: [SYNC_TABLES.animals.columns.farmId.name],
     type: [SYNC_TABLES.animals.columns.animalTypeId.name],
     code: [SYNC_TABLES.animals.columns.code.name],
+    herd: [SYNC_TABLES.animals.columns.herdId.name],
+  },
+  herds: {
+    farm: [SYNC_TABLES.herds.columns.farmId.name],
+    name: [SYNC_TABLES.herds.columns.name.name],
   },
   vaccinations: {
     animal: [SYNC_TABLES.vaccinations.columns.animalId.name],

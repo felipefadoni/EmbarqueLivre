@@ -9,16 +9,22 @@
  *
  * Puro (sem React Native): recebe um executor SQL (PowerSyncDatabase no app; node:sqlite nos testes).
  */
+import { HERDS_CONTRACT, isValidHerdFormedAt, normalizeHerdDescription, todayIsoInHerdZone } from '../api/herdsContract'
 import type { ApiError, UserRole } from '../api/types'
-import { tableOf as t, toColumns, type SyncEntity } from './mapping'
+import { colOf as col, tableOf as t, toColumns, type SyncEntity } from './mapping'
 import {
   animalByIdQuery,
   animalCodeTakenQuery,
   countQuery,
+  farmByIdQuery,
+  herdByIdQuery,
+  herdNameTakenQuery,
   nameTakenQuery,
   vaccineByIdQuery,
   vaccinationByIdQuery,
   type AnimalRow,
+  type FarmRow,
+  type HerdRow,
   type VaccinationRow,
 } from './queries'
 import { computeWithdrawalUntil } from './withdrawal'
@@ -75,15 +81,53 @@ export type AnimalInput = {
   sex: 'M' | 'F' | null
   breed: string | null
   birthDate: string | null
+  herdId?: string | null
 }
+export type HerdInput = { farmId: string; name: string; description?: string | null; formedAt: string }
 export type VaccinationInput = { animalId: string; vaccineId: string; appliedAt?: string }
 
 export function createRepository(ctx: RepositoryContext) {
   const { db } = ctx
   const id = () => ctx.newId().toUpperCase()
 
-  async function run(query: { sql: string; params: unknown[] }) {
-    await db.execute(query.sql, query.params)
+  async function run(query: { sql: string; params: unknown[] }, exec: SqlExecutor = db) {
+    await exec.execute(query.sql, query.params)
+  }
+
+  function asExecutor(raw: Pick<SqlExecutor, 'execute'> & Partial<SqlExecutor>): SqlExecutor {
+    return {
+      execute: (sql, params) => raw.execute(sql, params),
+      getAll: raw.getAll ? raw.getAll.bind(raw) : db.getAll.bind(db),
+      getOptional: raw.getOptional ? raw.getOptional.bind(raw) : db.getOptional.bind(db),
+    }
+  }
+
+  /** Uma transação PowerSync = um lote na fila, na ordem das escritas (rebanho antes dos animais). */
+  async function withWrite<T>(fn: (exec: SqlExecutor) => Promise<T>): Promise<T> {
+    if (typeof db.writeTransaction === 'function') {
+      return db.writeTransaction((tx) => fn(asExecutor(tx)))
+    }
+    return fn(db)
+  }
+
+  async function linkAnimalsToHerd(exec: SqlExecutor, herdId: string, farmId: string, animalIds: string[]) {
+    const today = ctx.today()
+    for (const animalId of animalIds) {
+      const animal = await exec.getOptional<AnimalRow>(...spread(animalByIdQuery(animalId, today)))
+      if (!animal) throw localError(404, 'ANIMAL_NOT_FOUND')
+      if (animal.farmId !== farmId) throw localError(422, HERDS_CONTRACT.errors.farmMismatch, 'herdId')
+      if (animal.herdId === herdId) continue
+      await run(updateSql('animals', animalId, toColumns('animals', { herdId, updatedAt: ctx.now() })), exec)
+    }
+  }
+
+  async function assertHerdFarm(farmId: string, herdId: string | null | undefined): Promise<string | null> {
+    const value = herdId?.trim() || null
+    if (!value) return null
+    const herd = await db.getOptional<HerdRow>(...spread(herdByIdQuery(value)))
+    if (!herd) throw localError(404, HERDS_CONTRACT.errors.notFound, 'herdId')
+    if (herd.farmId !== farmId) throw localError(422, HERDS_CONTRACT.errors.farmMismatch, 'herdId')
+    return value
   }
 
   return {
@@ -110,6 +154,7 @@ export function createRepository(ctx: RepositoryContext) {
     },
     async deleteFarm(farmId: string) {
       if ((await count(db, countQuery('animals', 'farmId', farmId))) > 0) throw localError(409, 'FARM_HAS_ANIMALS')
+      if ((await count(db, countQuery('herds', 'farmId', farmId))) > 0) throw localError(409, HERDS_CONTRACT.errors.farmHasHerds)
       await run({ sql: `DELETE FROM ${t('farms')} WHERE id = ?`, params: [farmId] })
     },
 
@@ -155,6 +200,7 @@ export function createRepository(ctx: RepositoryContext) {
       if (await db.getOptional(...spread(animalCodeTakenQuery(input.farmId, code)))) {
         throw localError(409, 'ANIMAL_CODE_ALREADY_EXISTS', 'code')
       }
+      const herdId = await assertHerdFarm(input.farmId, input.herdId)
       const newId = id()
       await run(
         insertSql('animals', newId, toColumns('animals', {
@@ -164,6 +210,7 @@ export function createRepository(ctx: RepositoryContext) {
           sex: input.sex,
           breed: input.breed,
           birthDate: input.birthDate,
+          herdId,
           createdAt: ctx.now(),
           updatedAt: ctx.now(),
         })),
@@ -175,6 +222,7 @@ export function createRepository(ctx: RepositoryContext) {
       if (await db.getOptional(...spread(animalCodeTakenQuery(input.farmId, code, animalId)))) {
         throw localError(409, 'ANIMAL_CODE_ALREADY_EXISTS', 'code')
       }
+      const herdId = await assertHerdFarm(input.farmId, input.herdId)
       await run(
         updateSql('animals', animalId, toColumns('animals', {
           code,
@@ -183,6 +231,7 @@ export function createRepository(ctx: RepositoryContext) {
           sex: input.sex,
           breed: input.breed,
           birthDate: input.birthDate,
+          herdId,
           updatedAt: ctx.now(),
         })),
       )
@@ -190,6 +239,80 @@ export function createRepository(ctx: RepositoryContext) {
     async deleteAnimal(animalId: string) {
       if ((await count(db, countQuery('vaccinations', 'animalId', animalId))) > 0) throw localError(409, 'ANIMAL_HAS_VACCINATIONS')
       await run({ sql: `DELETE FROM ${t('animals')} WHERE id = ?`, params: [animalId] })
+    },
+
+
+    // ----- Rebanhos (HERDS_CONTRACT, §17.10) -----
+    async createHerd(input: HerdInput, animalIds: string[] = []) {
+      const name = input.name.trim()
+      const description = normalizeHerdDescription(input.description)
+      const formedAt = input.formedAt
+      assertHerdFields(name, description, formedAt)
+      return withWrite(async (exec) => {
+        const farm = await exec.getOptional<FarmRow>(...spread(farmByIdQuery(input.farmId)))
+        if (!farm) throw localError(404, 'FARM_NOT_FOUND', 'farmId')
+        if (await exec.getOptional(...spread(herdNameTakenQuery(input.farmId, name)))) {
+          throw localError(409, HERDS_CONTRACT.errors.nameTaken, 'name')
+        }
+        const newId = id()
+        await run(
+          insertSql('herds', newId, toColumns('herds', {
+            farmId: input.farmId,
+            name,
+            description,
+            formedAt,
+            createdAt: ctx.now(),
+            updatedAt: ctx.now(),
+          })),
+          exec,
+        )
+        if (animalIds.length) await linkAnimalsToHerd(exec, newId, input.farmId, animalIds)
+        return newId
+      })
+    },
+    async updateHerd(herdId: string, input: HerdInput) {
+      const current = await db.getOptional<HerdRow>(...spread(herdByIdQuery(herdId)))
+      if (!current) throw localError(404, HERDS_CONTRACT.errors.notFound)
+      if (input.farmId && input.farmId !== current.farmId) {
+        throw localError(400, HERDS_CONTRACT.errors.farmImmutable, 'farmId')
+      }
+      const name = input.name.trim()
+      const description = normalizeHerdDescription(input.description)
+      const formedAt = input.formedAt
+      assertHerdFields(name, description, formedAt)
+      if (await db.getOptional(...spread(herdNameTakenQuery(current.farmId, name, herdId)))) {
+        throw localError(409, HERDS_CONTRACT.errors.nameTaken, 'name')
+      }
+      await run(updateSql('herds', herdId, toColumns('herds', {
+        name,
+        description,
+        formedAt,
+        updatedAt: ctx.now(),
+      })))
+    },
+    async deleteHerd(herdId: string) {
+      const current = await db.getOptional<HerdRow>(...spread(herdByIdQuery(herdId)))
+      if (!current) throw localError(404, HERDS_CONTRACT.errors.notFound)
+      const linked = await db.getAll<{ id: string }>(
+        `SELECT id FROM ${t('animals')} WHERE ${col('animals', 'herdId')} = ?`,
+        [herdId],
+      )
+      if (HERDS_CONTRACT.unlinkAnimalsOnDelete) {
+        for (const row of linked) {
+          await run(updateSql('animals', row.id, toColumns('animals', { herdId: null, updatedAt: ctx.now() })))
+        }
+      }
+      await run({ sql: `DELETE FROM ${t('herds')} WHERE id = ?`, params: [herdId] })
+    },
+    async assignAnimalsToHerd(herdId: string, animalIds: string[]) {
+      const herd = await db.getOptional<HerdRow>(...spread(herdByIdQuery(herdId)))
+      if (!herd) throw localError(404, HERDS_CONTRACT.errors.notFound, 'herdId')
+      await withWrite((exec) => linkAnimalsToHerd(exec, herdId, herd.farmId, animalIds))
+    },
+    async removeAnimalFromHerd(animalId: string) {
+      const animal = await db.getOptional<AnimalRow>(...spread(animalByIdQuery(animalId, ctx.today())))
+      if (!animal) throw localError(404, 'ANIMAL_NOT_FOUND')
+      await run(updateSql('animals', animalId, toColumns('animals', { herdId: null, updatedAt: ctx.now() })))
     },
 
     // ----- Lançamentos de vacina -----
@@ -251,6 +374,17 @@ export function createRepository(ctx: RepositoryContext) {
 
 function spread(query: { sql: string; params: unknown[] }): [string, unknown[]] {
   return [query.sql, query.params]
+}
+
+function assertHerdFields(name: string, description: string | null, formedAt: string) {
+  const { min, max } = HERDS_CONTRACT.limits.name
+  if (name.length < min || name.length > max) throw localError(400, HERDS_CONTRACT.errors.invalidName, 'name')
+  if (description && description.length > HERDS_CONTRACT.limits.description.max) {
+    throw localError(400, HERDS_CONTRACT.errors.invalidDescription, 'description')
+  }
+  if (!isValidHerdFormedAt(formedAt, todayIsoInHerdZone())) {
+    throw localError(400, HERDS_CONTRACT.errors.invalidFormedAt, 'formedAt')
+  }
 }
 
 export type LocalRepository = ReturnType<typeof createRepository>

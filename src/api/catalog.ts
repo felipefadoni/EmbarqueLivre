@@ -67,6 +67,8 @@ export type Animal = {
   birthDate: string | null
   farmName?: string
   animalTypeName?: string
+  herdId?: string | null
+  herdName?: string
   /** Bloco de carência (GET /animals/:id). null quando a API não envia. */
   withdrawal: AnimalWithdrawal | null
   /** `totalWithdrawalDays`, `freeAt`, `inWithdrawal` do topo do animal (lista e detalhe). */
@@ -80,6 +82,7 @@ export type AnimalPayload = {
   sex: AnimalSex | null
   breed: string | null
   birthDate: string | null
+  herdId?: string | null
 }
 
 function nestedName(raw: unknown): string | undefined {
@@ -139,6 +142,8 @@ export function parseAnimal(raw: unknown): Animal {
     birthDate: asNullableString(record.birthDate),
     farmName: nestedName(farm) ?? asNullableString(record.farmName) ?? undefined,
     animalTypeName: nestedName(animalType) ?? asNullableString(record.animalTypeName) ?? undefined,
+    herdId: asNullableString(record.herdId) || null,
+    herdName: nestedName(record.herd) ?? asNullableString(record.herdName) ?? undefined,
     withdrawal: parseAnimalWithdrawal(record[VACCINATION_CONTRACT.withdrawalField]),
     withdrawalSummary: parseWithdrawalSummary(record),
   }
@@ -148,3 +153,42 @@ export const farmsApi = createResourceClient('/farms', parseFarm)
 export const vaccinesApi = createResourceClient('/vaccines', parseVaccine)
 export const animalTypesApi = createResourceClient('/animal-types', parseAnimalType)
 export const animalsApi = createResourceClient('/animals', parseAnimal)
+
+/** Tipos locais de rebanho (a API REST ainda não existe; as telas usam só o PowerSync). */
+export type Herd = {
+  id: string
+  farmId: string
+  farmName?: string
+  name: string
+  description: string | null
+  /** YYYY-MM-DD (REST `formedAt`, coluna `formed_at`) */
+  formedAt: string
+  animalCount?: number
+  createdAt?: string | null
+  updatedAt?: string | null
+}
+
+export type HerdPayload = {
+  farmId: string
+  name: string
+  description: string | null
+  formedAt: string
+}
+
+export function parseHerd(raw: unknown): Herd {
+  const record = asRecord(raw)
+  return {
+    id: asString(record.id),
+    farmId: asString(record.farmId),
+    farmName: asNullableString(record.farmName) ?? undefined,
+    name: asString(record.name),
+    description: asNullableString(record.description),
+    formedAt: asNullableString(record.formedAt) ?? asString(record.formed_at).slice(0, 10),
+    animalCount: asNumber(record.animalCount ?? record.animal_count),
+    createdAt: asNullableString(record.createdAt ?? record.created_at),
+    updatedAt: asNullableString(record.updatedAt ?? record.updated_at),
+  }
+}
+
+/** Cliente REST (rascunho do contrato). As telas usam só o PowerSync. */
+export const herdsApi = createResourceClient('/herds', parseHerd)

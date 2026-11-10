@@ -132,7 +132,8 @@ não funciona no aparelho físico); por isso a variável do app vence enquanto e
 | Fazenda | `farms` | `account_id, owner_user_id` (alias deprecado), `name, city, state, created_at, updated_at` |
 | Vacina | `vaccines` | `name, withdrawal_days (integer), created_at, updated_at` |
 | Tipo de animal | `animal_types` | `name, created_at, updated_at` |
-| Animal | `animals` | `farm_id, animal_type_id, code, sex, breed, birth_date, created_at, updated_at` |
+| Animal | `animals` | `farm_id, animal_type_id, code, sex, breed, birth_date, herd_id` (nullable), `created_at, updated_at` |
+| Rebanho | `herds` | `farm_id, name, description, formed_at` (YYYY-MM-DD), `created_at, updated_at` — nomes em `HERDS_CONTRACT` (§17.10) |
 | Lançamento | `animal_vaccinations` | `animal_id, farm_id, vaccine_id, applied_at, withdrawal_days (integer), withdrawal_until, created_by_user_id, created_at, updated_at` |
 | Pendências (local) | `sync_rejections` | `entity, table_name, row_id, op, op_data, status_code (integer), error_code, message, field, created_at` — `localOnly`, nunca sobe |
 
@@ -141,7 +142,13 @@ fazenda: online vem do REST `GET /farms/:id` → `ownerName`; offline aparece "D
 master se reconhece pelo usuário logado).
 
 Streams (todas `auto_subscribe`): `catalogs` (vacinas e tipos, todos), `account` (master/basic: fazendas da conta +
-animais e lançamentos delas), `admin_all` (admin: tudo).
+animais, rebanhos e lançamentos delas), `admin_all` (admin: tudo).
+Rebanhos (`herds` + `animals.herd_id`) seguem o contrato final (`src/api/herdsContract.ts`, §17.10 e §19): streams
+`account` e `admin_all`. `formed_at` é a data de formação (hoje = America/Sao_Paulo). Excluir rebanho desvincula os
+animais. Um PUT de animal sem `herd_id` desvincula — o app sempre grava a coluna.
+No cadastro de um rebanho novo, o insert em `herds` e os updates de `herd_id`/`updated_at` nos animais escolhidos
+correm na mesma `writeTransaction` do PowerSync: um único lote na fila, rebanho primeiro, depois os animais
+(funciona offline).
 
 Datas: `YYYY-MM-DD` (texto). `timestamptz` chega como ISO UTC com microssegundos (`2026-11-10T15:17:43.051812Z`);
 `normalizeTimestamp` troca espaço por `T` (se vier) e trunca a fração em 3 casas antes de `new Date` (Hermes). IDs: ULID **em maiúsculas** gerado no app (`ids.ts`, PRNG do `expo-crypto`).
@@ -167,7 +174,10 @@ Datas: `YYYY-MM-DD` (texto). `timestamptz` chega como ISO UTC com microssegundos
   `ANIMAL_TYPE_HAS_ANIMALS`, `ANIMAL_HAS_VACCINATIONS`, `ANIMAL_CODE_ALREADY_EXISTS` (código único por fazenda,
   sem diferenciar maiúsculas) e nome duplicado de vacina/tipo — único sem diferenciar maiúsculas, ignorando o próprio
   registro na edição — com mensagem no campo Nome: `VACCINE_NAME_ALREADY_EXISTS` ("Já existe uma vacina com esse nome.") e
-  `ANIMAL_TYPE_NAME_ALREADY_EXISTS` ("Já existe um tipo de animal com esse nome."). O servidor (upload e REST) responde
+  `ANIMAL_TYPE_NAME_ALREADY_EXISTS` ("Já existe um tipo de animal com esse nome.") e, no rebanho,
+  `HERD_NAME_ALREADY_EXISTS` (nome único por fazenda, 2–120, sem diferenciar maiúsculas) e `HERD_FARM_MISMATCH` (animal e
+  rebanho da mesma fazenda). Excluir rebanho desvincula os animais (`herd_id = null`). Excluir fazenda com rebanhos:
+  `FARM_HAS_HERDS` (se também houver animais, `FARM_HAS_ANIMALS` vem antes). O servidor (upload e REST) responde
   409 `VACCINE_NAME_ALREADY_EXISTS` / `ANIMAL_TYPE_NAME_ALREADY_EXISTS` (um `CONFLICT` antigo também é mapeado); a
   pendência usa a mensagem pt-BR e, ao Corrigir, ela aparece no campo Nome.
 - Lançamento: `applied_at` padrão hoje (não pode ser futuro nem antes de 1900); `withdrawal_days` copiado da vacina;
@@ -214,6 +224,23 @@ O erro aparece **no campo** apontado por `details.field` (convertido para o camp
 pelo código (ex.: `ANIMAL_CODE_ALREADY_EXISTS` → Código, `INVALID_APPLIED_AT` → Data); senão, num aviso no topo.
 
 Ao salvar, a pendência é removida e a nova operação entra na fila.
+
+### Rebanho recusado e vínculos de animais (grupo)
+
+Se o servidor recusa o cadastro do rebanho (ex.: `HERD_NAME_ALREADY_EXISTS`), os updates de `herd_id` dos animais
+desse mesmo lote também são recusados em seguida (`HERD_NOT_FOUND`, `HERD_FARM_MISMATCH` ou similar). Tudo continua
+em `sync_rejections` (local-only), uma linha por operação.
+
+Na tela de Pendências, `groupRejections` junta essas recusas: o item **principal** é o do rebanho (erro real, campo
+Nome para corrigir). Os vínculos aparecem como dependentes, com o texto pt-BR "N animais aguardam este rebanho",
+e **não** como N cartões soltos. O critério é o `herd_id`/`herdId` no `op_data` do animal ser o `row_id` de uma
+recusa de `herds` ainda aberta. Recusa de animal sem um rebanho recusado correspondente segue avulsa.
+
+- **Descartar** o rebanho apaga também os avisos dos vínculos (`discardRejectionGroup`). Como as ops já saíram da
+  fila no `complete()`, o próximo checkpoint devolve rebanho e animais ao estado do servidor.
+- **Corrigir** abre o cadastro novo (PUT recusado gera outro ULID) já com os animais dependentes na seleção. Ao
+  salvar, a mesma `writeTransaction` recria o rebanho e reaplica os vínculos; `clearPendencia` descarta o grupo
+  inteiro (rebanho + dependentes).
 
 ## Telas
 

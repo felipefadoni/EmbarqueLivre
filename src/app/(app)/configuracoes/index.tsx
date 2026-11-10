@@ -142,6 +142,8 @@ export default function ConfiguracoesScreen() {
             />
             <YStack h={1} bg={isDark ? '#3A5247' : '#EEF6EF'} mx={20} />
             <MenuLink href="/configuracoes/animais" icon="list-outline" label="Animais" chevron={chevron} />
+            <YStack h={1} bg={isDark ? '#3A5247' : '#EEF6EF'} mx={20} />
+            <MenuLink href="/configuracoes/rebanhos" icon="layers-outline" label="Rebanho" chevron={chevron} />
           </YStack>
         </AppCard>
 
@@ -196,6 +198,7 @@ function MenuLink({
     | '/configuracoes/vacinas'
     | '/configuracoes/tipos-de-animais'
     | '/configuracoes/animais'
+    | '/configuracoes/rebanhos'
     | '/configuracoes/pendencias'
     | '/configuracoes/usuarios'
   icon: keyof typeof Ionicons.glyphMap
