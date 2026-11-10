@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import { Spinner, Text, YStack } from 'tamagui'
 
 import { vaccinesApi, type VaccinePayload } from '@/api/catalog'
-import { fieldMessagesFromError, isApiError, publicApiMessage } from '@/api/errors'
+import { fieldMessagesFromError, isApiError, publicApiMessage, userMessage } from '@/api/errors'
 import { AuthField } from '@/components/auth/AuthField'
 import { CadastroFormScreen } from '@/components/cadastros/CadastroFormScreen'
 import { ConfirmDialog } from '@/components/cadastros/ConfirmDialog'
@@ -121,7 +121,11 @@ export function VaccineEditor({ vaccineId }: VaccineEditorProps) {
       router.back()
     } catch (error) {
       setConfirmOpen(false)
-      setFormError(isApiError(error) ? publicApiMessage(error) : 'Não foi possível excluir a vacina.')
+      if (isApiError(error) && error.code === 'VACCINE_HAS_APPLICATIONS') {
+        setFormError(userMessage(error))
+      } else {
+        setFormError(isApiError(error) ? publicApiMessage(error) : 'Não foi possível excluir a vacina.')
+      }
     } finally {
       setDeleting(false)
     }

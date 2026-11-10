@@ -8,7 +8,9 @@ import { animalTypesApi, animalsApi, farmsApi, type Animal, type AnimalType, typ
 import { listAllPages, paginationParams, type ListPagingRequest } from '@/api/contract'
 import { ListLoadingFooter, ListStatus } from '@/components/cadastros/ListStatus'
 import { SelectField } from '@/components/cadastros/SelectField'
+import { WithdrawalBadge } from '@/components/cadastros/WithdrawalBadge'
 import { AppCard } from '@/components/dashboard/AppCard'
+import { formatDayMonthPtBr } from '@/features/cadastros/dates'
 import { useInfiniteList } from '@/features/cadastros/useInfiniteList'
 import { TOQUE_MINIMO } from '../../../../../tamagui.config'
 
@@ -137,6 +139,19 @@ function AnimalRow({
           <Text fontSize={16} fontWeight="500" color="brandMuted">
             {farmName} · {typeName}
           </Text>
+          {animal.withdrawalSummary?.inWithdrawal ? (
+            <XStack mt={4}>
+              <WithdrawalBadge
+                active
+                activeLabel={
+                  animal.withdrawalSummary.freeAt
+                    ? `Em carência · livre em ${formatDayMonthPtBr(animal.withdrawalSummary.freeAt)}`
+                    : 'Em carência'
+                }
+                inactiveLabel="Livre"
+              />
+            </XStack>
+          ) : null}
         </YStack>
         <Ionicons name="chevron-forward" size={22} color={chevron} />
       </XStack>

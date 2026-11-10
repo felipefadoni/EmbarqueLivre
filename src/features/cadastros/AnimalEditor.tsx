@@ -11,7 +11,7 @@ import {
   type Farm,
 } from '@/api/catalog'
 import { listAllPages } from '@/api/contract'
-import { fieldMessagesFromError, isApiError, publicApiMessage } from '@/api/errors'
+import { fieldMessagesFromError, isApiError, publicApiMessage, userMessage } from '@/api/errors'
 import { BIRTH_DATE_MIN, LIMITS } from '@/features/cadastros/limits'
 import { parseIsoDateLocal } from '@/features/cadastros/dates'
 import { AuthField } from '@/components/auth/AuthField'
@@ -19,6 +19,8 @@ import { CadastroFormScreen } from '@/components/cadastros/CadastroFormScreen'
 import { ConfirmDialog } from '@/components/cadastros/ConfirmDialog'
 import { DateField } from '@/components/form/DateField'
 import { SelectField } from '@/components/cadastros/SelectField'
+import { WithdrawalSection } from '@/features/vacinacoes/WithdrawalSection'
+import type { AnimalWithdrawal } from '@/api/contract'
 
 const SEX_OPTIONS = [
   { value: 'M', label: 'Macho' },
@@ -37,6 +39,7 @@ export function AnimalEditor({ animalId }: AnimalEditorProps) {
   const [sex, setSex] = useState('')
   const [breed, setBreed] = useState('')
   const [birthDate, setBirthDate] = useState<string | null>(null)
+  const [withdrawal, setWithdrawal] = useState<AnimalWithdrawal | null>(null)
   const [farms, setFarms] = useState<Farm[]>([])
   const [types, setTypes] = useState<AnimalType[]>([])
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
@@ -62,6 +65,7 @@ export function AnimalEditor({ animalId }: AnimalEditorProps) {
         setSex(animal.sex ?? '')
         setBreed(animal.breed ?? '')
         setBirthDate(animal.birthDate)
+        setWithdrawal(animal.withdrawal)
       }
     } catch (error) {
       setLoadError(isApiError(error) ? publicApiMessage(error) : 'Não foi possível carregar os dados do animal.')
@@ -87,6 +91,7 @@ export function AnimalEditor({ animalId }: AnimalEditorProps) {
           setSex(animal.sex ?? '')
           setBreed(animal.breed ?? '')
           setBirthDate(animal.birthDate)
+        setWithdrawal(animal.withdrawal)
         }
         setLoadError(null)
       } catch (error) {
@@ -162,7 +167,11 @@ export function AnimalEditor({ animalId }: AnimalEditorProps) {
       router.back()
     } catch (error) {
       setConfirmOpen(false)
-      setFormError(isApiError(error) ? publicApiMessage(error) : 'Não foi possível excluir o animal.')
+      if (isApiError(error) && error.code === 'ANIMAL_HAS_VACCINATIONS') {
+        setFormError(userMessage(error))
+      } else {
+        setFormError(isApiError(error) ? publicApiMessage(error) : 'Não foi possível excluir o animal.')
+      }
     } finally {
       setDeleting(false)
     }
@@ -206,7 +215,8 @@ export function AnimalEditor({ animalId }: AnimalEditorProps) {
         submitting={saving}
         onSubmit={() => void onSubmit()}
         onDelete={isEdit ? () => setConfirmOpen(true) : undefined}
-        deleteLabel="Excluir animal">
+        deleteLabel="Excluir animal"
+        footer={isEdit ? <WithdrawalSection withdrawal={withdrawal} /> : undefined}>
         <AuthField
           label="Código"
           value={code}
@@ -281,7 +291,11 @@ export function AnimalEditor({ animalId }: AnimalEditorProps) {
       <ConfirmDialog
         open={confirmOpen}
         title="Excluir animal?"
-        message="Esta ação não pode ser desfeita."
+        message={
+          withdrawal && withdrawal.applications.length > 0
+            ? 'Este animal possui vacinas lançadas. Exclua os lançamentos antes de excluir o animal.'
+            : 'Esta ação não pode ser desfeita.'
+        }
         onCancel={() => setConfirmOpen(false)}
         onConfirm={() => void onDelete()}
         busy={deleting}

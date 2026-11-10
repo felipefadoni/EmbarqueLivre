@@ -225,3 +225,213 @@ export function asNumber(raw: unknown, fallback = 0): number {
   const value = typeof raw === 'number' ? raw : Number(raw)
   return Number.isFinite(value) ? value : fallback
 }
+
+/* -------------------------------------------------------------------------- */
+/* Lançamentos de vacina (vacinações) e carência                               */
+/* -------------------------------------------------------------------------- */
+
+/**
+ * Contrato de lançamentos de vacina (API_INTEGRATION.md §18).
+ *
+ * - GET    /api/v1/vaccinations?date=YYYY-MM-DD&dateFrom=&dateTo=&farmId=&code=&page=&limit=
+ *          → { data: VaccinationEntry[], meta }  (params vazios são omitidos)
+ *          `date` não combina com `dateFrom`/`dateTo` (400 INVALID_DATE_FILTER). Ordem: appliedAt desc.
+ * - GET    /api/v1/vaccinations/:id → VaccinationEntry
+ * - POST   /api/v1/vaccinations { animalId, vaccineId, appliedAt } → VaccinationEntry
+ * - PATCH  /api/v1/vaccinations/:id { animalId?, vaccineId?, appliedAt? } → VaccinationEntry
+ * - DELETE /api/v1/vaccinations/:id (204)
+ * - Todos os papéis (admin, master, basic) podem criar, editar e excluir (escopo da fazenda do animal).
+ * - `withdrawalUntil` = appliedAt + withdrawalDays (sem +1). O animal já está livre NO dia `withdrawalUntil`.
+ *   O valor oficial vem da API; o app só mostra uma prévia.
+ *
+ * Busca de animais no seletor: GET /animals?code=&page=&limit= (parcial, sem diferenciar maiúsculas).
+ *
+ * Carência do animal:
+ * - Todo animal (lista e GET /:id) traz no topo `totalWithdrawalDays`, `freeAt`, `inWithdrawal`.
+ * - GET /animals/:id traz também `withdrawal: { applications: [{ id, vaccineId, vaccineName, appliedAt,
+ *   withdrawalDays, withdrawalUntil, active }], totalWithdrawalDays, freeAt, inWithdrawal }`.
+ * - `active` = hoje < withdrawalUntil; `inWithdrawal` = hoje < freeAt; `totalWithdrawalDays` soma TODAS as
+ *   aplicações (informativo). O status vem de `inWithdrawal`/`freeAt`.
+ *
+ * 409: VACCINE_HAS_APPLICATIONS (excluir vacina aplicada), ANIMAL_HAS_VACCINATIONS (excluir animal vacinado).
+ */
+export const VACCINATION_CONTRACT = {
+  path: '/vaccinations',
+  filters: {
+    date: 'date',
+    dateFrom: 'dateFrom',
+    dateTo: 'dateTo',
+    farmId: 'farmId',
+    code: 'code',
+  },
+  animalSearchParam: 'code',
+  withdrawalField: 'withdrawal',
+  /** Debounce da busca por código (ms). */
+  searchDebounceMs: 400,
+} as const
+
+export type VaccinationEntry = {
+  id: string
+  animalId: string
+  animalCode: string
+  farmId: string
+  farmName: string
+  animalTypeName: string
+  vaccineId: string
+  vaccineName: string
+  /** YYYY-MM-DD */
+  appliedAt: string
+  withdrawalDays: number
+  /** YYYY-MM-DD */
+  withdrawalUntil: string
+  createdByUserId: string | null
+  createdAt: string | null
+  updatedAt: string | null
+}
+
+export type VaccinationPayload = {
+  animalId: string
+  vaccineId: string
+  /** YYYY-MM-DD */
+  appliedAt: string
+}
+
+export type VaccinationFilters = {
+  /** Um dia exato. Não combine com dateFrom/dateTo. */
+  date?: string
+  /** Intervalo inclusivo (pode usar só um lado). */
+  dateFrom?: string
+  dateTo?: string
+  farmId?: string
+  code?: string
+}
+
+export type WithdrawalApplication = {
+  id: string
+  vaccineId: string | null
+  vaccineName: string
+  appliedAt: string
+  withdrawalDays: number
+  withdrawalUntil: string
+  active: boolean
+}
+
+export type AnimalWithdrawal = {
+  applications: WithdrawalApplication[]
+  totalWithdrawalDays: number
+  freeAt: string | null
+  inWithdrawal: boolean
+}
+
+/** Normaliza data da API (YYYY-MM-DD ou ISO com hora) para YYYY-MM-DD. */
+export function asIsoDate(raw: unknown): string {
+  const value = asString(raw).trim()
+  const match = /^(\d{4}-\d{2}-\d{2})/.exec(value)
+  return match ? match[1] : ''
+}
+
+function asNullableIsoDate(raw: unknown): string | null {
+  return asIsoDate(raw) || null
+}
+
+function nestedField(raw: unknown, field: string): string {
+  return asString(asRecord(raw)[field])
+}
+
+export function parseVaccinationEntry(raw: unknown): VaccinationEntry {
+  const record = asRecord(raw)
+  const animal = record.animal
+  const vaccine = record.vaccine
+  const farm = record.farm ?? asRecord(animal).farm
+  const animalType = record.animalType ?? asRecord(animal).animalType
+  return {
+    id: asString(record.id),
+    animalId: asString(record.animalId) || nestedField(animal, 'id'),
+    animalCode: asString(record.animalCode) || nestedField(animal, 'code'),
+    farmId: asString(record.farmId) || nestedField(farm, 'id') || nestedField(animal, 'farmId'),
+    farmName: asString(record.farmName) || nestedField(farm, 'name'),
+    animalTypeName: asString(record.animalTypeName) || nestedField(animalType, 'name'),
+    vaccineId: asString(record.vaccineId) || nestedField(vaccine, 'id'),
+    vaccineName: asString(record.vaccineName) || nestedField(vaccine, 'name'),
+    appliedAt: asIsoDate(record.appliedAt),
+    withdrawalDays: asNumber(record.withdrawalDays ?? asRecord(vaccine).withdrawalDays),
+    withdrawalUntil: asIsoDate(record.withdrawalUntil),
+    createdByUserId: asNullableString(record.createdByUserId),
+    createdAt: asNullableString(record.createdAt),
+    updatedAt: asNullableString(record.updatedAt),
+  }
+}
+
+/** Mesma regra da API: em carência enquanto hoje < withdrawalUntil (livre NO próprio dia). */
+export function isWithdrawalActive(withdrawalUntil: string | null | undefined): boolean {
+  return Boolean(withdrawalUntil) && todayIsoLocal() < (withdrawalUntil as string)
+}
+
+function parseWithdrawalApplication(raw: unknown): WithdrawalApplication {
+  const record = asRecord(raw)
+  const vaccine = record.vaccine
+  const withdrawalUntil = asIsoDate(record.withdrawalUntil)
+  const active =
+    typeof record.active === 'boolean'
+      ? record.active
+      : isWithdrawalActive(withdrawalUntil)
+  return {
+    id: asString(record.id),
+    vaccineId: asNullableString(record.vaccineId ?? asRecord(vaccine).id),
+    vaccineName: asString(record.vaccineName) || nestedField(vaccine, 'name'),
+    appliedAt: asIsoDate(record.appliedAt),
+    withdrawalDays: asNumber(record.withdrawalDays ?? asRecord(vaccine).withdrawalDays),
+    withdrawalUntil,
+    active,
+  }
+}
+
+function todayIsoLocal(): string {
+  const now = new Date()
+  const month = String(now.getMonth() + 1).padStart(2, '0')
+  const day = String(now.getDate()).padStart(2, '0')
+  return `${now.getFullYear()}-${month}-${day}`
+}
+
+/** Lê o bloco `withdrawal` de forma defensiva. Retorna null se a API ainda não o enviar. */
+export function parseAnimalWithdrawal(raw: unknown): AnimalWithdrawal | null {
+  if (!raw || typeof raw !== 'object') return null
+  const record = raw as Record<string, unknown>
+  const rawApplications = Array.isArray(record.applications)
+    ? record.applications
+    : Array.isArray(record.vaccinations)
+      ? record.vaccinations
+      : []
+  const applications = rawApplications.map(parseWithdrawalApplication)
+  const totalWithdrawalDays =
+    record.totalWithdrawalDays != null
+      ? asNumber(record.totalWithdrawalDays)
+      : applications.reduce((sum, item) => sum + item.withdrawalDays, 0)
+  const freeAt = asNullableIsoDate(record.freeAt)
+  const inWithdrawal =
+    typeof record.inWithdrawal === 'boolean'
+      ? record.inWithdrawal
+      : freeAt != null
+        ? todayIsoLocal() < freeAt
+        : applications.some((item) => item.active)
+  return { applications, totalWithdrawalDays, freeAt, inWithdrawal }
+}
+
+export type WithdrawalSummary = {
+  inWithdrawal: boolean
+  freeAt: string | null
+  totalWithdrawalDays: number
+}
+
+/** Resumo para o selo na listagem: campos no topo do animal (lista e GET /:id). */
+export function parseWithdrawalSummary(raw: unknown): WithdrawalSummary | null {
+  const record = asRecord(raw)
+  const block = asRecord(record[VACCINATION_CONTRACT.withdrawalField])
+  const inWithdrawal = typeof record.inWithdrawal === 'boolean' ? record.inWithdrawal : block.inWithdrawal
+  if (typeof inWithdrawal !== 'boolean') return null
+  return {
+    inWithdrawal,
+    freeAt: asNullableIsoDate(record.freeAt ?? block.freeAt),
+    totalWithdrawalDays: asNumber(record.totalWithdrawalDays ?? block.totalWithdrawalDays),
+  }
+}

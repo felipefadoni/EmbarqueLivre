@@ -199,3 +199,22 @@ export function toPartsFromDate(date?: Date | null): DateParts | null {
 function isDateParts(value: Date | DateParts): value is DateParts {
   return typeof value === 'object' && value !== null && !(value instanceof Date) && 'year' in value && 'month' in value && 'day' in value
 }
+
+/** Soma dias a uma data civil YYYY-MM-DD (sem fuso). Retorna '' se a data for inválida. */
+export function addDaysIso(iso: string | null | undefined, days: number): string {
+  const parts = parseIsoDateParts(iso)
+  if (!parts || !Number.isFinite(days)) return ''
+  const date = new Date(parts.year, parts.month - 1, parts.day + Math.trunc(days))
+  return toIsoDateLocal(date)
+}
+
+export function todayIso(): string {
+  return toIsoDateLocal(new Date())
+}
+
+/** DD/MM a partir de YYYY-MM-DD. */
+export function formatDayMonthPtBr(iso: string | null | undefined): string {
+  const parts = parseIsoDateParts(iso)
+  if (!parts) return ''
+  return `${String(parts.day).padStart(2, '0')}/${String(parts.month).padStart(2, '0')}`
+}

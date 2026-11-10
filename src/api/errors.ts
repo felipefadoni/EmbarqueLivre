@@ -52,6 +52,14 @@ const DOMAIN_MESSAGES: Record<string, string> = {
   INVALID_ANIMAL_SEX: 'Selecione o sexo (Macho ou Fêmea).',
   INVALID_ANIMAL_BREED: 'A raça deve ter no máximo 100 caracteres.',
   INVALID_BIRTH_DATE: 'Informe uma data de nascimento entre 01/01/1900 e hoje.',
+  VACCINE_HAS_APPLICATIONS: 'Esta vacina possui lançamentos e não pode ser excluída.',
+  VACCINATION_NOT_FOUND: 'Lançamento de vacina não encontrado. Ele pode ter sido excluído.',
+  ANIMAL_HAS_VACCINATIONS: 'Este animal possui vacinas lançadas e não pode ser excluído.',
+  INVALID_DATE_FILTER: 'Filtro de data inválido. Verifique a data selecionada.',
+  VACCINE_APPLICATION_NOT_FOUND: 'Lançamento de vacina não encontrado.',
+  INVALID_APPLIED_AT: 'Informe uma data de aplicação válida, entre 01/01/1900 e hoje (não pode ser futura).',
+  INVALID_APPLICATION_DATE: 'Informe uma data de aplicação válida (não pode ser no futuro).',
+  INVALID_DATE: 'Informe uma data válida.',
 }
 
 const VALIDATION_MESSAGE_MAP: [string, string][] = [
@@ -84,6 +92,11 @@ const VALIDATION_MESSAGE_MAP: [string, string][] = [
   ['animal_type_id should not be empty', 'Selecione o tipo de animal.'],
   ['animalTypeId should not be empty', 'Selecione o tipo de animal.'],
   ['sex should not be empty', 'Selecione o sexo.'],
+  ['animalId should not be empty', 'Selecione o animal.'],
+  ['vaccineId should not be empty', 'Selecione a vacina.'],
+  ['appliedAt should not be empty', 'Informe a data de aplicação.'],
+  ['appliedAt must be', 'Informe uma data de aplicação válida.'],
+  ['appliedAt deve estar no formato', 'Informe uma data de aplicação válida.'],
 ]
 
 export function isApiError(error: unknown): error is ApiError {
@@ -199,7 +212,7 @@ export function userMessage(
 }
 
 const PT_HINT =
-  /[áàâãéêíóôõúçÁÀÂÃÉÊÍÓÔÕÚÇ]|\b(já|nao|não|cadastrad[oa]s?|vinculad[oa]s?|existe[m]?|animal(?:es)?|fazenda|código|codigo|brinco|carência|carencia|obrigatório|obrigatorio|inválid[oa]|excluir)\b/i
+  /[áàâãéêíóôõúçÁÀÂÃÉÊÍÓÔÕÚÇ]|\b(já|nao|não|cadastrad[oa]s?|vinculad[oa]s?|existe[m]?|animal(?:es)?|fazenda|código|codigo|brinco|carência|carencia|vacinas?|lançamentos?|obrigatório|obrigatorio|inválid[oa]|excluir)\b/i
 const EN_TECHNICAL =
   /\b(already|exists|cannot|must|should|invalid|not found|conflict|duplicate|unique constraint|internal server|bad request|forbidden|unauthorized)\b/i
 

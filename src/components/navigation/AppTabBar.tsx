@@ -1,18 +1,28 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons'
 import type { Tabs } from 'expo-router'
 import type { ComponentProps } from 'react'
 import { Pressable, StyleSheet, Text, useColorScheme, View } from 'react-native'
 
-const ICONS: Record<string, keyof typeof Ionicons.glyphMap> = {
-  index: 'home',
-  infos: 'information-circle',
-  configuracoes: 'menu',
+type TabIcon =
+  | { family: 'ion'; name: keyof typeof Ionicons.glyphMap }
+  | { family: 'mci'; name: keyof typeof MaterialCommunityIcons.glyphMap }
+
+const ICONS: Record<string, TabIcon> = {
+  index: { family: 'ion', name: 'home' },
+  lancamentos: { family: 'mci', name: 'needle' },
+  configuracoes: { family: 'ion', name: 'menu' },
 }
 
 const LABELS: Record<string, string> = {
   index: 'Dashboard',
-  infos: 'Infos',
+  lancamentos: 'Vacinas',
   configuracoes: 'Menu',
+}
+
+function TabBarIcon({ icon, color }: { icon: TabIcon | undefined; color: string }) {
+  if (icon?.family === 'mci') return <MaterialCommunityIcons name={icon.name} size={24} color={color} />
+  return <Ionicons name={icon?.family === 'ion' ? icon.name : 'ellipse'} size={22} color={color} />
 }
 
 const ACTIVE_LIGHT = '#2B3D34'
@@ -49,7 +59,7 @@ export function AppTabBar({ state, descriptors, emitter, navigateToTab, insets }
         {state.routes.map((route, index) => {
           const selected = state.index === index
           const label = LABELS[route.name] ?? descriptors[route.key].options.title ?? route.name
-          const iconName = ICONS[route.name] ?? 'ellipse'
+          const icon = ICONS[route.name]
           const iconColor = selected ? activeIcon : inactive
 
           const onPress = () => {
@@ -78,7 +88,7 @@ export function AppTabBar({ state, descriptors, emitter, navigateToTab, insets }
               hitSlop={4}
               style={styles.item}>
               <View style={[styles.iconWrap, selected && { backgroundColor: activeBg }]}>
-                <Ionicons name={iconName} size={22} color={iconColor} />
+                <TabBarIcon icon={icon} color={iconColor} />
               </View>
               <Text style={[styles.label, { color: selected ? activeLabel : inactive }]}>{label}</Text>
             </Pressable>

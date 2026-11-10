@@ -1,4 +1,15 @@
-import { asNullableString, asNumber, asRecord, asString, createResourceClient } from './contract'
+import {
+  asNullableString,
+  asNumber,
+  asRecord,
+  asString,
+  createResourceClient,
+  parseAnimalWithdrawal,
+  parseWithdrawalSummary,
+  VACCINATION_CONTRACT,
+  type AnimalWithdrawal,
+  type WithdrawalSummary,
+} from './contract'
 
 export type Farm = {
   id: string
@@ -49,6 +60,10 @@ export type Animal = {
   birthDate: string | null
   farmName?: string
   animalTypeName?: string
+  /** Bloco de carência (GET /animals/:id). null quando a API não envia. */
+  withdrawal: AnimalWithdrawal | null
+  /** `totalWithdrawalDays`, `freeAt`, `inWithdrawal` do topo do animal (lista e detalhe). */
+  withdrawalSummary: WithdrawalSummary | null
 }
 
 export type AnimalPayload = {
@@ -113,6 +128,8 @@ export function parseAnimal(raw: unknown): Animal {
     birthDate: asNullableString(record.birthDate),
     farmName: nestedName(farm) ?? asNullableString(record.farmName) ?? undefined,
     animalTypeName: nestedName(animalType) ?? asNullableString(record.animalTypeName) ?? undefined,
+    withdrawal: parseAnimalWithdrawal(record[VACCINATION_CONTRACT.withdrawalField]),
+    withdrawalSummary: parseWithdrawalSummary(record),
   }
 }
 

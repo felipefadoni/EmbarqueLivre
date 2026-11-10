@@ -14,6 +14,8 @@ type CadastroFormScreenProps = {
   onDelete?: () => void
   deleteLabel?: string
   readOnly?: boolean
+  /** Conteúdo exibido depois dos botões (ex.: seção de carência no cadastro do animal). */
+  footer?: ReactNode
 }
 
 export function CadastroFormScreen({
@@ -25,6 +27,7 @@ export function CadastroFormScreen({
   onDelete,
   deleteLabel = 'Excluir',
   readOnly = false,
+  footer,
 }: CadastroFormScreenProps) {
   return (
     <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
@@ -72,6 +75,7 @@ export function CadastroFormScreen({
           ) : null}
           </>
           )}
+          {footer}
         </ScrollView>
       </YStack>
     </KeyboardAvoidingView>
