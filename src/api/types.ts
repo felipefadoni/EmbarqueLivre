@@ -129,6 +129,8 @@ export interface FrameworkErrorBody {
 export interface ApiError {
   status: number
   code: string
+  /** Mensagem original do corpo da API, se houver. Só exibir se for pt-BR. */
+  message?: string
   fieldErrors?: Record<string, string[]>
   details?: Record<string, unknown>
   retryAfterSeconds?: number

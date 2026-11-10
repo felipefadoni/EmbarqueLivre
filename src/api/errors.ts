@@ -25,6 +25,33 @@ const DOMAIN_MESSAGES: Record<string, string> = {
   INTERNAL_ERROR: 'Ocorreu um erro inesperado. Tente novamente.',
   NETWORK_ERROR: 'Sem conexão com o servidor',
   VALIDATION_ERROR: 'Verifique os campos e tente novamente.',
+  CONFLICT: 'Já existe um cadastro com esse nome.',
+  ANIMAL_CODE_ALREADY_EXISTS: 'Já existe um animal com este código nesta fazenda.',
+  DUPLICATE_ANIMAL_CODE: 'Já existe um animal com este código nesta fazenda.',
+  CODE_ALREADY_EXISTS: 'Já existe um animal com este código nesta fazenda.',
+  FARM_HAS_ANIMALS: 'Não é possível excluir: há animais vinculados a esta fazenda.',
+  ANIMAL_TYPE_HAS_ANIMALS: 'Não é possível excluir: há animais vinculados a este tipo.',
+  FARM_IN_USE: 'Não é possível excluir: há animais vinculados a esta fazenda.',
+  ANIMAL_TYPE_IN_USE: 'Não é possível excluir: há animais vinculados a este tipo.',
+  RESOURCE_IN_USE: 'Não é possível excluir: este registro está em uso.',
+  FARM_NOT_FOUND: 'Fazenda não encontrada.',
+  ANIMAL_TYPE_NOT_FOUND: 'Tipo de animal não encontrado.',
+  ANIMAL_NOT_FOUND: 'Animal não encontrado.',
+  VACCINE_NOT_FOUND: 'Vacina não encontrada.',
+  INVALID_ID: 'Identificador inválido.',
+  FARM_OWNER_REQUIRED: 'Informe o usuário master dono da fazenda.',
+  INVALID_FARM_OWNER: 'O dono da fazenda deve ser um usuário master ativo.',
+  FARM_OWNER_FORBIDDEN: 'Você só pode cadastrar fazendas na sua própria conta.',
+  INVALID_FARM_NAME: 'Informe um nome de fazenda válido (2 a 150 caracteres).',
+  INVALID_FARM_CITY: 'Informe uma cidade válida (2 a 100 caracteres).',
+  INVALID_STATE: 'Selecione um estado (UF) válido.',
+  INVALID_VACCINE_NAME: 'Informe um nome de vacina válido (2 a 150 caracteres).',
+  INVALID_WITHDRAWAL_DAYS: 'Informe os dias de carência entre 0 e 3650.',
+  INVALID_ANIMAL_TYPE_NAME: 'Informe um nome de tipo válido (2 a 60 caracteres).',
+  INVALID_ANIMAL_CODE: 'Informe um código ou brinco válido (até 50 caracteres).',
+  INVALID_ANIMAL_SEX: 'Selecione o sexo (Macho ou Fêmea).',
+  INVALID_ANIMAL_BREED: 'A raça deve ter no máximo 100 caracteres.',
+  INVALID_BIRTH_DATE: 'Informe uma data de nascimento entre 01/01/1900 e hoje.',
 }
 
 const VALIDATION_MESSAGE_MAP: [string, string][] = [
@@ -45,6 +72,18 @@ const VALIDATION_MESSAGE_MAP: [string, string][] = [
     'A senha deve ter ao menos 1 caractere especial (ex.: @ # ! $).',
   ],
   ['password should not be empty', 'Informe sua senha.'],
+  ['city should not be empty', 'Informe a cidade.'],
+  ['city must be a string', 'Informe a cidade.'],
+  ['state should not be empty', 'Informe o estado.'],
+  ['state must be a string', 'Informe o estado.'],
+  ['withdrawal_days should not be empty', 'Informe os dias de carência.'],
+  ['withdrawalDays should not be empty', 'Informe os dias de carência.'],
+  ['code should not be empty', 'Informe o código ou brinco.'],
+  ['farm_id should not be empty', 'Selecione a fazenda.'],
+  ['farmId should not be empty', 'Selecione a fazenda.'],
+  ['animal_type_id should not be empty', 'Selecione o tipo de animal.'],
+  ['animalTypeId should not be empty', 'Selecione o tipo de animal.'],
+  ['sex should not be empty', 'Selecione o sexo.'],
 ]
 
 export function isApiError(error: unknown): error is ApiError {
@@ -89,8 +128,21 @@ export function toApiError(error: unknown): ApiError {
     return {
       status,
       code: body.error,
+      message: typeof body.message === 'string' ? body.message : undefined,
       details,
       fieldErrors: field ? { [field]: [body.error] } : undefined,
+    }
+  }
+
+  if (status === 409) {
+    return {
+      status: 409,
+      code: 'CONFLICT',
+      message: typeof body.message === 'string' ? body.message : undefined,
+      details:
+        typeof body.details === 'object' && body.details
+          ? (body.details as Record<string, unknown>)
+          : undefined,
     }
   }
 
@@ -144,4 +196,40 @@ export function userMessage(
     return `Muitas tentativas. Aguarde ${seconds}s.`
   }
   return DOMAIN_MESSAGES[error.code] ?? DOMAIN_MESSAGES.INTERNAL_ERROR
+}
+
+const PT_HINT =
+  /[áàâãéêíóôõúçÁÀÂÃÉÊÍÓÔÕÚÇ]|\b(já|nao|não|cadastrad[oa]s?|vinculad[oa]s?|existe[m]?|animal(?:es)?|fazenda|código|codigo|brinco|carência|carencia|obrigatório|obrigatorio|inválid[oa]|excluir)\b/i
+const EN_TECHNICAL =
+  /\b(already|exists|cannot|must|should|invalid|not found|conflict|duplicate|unique constraint|internal server|bad request|forbidden|unauthorized)\b/i
+
+export function isPortugueseUserMessage(message: string): boolean {
+  const trimmed = message.trim()
+  if (!trimmed) return false
+  if (EN_TECHNICAL.test(trimmed) && !PT_HINT.test(trimmed)) return false
+  return PT_HINT.test(trimmed)
+}
+
+/** Mensagem segura para a UI: prioriza message pt-BR do corpo; senão mapeia o código. */
+export function publicApiMessage(error: ApiError): string {
+  if (error.message && isPortugueseUserMessage(error.message)) {
+    return error.message
+  }
+  if (DOMAIN_MESSAGES[error.code]) return DOMAIN_MESSAGES[error.code]
+  if (error.status === 409) return 'Não foi possível concluir. Este registro está em uso ou já existe.'
+  if (error.status === 404) return DOMAIN_MESSAGES.NOT_FOUND
+  if (error.status === 400) return DOMAIN_MESSAGES.VALIDATION_ERROR
+  if (error.status === 403) return DOMAIN_MESSAGES.INSUFFICIENT_ROLE
+  if (error.status === 422) return 'Não foi possível concluir. Verifique os dados e tente novamente.'
+  return DOMAIN_MESSAGES.INTERNAL_ERROR
+}
+
+export function listErrorMessage(error: ApiError): string {
+  if (error.code === 'NETWORK_ERROR' || error.code === 'UNAUTHENTICATED' || error.code === 'RATE_LIMITED') {
+    return userMessage(error)
+  }
+  if (error.message && isPortugueseUserMessage(error.message)) {
+    return error.message
+  }
+  return 'Não foi possível carregar a lista. Tente novamente.'
 }

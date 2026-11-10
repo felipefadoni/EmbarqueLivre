@@ -1,12 +1,13 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
 import Constants from 'expo-constants'
+import { router } from 'expo-router'
 import { ScrollView, useColorScheme } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Text, XStack, YStack } from 'tamagui'
 
 import { AppCard } from '@/components/dashboard/AppCard'
 import { useAuth } from '@/features/auth/AuthProvider'
-import { TOQUE_MINIMO } from '../../../tamagui.config'
+import { TOQUE_MINIMO } from '../../../../tamagui.config'
 
 const VERSAO = Constants.expoConfig?.version ?? '1.0.0'
 
@@ -31,7 +32,7 @@ export default function ConfiguracoesScreen() {
             Configurações
           </Text>
           <Text fontSize={16} fontWeight="600" color="brandMuted">
-            Conta, informações e saída do aplicativo.
+            Cadastros, conta e saída do aplicativo.
           </Text>
         </YStack>
 
@@ -67,6 +68,23 @@ export default function ConfiguracoesScreen() {
         </AppCard>
 
         <AppCard padded={false}>
+          <YStack>
+            <MenuLink href="/configuracoes/fazendas" icon="home-outline" label="Fazendas" chevron={chevron} />
+            <YStack h={1} bg={isDark ? '#3A5247' : '#EEF6EF'} mx={20} />
+            <MenuLink href="/configuracoes/vacinas" icon="medkit-outline" label="Vacinas" chevron={chevron} />
+            <YStack h={1} bg={isDark ? '#3A5247' : '#EEF6EF'} mx={20} />
+            <MenuLink
+              href="/configuracoes/tipos-de-animais"
+              icon="paw-outline"
+              label="Tipos de animais"
+              chevron={chevron}
+            />
+            <YStack h={1} bg={isDark ? '#3A5247' : '#EEF6EF'} mx={20} />
+            <MenuLink href="/configuracoes/animais" icon="list-outline" label="Animais" chevron={chevron} />
+          </YStack>
+        </AppCard>
+
+        <AppCard padded={false}>
           <XStack
             items="center"
             justify="space-between"
@@ -87,5 +105,40 @@ export default function ConfiguracoesScreen() {
         </AppCard>
       </ScrollView>
     </YStack>
+  )
+}
+
+
+function MenuLink({
+  href,
+  icon,
+  label,
+  chevron,
+}: {
+  href: '/configuracoes/fazendas' | '/configuracoes/vacinas' | '/configuracoes/tipos-de-animais' | '/configuracoes/animais'
+  icon: keyof typeof Ionicons.glyphMap
+  label: string
+  chevron: string
+}) {
+  return (
+    <XStack
+      items="center"
+      justify="space-between"
+      px={20}
+      py={16}
+      minH={TOQUE_MINIMO}
+      gap={12}
+      opacity={{ press: 0.85 }}
+      onPress={() => router.push(href)}
+      accessibilityRole="button"
+      accessibilityLabel={label}>
+      <XStack items="center" gap={12} flex={1}>
+        <Ionicons name={icon} size={24} color={chevron} />
+        <Text fontSize={18} fontWeight="800" color="brandFg">
+          {label}
+        </Text>
+      </XStack>
+      <Ionicons name="chevron-forward" size={22} color={chevron} />
+    </XStack>
   )
 }
