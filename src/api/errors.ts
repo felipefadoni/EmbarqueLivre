@@ -223,8 +223,15 @@ export function isPortugueseUserMessage(message: string): boolean {
   return PT_HINT.test(trimmed)
 }
 
+/**
+ * Códigos cuja message da API cita nomes técnicos (dateFrom/dateTo, AAAA-MM-DD):
+ * a UI usa sempre o texto do app.
+ */
+const APP_MESSAGE_FIRST = new Set(['INVALID_DATE_FILTER', 'INVALID_APPLIED_AT'])
+
 /** Mensagem segura para a UI: prioriza message pt-BR do corpo; senão mapeia o código. */
 export function publicApiMessage(error: ApiError): string {
+  if (APP_MESSAGE_FIRST.has(error.code) && DOMAIN_MESSAGES[error.code]) return DOMAIN_MESSAGES[error.code]
   if (error.message && isPortugueseUserMessage(error.message)) {
     return error.message
   }
@@ -241,6 +248,7 @@ export function listErrorMessage(error: ApiError): string {
   if (error.code === 'NETWORK_ERROR' || error.code === 'UNAUTHENTICATED' || error.code === 'RATE_LIMITED') {
     return userMessage(error)
   }
+  if (APP_MESSAGE_FIRST.has(error.code) && DOMAIN_MESSAGES[error.code]) return DOMAIN_MESSAGES[error.code]
   if (error.message && isPortugueseUserMessage(error.message)) {
     return error.message
   }

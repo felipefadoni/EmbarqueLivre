@@ -121,7 +121,9 @@ export function VaccinationEditor({ vaccinationId }: VaccinationEditorProps) {
       }
       const fields = fieldMessagesFromError(apiError)
       setFieldErrors(fields)
-      setFormError(Object.keys(fields).length > 0 && apiError.code === 'VALIDATION_ERROR' ? null : publicApiMessage(apiError))
+      // Erro já exibido no campo (validação ou código de domínio com details.field): sem banner duplicado.
+      const shownInField = Object.keys(fields).length > 0 && (apiError.code === 'VALIDATION_ERROR' || Boolean(apiError.details?.field))
+      setFormError(shownInField ? null : publicApiMessage(apiError))
     } finally {
       setSaving(false)
     }
