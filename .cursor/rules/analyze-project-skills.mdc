@@ -1,0 +1,30 @@
+---
+description: Em toda mensagem nova, analisar as skills do projeto antes de agir
+alwaysApply: true
+---
+
+# Analisar skills do projeto
+
+Em toda mensagem nova do usuário, antes de planejar, editar ou responder com passos de implementação, descubra e avalie as skills do projeto.
+
+## Onde procurar
+
+Procure `SKILL.md` (e pastas `skills/`) somente nestes diretórios, na raiz do repositório:
+
+- `.agents/`
+- `.cursor/`
+- `.claude/`
+- `.expo/`
+- `.vscode/`
+
+Ignore o diretório que não existir. Não invente skill nem leia skills de fora desses caminhos.
+
+## Como analisar
+
+1. Liste os `SKILL.md` encontrados.
+2. Leia só o frontmatter (`name` e `description`) de cada um.
+3. Se a `description` cobrir o pedido, leia esse `SKILL.md` por completo e siga as instruções dele antes de escrever código.
+4. Em trabalho de Expo ou EAS, carregue `.agents/skills/expo-overview/SKILL.md` primeiro e depois a skill folha para a qual ele encaminhar.
+5. Se nenhuma skill se aplicar, siga sem carregar o corpo de nenhuma.
+
+Não despeje o conteúdo das skills na resposta. Mencione qual skill foi seguida só quando ela mudar a abordagem.
