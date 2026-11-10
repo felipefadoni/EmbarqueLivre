@@ -2813,6 +2813,43 @@ Expected a subset of: ${expected.join(", ")}
 };
 
 // tamagui.config.ts
+var brandFixo = {
+  brandSage: "#99C2AB",
+  brandSageLight: "#CEE3CD",
+  brandInk: "#2B3D34",
+  brandAqua: "#D1EFEF",
+  brandBorder: "#99C2AB"
+};
+var brandClaro = {
+  ...brandFixo,
+  brandBg: "#FFFFFF",
+  brandFg: "#2B3D34",
+  brandSurface: "#D1EFEF",
+  brandPrimary: "#2B3D34",
+  brandPrimaryFg: "#D1EFEF",
+  brandMuted: "#3A5247",
+  brandError: "#8B1515",
+  brandSuccess: "#075E26",
+  appBg: "#EEF6EF",
+  cardBg: "#FFFFFF",
+  tabBarBg: "#FFFFFF",
+  tabInactive: "#7A8B80"
+};
+var brandEscuro = {
+  ...brandFixo,
+  brandBg: "#2B3D34",
+  brandFg: "#D1EFEF",
+  brandSurface: "#3A5247",
+  brandPrimary: "#99C2AB",
+  brandPrimaryFg: "#2B3D34",
+  brandMuted: "#CEE3CD",
+  brandError: "#FF8A80",
+  brandSuccess: "#8BE19A",
+  appBg: "#152821",
+  cardBg: "#243B32",
+  tabBarBg: "#1C3C31",
+  tabInactive: "#A8B8AF"
+};
 var statusClaro = {
   liberado: "#075E26",
   "liberado-color": "#FFFFFF",
@@ -2832,11 +2869,14 @@ var statusEscuro = {
 var themes2 = Object.fromEntries(
   Object.entries(defaultConfig.themes).map(([nome, tema]) => [
     nome,
-    { ...tema, ...nome.startsWith("dark") ? statusEscuro : statusClaro }
+    {
+      ...tema,
+      ...nome.startsWith("dark") ? { ...statusEscuro, ...brandEscuro } : { ...statusClaro, ...brandClaro }
+    }
   ])
 );
-var TOQUE_MINIMO = "$14";
-var TOQUE_PRINCIPAL = "$16";
+var TOQUE_MINIMO = "14";
+var TOQUE_PRINCIPAL = "16";
 var tamaguiConfig = createTamagui({
   ...defaultConfig,
   themes: themes2
