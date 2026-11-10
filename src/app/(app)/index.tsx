@@ -5,7 +5,6 @@ import { Pressable, ScrollView, useColorScheme } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Spinner, Text, XStack, YStack } from 'tamagui'
 
-import { isWithdrawalActive } from '@/api/contract'
 import { SelectField } from '@/components/cadastros/SelectField'
 import { WithdrawalBadge } from '@/components/cadastros/WithdrawalBadge'
 import { AppCard } from '@/components/dashboard/AppCard'
@@ -242,39 +241,7 @@ export default function DashboardScreen() {
               </YStack>
             </AppCard>
 
-            {/* 6. Últimas vacinações */}
-            <ShortListCard
-              title="Últimas vacinações"
-              loading={data.latest.loading}
-              empty={data.latest.items.length === 0}
-              emptyText='Nenhuma vacina lançada ainda. Toque em "Informar Vacina" na aba Vacinas.'
-              footerLabel="Ver todas"
-              onFooterPress={() => router.push(vaccinationsLink({ farmId: farm }))}>
-              {data.latest.items.map((entry) => (
-                <ShortListRow
-                  key={entry.id}
-                  onPress={() => router.push({ pathname: '/lancamentos/[id]', params: { id: entry.id } })}
-                  label={`Lançamento do animal ${entry.animalCode}, ${entry.vaccineName}, ${formatDatePtBr(entry.appliedAt)}`}>
-                  <YStack flex={1} gap={2}>
-                    <Text fontSize={17} fontWeight="800" color="brandFg">
-                      {entry.animalCode || 'Animal sem código'} · {entry.vaccineName || 'Vacina'}
-                    </Text>
-                    <Text fontSize={14} fontWeight="600" color="brandMuted">
-                      {formatDatePtBr(entry.appliedAt)} · {entry.farmName || 'Fazenda não informada'}
-                    </Text>
-                  </YStack>
-                  {entry.withdrawalUntil ? (
-                    <WithdrawalBadge
-                      active={isWithdrawalActive(entry.withdrawalUntil)}
-                      activeLabel={`Livre em ${formatDayMonthPtBr(entry.withdrawalUntil)}`}
-                      inactiveLabel="Livre"
-                    />
-                  ) : null}
-                </ShortListRow>
-              ))}
-            </ShortListCard>
-
-            {/* 7. Rebanho */}
+            {/* 6. Rebanho */}
             <AppCard>
               <YStack gap={14}>
                 <Text fontSize={20} fontWeight="800" color="brandFg">
@@ -302,26 +269,30 @@ export default function DashboardScreen() {
                     />
                   </YStack>
                 ) : null}
-                {!farm && data.byFarm.items.length > 1 ? (
-                  <YStack gap={6}>
-                    <Text fontSize={16} fontWeight="800" color="brandMuted">
-                      Por fazenda
-                    </Text>
-                    <BarList
-                      color={ringColor}
-                      track={ringTrack}
-                      items={data.byFarm.items.map((row) => ({
-                        id: row.id ?? '',
-                        label: row.name ?? 'Fazenda',
-                        value: Number(row.n),
-                        hint: Number(row.emCarencia) > 0 ? `${row.emCarencia} em carência` : undefined,
-                      }))}
-                      onPress={(item) => item.id && setFarmId(item.id)}
-                    />
-                  </YStack>
-                ) : null}
               </YStack>
             </AppCard>
+
+            {/* 7. Por fazenda */}
+            {!farm && data.byFarm.items.length > 1 ? (
+              <AppCard>
+                <YStack gap={14}>
+                  <Text fontSize={20} fontWeight="800" color="brandFg">
+                    Por fazenda
+                  </Text>
+                  <BarList
+                    color={ringColor}
+                    track={ringTrack}
+                    items={data.byFarm.items.map((row) => ({
+                      id: row.id ?? '',
+                      label: row.name ?? 'Fazenda',
+                      value: Number(row.n),
+                      hint: Number(row.emCarencia) > 0 ? `${row.emCarencia} em carência` : undefined,
+                    }))}
+                    onPress={(item) => item.id && setFarmId(item.id)}
+                  />
+                </YStack>
+              </AppCard>
+            ) : null}
 
             {/* 8. Vacina mais usada (30 dias) */}
             <AppCard>

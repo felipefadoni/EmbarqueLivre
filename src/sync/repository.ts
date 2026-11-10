@@ -65,7 +65,7 @@ async function count(db: SqlExecutor, query: { sql: string; params: unknown[] })
   return Number(row?.n ?? 0)
 }
 
-export type FarmInput = { name: string; city: string; state: string; ownerUserId?: string }
+export type FarmInput = { name: string; city: string; state: string; accountId?: string; /** @deprecated use accountId */ ownerUserId?: string }
 export type VaccineInput = { name: string; withdrawalDays: number }
 export type AnimalTypeInput = { name: string }
 export type AnimalInput = {
@@ -95,8 +95,8 @@ export function createRepository(ctx: RepositoryContext) {
         name: input.name.trim(),
         city: input.city.trim(),
         state: input.state,
-        // Admin escolhe o dono; master/basic: o servidor atribui à conta (não enviar).
-        ownerUserId: user?.role === 'admin' ? input.ownerUserId : undefined,
+        // Admin escolhe a conta; master/basic: o servidor atribui à conta de quem cria (não enviar).
+        accountId: user?.role === 'admin' ? (input.accountId || input.ownerUserId) : undefined,
         createdAt: ctx.now(),
         updatedAt: ctx.now(),
       })
@@ -104,7 +104,7 @@ export function createRepository(ctx: RepositoryContext) {
       return newId
     },
     async updateFarm(farmId: string, input: FarmInput) {
-      // Dono não muda por PATCH: nunca enviar owner_user_id aqui.
+      // A conta não muda por PATCH: nunca enviar account_id / owner_user_id aqui.
       const values = toColumns('farms', { name: input.name.trim(), city: input.city.trim(), state: input.state, updatedAt: ctx.now() })
       await run(updateSql('farms', farmId, values))
     },

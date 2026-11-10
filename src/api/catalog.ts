@@ -13,9 +13,14 @@ import {
 
 export type Farm = {
   id: string
+  accountId: string
+  accountName?: string | null
+  /** @deprecated = accountId */
   ownerUserId: string
+  /** @deprecated = accountName */
   ownerName?: string
-  ownerEmail?: string
+  /** @deprecated sempre null */
+  ownerEmail?: string | null
   name: string
   city: string
   state: string
@@ -25,6 +30,8 @@ export type FarmPayload = {
   name: string
   city: string
   state: string
+  accountId?: string
+  /** @deprecated use accountId */
   ownerUserId?: string
 }
 
@@ -84,11 +91,15 @@ function nestedName(raw: unknown): string | undefined {
 export function parseFarm(raw: unknown): Farm {
   const record = asRecord(raw)
   const owner = asRecord(record.owner)
+  const accountId = asString(record.accountId) || asString(record.ownerUserId)
+  const accountName = asNullableString(record.accountName ?? record.ownerName ?? owner.name)
   return {
     id: asString(record.id),
-    ownerUserId: asString(record.ownerUserId),
-    ownerName: asNullableString(record.ownerName ?? owner.name) ?? undefined,
-    ownerEmail: asNullableString(record.ownerEmail ?? owner.email) ?? undefined,
+    accountId,
+    accountName,
+    ownerUserId: asString(record.ownerUserId) || accountId,
+    ownerName: accountName ?? undefined,
+    ownerEmail: asNullableString(record.ownerEmail ?? owner.email),
     name: asString(record.name),
     city: asString(record.city),
     state: asString(record.state),

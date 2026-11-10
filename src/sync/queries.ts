@@ -32,7 +32,10 @@ function limitClause(limit: number | undefined) {
 
 // ---------- Fazendas ----------
 
-const farmSelect = `SELECT f.id AS id, f.${c('farms', 'ownerUserId')} AS ownerUserId, f.${c('farms', 'name')} AS name,
+const farmSelect = `SELECT f.id AS id,
+  COALESCE(f.${c('farms', 'accountId')}, f.${c('farms', 'ownerUserId')}) AS accountId,
+  f.${c('farms', 'ownerUserId')} AS ownerUserId,
+  f.${c('farms', 'name')} AS name,
   f.${c('farms', 'city')} AS city, f.${c('farms', 'state')} AS state
   FROM ${F} f`
 
@@ -44,13 +47,22 @@ export function farmByIdQuery(id: string): SqlQuery {
   return { sql: `${farmSelect} WHERE f.id = ?`, params: [id] }
 }
 
-/** Sem tabela de usuários no sync: o nome do dono só vem do REST (GET /farms/:id), online. */
-export type FarmRow = { id: string; ownerUserId: string | null; name: string; city: string; state: string }
+/** Sem tabela de contas no sync: o nome da conta só vem do REST (GET /farms/:id), online. */
+export type FarmRow = {
+  id: string
+  accountId: string | null
+  ownerUserId: string | null
+  name: string
+  city: string
+  state: string
+}
 
 export function rowToFarm(row: FarmRow): Farm {
+  const accountId = row.accountId || row.ownerUserId || ''
   return {
     id: row.id,
-    ownerUserId: row.ownerUserId ?? '',
+    accountId,
+    ownerUserId: row.ownerUserId || accountId,
     name: row.name ?? '',
     city: row.city ?? '',
     state: row.state ?? '',

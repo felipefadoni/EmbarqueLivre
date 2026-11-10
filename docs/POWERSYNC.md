@@ -129,7 +129,7 @@ não funciona no aparelho físico); por isso a variável do app vence enquanto e
 
 | Entidade (app) | Tabela | Colunas (além de `id`) |
 | --- | --- | --- |
-| Fazenda | `farms` | `owner_user_id, name, city, state, created_at, updated_at` |
+| Fazenda | `farms` | `account_id, owner_user_id` (alias deprecado), `name, city, state, created_at, updated_at` |
 | Vacina | `vaccines` | `name, withdrawal_days (integer), created_at, updated_at` |
 | Tipo de animal | `animal_types` | `name, created_at, updated_at` |
 | Animal | `animals` | `farm_id, animal_type_id, code, sex, breed, birth_date, created_at, updated_at` |
@@ -150,7 +150,7 @@ Datas: `YYYY-MM-DD` (texto). `timestamptz` chega como ISO UTC com microssegundos
 
 - `fetchCredentials`: `GET /api/v1/powersync/token` com o Bearer do app (o cliente `http` já faz o refresh single-flight).
   Resposta `{ token, powersyncUrl, expiresAt }` (RS256 com `kid`; claims `sub, role, masterId, iss, aud, iat, exp=iat+900`).
-  503 `POWERSYNC_NOT_CONFIGURED` (API sem chave) → o SDK tenta de novo com backoff e loga o aviso. O token fica em cache e é renovado quando faltam < 2 min (TTL 15 min).
+  503 `POWERSYNC_NOT_CONFIGURED` (API sem chave) → o SDK tenta de novo com backoff e loga o aviso. O token fica em cache e é renovado quando falta < 1 min (TTL 5 min / 300 s).
 - Login / app aberto com sessão: `syncLifecycle.start(userId)` → `db.connect(connector)`. Se o usuário for **outro**
   que o da última sessão, faz `disconnectAndClear()` antes.
 - Logout explícito (Menu → Sair): `disconnectAndClear({ clearLocal: true })`. Antes, o app conta **na hora** a fila de
@@ -173,7 +173,7 @@ Datas: `YYYY-MM-DD` (texto). `timestamptz` chega como ISO UTC com microssegundos
 - Lançamento: `applied_at` padrão hoje (não pode ser futuro nem antes de 1900); `withdrawal_days` copiado da vacina;
   `withdrawal_until = applied_at + dias`; `farm_id` do animal; `created_by_user_id` = usuário atual. Editar mantendo a
   mesma vacina mantém a cópia de dias; trocar a vacina recalcula com a carência atual dela.
-- Fazenda: `owner_user_id` só no cadastro feito por **admin**; nunca em alteração (também removido no upload de PATCH).
+- Fazenda: `account_id` só no cadastro feito por **admin** (`owner_user_id` é alias deprecado); nunca em alteração (também removido no upload de PATCH). Master/basic não enviam: o servidor atribui à conta de quem cria.
 - Carência calculada no SQLite: `totalWithdrawalDays` = soma de todas as aplicações (inclui vencidas),
   `freeAt` = maior `withdrawal_until`, `inWithdrawal` = hoje < `freeAt` (livre NO dia).
 
@@ -186,7 +186,7 @@ Datas: `YYYY-MM-DD` (texto). `timestamptz` chega como ISO UTC com microssegundos
 | --- | --- |
 | 2xx com `results[]` | `applied` → ok; `rejected` → grava em `sync_rejections` com a mensagem pt-BR; op sem resultado → pendência `SYNC_NO_RESULT` |
 | 2xx sem `results` | (o contrato diz que nunca acontece) lote inteiro considerado aplicado |
-| 401 | o cliente `http` faz refresh e reenvia; se ainda falhar, **lança** (retry) |
+| 401 UNAUTHENTICATED | o cliente `http` tenta refresh; se o usuário foi removido/inativo (ou o refresh falhar), a sessão é encerrada **sem retry**, mantendo os dados locais |
 | 408, 429, 5xx (ex.: 503 `SYNC_UNAVAILABLE`), sem rede | **lança** → o PowerSync tenta de novo depois (nada é concluído) |
 | 400 `INVALID_BATCH` / `BATCH_TOO_LARGE` (ou outro 4xx no lote) | bug do app: `console.warn` e todas as ops do lote viram pendências (não re-tenta para sempre) |
 
@@ -238,4 +238,4 @@ Ao salvar, a pendência é removida e a nova operação entra na fila.
 - Mesmo código de animal criado em dois aparelhos offline → um vira pendência ("Já existe um animal com este código nesta fazenda.").
 - Excluir no aparelho A uma vacina que ganhou lançamento no aparelho B → pendência de exclusão.
 - Logout com pendências (aviso) e troca de usuário (banco limpo).
-- Token expirando durante uso longo (15 min).
+- Token PowerSync expirando durante uso longo (TTL 5 min; renovado 1 min antes).

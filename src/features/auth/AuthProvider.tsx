@@ -1,8 +1,8 @@
 import { createContext, use, useCallback, useEffect, useMemo, useState, type PropsWithChildren } from 'react'
 
-import { authApi, setOnLoggedOut } from '@/api/client'
+import { authApi, endSessionKeepData, setOnLoggedOut } from '@/api/client'
 import type { AuthUser } from '@/api/types'
-import { setSyncUser, syncLifecycle } from '@/sync'
+import { connector, setSyncUser, syncLifecycle } from '@/sync'
 
 type AuthContextValue = {
   user: AuthUser | null
@@ -16,7 +16,7 @@ const AuthContext = createContext<AuthContextValue | null>(null)
 
 /** Conecta o PowerSync para o usuário (limpa o banco antes se for outro usuário). */
 function startSync(user: AuthUser) {
-  setSyncUser({ id: user.id, role: user.role })
+  setSyncUser({ id: user.id, role: user.role, accountId: user.accountId })
   void syncLifecycle.start(user.id).catch(() => undefined)
 }
 
@@ -32,6 +32,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
       void syncLifecycle.stopKeepData().catch(() => undefined)
       setUser(null)
     })
+    connector.onSessionEnded = () => endSessionKeepData()
     authApi
       .restore()
       .then((restored) => {
@@ -40,7 +41,10 @@ export function AuthProvider({ children }: PropsWithChildren) {
       })
       .finally(() => setIsLoading(false))
 
-    return () => setOnLoggedOut(() => {})
+    return () => {
+      setOnLoggedOut(() => {})
+      connector.onSessionEnded = () => {}
+    }
   }, [])
 
   const login = useCallback(async (email: string, password: string) => {

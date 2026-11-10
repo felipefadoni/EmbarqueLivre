@@ -140,7 +140,7 @@ export function useSyncInfo() {
   }
 }
 
-/** Só rede (para avisos de telas que dependem da API online, como login e MasterPicker). */
+/** Só rede (para avisos de telas que dependem da API online, como login e AccountPicker). */
 export function useIsOnline(): boolean {
   const net = useNetInfo()
   return !(net.isConnected === false || net.isInternetReachable === false)

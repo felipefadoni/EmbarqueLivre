@@ -1,8 +1,8 @@
-/** Contas (admin): GET /accounts?search&page → { id, name, masterCount }. Online, não sincronizado. */
+/** Contas (admin): GET /accounts?search&page → { id, name, masterCount, createdAt }. Online, não sincronizado. */
 import { http } from './client'
 import { compactParams, paginationParams, unwrapListPage, USERS_CONTRACT, type ListPagingRequest } from './contract'
 
-export type Account = { id: string; name: string; masterCount: number | null }
+export type Account = { id: string; name: string; masterCount: number | null; createdAt: string | null }
 
 export function parseAccount(raw: unknown): Account {
   const r = raw && typeof raw === 'object' ? (raw as Record<string, unknown>) : {}
@@ -11,6 +11,7 @@ export function parseAccount(raw: unknown): Account {
     id: typeof r.id === 'string' ? r.id : String(r.id ?? ''),
     name: typeof r.name === 'string' ? r.name : String(r.name ?? ''),
     masterCount: typeof count === 'number' && Number.isFinite(count) ? count : null,
+    createdAt: typeof r.createdAt === 'string' && r.createdAt ? r.createdAt : null,
   }
 }
 

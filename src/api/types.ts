@@ -19,6 +19,8 @@ export interface RegisterUserRequest {
 export interface UserResponse {
   userId: Ulid
   role: UserRole
+  accountId: Ulid | null
+  /** @deprecated use accountId (sempre null no cadastro público). */
   masterUserId: Ulid | null
   name: string
   email: string
@@ -50,7 +52,29 @@ export interface AuthUser {
   name: string
   email: string
   role: UserRole
+  /** Conta do usuário; null só para admin. */
+  accountId: Ulid | null
+  /** @deprecated use accountId (null para admin/master; = accountId para basic). */
   masterUserId: Ulid | null
+}
+
+/** Normaliza login / refresh /me / cache: prefere accountId, com fallback de masterUserId para basic. */
+export function normalizeAuthUser(raw: unknown): AuthUser | null {
+  if (!raw || typeof raw !== 'object') return null
+  const r = raw as Record<string, unknown>
+  if (typeof r.id !== 'string' || typeof r.role !== 'string') return null
+  const role: UserRole | null = r.role === 'admin' || r.role === 'master' || r.role === 'basic' ? r.role : null
+  if (!role) return null
+  const accountId = typeof r.accountId === 'string' && r.accountId ? r.accountId : null
+  const masterUserId = typeof r.masterUserId === 'string' && r.masterUserId ? r.masterUserId : null
+  return {
+    id: r.id,
+    name: typeof r.name === 'string' ? r.name : '',
+    email: typeof r.email === 'string' ? r.email : '',
+    role,
+    accountId: accountId ?? (role === 'basic' ? masterUserId : null),
+    masterUserId,
+  }
 }
 
 interface SessionInfo {

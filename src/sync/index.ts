@@ -9,10 +9,10 @@ import { newUlid } from './ids'
 import { createSyncLifecycle } from './lifecycle'
 import { createRepository } from './repository'
 
-let syncUser: { id: string; role: UserRole } | null = null
+let syncUser: { id: string; role: UserRole; accountId?: string | null } | null = null
 
-/** Usuário atual para as escritas locais (created_by, regra do dono da fazenda). */
-export function setSyncUser(user: { id: string; role: UserRole } | null) {
+/** Usuário atual para as escritas locais (created_by, conta da fazenda). */
+export function setSyncUser(user: { id: string; role: UserRole; accountId?: string | null } | null) {
   syncUser = user
 }
 

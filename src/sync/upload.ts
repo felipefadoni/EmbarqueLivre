@@ -9,8 +9,10 @@
  * - Operação recusada NÃO trava a fila: vai para a tabela local `sync_rejections` (com a mensagem pt-BR)
  *   e a transação é concluída (complete()). O PowerSync então devolve a linha ao estado do servidor
  *   no próximo checkpoint — ver docs/POWERSYNC.md ("Pendências").
- * - 401, 408, 429, 5xx ou sem rede: lança RetryableUploadError para o PowerSync tentar de novo
+ * - 408, 429, 5xx ou sem rede: lança RetryableUploadError para o PowerSync tentar de novo
  *   (nada é concluído; reenvio precisa ser idempotente no servidor).
+ * - 401 UNAUTHENTICATED (usuário removido/inativo, ou refresh falhou): lança SessionEndedUploadError,
+ *   sem retry; o connector encerra a sessão e mantém os dados locais.
  * - Outros 4xx no lote inteiro (400/403/404/409/422): todas as ops do lote viram pendências.
  *
  * Puro (sem React Native) para testar com servidor simulado.
@@ -62,16 +64,35 @@ export class RetryableUploadError extends Error {
   }
 }
 
-export function isRetryableStatus(status: number): boolean {
-  return status === 0 || status === 401 || status === 408 || status === 429 || status >= 500
+/** 401 UNAUTHENTICATED no upload: sessão encerrada, sem loop de retry. */
+export class SessionEndedUploadError extends Error {
+  status = 401
+  code: string
+  constructor(code = 'UNAUTHENTICATED') {
+    super('Sua sessão expirou. Entre novamente.')
+    this.name = 'SessionEndedUploadError'
+    this.code = code
+  }
 }
 
-/** Ajustes do contrato: PATCH de fazenda nunca leva owner_user_id. IDs em maiúsculas. */
+export function isRetryableStatus(status: number): boolean {
+  return status === 0 || status === 408 || status === 429 || status >= 500
+}
+
+/** Ajustes do contrato: PATCH de fazenda nunca leva account_id nem owner_user_id. IDs em maiúsculas. */
 export function toUploadOp(entry: CrudLike): UploadOp {
   const op = String(entry.op).toUpperCase() as UploadOpType
   let opData = entry.opData ? { ...entry.opData } : undefined
-  if (op === 'PATCH' && opData && entityOfTable(entry.table) === 'farms') {
-    delete opData[colOf('farms', 'ownerUserId')]
+  if (opData && entityOfTable(entry.table) === 'farms') {
+    const accountCol = colOf('farms', 'accountId')
+    const ownerCol = colOf('farms', 'ownerUserId')
+    if (op === 'PATCH') {
+      delete opData[accountCol]
+      delete opData[ownerCol]
+    } else if (op === 'PUT') {
+      // Prefere account_id; se só houver o alias legado, mantém owner_user_id.
+      if (opData[accountCol]) delete opData[ownerCol]
+    }
   }
   if (op === 'DELETE') opData = undefined
   return { op, table: entry.table, id: String(entry.id).toUpperCase(), ...(opData ? { opData } : {}) }
@@ -162,6 +183,9 @@ export async function uploadTransaction(
       response = await deps.post({ batch })
     } catch (error) {
       throw new RetryableUploadError(0, `Falha de rede no upload: ${String((error as Error)?.message ?? error)}`)
+    }
+    if (response.status === 401) {
+      throw new SessionEndedUploadError(errorBody(response.data).error ?? 'UNAUTHENTICATED')
     }
     if (isRetryableStatus(response.status)) {
       throw new RetryableUploadError(response.status, `Upload recusado temporariamente (HTTP ${response.status})`)

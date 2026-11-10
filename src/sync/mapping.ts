@@ -28,7 +28,9 @@ export const SYNC_TABLES = {
   farms: {
     table: 'farms',
     columns: {
-      /** Só o admin envia (no PUT). Master/basic: o servidor define a conta. Nunca vai em PATCH. */
+      /** Só o admin envia no PUT. Master/basic: o servidor atribui à conta de quem cria. Nunca vai em PATCH. */
+      accountId: col('account_id'),
+      /** @deprecated alias de account_id; lido se account_id estiver vazio (dados antigos, antes do re-download). */
       ownerUserId: col('owner_user_id'),
       name: col('name'),
       city: col('city'),

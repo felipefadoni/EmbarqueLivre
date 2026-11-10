@@ -1,11 +1,12 @@
 import { Link, router } from 'expo-router'
 import { useRef, useState } from 'react'
-import { Button, Label, Spinner, Switch, Text, XStack, YStack } from 'tamagui'
+import { Button, Spinner, Text, XStack, YStack } from 'tamagui'
 
 import { authApi } from '@/api/client'
 import { fieldMessagesFromError, isApiError, userMessage } from '@/api/errors'
-import { emailIsValid, maskPhoneBR, mobilePhoneIsValid, nameIsValid, passwordIsValid } from '@/api/validation'
+import { emailIsValid, nameIsValid, passwordIsValid, resolvedWhatsAppPhone, validatePhoneFields } from '@/api/validation'
 import { AuthField, type AuthFieldRef } from '@/components/auth/AuthField'
+import { PhoneFields } from '@/components/auth/PhoneFields'
 import { AuthScaffold } from '@/components/auth/AuthScaffold'
 import { FormBanner } from '@/components/auth/FormBanner'
 import { OfflineNotice } from '@/components/sync/OfflineNotice'
@@ -35,8 +36,6 @@ export default function CadastroScreen() {
   const [loading, setLoading] = useState(false)
 
   const disabled = loading || isCoolingDown
-  const whatsAppValue = sameWhatsApp ? mobilePhone : whatsAppPhone
-
   function clearField(field: string) {
     setFieldErrors((current) => ({ ...current, [field]: '' }))
   }
@@ -46,14 +45,7 @@ export default function CadastroScreen() {
     if (!nameIsValid(name)) next.name = 'Informe um nome válido (mínimo 2 letras).'
     if (!email.trim()) next.email = 'Informe seu email.'
     else if (!emailIsValid(email)) next.email = 'Informe um email válido.'
-    if (!mobilePhone.trim()) next.mobilePhone = 'Informe o celular.'
-    else if (!mobilePhoneIsValid(mobilePhone)) next.mobilePhone = 'Informe um número de celular válido com DDD.'
-    if (!sameWhatsApp) {
-      if (!whatsAppPhone.trim()) next.whatsAppPhone = 'Informe o WhatsApp.'
-      else if (!mobilePhoneIsValid(whatsAppPhone)) {
-        next.whatsAppPhone = 'Informe um número de celular válido com DDD.'
-      }
-    }
+    Object.assign(next, validatePhoneFields({ mobilePhone, whatsAppPhone, sameWhatsApp }))
     if (!password) next.password = 'Informe sua senha.'
     else if (!passwordIsValid(password)) {
       next.password = 'A senha precisa ter ao menos 8 caracteres, 1 letra maiúscula e 1 caractere especial.'
@@ -74,7 +66,7 @@ export default function CadastroScreen() {
         name: name.trim(),
         email: email.trim(),
         mobilePhone,
-        whatsAppPhone: whatsAppValue,
+        whatsAppPhone: resolvedWhatsAppPhone(mobilePhone, whatsAppPhone, sameWhatsApp),
         password,
       })
       router.replace({ pathname: '/login', params: { email: email.trim(), created: '1' } })
@@ -152,62 +144,24 @@ export default function CadastroScreen() {
           onSubmitEditing={() => mobileRef.current?.focus()}
         />
 
-        <AuthField
-          ref={mobileRef}
-          label="Celular"
-          value={mobilePhone}
-          onChangeText={(value) => {
-            setMobilePhone(maskPhoneBR(value))
+        <PhoneFields
+          mobilePhone={mobilePhone}
+          whatsAppPhone={whatsAppPhone}
+          sameWhatsApp={sameWhatsApp}
+          errors={fieldErrors}
+          mobileRef={mobileRef}
+          whatsAppRef={whatsAppRef}
+          onChangeMobilePhone={(value) => {
+            setMobilePhone(value)
             clearField('mobilePhone')
           }}
-          error={fieldErrors.mobilePhone}
-          placeholder="(11) 91234-5678"
-          keyboardType="phone-pad"
-          autoComplete="tel"
-          textContentType="telephoneNumber"
-          returnKeyType="next"
-          onSubmitEditing={() => (sameWhatsApp ? passwordRef.current?.focus() : whatsAppRef.current?.focus())}
-          maxLength={30}
-        />
-
-        <XStack
-          items="center"
-          gap="3"
-          minH={TOQUE_MINIMO}
-          onPress={() => setSameWhatsApp((value) => !value)}
-          accessibilityRole="switch"
-          accessibilityState={{ checked: sameWhatsApp }}
-          accessibilityLabel="WhatsApp é o mesmo número">
-          <Switch
-            size="4"
-            checked={sameWhatsApp}
-            onCheckedChange={(checked) => setSameWhatsApp(Boolean(checked))}
-            bg={sameWhatsApp ? 'brandPrimary' : 'brandSage'}
-            borderColor="brandBorder">
-            <Switch.Thumb animation="quick" bg="brandAqua" />
-          </Switch>
-          <Label fontSize={16} fontWeight="700" color="brandFg" flex={1} lineHeight="22px">
-            WhatsApp é o mesmo número
-          </Label>
-        </XStack>
-
-        <AuthField
-          ref={whatsAppRef}
-          label="WhatsApp"
-          value={whatsAppValue}
-          onChangeText={(value) => {
-            setWhatsAppPhone(maskPhoneBR(value))
+          onChangeWhatsAppPhone={(value) => {
+            setWhatsAppPhone(value)
             clearField('whatsAppPhone')
           }}
-          error={fieldErrors.whatsAppPhone}
-          placeholder="(11) 91234-5678"
-          keyboardType="phone-pad"
-          autoComplete="tel"
-          textContentType="telephoneNumber"
-          returnKeyType="next"
-          editable={!sameWhatsApp}
-          onSubmitEditing={() => passwordRef.current?.focus()}
-          maxLength={30}
+          onChangeSameWhatsApp={setSameWhatsApp}
+          onSubmitMobile={() => (sameWhatsApp ? passwordRef.current?.focus() : whatsAppRef.current?.focus())}
+          onSubmitWhatsApp={() => passwordRef.current?.focus()}
         />
 
         <YStack gap="2">

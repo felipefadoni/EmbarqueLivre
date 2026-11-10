@@ -45,32 +45,36 @@ export const RESOURCE_CONTRACT = {
 }
 
 /**
- * Usuários da conta (Menu → Usuários). CONTRATO PROPOSTO pelo backend (aguardando o Felipe: telefones, PATCH, revogação).
+ * Usuários da conta (Menu → Usuários). Contrato final: API_INTEGRATION.md §20.
  * Tudo que pode mudar fica AQUI, em flags; telas e cliente (src/api/users.ts, src/api/accounts.ts) só leem estas chaves.
  * Só admin e master (basic → 403 INSUFFICIENT_ROLE). Base: /api/v1 (baseURL do cliente http).
  *
- * - Listar:  GET    /account/users?page&limit&search&role=master|basic[&accountId]  (admin sem accountId = todas as contas)
- *            item: { id, accountId, name, email, role, status, canAccess, createdByUserId, createdAt, updatedAt }
- * - Criar:   POST   /account/users { name, email, password, role, accountId? } → 201  (accountId obrigatório para admin)
+ * - Listar:  GET    /account/users?page&limit<=100&search&role=master|basic[&accountId]
+ *            (admin sem accountId = todas as contas; master pedindo outra conta → 403)
+ * - Detalhe: GET    /account/users/:id → 200 (mesmo item); fora do escopo / removido / admin → 404 USER_NOT_FOUND
+ * - Criar:   POST   /account/users { name, email, mobilePhone, whatsAppPhone, password, role, accountId? } → 201
+ *            (accountId obrigatório para admin; telefones obrigatórios, iguais ao payload do signup)
+ * - Editar:  PATCH  /account/users/:id { name?, role?, mobilePhone?, whatsAppPhone? } → 200 (parcial; {} aceito;
+ *            null ou "" → 400; não envia email, password, accountId nem status)
  * - Excluir: DELETE /account/users/:id → 204 (soft delete + revoga sessões; repetir → 404 = já excluído)
- * - Editar:  PATCH  /account/users/:id { name?, role? }  PROPOSTO → `supportsEdit`
- * - Detalhe: não há GET /account/users/:id → a tela usa o item da lista (cache) e, se faltar, busca na lista; `detailPath`
- * - Contas:  GET    /accounts?search&page (admin) → { id, name, masterCount }  (AccountPicker)
+ * - Contas:  GET    /accounts?search&page&limit (só admin) → { id, name, masterCount, createdAt }
+ * Item (GET/POST/PATCH): { id, accountId, name, email, mobilePhone, whatsAppPhone, role, status, canAccess,
+ *   createdByUserId, createdAt, updatedAt }. Telefones vêm em E.164.
  * Contas migradas usam o id do antigo master como accountId.
  *
- * NÃO alterado ainda (muda com o conceito de conta):
- * - PowerSync: claim `accountId` no token (src/sync/connector.ts fetchCredentials) e a stream `account`
- *   (src/sync/mapping.ts, docs/POWERSYNC.md): o filtro passa de owner/master para accountId.
- * - Dono da fazenda: `owner_user_id` em src/sync/mapping.ts, queries.ts (FarmRow), repository.ts (FarmInput),
- *   upload.ts (PATCH sem owner), rejections.ts (FARM_OWNER_*) e FarmEditor/MasterPicker (admin escolhe master;
- *   tende a virar AccountPicker + accountId). RESOURCE_CONTRACT.masters (/users/masters) continua usado só pelas fazendas.
+ * Auth / PowerSync / fazendas (campos deprecados mantidos por uma versão):
+ * - login, refresh, /me e signup: `user.accountId` (masterUserId deprecado). JWT: claim `aid` (`mid` deprecado).
+ * - Token PowerSync: `accountId` (`masterId` deprecado), TTL 300 s.
+ * - Fazendas: coluna `account_id` (`owner_user_id` alias). REST: accountId/accountName
+ *   (ownerUserId/ownerName deprecados, ownerEmail sempre null). Admin escolhe a conta no AccountPicker.
+ * - /users/masters inclui accountId. Não há rota de perfil para o basic editar a si mesmo.
  */
 export const USERS_CONTRACT = {
-  provisional: true,
+  provisional: false,
   path: '/account/users',
   createPath: '/account/users',
-  /** GET de um usuário. null = não existe: detalhe vem do cache da lista / busca na lista. Ex.: '/account/users/:id'. */
-  detailPath: null as string | null,
+  /** GET de um usuário. Ex.: '/account/users/:id'. */
+  detailPath: '/account/users/:id' as string | null,
   searchParam: 'search',
   roleParam: 'role',
   /** Escopo por conta (filtro do admin na lista e campo do POST do admin). */
@@ -78,11 +82,16 @@ export const USERS_CONTRACT = {
   adminScopeField: 'accountId',
   /** Perfis que podem ser criados por aqui (admin só via seed/ops). */
   creatableRoles: ['master', 'basic'] as const,
-  /** Telefones no POST: provavelmente opcionais (decisão do Felipe). false = não pede nem envia. */
-  sendsPhones: false,
-  /** PATCH /account/users/:id { name?, role? } — proposto, aguardando o Felipe. */
-  supportsEdit: false,
-  editableFields: ['name', 'role'] as const,
+  /** Telefones no POST/PATCH: obrigatórios como no signup, nomes iguais ao RegisterUserRequest. */
+  sendsPhones: true,
+  /**
+   * Nomes dos campos de telefone no POST, no PATCH e na leitura (lista/detalhe/resposta).
+   * Iguais ao payload do signup. Se o contrato final do PATCH divergir, troque só aqui.
+   */
+  phoneFields: { mobile: 'mobilePhone', whatsApp: 'whatsAppPhone' } as const,
+  /** PATCH /account/users/:id — ver assunções no comentário acima. */
+  supportsEdit: true,
+  editableFields: ['name', 'role', 'mobilePhone', 'whatsAppPhone'] as const,
   /** DELETE repetido responde 404: tratar como "já excluído" e atualizar a lista. */
   deleteNotFoundIsGone: true,
   /** Status considerado normal (outros mostram um selo discreto). */

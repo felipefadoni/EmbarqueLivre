@@ -5,8 +5,8 @@ import { Spinner, Text, YStack } from 'tamagui'
 import { farmsApi, type FarmPayload } from '@/api/catalog'
 import { fieldMessagesFromError, isApiError, publicApiMessage } from '@/api/errors'
 import { AuthField } from '@/components/auth/AuthField'
-import { MasterPicker, OwnerReadOnlyField } from '@/components/cadastros/MasterPicker'
-import type { MasterUser } from '@/api/masters'
+import { AccountPicker } from '@/components/cadastros/AccountPicker'
+import type { Account } from '@/api/accounts'
 import { CadastroFormScreen } from '@/components/cadastros/CadastroFormScreen'
 import { ConfirmDialog } from '@/components/cadastros/ConfirmDialog'
 import { canManageCatalog } from '@/features/cadastros/permissions'
@@ -36,8 +36,8 @@ export function FarmEditor({ farmId, pendenciaId }: FarmEditorProps) {
   const [name, setName] = useState('')
   const [city, setCity] = useState('')
   const [state, setState] = useState('')
-  const [ownerUserId, setOwnerUserId] = useState('')
-  const [owner, setOwner] = useState<MasterUser | null>(null)
+  const [accountId, setAccountId] = useState('')
+  const [account, setAccount] = useState<Account | null>(null)
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [formError, setFormError] = useState<string | null>(null)
   const [loading, setLoading] = useState(isEdit || Boolean(pendenciaId))
@@ -66,13 +66,17 @@ export function FarmEditor({ farmId, pendenciaId }: FarmEditorProps) {
       setName(draftString(draft, 'name') ?? farm?.name ?? '')
       setCity(draftString(draft, 'city') ?? farm?.city ?? '')
       setState(draftString(draft, 'state') ?? farm?.state ?? '')
-      const ownerId = farm?.ownerUserId ?? draftString(draft, 'ownerUserId') ?? ''
-      setOwnerUserId(ownerId)
-      // Não há tabela de usuários no sync: offline só temos o id do dono. O próprio master se reconhece;
-      // online, o nome vem do REST (efeito abaixo).
-      const self = user && ownerId === user.id ? user : null
-      setOwner(ownerId ? { id: ownerId, name: self?.name ?? '', email: self?.email ?? '' } : null)
-      showRejection(source.rejection, setFieldErrors, setFormError, ['name', 'city', 'state', 'ownerUserId'])
+      const resolvedAccountId =
+        farm?.accountId || farm?.ownerUserId || draftString(draft, 'accountId') || draftString(draft, 'ownerUserId') || ''
+      setAccountId(resolvedAccountId)
+      // Não há tabela de contas no sync: offline só temos o id. Online, o nome vem do REST (efeito abaixo).
+      const selfAccount = user && resolvedAccountId && resolvedAccountId === user.accountId
+      setAccount(
+        resolvedAccountId
+          ? { id: resolvedAccountId, name: farm?.accountName || farm?.ownerName || (selfAccount ? user.name : ''), masterCount: null, createdAt: null }
+          : null,
+      )
+      showRejection(source.rejection, setFieldErrors, setFormError, ['name', 'city', 'state', 'accountId'])
     } catch (error) {
       setLoadError(editorErrorMessage(error, 'Não foi possível carregar a fazenda.'))
     } finally {
@@ -80,20 +84,21 @@ export function FarmEditor({ farmId, pendenciaId }: FarmEditorProps) {
     }
   }
 
-  // Online: busca o nome do dono no REST (GET /farms/:id → ownerName). Falha silenciosa (fica o fallback).
+  // Online: busca o nome da conta no REST (GET /farms/:id → accountName). Falha silenciosa (fica o fallback).
   useEffect(() => {
-    if (!farmId || !ownerUserId || owner?.name || !online) return
+    if (!farmId || !accountId || account?.name || !online) return
     let alive = true
     farmsApi
       .get(farmId)
       .then((farm) => {
-        if (alive && farm.ownerName) setOwner({ id: ownerUserId, name: farm.ownerName, email: farm.ownerEmail ?? '' })
+        const name = farm.accountName || farm.ownerName
+        if (alive && name) setAccount({ id: farm.accountId || accountId, name, masterCount: null, createdAt: null })
       })
       .catch(() => undefined)
     return () => {
       alive = false
     }
-  }, [farmId, ownerUserId, owner?.name, online])
+  }, [farmId, accountId, account?.name, online])
 
   useEffect(() => {
     void load()
@@ -113,8 +118,8 @@ export function FarmEditor({ farmId, pendenciaId }: FarmEditorProps) {
       next.city = `A cidade deve ter entre ${LIMITS.city.min} e ${LIMITS.city.max} caracteres.`
     }
     if (!state.trim()) next.state = 'Selecione o estado.'
-    if (!isEdit && isAdmin && !ownerUserId.trim()) {
-      next.ownerUserId = 'Selecione o usuário master dono da fazenda.'
+    if (!isEdit && isAdmin && !accountId.trim()) {
+      next.accountId = 'Selecione a conta dona da fazenda.'
     }
     setFieldErrors(next)
     return Object.keys(next).length === 0
@@ -125,7 +130,7 @@ export function FarmEditor({ farmId, pendenciaId }: FarmEditorProps) {
     setFormError(null)
     if (!validate()) return
     const payload: FarmPayload = { name: name.trim(), city: city.trim(), state }
-    if (!isEdit && isAdmin) payload.ownerUserId = ownerUserId.trim()
+    if (!isEdit && isAdmin) payload.accountId = accountId.trim()
     setSaving(true)
     try {
       // Grava no banco local; o PowerSync envia quando houver rede.
@@ -245,25 +250,31 @@ export function FarmEditor({ farmId, pendenciaId }: FarmEditorProps) {
           }}
         />
         {isEdit ? (
-          <OwnerReadOnlyField
-            label="Dono da fazenda"
-            name={owner?.name || undefined}
-            email={owner?.email || undefined}
-            ownerUserId={ownerUserId}
-            unavailableLabel={online ? 'Nome do dono indisponível' : 'Dono indisponível offline'}
-          />
+          <YStack gap="2" w="100%">
+            <Text fontSize={16} fontWeight="700" color="brandFg" lineHeight="22px">
+              Conta
+            </Text>
+            <Text fontSize={18} fontWeight="700" color="brandFg">
+              {account?.name || (online ? 'Nome da conta indisponível' : 'Conta indisponível offline')}
+            </Text>
+            {!account?.name && accountId ? (
+              <Text fontSize={15} fontWeight="500" color="brandMuted">
+                {accountId}
+              </Text>
+            ) : null}
+          </YStack>
         ) : isAdmin ? (
-          <MasterPicker
-            label="Dono da fazenda"
-            value={ownerUserId}
-            selected={owner}
-            placeholder="Selecione o master dono"
-            error={fieldErrors.ownerUserId}
+          <AccountPicker
+            label="Conta"
+            value={accountId}
+            selected={account}
+            placeholder="Selecione a conta dona da fazenda"
+            error={fieldErrors.accountId}
             disabled={readOnly}
-            onChange={(master) => {
-              setOwnerUserId(master.id)
-              setOwner(master)
-              setFieldErrors((current) => ({ ...current, ownerUserId: '' }))
+            onChange={(picked) => {
+              setAccountId(picked.id)
+              setAccount(picked)
+              setFieldErrors((current) => ({ ...current, accountId: '' }))
             }}
           />
         ) : null}

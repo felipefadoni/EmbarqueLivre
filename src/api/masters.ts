@@ -11,6 +11,7 @@ export type MasterUser = {
   id: string
   name: string
   email: string
+  accountId: string | null
 }
 
 function parseMaster(raw: unknown): MasterUser {
@@ -19,6 +20,7 @@ function parseMaster(raw: unknown): MasterUser {
     id: typeof record.id === 'string' ? record.id : String(record.id ?? ''),
     name: typeof record.name === 'string' ? record.name : String(record.name ?? ''),
     email: typeof record.email === 'string' ? record.email : String(record.email ?? ''),
+    accountId: typeof record.accountId === 'string' && record.accountId ? record.accountId : null,
   }
 }
 

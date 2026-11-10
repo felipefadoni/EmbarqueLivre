@@ -7,7 +7,9 @@ import { USERS_CONTRACT } from '@/api/contract'
 import { isApiError, publicApiMessage } from '@/api/errors'
 import type { ApiError } from '@/api/types'
 import { countAccountMasters, deleteUser, findUser, updateUser, type AccountUser, type CreatableRole } from '@/api/users'
+import { maskPhoneBR, resolvedWhatsAppPhone, sameWhatsAppAsMobile } from '@/api/validation'
 import { AuthField } from '@/components/auth/AuthField'
+import { PhoneFields } from '@/components/auth/PhoneFields'
 import { FormBanner } from '@/components/auth/FormBanner'
 import { ConfirmDialog } from '@/components/cadastros/ConfirmDialog'
 import { RoleBadge } from '@/components/cadastros/RoleBadge'
@@ -20,7 +22,9 @@ import {
   createUserErrors,
   DELETE_BLOCK_MESSAGES,
   deleteBlockReason,
+  ROLE_EDIT_BLOCK_MESSAGES,
   ROLE_OPTIONS,
+  roleEditBlockReason,
   userStatusLabel,
   validateUserEdit,
 } from '@/features/usuarios/rules'
@@ -47,7 +51,7 @@ function UsuarioDetail({ id, hint, currentUserId }: { id: string; hint?: string;
   const [deleting, setDeleting] = useState(false)
   const [deleteError, setDeleteError] = useState<string | null>(null)
 
-  // Sem GET /account/users/:id: item do cache da lista → busca na lista (USERS_CONTRACT.detailPath quando existir).
+  // Cache da lista → GET /account/users/:id (USERS_CONTRACT.detailPath).
   const load = useCallback(async () => {
     try {
       const found = await findUser(id, hint)
@@ -126,15 +130,20 @@ function UsuarioDetail({ id, hint, currentUserId }: { id: string; hint?: string;
           </Text>
           <RoleBadge role={target.role} self={self} status={userStatusLabel(target)} />
           <Info label="Email" value={target.email} />
+          {target.mobilePhone ? <Info label="Celular" value={maskPhoneBR(target.mobilePhone)} /> : null}
+          {target.whatsAppPhone ? <Info label="WhatsApp" value={maskPhoneBR(target.whatsAppPhone)} /> : null}
           {target.createdAt ? <Info label="Criado em" value={new Date(target.createdAt).toLocaleDateString('pt-BR')} /> : null}
         </YStack>
       </AppCard>
-      {/* PATCH /account/users/:id { name?, role? } proposto: liga com USERS_CONTRACT.supportsEdit. */}
-      {USERS_CONTRACT.supportsEdit && !self && target.role !== 'admin' ? (
+      {/* PATCH /account/users/:id: liga com USERS_CONTRACT.supportsEdit. Admin não é gerenciado por aqui.
+          Próprio usuário e último master podem editar nome/telefones, mas o perfil fica travado. */}
+      {USERS_CONTRACT.supportsEdit && target.role !== 'admin' ? (
         <EditUserCard
+          key={`${target.id}-${target.updatedAt ?? ''}`}
           user={target}
           online={online}
-          isLastMaster={target.role === 'master' && state.masters != null && state.masters <= 1}
+          currentUserId={currentUserId}
+          accountMastersCount={state.masters}
           onSaved={(user) => setState({ status: 'ready', user, masters: state.masters })}
         />
       ) : null}
@@ -163,31 +172,46 @@ function UsuarioDetail({ id, hint, currentUserId }: { id: string; hint?: string;
 function EditUserCard({
   user,
   online,
-  isLastMaster,
+  currentUserId,
+  accountMastersCount,
   onSaved,
 }: {
   user: AccountUser
   online: boolean
-  isLastMaster: boolean
+  currentUserId: string | null
+  accountMastersCount: number | null
   onSaved: (user: AccountUser) => void
 }) {
   const [name, setName] = useState(user.name)
   const [role, setRole] = useState<CreatableRole>(user.role === 'master' ? 'master' : 'basic')
+  const [mobilePhone, setMobilePhone] = useState(user.mobilePhone ? maskPhoneBR(user.mobilePhone) : '')
+  const [whatsAppPhone, setWhatsAppPhone] = useState(user.whatsAppPhone ? maskPhoneBR(user.whatsAppPhone) : '')
+  const [sameWhatsApp, setSameWhatsApp] = useState(sameWhatsAppAsMobile(user.mobilePhone ?? '', user.whatsAppPhone))
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [formError, setFormError] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
+  const roleBlock = roleEditBlockReason({ target: user, currentUserId, accountMastersCount })
+  const lockedRole = roleBlock ? (user.role === 'master' ? 'master' : 'basic') : role
 
   async function onSave() {
     if (saving || !online) return
     setFormError(null)
-    const errors = validateUserEdit({ name, role })
-    // Rebaixar o último master também deixaria a conta sem master (o backend responde LAST_MASTER).
-    if (isLastMaster && role !== 'master') errors.role = 'Este é o último Usuário Master da conta.'
+    const effectiveRole = lockedRole
+    const errors = validateUserEdit({ name, role: effectiveRole, mobilePhone, whatsAppPhone, sameWhatsApp })
     setFieldErrors(errors)
     if (Object.keys(errors).length > 0) return
     setSaving(true)
     try {
-      const patch = { name: name !== user.name ? name : undefined, role: role !== user.role ? role : undefined }
+      const whatsApp = resolvedWhatsAppPhone(mobilePhone, whatsAppPhone, sameWhatsApp)
+      const phonesChanged =
+        mobilePhone !== (user.mobilePhone ? maskPhoneBR(user.mobilePhone) : '') ||
+        whatsApp !== (user.whatsAppPhone ? maskPhoneBR(user.whatsAppPhone) : user.mobilePhone ? maskPhoneBR(user.mobilePhone) : '')
+      const patch = {
+        name: name !== user.name ? name : undefined,
+        role: !roleBlock && effectiveRole !== user.role ? effectiveRole : undefined,
+        mobilePhone: USERS_CONTRACT.sendsPhones && phonesChanged ? mobilePhone : undefined,
+        whatsAppPhone: USERS_CONTRACT.sendsPhones && phonesChanged ? whatsApp : undefined,
+      }
       onSaved(await updateUser(user.id, patch))
     } catch (error) {
       const result = createUserErrors(asApiError(error))
@@ -198,24 +222,55 @@ function EditUserCard({
     }
   }
 
+  const clear = (field: string) => setFieldErrors((current) => ({ ...current, [field]: '' }))
+
   return (
     <AppCard>
       <YStack gap={12}>
         <AuthField
           label="Nome"
           value={name}
-          onChangeText={setName}
+          onChangeText={(value) => {
+            setName(value)
+            clear('name')
+          }}
           error={fieldErrors.name}
           autoCapitalize="words"
           maxLength={150}
         />
         <SelectField
           label="Perfil"
-          value={role}
+          value={lockedRole}
           options={[...ROLE_OPTIONS]}
           error={fieldErrors.role}
+          disabled={Boolean(roleBlock)}
           onChange={(value) => setRole(value === 'master' ? 'master' : 'basic')}
         />
+        {roleBlock ? (
+          <Text fontSize={15} fontWeight="600" color="brandMuted">
+            {ROLE_EDIT_BLOCK_MESSAGES[roleBlock]}
+          </Text>
+        ) : null}
+        {USERS_CONTRACT.sendsPhones ? (
+          <PhoneFields
+            mobilePhone={mobilePhone}
+            whatsAppPhone={whatsAppPhone}
+            sameWhatsApp={sameWhatsApp}
+            errors={fieldErrors}
+            onChangeMobilePhone={(value) => {
+              setMobilePhone(value)
+              clear('mobilePhone')
+            }}
+            onChangeWhatsAppPhone={(value) => {
+              setWhatsAppPhone(value)
+              clear('whatsAppPhone')
+            }}
+            onChangeSameWhatsApp={(value) => {
+              setSameWhatsApp(value)
+              clear('whatsAppPhone')
+            }}
+          />
+        ) : null}
         {formError ? <FormBanner message={formError} tone="error" /> : null}
         <ActionButton
           label={saving ? 'Salvando…' : 'Salvar alterações'}

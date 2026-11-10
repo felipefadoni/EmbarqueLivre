@@ -4,8 +4,11 @@ import { Text, YStack } from 'tamagui'
 
 import { isApiError } from '@/api/errors'
 import type { Account } from '@/api/accounts'
+import { USERS_CONTRACT } from '@/api/contract'
 import { createUser, type CreatableRole } from '@/api/users'
+import { resolvedWhatsAppPhone } from '@/api/validation'
 import { AuthField } from '@/components/auth/AuthField'
+import { PhoneFields } from '@/components/auth/PhoneFields'
 import { PasswordChecklist } from '@/components/auth/PasswordChecklist'
 import { CadastroFormScreen } from '@/components/cadastros/CadastroFormScreen'
 import { AccountPicker } from '@/components/cadastros/AccountPicker'
@@ -26,6 +29,9 @@ function NovoUsuarioForm({ isAdmin }: { isAdmin: boolean }) {
   const online = useIsOnline()
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [mobilePhone, setMobilePhone] = useState('')
+  const [whatsAppPhone, setWhatsAppPhone] = useState('')
+  const [sameWhatsApp, setSameWhatsApp] = useState(true)
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
@@ -41,13 +47,26 @@ function NovoUsuarioForm({ isAdmin }: { isAdmin: boolean }) {
   async function onSubmit() {
     if (saving || !online) return
     setFormError(null)
-    const errors = validateNewUser({ name, email, password, confirmPassword, role, scopeId: account?.id }, { isAdmin })
+    const errors = validateNewUser(
+      { name, email, password, confirmPassword, role, scopeId: account?.id, mobilePhone, whatsAppPhone, sameWhatsApp },
+      { isAdmin },
+    )
     setFieldErrors(errors)
     if (Object.keys(errors).length > 0) return
     setSaving(true)
     try {
       // Novo master entra na MESMA conta (com as mesmas fazendas): isso é do backend; o app só manda o perfil.
-      await createUser({ name, email, password, role, accountId: isAdmin ? account?.id : undefined })
+      await createUser({
+        name,
+        email,
+        password,
+        role,
+        accountId: isAdmin ? account?.id : undefined,
+        mobilePhone: USERS_CONTRACT.sendsPhones ? mobilePhone : undefined,
+        whatsAppPhone: USERS_CONTRACT.sendsPhones
+          ? resolvedWhatsAppPhone(mobilePhone, whatsAppPhone, sameWhatsApp)
+          : undefined,
+      })
       router.replace('/configuracoes/usuarios')
     } catch (error) {
       const result = createUserErrors(isApiError(error) ? error : { status: 0, code: 'INTERNAL_ERROR' })
@@ -107,6 +126,26 @@ function NovoUsuarioForm({ isAdmin }: { isAdmin: boolean }) {
         textContentType="emailAddress"
         maxLength={254}
       />
+      {USERS_CONTRACT.sendsPhones ? (
+        <PhoneFields
+          mobilePhone={mobilePhone}
+          whatsAppPhone={whatsAppPhone}
+          sameWhatsApp={sameWhatsApp}
+          errors={fieldErrors}
+          onChangeMobilePhone={(value) => {
+            setMobilePhone(value)
+            clear('mobilePhone')
+          }}
+          onChangeWhatsAppPhone={(value) => {
+            setWhatsAppPhone(value)
+            clear('whatsAppPhone')
+          }}
+          onChangeSameWhatsApp={(value) => {
+            setSameWhatsApp(value)
+            clear('whatsAppPhone')
+          }}
+        />
+      ) : null}
       <YStack gap="2">
         <AuthField
           label="Senha"

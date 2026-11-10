@@ -2,7 +2,7 @@ import axios, { AxiosError, create, type InternalAxiosRequestConfig } from 'axio
 
 import { toApiError } from './errors'
 import { deleteSecureItem, getSecureItem, setSecureItem } from './storage'
-import type { AuthUser, LoginRequest, MeResponse, MobileSessionResponse, RegisterUserRequest, UserResponse } from './types'
+import { normalizeAuthUser, type AuthUser, type LoginRequest, type MeResponse, type MobileSessionResponse, type RegisterUserRequest, type UserResponse } from './types'
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:3000'
 const KEYS = { access: 'el.accessToken', refresh: 'el.refreshToken', accessExp: 'el.accessExp', user: 'el.user' } as const
@@ -27,17 +27,19 @@ async function saveSession(session: MobileSessionResponse) {
   await setSecureItem(KEYS.refresh, session.refreshToken)
   await setSecureItem(KEYS.access, session.accessToken)
   await setSecureItem(KEYS.accessExp, session.accessTokenExpiresAt)
-  await setSecureItem(KEYS.user, JSON.stringify(session.user))
+  const user = normalizeAuthUser(session.user) ?? session.user
+  await setSecureItem(KEYS.user, JSON.stringify(user))
   accessToken = session.accessToken
   accessExpiresAt = Date.parse(session.accessTokenExpiresAt)
+  session.user = user
 }
 
 /** Último usuário autenticado (para abrir o app offline com os dados locais). */
 async function readCachedUser(): Promise<AuthUser | null> {
   try {
     const raw = await getSecureItem(KEYS.user)
-    const user = raw ? (JSON.parse(raw) as AuthUser) : null
-    return user && typeof user.id === 'string' && typeof user.role === 'string' ? user : null
+    const user = raw ? normalizeAuthUser(JSON.parse(raw)) : null
+    return user
   } catch {
     return null
   }
@@ -47,6 +49,12 @@ async function clearSession() {
   accessToken = null
   accessExpiresAt = 0
   await Promise.all(Object.values(KEYS).map((key) => deleteSecureItem(key)))
+}
+
+/** Encerra a sessão local e avisa o AuthProvider (mantém dados do sync). Usado no 401 UNAUTHENTICATED do upload. */
+export async function endSessionKeepData() {
+  await clearSession()
+  onLoggedOut()
 }
 
 function sleep(ms: number) {
@@ -144,8 +152,9 @@ export const authApi = {
     accessExpiresAt = Date.parse((await getSecureItem(KEYS.accessExp)) ?? '') || 0
     if (!(await getSecureItem(KEYS.refresh))) return null
     try {
-      const me = (await http.get<MeResponse>('/auth/me')).data
-      await setSecureItem(KEYS.user, JSON.stringify({ id: me.id, name: me.name, email: me.email, role: me.role, masterUserId: me.masterUserId }))
+      const me = normalizeAuthUser((await http.get<MeResponse>('/auth/me')).data)
+      if (!me) return readCachedUser()
+      await setSecureItem(KEYS.user, JSON.stringify(me))
       return me
     } catch (error) {
       // Offline-first: sem rede (ou servidor fora), mantém a sessão local com o último usuário.

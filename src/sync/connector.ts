@@ -6,19 +6,20 @@ import { POWERSYNC_CONFIG } from './config'
 import { newUlid } from './ids'
 import { parseTimestamp } from './mapping'
 import { saveRejections } from './rejections'
-import { resolvePowerSyncEndpoint, uploadTransaction, type PostResponse } from './upload'
+import { SessionEndedUploadError, resolvePowerSyncEndpoint, uploadTransaction, type PostResponse } from './upload'
 
 type TokenResponse = { token: string; powersyncUrl?: string; expiresAt?: string }
 
 /**
  * Connector do PowerSync.
  * - fetchCredentials: GET /powersync/token com o Bearer do app (o cliente http já faz refresh
- *   single-flight). Cache local renovado antes de expirar (TTL do servidor = 15 min).
+ *   single-flight). Cache local renovado antes de expirar (TTL do servidor = 5 min / 300 s; renovado 1 min antes).
  * - uploadData: próxima transação da fila → POST /powersync/upload em lotes de até 500.
- *   Recusas vão para `sync_rejections`; 401/5xx/sem rede lançam para o SDK tentar de novo.
+ *   Recusas vão para `sync_rejections`; 408/429/5xx/sem rede lançam para o SDK tentar de novo. 401 UNAUTHENTICATED encerra a sessão (sem retry) e mantém os dados locais.
  */
 export class EmbarqueConnector implements PowerSyncBackendConnector {
   private cached: PowerSyncCredentials | null = null
+  onSessionEnded: () => void | Promise<void> = () => {}
 
   invalidate() {
     this.cached = null
@@ -55,10 +56,18 @@ export class EmbarqueConnector implements PowerSyncBackendConnector {
   async uploadData(database: CommonPowerSyncDatabase): Promise<void> {
     const transaction = await database.getNextCrudTransaction()
     if (!transaction) return
-    await uploadTransaction(transaction, {
-      post: postBatch,
-      saveRejections: (rows) => saveRejections(database, rows, newUlid),
-    })
+    try {
+      await uploadTransaction(transaction, {
+        post: postBatch,
+        saveRejections: (rows) => saveRejections(database, rows, newUlid),
+      })
+    } catch (error) {
+      if (error instanceof SessionEndedUploadError) {
+        await this.onSessionEnded()
+        return
+      }
+      throw error
+    }
   }
 }
 

@@ -115,8 +115,9 @@ const CODE_FIELD: Record<string, string> = {
   INVALID_ANIMAL_BREED: 'breed',
   INVALID_BIRTH_DATE: 'birthDate',
   INVALID_APPLIED_AT: 'appliedAt',
-  FARM_OWNER_REQUIRED: 'ownerUserId',
-  INVALID_FARM_OWNER: 'ownerUserId',
+  FARM_OWNER_REQUIRED: 'accountId',
+  INVALID_FARM_OWNER: 'accountId',
+  FARM_OWNER_FORBIDDEN: 'accountId',
 }
 
 /**

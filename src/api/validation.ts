@@ -70,3 +70,41 @@ export function maskPhoneBR(value: string): string {
   if (local.length <= 7) return `(${local.slice(0, 2)}) ${local.slice(2)}`
   return `(${local.slice(0, 2)}) ${local.slice(2, 7)}-${local.slice(7)}`
 }
+
+/** Mensagens iguais às do cadastro (src/app/(auth)/cadastro.tsx). */
+export const PHONE_MESSAGES = {
+  mobileRequired: 'Informe o celular.',
+  whatsAppRequired: 'Informe o WhatsApp.',
+  invalid: 'Informe um número de celular válido com DDD.',
+} as const
+
+/**
+ * Valida celular e WhatsApp com as mesmas regras do signup.
+ * `sameWhatsApp` verdadeiro: o WhatsApp reutiliza o celular e não é validado à parte.
+ */
+export function validatePhoneFields(input: {
+  mobilePhone: string
+  whatsAppPhone: string
+  sameWhatsApp: boolean
+}): Record<string, string> {
+  const next: Record<string, string> = {}
+  if (!input.mobilePhone.trim()) next.mobilePhone = PHONE_MESSAGES.mobileRequired
+  else if (!mobilePhoneIsValid(input.mobilePhone)) next.mobilePhone = PHONE_MESSAGES.invalid
+  if (!input.sameWhatsApp) {
+    if (!input.whatsAppPhone.trim()) next.whatsAppPhone = PHONE_MESSAGES.whatsAppRequired
+    else if (!mobilePhoneIsValid(input.whatsAppPhone)) next.whatsAppPhone = PHONE_MESSAGES.invalid
+  }
+  return next
+}
+
+/** WhatsApp efetivo do payload: o celular, se for o mesmo número. */
+export function resolvedWhatsAppPhone(mobilePhone: string, whatsAppPhone: string, sameWhatsApp: boolean): string {
+  return sameWhatsApp ? mobilePhone : whatsAppPhone
+}
+
+/** Compara só os dígitos; WhatsApp ausente conta como o mesmo número (switch ligado). */
+export function sameWhatsAppAsMobile(mobilePhone: string, whatsAppPhone: string | null | undefined): boolean {
+  if (!whatsAppPhone || !whatsAppPhone.trim()) return true
+  return mobilePhone.replace(/\D/g, '') === whatsAppPhone.replace(/\D/g, '')
+}
+

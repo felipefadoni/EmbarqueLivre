@@ -19,7 +19,7 @@ import {
   type TopVaccineRow,
   type VaccinationCountsRow,
 } from '@/sync/dashboardQueries'
-import { rowToVaccination, vaccinationsListQuery, type SqlQuery, type VaccinationRow } from '@/sync/queries'
+import type { SqlQuery } from '@/sync/queries'
 import { buildSeries, chartBuckets, startOfMonthIso, startOfWeekIso, type ChartPeriod } from './period'
 
 function useSql<T>(query: SqlQuery) {
@@ -39,7 +39,6 @@ export function useDashboard({ today, farmId, period }: { today: string; farmId?
   const counts = useSql<VaccinationCountsRow>(vaccinationCountsQuery(today, weekStart, monthStart, farmId))
   const perDay = useSql<DayCountRow>(vaccinationsPerDayQuery(buckets[0].start, today, farmId))
   const releasing = useSql<ReleasingRow>(releasingSoonQuery(today, farmId, 5))
-  const latest = useSql<VaccinationRow>(vaccinationsListQuery({ farmId }, 5))
   const byType = useSql<GroupCountRow>(animalsByTypeQuery(today, farmId))
   const byFarm = useSql<GroupCountRow>(animalsByFarmQuery(today))
   const topVaccines = useSql<TopVaccineRow>(topVaccinesQuery(addDaysIso(today, -29), today, farmId, 1))
@@ -61,7 +60,6 @@ export function useDashboard({ today, farmId, period }: { today: string; farmId?
     counts: { hoje: num(counts.data[0]?.hoje), semana: num(counts.data[0]?.semana), mes: num(counts.data[0]?.mes), loading: counts.isLoading },
     series: { ...series, loading: perDay.isLoading },
     releasing: { items: releasing.data, loading: releasing.isLoading },
-    latest: { items: latest.data.slice(0, 5).map(rowToVaccination), loading: latest.isLoading },
     byType: { items: byType.data, loading: byType.isLoading },
     byFarm: { items: byFarm.data, loading: byFarm.isLoading },
     topVaccine: { item: topVaccines.data[0] ?? null, loading: topVaccines.isLoading },

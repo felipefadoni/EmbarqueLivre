@@ -13,6 +13,6 @@ export const POWERSYNC_CONFIG = {
     | 'requests'
     | 'legacy',
   dbFilename: 'embarquelivre.db',
-  /** Renova o token quando faltar menos que isso para expirar (TTL do servidor = 15 min). */
-  tokenRenewMarginMs: 2 * 60_000,
+  /** Renova o token quando faltar menos que isso para expirar (TTL do servidor = 5 min / 300 s). */
+  tokenRenewMarginMs: 60_000,
 } as const
