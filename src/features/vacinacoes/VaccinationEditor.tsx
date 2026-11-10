@@ -1,11 +1,25 @@
 import { router } from 'expo-router'
-import { useEffect, useState } from 'react'
+import { useQuery } from '@powersync/react'
+import { useEffect, useMemo, useState } from 'react'
 import { Spinner, Text, YStack } from 'tamagui'
 
-import { vaccinesApi, type Vaccine } from '@/api/catalog'
-import { listAllPages, type VaccinationEntry, type VaccinationPayload } from '@/api/contract'
+import type { Vaccine } from '@/api/catalog'
+import type { VaccinationEntry, VaccinationPayload } from '@/api/contract'
 import { fieldMessagesFromError, isApiError, publicApiMessage } from '@/api/errors'
-import { vaccinationsApi } from '@/api/vaccinations'
+import { db, repo } from '@/sync'
+import { clearPendencia, clearRowRejections, draftString, editorErrorMessage, loadEditorSource, showRejection } from '@/sync/editor'
+import {
+  ALL_ROWS,
+  animalByIdQuery,
+  querySpread,
+  rowToAnimal,
+  rowToVaccination,
+  rowToVaccine,
+  vaccinationByIdQuery,
+  vaccinesListQuery,
+  type AnimalRow,
+  type VaccinationRow,
+} from '@/sync/queries'
 import { AnimalPicker, type PickedAnimal } from '@/components/cadastros/AnimalPicker'
 import { CadastroFormScreen } from '@/components/cadastros/CadastroFormScreen'
 import { ConfirmDialog } from '@/components/cadastros/ConfirmDialog'
@@ -15,18 +29,19 @@ import { addDaysIso, formatDatePtBr, todayIso } from '@/features/cadastros/dates
 
 type VaccinationEditorProps = {
   vaccinationId?: string
+  /** Pendência (operação recusada pelo servidor) a corrigir. */
+  pendenciaId?: string
 }
 
 function pluralDias(days: number) {
   return days === 1 ? '1 dia' : `${days} dias`
 }
 
-export function VaccinationEditor({ vaccinationId }: VaccinationEditorProps) {
+export function VaccinationEditor({ vaccinationId, pendenciaId }: VaccinationEditorProps) {
   const isEdit = Boolean(vaccinationId)
   const [animal, setAnimal] = useState<PickedAnimal | null>(null)
   const [vaccineId, setVaccineId] = useState('')
   const [appliedAt, setAppliedAt] = useState<string>(() => todayIso())
-  const [vaccines, setVaccines] = useState<Vaccine[]>([])
   const [original, setOriginal] = useState<VaccinationEntry | null>(null)
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [formError, setFormError] = useState<string | null>(null)
@@ -37,16 +52,28 @@ export function VaccinationEditor({ vaccinationId }: VaccinationEditorProps) {
   const [confirmOpen, setConfirmOpen] = useState(false)
   const [deleting, setDeleting] = useState(false)
 
+  // Vacinas: consulta local reativa (atualiza quando o sync traz o catálogo).
+  const vaccinesQuery = vaccinesListQuery(ALL_ROWS)
+  const vaccineRows = useQuery<{ id: string; name: string; withdrawalDays: number | null }>(vaccinesQuery.sql, vaccinesQuery.params)
+  const vaccines: Vaccine[] = useMemo(() => vaccineRows.data.map(rowToVaccine), [vaccineRows.data])
+
   useEffect(() => {
     let cancelled = false
     ;(async () => {
       try {
-        const [vaccineList, entry] = await Promise.all([
-          listAllPages(vaccinesApi.list),
-          vaccinationId ? vaccinationsApi.get(vaccinationId) : Promise.resolve(null),
-        ])
+        const source = await loadEditorSource<VaccinationRow, VaccinationEntry>(
+          'vaccinations',
+          vaccinationId ? vaccinationByIdQuery(vaccinationId) : null,
+          rowToVaccination,
+          pendenciaId,
+        )
         if (cancelled) return
-        setVaccines(vaccineList)
+        const entry = source.record
+        if (vaccinationId && !entry) {
+          setLoadError('Lançamento não encontrado neste aparelho. Ele pode ter sido excluído ou ainda não sincronizou.')
+          return
+        }
+        const draft = source.draft
         if (entry) {
           setOriginal(entry)
           setAnimal({
@@ -58,10 +85,25 @@ export function VaccinationEditor({ vaccinationId }: VaccinationEditorProps) {
           setVaccineId(entry.vaccineId)
           setAppliedAt(entry.appliedAt || todayIso())
         }
+        // "Corrigir": valores recusados pelo servidor por cima do registro local.
+        const draftAnimalId = draftString(draft, 'animalId')
+        if (draftAnimalId && draftAnimalId !== entry?.animalId) {
+          const row = await db.getOptional<AnimalRow>(...querySpread(animalByIdQuery(draftAnimalId, todayIso())))
+          if (cancelled) return
+          if (row) {
+            const picked = rowToAnimal(row)
+            setAnimal({ id: picked.id, code: picked.code, farmName: picked.farmName, animalTypeName: picked.animalTypeName })
+          }
+        }
+        const draftVaccineId = draftString(draft, 'vaccineId')
+        if (draftVaccineId) setVaccineId(draftVaccineId)
+        const draftAppliedAt = draftString(draft, 'appliedAt')
+        if (draftAppliedAt) setAppliedAt(draftAppliedAt.slice(0, 10))
+        showRejection(source.rejection, setFieldErrors, setFormError, ['animalId', 'vaccineId', 'appliedAt'])
         setLoadError(null)
       } catch (error) {
         if (cancelled) return
-        setLoadError(isApiError(error) ? publicApiMessage(error) : 'Não foi possível carregar o lançamento.')
+        setLoadError(editorErrorMessage(error, 'Não foi possível carregar o lançamento.'))
       } finally {
         if (!cancelled) setLoading(false)
       }
@@ -69,7 +111,7 @@ export function VaccinationEditor({ vaccinationId }: VaccinationEditorProps) {
     return () => {
       cancelled = true
     }
-  }, [vaccinationId, reloadKey])
+  }, [vaccinationId, pendenciaId, reloadKey])
 
   const vaccineOptions = vaccines.map((vaccine) => ({
     value: vaccine.id,
@@ -110,8 +152,11 @@ export function VaccinationEditor({ vaccinationId }: VaccinationEditorProps) {
     const payload: VaccinationPayload = { animalId: animal.id, vaccineId, appliedAt }
     setSaving(true)
     try {
-      if (isEdit && vaccinationId) await vaccinationsApi.update(vaccinationId, payload)
-      else await vaccinationsApi.create(payload)
+      // Grava no banco local (carência calculada aqui); o PowerSync envia quando houver rede.
+      const savedId =
+        isEdit && vaccinationId ? (await repo.updateVaccination(vaccinationId, payload), vaccinationId) : await repo.createVaccination(payload)
+      await clearRowRejections('vaccinations', savedId)
+      await clearPendencia(pendenciaId)
       router.back()
     } catch (error) {
       const apiError = isApiError(error) ? error : null
@@ -134,7 +179,8 @@ export function VaccinationEditor({ vaccinationId }: VaccinationEditorProps) {
     setDeleting(true)
     setFormError(null)
     try {
-      await vaccinationsApi.remove(vaccinationId)
+      await repo.deleteVaccination(vaccinationId)
+      await clearRowRejections('vaccinations', vaccinationId)
       setConfirmOpen(false)
       router.back()
     } catch (error) {

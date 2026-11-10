@@ -1,13 +1,14 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { FlatList, Modal, Pressable, useColorScheme } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Input, Text, XStack, YStack } from 'tamagui'
 
-import { VACCINATION_CONTRACT, type ListPagingRequest } from '@/api/contract'
-import { searchAnimals } from '@/api/vaccinations'
+import { VACCINATION_CONTRACT } from '@/api/contract'
 import { ListLoadingFooter, ListStatus } from '@/components/cadastros/ListStatus'
-import { useInfiniteList } from '@/features/cadastros/useInfiniteList'
+import { todayIso } from '@/features/cadastros/dates'
+import { useLocalList } from '@/sync/hooks'
+import { animalsListQuery, rowToAnimal, type AnimalRow } from '@/sync/queries'
 import { TOQUE_MINIMO } from '../../../tamagui.config'
 
 /** Dados mínimos para exibir o animal escolhido (vem da lista ou do lançamento em edição). */
@@ -155,8 +156,13 @@ function AnimalPickerList({
     return () => clearTimeout(timer)
   }, [input])
 
-  const load = useCallback((paging: ListPagingRequest) => searchAnimals(search, paging), [search])
-  const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useInfiniteList(load)
+  // Busca local por código (contém, sem diferenciar maiúsculas).
+  const today = todayIso()
+  const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useLocalList(
+    (limit) => animalsListQuery({ code: search || undefined }, today, limit),
+    (row: AnimalRow) => rowToAnimal(row),
+    [search, today],
+  )
 
   return (
     <YStack flex={1} gap={12} minH={280}>

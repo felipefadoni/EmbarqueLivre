@@ -2,7 +2,7 @@ import { router } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { Spinner, Text, YStack } from 'tamagui'
 
-import { animalTypesApi, type AnimalTypePayload } from '@/api/catalog'
+import type { AnimalTypePayload } from '@/api/catalog'
 import { fieldMessagesFromError, isApiError, publicApiMessage } from '@/api/errors'
 import { AuthField } from '@/components/auth/AuthField'
 import { CadastroFormScreen } from '@/components/cadastros/CadastroFormScreen'
@@ -10,12 +10,17 @@ import { ConfirmDialog } from '@/components/cadastros/ConfirmDialog'
 import { LIMITS } from '@/features/cadastros/limits'
 import { canManageCatalog } from '@/features/cadastros/permissions'
 import { useAuth } from '@/features/auth/AuthProvider'
+import { repo } from '@/sync'
+import { clearPendencia, clearRowRejections, draftString, editorErrorMessage, loadEditorSource, showRejection } from '@/sync/editor'
+import { animalTypeByIdQuery, rowToAnimalType } from '@/sync/queries'
 
 type AnimalTypeEditorProps = {
   typeId?: string
+  /** Pendência (operação recusada pelo servidor) a corrigir. */
+  pendenciaId?: string
 }
 
-export function AnimalTypeEditor({ typeId }: AnimalTypeEditorProps) {
+export function AnimalTypeEditor({ typeId, pendenciaId }: AnimalTypeEditorProps) {
   const isEdit = Boolean(typeId)
   const { user } = useAuth()
   const canManage = canManageCatalog(user?.role)
@@ -23,46 +28,40 @@ export function AnimalTypeEditor({ typeId }: AnimalTypeEditorProps) {
   const [name, setName] = useState('')
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [formError, setFormError] = useState<string | null>(null)
-  const [loading, setLoading] = useState(isEdit)
+  const [loading, setLoading] = useState(isEdit || Boolean(pendenciaId))
   const [loadError, setLoadError] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
   const [confirmOpen, setConfirmOpen] = useState(false)
   const [deleting, setDeleting] = useState(false)
 
-  async function load() {
-    if (!typeId) return
+  function retry() {
     setLoading(true)
     setLoadError(null)
+    void load()
+  }
+
+  async function load() {
+    if (!typeId && !pendenciaId) return
     try {
-      const item = await animalTypesApi.get(typeId)
-      setName(item.name)
+      const source = await loadEditorSource('animalTypes', typeId ? animalTypeByIdQuery(typeId) : null, rowToAnimalType, pendenciaId)
+      const item = source.record
+      if (typeId && !item) {
+        setLoadError('Tipo de animal não encontrado neste aparelho. Ele pode ter sido excluído ou ainda não sincronizou.')
+        return
+      }
+      setName(draftString(source.draft, 'name') ?? item?.name ?? '')
+      showRejection(source.rejection, setFieldErrors, setFormError, ['name'])
     } catch (error) {
-      setLoadError(isApiError(error) ? publicApiMessage(error) : 'Não foi possível carregar o tipo de animal.')
+      setLoadError(editorErrorMessage(error, 'Não foi possível carregar o tipo de animal.'))
     } finally {
       setLoading(false)
     }
   }
 
   useEffect(() => {
-    if (!typeId) return
-    let cancelled = false
-    ;(async () => {
-      try {
-        const item = await animalTypesApi.get(typeId)
-        if (cancelled) return
-        setName(item.name)
-        setLoadError(null)
-      } catch (error) {
-        if (cancelled) return
-        setLoadError(isApiError(error) ? publicApiMessage(error) : 'Não foi possível carregar o tipo de animal.')
-      } finally {
-        if (!cancelled) setLoading(false)
-      }
-    })()
-    return () => {
-      cancelled = true
-    }
-  }, [typeId])
+    void load()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [typeId, pendenciaId])
 
   function validate(): boolean {
     const next: Record<string, string> = {}
@@ -82,8 +81,10 @@ export function AnimalTypeEditor({ typeId }: AnimalTypeEditorProps) {
     const payload: AnimalTypePayload = { name: name.trim() }
     setSaving(true)
     try {
-      if (isEdit && typeId) await animalTypesApi.update(typeId, payload)
-      else await animalTypesApi.create(payload)
+      // Grava no banco local; o PowerSync envia quando houver rede.
+      const savedId = isEdit && typeId ? (await repo.updateAnimalType(typeId, payload), typeId) : await repo.createAnimalType(payload)
+      await clearRowRejections('animalTypes', savedId)
+      await clearPendencia(pendenciaId)
       router.back()
     } catch (error) {
       const apiError = isApiError(error) ? error : null
@@ -93,7 +94,9 @@ export function AnimalTypeEditor({ typeId }: AnimalTypeEditorProps) {
       }
       const fields = fieldMessagesFromError(apiError)
       setFieldErrors(fields)
-      setFormError(Object.keys(fields).length > 0 && apiError.code === 'VALIDATION_ERROR' ? null : publicApiMessage(apiError))
+      // Erro já exibido no campo (validação ou nome duplicado com details.field): sem banner duplicado.
+      const shownInField = Object.keys(fields).length > 0 && (apiError.code === 'VALIDATION_ERROR' || Boolean(apiError.details?.field))
+      setFormError(shownInField ? null : publicApiMessage(apiError))
     } finally {
       setSaving(false)
     }
@@ -104,7 +107,8 @@ export function AnimalTypeEditor({ typeId }: AnimalTypeEditorProps) {
     setDeleting(true)
     setFormError(null)
     try {
-      await animalTypesApi.remove(typeId)
+      await repo.deleteAnimalType(typeId)
+      await clearRowRejections('animalTypes', typeId)
       setConfirmOpen(false)
       router.back()
     } catch (error) {
@@ -137,7 +141,7 @@ export function AnimalTypeEditor({ typeId }: AnimalTypeEditorProps) {
           fontWeight="800"
           color="brandFg"
           textDecorationLine="underline"
-          onPress={() => void load()}
+          onPress={retry}
           accessibilityRole="button">
           Tentar novamente
         </Text>
@@ -173,7 +177,7 @@ export function AnimalTypeEditor({ typeId }: AnimalTypeEditorProps) {
       <ConfirmDialog
         open={confirmOpen}
         title="Excluir tipo de animal?"
-        message="Se houver animais vinculados, a API vai recusar a exclusão. Esta ação não pode ser desfeita."
+        message="Tipos com animais vinculados não podem ser excluídos. Esta ação não pode ser desfeita."
         onCancel={() => setConfirmOpen(false)}
         onConfirm={() => void onDelete()}
         busy={deleting}

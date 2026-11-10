@@ -1,16 +1,10 @@
 import { router } from 'expo-router'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Spinner, Text, YStack } from 'tamagui'
 
-import {
-  animalTypesApi,
-  animalsApi,
-  farmsApi,
-  type AnimalPayload,
-  type AnimalType,
-  type Farm,
-} from '@/api/catalog'
-import { listAllPages } from '@/api/contract'
+import { useQuery } from '@powersync/react'
+
+import type { Animal, AnimalPayload } from '@/api/catalog'
 import { fieldMessagesFromError, isApiError, publicApiMessage, userMessage } from '@/api/errors'
 import { BIRTH_DATE_MIN, LIMITS } from '@/features/cadastros/limits'
 import { parseIsoDateLocal } from '@/features/cadastros/dates'
@@ -21,6 +15,23 @@ import { DateField } from '@/components/form/DateField'
 import { SelectField } from '@/components/cadastros/SelectField'
 import { WithdrawalSection } from '@/features/vacinacoes/WithdrawalSection'
 import type { AnimalWithdrawal } from '@/api/contract'
+import { todayIso } from '@/components/form/date'
+import { repo } from '@/sync'
+import { clearPendencia, clearRowRejections, draftString, editorErrorMessage, loadEditorSource, showRejection } from '@/sync/editor'
+import {
+  ALL_ROWS,
+  animalApplicationsQuery,
+  animalByIdQuery,
+  animalTypesListQuery,
+  farmsListQuery,
+  rowToAnimal,
+  rowToAnimalType,
+  rowToFarm,
+  rowsToWithdrawal,
+  type AnimalRow,
+  type ApplicationRow,
+  type FarmRow,
+} from '@/sync/queries'
 
 const SEX_OPTIONS = [
   { value: 'M', label: 'Macho' },
@@ -29,9 +40,11 @@ const SEX_OPTIONS = [
 
 type AnimalEditorProps = {
   animalId?: string
+  /** Pendência (operação recusada pelo servidor) a corrigir. */
+  pendenciaId?: string
 }
 
-export function AnimalEditor({ animalId }: AnimalEditorProps) {
+export function AnimalEditor({ animalId, pendenciaId }: AnimalEditorProps) {
   const isEdit = Boolean(animalId)
   const [code, setCode] = useState('')
   const [farmId, setFarmId] = useState('')
@@ -39,9 +52,6 @@ export function AnimalEditor({ animalId }: AnimalEditorProps) {
   const [sex, setSex] = useState('')
   const [breed, setBreed] = useState('')
   const [birthDate, setBirthDate] = useState<string | null>(null)
-  const [withdrawal, setWithdrawal] = useState<AnimalWithdrawal | null>(null)
-  const [farms, setFarms] = useState<Farm[]>([])
-  const [types, setTypes] = useState<AnimalType[]>([])
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [formError, setFormError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
@@ -50,61 +60,54 @@ export function AnimalEditor({ animalId }: AnimalEditorProps) {
   const [confirmOpen, setConfirmOpen] = useState(false)
   const [deleting, setDeleting] = useState(false)
 
-  async function load() {
+  // Opções e carência são consultas locais reativas: atualizam sozinhas quando o sync traz dados.
+  const farmsQuery = farmsListQuery(ALL_ROWS)
+  const typesQuery = animalTypesListQuery(ALL_ROWS)
+  const farmRows = useQuery<FarmRow>(farmsQuery.sql, farmsQuery.params)
+  const typeRows = useQuery<{ id: string; name: string }>(typesQuery.sql, typesQuery.params)
+  const farms = useMemo(() => farmRows.data.map(rowToFarm), [farmRows.data])
+  const types = useMemo(() => typeRows.data.map(rowToAnimalType), [typeRows.data])
+  const today = todayIso()
+  const applicationsQuery = animalApplicationsQuery(animalId ?? '')
+  const applicationRows = useQuery<ApplicationRow>(applicationsQuery.sql, applicationsQuery.params)
+  const withdrawal: AnimalWithdrawal | null = useMemo(
+    () => (animalId ? rowsToWithdrawal(applicationRows.data, today) : null),
+    [animalId, applicationRows.data, today],
+  )
+
+  function retry() {
     setLoading(true)
     setLoadError(null)
+    void load()
+  }
+
+  async function load() {
     try {
-      const [farmList, typeList] = await Promise.all([listAllPages(farmsApi.list), listAllPages(animalTypesApi.list)])
-      setFarms(farmList)
-      setTypes(typeList)
-      if (animalId) {
-        const animal = await animalsApi.get(animalId)
-        setCode(animal.code)
-        setFarmId(animal.farmId)
-        setAnimalTypeId(animal.animalTypeId)
-        setSex(animal.sex ?? '')
-        setBreed(animal.breed ?? '')
-        setBirthDate(animal.birthDate)
-        setWithdrawal(animal.withdrawal)
+      const source = await loadEditorSource<AnimalRow, Animal>('animals', animalId ? animalByIdQuery(animalId, todayIso()) : null, (row) => rowToAnimal(row), pendenciaId)
+      const animal = source.record
+      if (animalId && !animal) {
+        setLoadError('Animal não encontrado neste aparelho. Ele pode ter sido excluído ou ainda não sincronizou.')
+        return
       }
+      const draft = source.draft
+      setCode(draftString(draft, 'code') ?? animal?.code ?? '')
+      setFarmId(draftString(draft, 'farmId') ?? animal?.farmId ?? '')
+      setAnimalTypeId(draftString(draft, 'animalTypeId') ?? animal?.animalTypeId ?? '')
+      setSex(draftString(draft, 'sex') ?? animal?.sex ?? '')
+      setBreed(draftString(draft, 'breed') ?? animal?.breed ?? '')
+      setBirthDate((draftString(draft, 'birthDate') ?? animal?.birthDate ?? '') || null)
+      showRejection(source.rejection, setFieldErrors, setFormError, ['code', 'farmId', 'animalTypeId', 'sex', 'breed', 'birthDate'])
     } catch (error) {
-      setLoadError(isApiError(error) ? publicApiMessage(error) : 'Não foi possível carregar os dados do animal.')
+      setLoadError(editorErrorMessage(error, 'Não foi possível carregar os dados do animal.'))
     } finally {
       setLoading(false)
     }
   }
 
   useEffect(() => {
-    let cancelled = false
-    ;(async () => {
-      try {
-        const [farmList, typeList] = await Promise.all([listAllPages(farmsApi.list), listAllPages(animalTypesApi.list)])
-        if (cancelled) return
-        setFarms(farmList)
-        setTypes(typeList)
-        if (animalId) {
-          const animal = await animalsApi.get(animalId)
-          if (cancelled) return
-          setCode(animal.code)
-          setFarmId(animal.farmId)
-          setAnimalTypeId(animal.animalTypeId)
-          setSex(animal.sex ?? '')
-          setBreed(animal.breed ?? '')
-          setBirthDate(animal.birthDate)
-        setWithdrawal(animal.withdrawal)
-        }
-        setLoadError(null)
-      } catch (error) {
-        if (cancelled) return
-        setLoadError(isApiError(error) ? publicApiMessage(error) : 'Não foi possível carregar os dados do animal.')
-      } finally {
-        if (!cancelled) setLoading(false)
-      }
-    })()
-    return () => {
-      cancelled = true
-    }
-  }, [animalId])
+    void load()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [animalId, pendenciaId])
 
   function validate(): boolean {
     const next: Record<string, string> = {}
@@ -140,8 +143,10 @@ export function AnimalEditor({ animalId }: AnimalEditorProps) {
     }
     setSaving(true)
     try {
-      if (isEdit && animalId) await animalsApi.update(animalId, payload)
-      else await animalsApi.create(payload)
+      // Grava no banco local (código único por fazenda checado aqui); o PowerSync envia quando houver rede.
+      const savedId = isEdit && animalId ? (await repo.updateAnimal(animalId, payload), animalId) : await repo.createAnimal(payload)
+      await clearRowRejections('animals', savedId)
+      await clearPendencia(pendenciaId)
       router.back()
     } catch (error) {
       const apiError = isApiError(error) ? error : null
@@ -162,7 +167,8 @@ export function AnimalEditor({ animalId }: AnimalEditorProps) {
     setDeleting(true)
     setFormError(null)
     try {
-      await animalsApi.remove(animalId)
+      await repo.deleteAnimal(animalId)
+      await clearRowRejections('animals', animalId)
       setConfirmOpen(false)
       router.back()
     } catch (error) {
@@ -199,7 +205,7 @@ export function AnimalEditor({ animalId }: AnimalEditorProps) {
           fontWeight="800"
           color="brandFg"
           textDecorationLine="underline"
-          onPress={() => void load()}
+          onPress={retry}
           accessibilityRole="button">
           Tentar novamente
         </Text>

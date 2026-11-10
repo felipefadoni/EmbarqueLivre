@@ -14,14 +14,20 @@ import { useAuth } from '@/features/auth/AuthProvider'
 import { SelectField } from '@/components/cadastros/SelectField'
 import { LIMITS } from '@/features/cadastros/limits'
 import { labelUf, UFS } from '@/constants/ufs'
+import { repo } from '@/sync'
+import { clearPendencia, clearRowRejections, draftString, editorErrorMessage, loadEditorSource, showRejection } from '@/sync/editor'
+import { useIsOnline } from '@/sync/hooks'
+import { farmByIdQuery, rowToFarm } from '@/sync/queries'
 
 const UF_OPTIONS = UFS.map((item) => ({ value: item.uf, label: labelUf(item.uf) }))
 
 type FarmEditorProps = {
   farmId?: string
+  /** Pendência (operação recusada pelo servidor) a corrigir. */
+  pendenciaId?: string
 }
 
-export function FarmEditor({ farmId }: FarmEditorProps) {
+export function FarmEditor({ farmId, pendenciaId }: FarmEditorProps) {
   const isEdit = Boolean(farmId)
   const { user } = useAuth()
   const canManage = canManageCatalog(user?.role)
@@ -34,60 +40,65 @@ export function FarmEditor({ farmId }: FarmEditorProps) {
   const [owner, setOwner] = useState<MasterUser | null>(null)
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [formError, setFormError] = useState<string | null>(null)
-  const [loading, setLoading] = useState(isEdit)
+  const [loading, setLoading] = useState(isEdit || Boolean(pendenciaId))
   const [loadError, setLoadError] = useState<string | null>(null)
   const [saving, setSaving] = useState(false)
   const [confirmOpen, setConfirmOpen] = useState(false)
   const [deleting, setDeleting] = useState(false)
+  const online = useIsOnline()
 
-  async function load() {
-    if (!farmId) return
+  function retry() {
     setLoading(true)
     setLoadError(null)
+    void load()
+  }
+
+  async function load() {
+    if (!farmId && !pendenciaId) return
     try {
-      const farm = await farmsApi.get(farmId)
-      setName(farm.name)
-      setCity(farm.city)
-      setState(farm.state)
-      setOwnerUserId(farm.ownerUserId)
-      setOwner(
-        farm.ownerUserId
-          ? {
-              id: farm.ownerUserId,
-              name: farm.ownerName ?? '',
-              email: farm.ownerEmail ?? '',
-            }
-          : null,
-      )
+      const source = await loadEditorSource('farms', farmId ? farmByIdQuery(farmId) : null, rowToFarm, pendenciaId)
+      const farm = source.record
+      if (farmId && !farm) {
+        setLoadError('Fazenda não encontrada neste aparelho. Ela pode ter sido excluída ou ainda não sincronizou.')
+        return
+      }
+      const draft = source.draft
+      setName(draftString(draft, 'name') ?? farm?.name ?? '')
+      setCity(draftString(draft, 'city') ?? farm?.city ?? '')
+      setState(draftString(draft, 'state') ?? farm?.state ?? '')
+      const ownerId = farm?.ownerUserId ?? draftString(draft, 'ownerUserId') ?? ''
+      setOwnerUserId(ownerId)
+      // Não há tabela de usuários no sync: offline só temos o id do dono. O próprio master se reconhece;
+      // online, o nome vem do REST (efeito abaixo).
+      const self = user && ownerId === user.id ? user : null
+      setOwner(ownerId ? { id: ownerId, name: self?.name ?? '', email: self?.email ?? '' } : null)
+      showRejection(source.rejection, setFieldErrors, setFormError, ['name', 'city', 'state', 'ownerUserId'])
     } catch (error) {
-      setLoadError(isApiError(error) ? publicApiMessage(error) : 'Não foi possível carregar a fazenda.')
+      setLoadError(editorErrorMessage(error, 'Não foi possível carregar a fazenda.'))
     } finally {
       setLoading(false)
     }
   }
 
+  // Online: busca o nome do dono no REST (GET /farms/:id → ownerName). Falha silenciosa (fica o fallback).
   useEffect(() => {
-    if (!farmId) return
-    let cancelled = false
-    ;(async () => {
-      try {
-        const farm = await farmsApi.get(farmId)
-        if (cancelled) return
-        setName(farm.name)
-        setCity(farm.city)
-        setState(farm.state)
-        setLoadError(null)
-      } catch (error) {
-        if (cancelled) return
-        setLoadError(isApiError(error) ? publicApiMessage(error) : 'Não foi possível carregar a fazenda.')
-      } finally {
-        if (!cancelled) setLoading(false)
-      }
-    })()
+    if (!farmId || !ownerUserId || owner?.name || !online) return
+    let alive = true
+    farmsApi
+      .get(farmId)
+      .then((farm) => {
+        if (alive && farm.ownerName) setOwner({ id: ownerUserId, name: farm.ownerName, email: farm.ownerEmail ?? '' })
+      })
+      .catch(() => undefined)
     return () => {
-      cancelled = true
+      alive = false
     }
-  }, [farmId])
+  }, [farmId, ownerUserId, owner?.name, online])
+
+  useEffect(() => {
+    void load()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [farmId, pendenciaId])
 
   function validate(): boolean {
     const next: Record<string, string> = {}
@@ -117,8 +128,10 @@ export function FarmEditor({ farmId }: FarmEditorProps) {
     if (!isEdit && isAdmin) payload.ownerUserId = ownerUserId.trim()
     setSaving(true)
     try {
-      if (isEdit && farmId) await farmsApi.update(farmId, payload)
-      else await farmsApi.create(payload)
+      // Grava no banco local; o PowerSync envia quando houver rede.
+      const savedId = isEdit && farmId ? (await repo.updateFarm(farmId, payload), farmId) : await repo.createFarm(payload)
+      await clearRowRejections('farms', savedId)
+      await clearPendencia(pendenciaId)
       router.back()
     } catch (error) {
       const apiError = isApiError(error) ? error : null
@@ -139,7 +152,8 @@ export function FarmEditor({ farmId }: FarmEditorProps) {
     setDeleting(true)
     setFormError(null)
     try {
-      await farmsApi.remove(farmId)
+      await repo.deleteFarm(farmId)
+      await clearRowRejections('farms', farmId)
       setConfirmOpen(false)
       router.back()
     } catch (error) {
@@ -172,7 +186,7 @@ export function FarmEditor({ farmId }: FarmEditorProps) {
           fontWeight="800"
           color="brandFg"
           textDecorationLine="underline"
-          onPress={() => void load()}
+          onPress={retry}
           accessibilityRole="button">
           Tentar novamente
         </Text>
@@ -236,6 +250,7 @@ export function FarmEditor({ farmId }: FarmEditorProps) {
             name={owner?.name || undefined}
             email={owner?.email || undefined}
             ownerUserId={ownerUserId}
+            unavailableLabel={online ? 'Nome do dono indisponível' : 'Dono indisponível offline'}
           />
         ) : isAdmin ? (
           <MasterPicker
@@ -256,7 +271,7 @@ export function FarmEditor({ farmId }: FarmEditorProps) {
       <ConfirmDialog
         open={confirmOpen}
         title="Excluir fazenda?"
-        message="Se houver animais vinculados, a API vai recusar a exclusão. Esta ação não pode ser desfeita."
+        message="Fazendas com animais vinculados não podem ser excluídas. Esta ação não pode ser desfeita."
         onCancel={() => setConfirmOpen(false)}
         onConfirm={() => void onDelete()}
         busy={deleting}

@@ -14,6 +14,8 @@ type CadastroFormScreenProps = {
   onDelete?: () => void
   deleteLabel?: string
   readOnly?: boolean
+  /** Desabilita o envio sem mostrar "Salvando…" (ex.: tela online sem internet). */
+  submitDisabled?: boolean
   /** Conteúdo exibido depois dos botões (ex.: seção de carência no cadastro do animal). */
   footer?: ReactNode
 }
@@ -27,8 +29,10 @@ export function CadastroFormScreen({
   onDelete,
   deleteLabel = 'Excluir',
   readOnly = false,
+  submitDisabled = false,
   footer,
 }: CadastroFormScreenProps) {
+  const blocked = submitting || submitDisabled
   return (
     <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <YStack flex={1} bg="appBg">
@@ -47,11 +51,11 @@ export function CadastroFormScreen({
             justify="center"
             rounded={16}
             bg="brandPrimary"
-            opacity={{ default: submitting ? 0.55 : 1, press: 0.85 }}
-            onPress={submitting ? undefined : onSubmit}
+            opacity={{ default: blocked ? 0.55 : 1, press: 0.85 }}
+            onPress={blocked ? undefined : onSubmit}
             accessibilityRole="button"
             accessibilityLabel={submitLabel}
-            accessibilityState={{ disabled: submitting, busy: submitting }}>
+            accessibilityState={{ disabled: blocked, busy: submitting }}>
             {submitting ? <Spinner color="brandPrimaryFg" /> : null}
             <Text fontSize={18} fontWeight="800" color="brandPrimaryFg" ml={submitting ? 8 : 0}>
               {submitting ? 'Salvando…' : submitLabel}

@@ -2,6 +2,7 @@ import { createContext, use, useCallback, useEffect, useMemo, useState, type Pro
 
 import { authApi, setOnLoggedOut } from '@/api/client'
 import type { AuthUser } from '@/api/types'
+import { setSyncUser, syncLifecycle } from '@/sync'
 
 type AuthContextValue = {
   user: AuthUser | null
@@ -13,15 +14,30 @@ type AuthContextValue = {
 
 const AuthContext = createContext<AuthContextValue | null>(null)
 
+/** Conecta o PowerSync para o usuário (limpa o banco antes se for outro usuário). */
+function startSync(user: AuthUser) {
+  setSyncUser({ id: user.id, role: user.role })
+  void syncLifecycle.start(user.id).catch(() => undefined)
+}
+
 export function AuthProvider({ children }: PropsWithChildren) {
   const [user, setUser] = useState<AuthUser | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    setOnLoggedOut(() => setUser(null))
+    // Sessão expirada (refresh recusado): desconecta o sync mas MANTÉM os dados locais e a fila,
+    // para não perder alterações offline. Se outro usuário entrar, o start() limpa tudo.
+    setOnLoggedOut(() => {
+      setSyncUser(null)
+      void syncLifecycle.stopKeepData().catch(() => undefined)
+      setUser(null)
+    })
     authApi
       .restore()
-      .then((restored) => setUser(restored))
+      .then((restored) => {
+        if (restored) startSync(restored)
+        setUser(restored)
+      })
       .finally(() => setIsLoading(false))
 
     return () => setOnLoggedOut(() => {})
@@ -29,12 +45,16 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
   const login = useCallback(async (email: string, password: string) => {
     const nextUser = await authApi.login(email, password)
+    startSync(nextUser)
     setUser(nextUser)
     return nextUser
   }, [])
 
+  /** Logout explícito: encerra a sessão e apaga o banco local (disconnectAndClear). */
   const logout = useCallback(async (all = false) => {
     await authApi.logout(all)
+    setSyncUser(null)
+    await syncLifecycle.logoutAndClear().catch(() => undefined)
     setUser(null)
   }, [])
 

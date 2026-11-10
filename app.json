@@ -8,7 +8,8 @@
     "scheme": "embarquelivre",
     "userInterfaceStyle": "automatic",
     "ios": {
-      "icon": "./assets/images/icon.png"
+      "icon": "./assets/images/icon.png",
+      "bundleIdentifier": "com.fadoni.embarquelivre"
     },
     "android": {
       "adaptiveIcon": {
@@ -17,7 +18,8 @@
         "monochromeImage": "./assets/images/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "icon": "./assets/images/icon.png"
+      "icon": "./assets/images/icon.png",
+      "package": "com.fadoni.embarquelivre"
     },
     "web": {
       "output": "server",

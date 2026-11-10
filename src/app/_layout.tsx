@@ -5,6 +5,7 @@ import { TamaguiProvider } from 'tamagui'
 
 import { AnimatedSplashOverlay } from '@/components/animated-icon'
 import { AuthProvider, useAuth } from '@/features/auth/AuthProvider'
+import { SyncProvider } from '@/sync/SyncProvider'
 import { tamaguiConfig } from '../../tamagui.config'
 
 SplashScreen.preventAutoHideAsync()
@@ -15,9 +16,11 @@ export default function RootLayout() {
   return (
     <TamaguiProvider config={tamaguiConfig} defaultTheme={colorScheme === 'dark' ? 'dark' : 'light'}>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <AuthProvider>
-          <SplashGate />
-        </AuthProvider>
+        <SyncProvider>
+          <AuthProvider>
+            <SplashGate />
+          </AuthProvider>
+        </SyncProvider>
       </ThemeProvider>
     </TamaguiProvider>
   )

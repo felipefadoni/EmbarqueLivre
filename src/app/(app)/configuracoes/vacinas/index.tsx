@@ -1,16 +1,15 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { router } from 'expo-router'
-import { useCallback } from 'react'
 import { FlatList, useColorScheme } from 'react-native'
 import { Text, XStack, YStack } from 'tamagui'
 
-import { vaccinesApi, type Vaccine } from '@/api/catalog'
-import { paginationParams, type ListPagingRequest } from '@/api/contract'
+import type { Vaccine } from '@/api/catalog'
 import { ListLoadingFooter, ListStatus } from '@/components/cadastros/ListStatus'
 import { AppCard } from '@/components/dashboard/AppCard'
-import { useInfiniteList } from '@/features/cadastros/useInfiniteList'
 import { canManageCatalog } from '@/features/cadastros/permissions'
 import { useAuth } from '@/features/auth/AuthProvider'
+import { useLocalList } from '@/sync/hooks'
+import { vaccinesListQuery, rowToVaccine } from '@/sync/queries'
 import { TOQUE_MINIMO } from '../../../../../tamagui.config'
 
 function carenciaLabel(days: number) {
@@ -22,8 +21,8 @@ export default function VacinasListScreen() {
   const chevron = isDark ? '#A8B8AF' : '#7A8B80'
   const { user } = useAuth()
   const canManage = canManageCatalog(user?.role)
-  const load = useCallback((paging: ListPagingRequest) => vaccinesApi.list(paginationParams(paging)), [])
-  const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useInfiniteList(load)
+  // Lista local reativa (PowerSync): funciona offline e atualiza sozinha quando o sync traz dados.
+  const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useLocalList(vaccinesListQuery, rowToVaccine, [])
 
   return (
     <YStack flex={1} bg="appBg">

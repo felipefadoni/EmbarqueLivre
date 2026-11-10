@@ -31,6 +31,10 @@ export default function ConfiguracoesLayout() {
       <Stack.Screen name="animais/index" options={{ title: 'Animais' }} />
       <Stack.Screen name="animais/nova" options={{ title: 'Novo animal' }} />
       <Stack.Screen name="animais/[id]" options={{ title: 'Editar animal' }} />
+      <Stack.Screen name="usuarios/index" options={{ title: 'Usuários' }} />
+      <Stack.Screen name="usuarios/nova" options={{ title: 'Novo usuário' }} />
+      <Stack.Screen name="usuarios/[id]" options={{ title: 'Usuário' }} />
+      <Stack.Screen name="pendencias" options={{ title: 'Pendências' }} />
     </Stack>
   )
 }

@@ -44,6 +44,53 @@ export const RESOURCE_CONTRACT = {
   },
 }
 
+/**
+ * Usuários da conta (Menu → Usuários). CONTRATO PROPOSTO pelo backend (aguardando o Felipe: telefones, PATCH, revogação).
+ * Tudo que pode mudar fica AQUI, em flags; telas e cliente (src/api/users.ts, src/api/accounts.ts) só leem estas chaves.
+ * Só admin e master (basic → 403 INSUFFICIENT_ROLE). Base: /api/v1 (baseURL do cliente http).
+ *
+ * - Listar:  GET    /account/users?page&limit&search&role=master|basic[&accountId]  (admin sem accountId = todas as contas)
+ *            item: { id, accountId, name, email, role, status, canAccess, createdByUserId, createdAt, updatedAt }
+ * - Criar:   POST   /account/users { name, email, password, role, accountId? } → 201  (accountId obrigatório para admin)
+ * - Excluir: DELETE /account/users/:id → 204 (soft delete + revoga sessões; repetir → 404 = já excluído)
+ * - Editar:  PATCH  /account/users/:id { name?, role? }  PROPOSTO → `supportsEdit`
+ * - Detalhe: não há GET /account/users/:id → a tela usa o item da lista (cache) e, se faltar, busca na lista; `detailPath`
+ * - Contas:  GET    /accounts?search&page (admin) → { id, name, masterCount }  (AccountPicker)
+ * Contas migradas usam o id do antigo master como accountId.
+ *
+ * NÃO alterado ainda (muda com o conceito de conta):
+ * - PowerSync: claim `accountId` no token (src/sync/connector.ts fetchCredentials) e a stream `account`
+ *   (src/sync/mapping.ts, docs/POWERSYNC.md): o filtro passa de owner/master para accountId.
+ * - Dono da fazenda: `owner_user_id` em src/sync/mapping.ts, queries.ts (FarmRow), repository.ts (FarmInput),
+ *   upload.ts (PATCH sem owner), rejections.ts (FARM_OWNER_*) e FarmEditor/MasterPicker (admin escolhe master;
+ *   tende a virar AccountPicker + accountId). RESOURCE_CONTRACT.masters (/users/masters) continua usado só pelas fazendas.
+ */
+export const USERS_CONTRACT = {
+  provisional: true,
+  path: '/account/users',
+  createPath: '/account/users',
+  /** GET de um usuário. null = não existe: detalhe vem do cache da lista / busca na lista. Ex.: '/account/users/:id'. */
+  detailPath: null as string | null,
+  searchParam: 'search',
+  roleParam: 'role',
+  /** Escopo por conta (filtro do admin na lista e campo do POST do admin). */
+  scopeParam: 'accountId',
+  adminScopeField: 'accountId',
+  /** Perfis que podem ser criados por aqui (admin só via seed/ops). */
+  creatableRoles: ['master', 'basic'] as const,
+  /** Telefones no POST: provavelmente opcionais (decisão do Felipe). false = não pede nem envia. */
+  sendsPhones: false,
+  /** PATCH /account/users/:id { name?, role? } — proposto, aguardando o Felipe. */
+  supportsEdit: false,
+  editableFields: ['name', 'role'] as const,
+  /** DELETE repetido responde 404: tratar como "já excluído" e atualizar a lista. */
+  deleteNotFoundIsGone: true,
+  /** Status considerado normal (outros mostram um selo discreto). */
+  activeStatus: 'active',
+  searchDebounceMs: 400,
+  accounts: { path: '/accounts', searchParam: 'search', masterCountField: 'masterCount' },
+}
+
 export function clampLimit(limit?: number): number {
   const { defaultLimit, maxLimit } = RESOURCE_CONTRACT.pagination
   if (limit == null || !Number.isFinite(limit)) return defaultLimit

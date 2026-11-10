@@ -8,6 +8,7 @@ import { listMasters, type MasterUser } from '@/api/masters'
 import { type ListPagingRequest } from '@/api/contract'
 import { ListLoadingFooter, ListStatus } from '@/components/cadastros/ListStatus'
 import { useInfiniteList } from '@/features/cadastros/useInfiniteList'
+import { OfflineNotice } from '@/components/sync/OfflineNotice'
 import { TOQUE_MINIMO } from '../../../tamagui.config'
 
 type MasterPickerProps = {
@@ -81,6 +82,8 @@ export function MasterPicker({
           {error}
         </Text>
       ) : null}
+      {/* A lista de masters vem da API (não é sincronizada): precisa de internet. */}
+      {disabled ? null : <OfflineNotice message="Sem internet. A escolha do master dono precisa de conexão." />}
 
       <Modal visible={open} transparent animationType="slide" onRequestClose={() => setOpen(false)}>
         <Pressable
@@ -240,11 +243,14 @@ export function OwnerReadOnlyField({
   name,
   email,
   ownerUserId,
+  unavailableLabel = 'Nome do dono indisponível',
 }: {
   label: string
   name?: string
   email?: string
   ownerUserId: string
+  /** Texto quando o nome não está disponível (ex.: offline, sem tabela de usuários no sync). */
+  unavailableLabel?: string
 }) {
   return (
     <YStack gap="2" w="100%">
@@ -274,7 +280,7 @@ export function OwnerReadOnlyField({
         ) : (
           <>
             <Text fontSize={18} fontWeight="700" color="brandFg">
-              Nome do dono indisponível
+              {unavailableLabel}
             </Text>
             <Text fontSize={15} fontWeight="500" color="brandMuted">
               {ownerUserId}

@@ -1,12 +1,19 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
 import Constants from 'expo-constants'
 import { router } from 'expo-router'
+import { useRef, useState } from 'react'
 import { ScrollView, useColorScheme } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Text, XStack, YStack } from 'tamagui'
 
+import { ConfirmDialog } from '@/components/cadastros/ConfirmDialog'
 import { AppCard } from '@/components/dashboard/AppCard'
+import { SyncStatusIndicator } from '@/components/sync/SyncStatusIndicator'
 import { useAuth } from '@/features/auth/AuthProvider'
+import { canManageUsers } from '@/features/cadastros/permissions'
+import { db } from '@/sync'
+import { useSyncInfo } from '@/sync/hooks'
+import { countUnsentChanges, logoutWithGuard } from '@/sync/logout'
 import { TOQUE_MINIMO } from '../../../../tamagui.config'
 
 const VERSAO = Constants.expoConfig?.version ?? '1.0.0'
@@ -16,6 +23,42 @@ export default function ConfiguracoesScreen() {
   const isDark = useColorScheme() === 'dark'
   const { user, logout } = useAuth()
   const chevron = isDark ? '#A8B8AF' : '#7A8B80'
+  const sync = useSyncInfo()
+  const [confirmCount, setConfirmCount] = useState<number | null>(null)
+  const [loggingOut, setLoggingOut] = useState(false)
+  const confirmResolver = useRef<((ok: boolean) => void) | null>(null)
+
+  function askConfirm(total: number) {
+    return new Promise<boolean>((resolve) => {
+      confirmResolver.current = resolve
+      setConfirmCount(total)
+    })
+  }
+
+  function answerConfirm(ok: boolean) {
+    confirmResolver.current?.(ok)
+    confirmResolver.current = null
+    if (!ok) setConfirmCount(null)
+  }
+
+  // Sair apaga o banco local: se houver alterações não enviadas ou pendências (contadas AGORA), pede confirmação.
+  // Cancelar mantém o usuário conectado e os dados no aparelho.
+  async function onLogoutPress() {
+    if (loggingOut) return
+    try {
+      await logoutWithGuard({
+        count: () => countUnsentChanges(db),
+        confirm: askConfirm,
+        logout: async () => {
+          setLoggingOut(true)
+          await logout()
+        },
+      })
+    } finally {
+      setLoggingOut(false)
+      setConfirmCount(null)
+    }
+  }
 
   return (
     <YStack flex={1} bg="appBg">
@@ -67,6 +110,24 @@ export default function ConfiguracoesScreen() {
           </YStack>
         </AppCard>
 
+        <AppCard>
+          <YStack gap={12}>
+            <Text fontSize={14} fontWeight="700" color="brandMuted">
+              Sincronização
+            </Text>
+            <SyncStatusIndicator />
+          </YStack>
+        </AppCard>
+
+        <AppCard padded={false}>
+          <MenuLink
+            href="/configuracoes/pendencias"
+            icon="alert-circle-outline"
+            label={sync.rejectionCount > 0 ? `Pendências (${sync.rejectionCount})` : 'Pendências'}
+            chevron={chevron}
+          />
+        </AppCard>
+
         <AppCard padded={false}>
           <YStack>
             <MenuLink href="/configuracoes/fazendas" icon="home-outline" label="Fazendas" chevron={chevron} />
@@ -84,6 +145,13 @@ export default function ConfiguracoesScreen() {
           </YStack>
         </AppCard>
 
+        {/* Usuários: só master e admin (Basic não vê; a rota também redireciona). */}
+        {canManageUsers(user?.role) ? (
+          <AppCard padded={false}>
+            <MenuLink href="/configuracoes/usuarios" icon="people-outline" label="Usuários" chevron={chevron} />
+          </AppCard>
+        ) : null}
+
         <AppCard padded={false}>
           <XStack
             items="center"
@@ -92,9 +160,7 @@ export default function ConfiguracoesScreen() {
             py={16}
             minH={TOQUE_MINIMO}
             opacity={{ press: 0.85 }}
-            onPress={() => {
-              void logout()
-            }}
+            onPress={() => void onLogoutPress()}
             accessibilityRole="button"
             accessibilityLabel="Sair da conta">
             <Text fontSize={18} fontWeight="800" color="brandError">
@@ -104,6 +170,16 @@ export default function ConfiguracoesScreen() {
           </XStack>
         </AppCard>
       </ScrollView>
+      <ConfirmDialog
+        open={confirmCount != null}
+        title="Sair e apagar dados deste aparelho?"
+        message={`Há ${confirmCount === 1 ? '1 alteração' : `${confirmCount ?? 0} alterações`} que ainda não foram enviadas ou foram recusadas pelo servidor. Ao sair, elas serão perdidas. Conecte-se à internet e aguarde a sincronização para não perder nada.`}
+        confirmLabel="Sair mesmo assim"
+        cancelLabel="Continuar conectado"
+        onCancel={() => answerConfirm(false)}
+        onConfirm={() => answerConfirm(true)}
+        busy={loggingOut}
+      />
     </YStack>
   )
 }
@@ -115,7 +191,13 @@ function MenuLink({
   label,
   chevron,
 }: {
-  href: '/configuracoes/fazendas' | '/configuracoes/vacinas' | '/configuracoes/tipos-de-animais' | '/configuracoes/animais'
+  href:
+    | '/configuracoes/fazendas'
+    | '/configuracoes/vacinas'
+    | '/configuracoes/tipos-de-animais'
+    | '/configuracoes/animais'
+    | '/configuracoes/pendencias'
+    | '/configuracoes/usuarios'
   icon: keyof typeof Ionicons.glyphMap
   label: string
   chevron: string

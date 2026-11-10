@@ -1,48 +1,59 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
-import { router } from 'expo-router'
-import { useCallback, useEffect, useState } from 'react'
+import { router, useLocalSearchParams } from 'expo-router'
+import { useState } from 'react'
 import { FlatList, useColorScheme } from 'react-native'
 import { Text, XStack, YStack } from 'tamagui'
 
-import { animalTypesApi, animalsApi, farmsApi, type Animal, type AnimalType, type Farm } from '@/api/catalog'
-import { listAllPages, paginationParams, type ListPagingRequest } from '@/api/contract'
+import type { Animal } from '@/api/catalog'
 import { ListLoadingFooter, ListStatus } from '@/components/cadastros/ListStatus'
 import { SelectField } from '@/components/cadastros/SelectField'
 import { WithdrawalBadge } from '@/components/cadastros/WithdrawalBadge'
 import { AppCard } from '@/components/dashboard/AppCard'
-import { formatDayMonthPtBr } from '@/features/cadastros/dates'
-import { useInfiniteList } from '@/features/cadastros/useInfiniteList'
+import { formatDayMonthPtBr, todayIso } from '@/features/cadastros/dates'
+import { useLocalAnimalTypes, useLocalFarms, useLocalList } from '@/sync/hooks'
+import { firstParam } from '@/sync/params'
+import { animalsListQuery, isAnimalSituation, rowToAnimal, type AnimalRow as LocalAnimalRow, type AnimalSituation } from '@/sync/queries'
 import { TOQUE_MINIMO } from '../../../../../tamagui.config'
+
+const SITUATION_OPTIONS: { value: '' | AnimalSituation; label: string }[] = [
+  { value: '', label: 'Todas as situações' },
+  { value: 'liberado', label: 'Liberados (aptos para embarque)' },
+  { value: 'carencia', label: 'Em carência' },
+  { value: 'libera7', label: 'Ficam livres em até 7 dias' },
+  { value: 'sem_historico', label: 'Sem histórico de vacina' },
+]
 
 export default function AnimaisListScreen() {
   const isDark = useColorScheme() === 'dark'
   const chevron = isDark ? '#A8B8AF' : '#7A8B80'
-  const [farms, setFarms] = useState<Farm[]>([])
-  const [types, setTypes] = useState<AnimalType[]>([])
-  const [farmId, setFarmId] = useState('')
-  const [typeId, setTypeId] = useState('')
+  const farms = useLocalFarms()
+  const types = useLocalAnimalTypes()
+  // Filtros podem vir do Dashboard: ?situacao=carencia&farmId=...&animalTypeId=...
+  const params = useLocalSearchParams<{ situacao?: string; farmId?: string; animalTypeId?: string }>()
+  const paramSituation = firstParam(params.situacao)
+  const paramFarm = firstParam(params.farmId)
+  const paramType = firstParam(params.animalTypeId)
+  const [farmId, setFarmId] = useState(paramFarm ?? '')
+  const [typeId, setTypeId] = useState(paramType ?? '')
+  const [situacao, setSituacao] = useState<'' | AnimalSituation>(isAnimalSituation(paramSituation) ? paramSituation : '')
+  // A tela pode já estar montada na pilha: parâmetros novos substituem os filtros (ajuste durante o render).
+  const paramsKey = `${paramSituation ?? ''}|${paramFarm ?? ''}|${paramType ?? ''}`
+  const [appliedParams, setAppliedParams] = useState(paramsKey)
+  if (appliedParams !== paramsKey) {
+    setAppliedParams(paramsKey)
+    setSituacao(isAnimalSituation(paramSituation) ? paramSituation : '')
+    setFarmId(paramFarm ?? '')
+    setTypeId(paramType ?? '')
+  }
+  const today = todayIso()
 
-  useEffect(() => {
-    void Promise.all([listAllPages(farmsApi.list), listAllPages(animalTypesApi.list)])
-      .then(([farmList, typeList]) => {
-        setFarms(farmList)
-        setTypes(typeList)
-      })
-      .catch(() => {
-        // Filtros ficam vazios se as listas auxiliares falharem; a lista de animais ainda tenta carregar.
-      })
-  }, [])
-
-  const load = useCallback(
-    (paging: ListPagingRequest) =>
-      animalsApi.list({
-        farmId: farmId || undefined,
-        animalTypeId: typeId || undefined,
-        ...paginationParams(paging),
-      }),
-    [farmId, typeId],
+  // Lista local reativa: carência (SUM/MAX) calculada no SQLite do aparelho.
+  const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useLocalList(
+    (limit) =>
+      animalsListQuery({ farmId: farmId || undefined, animalTypeId: typeId || undefined, situacao: situacao || undefined }, today, limit),
+    (row: LocalAnimalRow) => rowToAnimal(row),
+    [farmId, typeId, situacao, today],
   )
-  const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useInfiniteList(load)
 
   const farmName = (animal: Animal) =>
     animal.farmName ?? farms.find((farm) => farm.id === animal.farmId)?.name ?? 'Fazenda não informada'
@@ -78,6 +89,12 @@ export default function AnimaisListScreen() {
           options={[{ value: '', label: 'Todos os tipos' }, ...types.map((item) => ({ value: item.id, label: item.name }))]}
           onChange={setTypeId}
         />
+        <SelectField
+          label="Situação"
+          value={situacao}
+          options={SITUATION_OPTIONS}
+          onChange={(value) => setSituacao(isAnimalSituation(value) ? value : '')}
+        />
       </YStack>
       <FlatList
         data={items}
@@ -96,7 +113,7 @@ export default function AnimaisListScreen() {
             error={error}
             empty={!loading && !error}
             emptyTitle="Nenhum animal"
-            emptyMessage="Cadastre o primeiro animal ou ajuste os filtros."
+            emptyMessage={situacao ? 'Nenhum animal nesta situação com esses filtros.' : 'Cadastre o primeiro animal ou ajuste os filtros.'}
             onRetry={() => void reload()}
           />
         }

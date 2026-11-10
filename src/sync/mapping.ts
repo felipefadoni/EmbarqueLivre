@@ -1,0 +1,223 @@
+/**
+ * MAPEAMENTO ÚNICO entre o app e as tabelas sincronizadas pelo PowerSync.
+ *
+ * Ajuste AQUI quando o backend confirmar os nomes finais (tabelas, colunas e tipos).
+ * Nenhum outro arquivo do app escreve nome de tabela/coluna à mão: SQL, schema local,
+ * prefill de pendências e upload usam este módulo.
+ *
+ * Contrato final do backend (API_INTEGRATION.md §19, 10/11/2026): tabelas farms, vaccines,
+ * animal_types, animals, animal_vaccinations (NÃO há tabela de usuários); colunas snake_case sem
+ * prefixo, com `id`; o opData do upload usa os mesmos nomes. IDs são ULID em MAIÚSCULAS.
+ * Streams (auto_subscribe): catalogs (todos), account (master/basic), admin_all (admin).
+ * - `id` é sempre a coluna `id` (texto, ULID) criada pelo PowerSync.
+ * - Datas civis (YYYY-MM-DD) e timestamps (ISO 8601) são `text`.
+ * - Inteiros (dias de carência) são `integer`.
+ *
+ * Este arquivo é puro (sem React Native) para poder ser testado no Node.
+ */
+
+export type ColumnType = 'text' | 'integer' | 'real'
+
+type ColumnDef = { name: string; type: ColumnType }
+
+function col(name: string, type: ColumnType = 'text'): ColumnDef {
+  return { name, type }
+}
+
+export const SYNC_TABLES = {
+  farms: {
+    table: 'farms',
+    columns: {
+      /** Só o admin envia (no PUT). Master/basic: o servidor define a conta. Nunca vai em PATCH. */
+      ownerUserId: col('owner_user_id'),
+      name: col('name'),
+      city: col('city'),
+      state: col('state'),
+      createdAt: col('created_at'),
+      updatedAt: col('updated_at'),
+    },
+  },
+  vaccines: {
+    table: 'vaccines',
+    columns: {
+      name: col('name'),
+      withdrawalDays: col('withdrawal_days', 'integer'),
+      createdAt: col('created_at'),
+      updatedAt: col('updated_at'),
+    },
+  },
+  animalTypes: {
+    table: 'animal_types',
+    columns: {
+      name: col('name'),
+      createdAt: col('created_at'),
+      updatedAt: col('updated_at'),
+    },
+  },
+  animals: {
+    table: 'animals',
+    columns: {
+      farmId: col('farm_id'),
+      animalTypeId: col('animal_type_id'),
+      code: col('code'),
+      sex: col('sex'),
+      breed: col('breed'),
+      birthDate: col('birth_date'),
+      createdAt: col('created_at'),
+      updatedAt: col('updated_at'),
+    },
+  },
+  vaccinations: {
+    table: 'animal_vaccinations',
+    columns: {
+      animalId: col('animal_id'),
+      /** Denormalizado (fazenda atual do animal). O servidor mantém; o app grava a fazenda do animal. */
+      farmId: col('farm_id'),
+      vaccineId: col('vaccine_id'),
+      appliedAt: col('applied_at'),
+      /** Cópia dos dias da vacina no momento do registro. */
+      withdrawalDays: col('withdrawal_days', 'integer'),
+      /** Gerada no servidor (applied_at + days). Localmente o app calcula e grava. */
+      withdrawalUntil: col('withdrawal_until'),
+      createdByUserId: col('created_by_user_id'),
+      createdAt: col('created_at'),
+      updatedAt: col('updated_at'),
+    },
+  },
+} as const
+
+/** Entidades que o app escreve localmente. */
+export const WRITABLE_ENTITIES = ['farms', 'vaccines', 'animalTypes', 'animals', 'vaccinations'] as const
+
+/** Limite de operações por POST /powersync/upload. */
+export const UPLOAD_BATCH_LIMIT = 500
+
+/**
+ * timestamptz chega do PowerSync como ISO UTC com microssegundos ("2026-11-10T15:17:43.051812Z").
+ * Para o `new Date` do Hermes ser previsível: espaço → T e fração truncada em 3 casas (milissegundos).
+ * Datas civis (YYYY-MM-DD) passam inalteradas.
+ */
+export function normalizeTimestamp(raw: string | null | undefined): string | null {
+  if (!raw) return null
+  let value = String(raw).trim()
+  if (/^\d{4}-\d{2}-\d{2} \d/.test(value)) value = value.replace(' ', 'T')
+  return value.replace(/(T\d{2}:\d{2}:\d{2})\.(\d{1,3})\d*/, '$1.$2')
+}
+
+export function parseTimestamp(raw: string | null | undefined): Date | null {
+  const normalized = normalizeTimestamp(raw)
+  if (!normalized) return null
+  const date = new Date(normalized)
+  return Number.isNaN(date.getTime()) ? null : date
+}
+
+export type SyncEntity = keyof typeof SYNC_TABLES
+export type EntityField<E extends SyncEntity> = keyof (typeof SYNC_TABLES)[E]['columns']
+
+/**
+ * Colunas derivadas pelo servidor: o app grava localmente (para as consultas offline
+ * funcionarem), envia no upload, e o backend deve IGNORAR/recalcular.
+ */
+export const SERVER_DERIVED_COLUMNS: Partial<Record<SyncEntity, string[]>> = {
+  vaccinations: [
+    SYNC_TABLES.vaccinations.columns.farmId.name,
+    SYNC_TABLES.vaccinations.columns.withdrawalDays.name,
+    SYNC_TABLES.vaccinations.columns.withdrawalUntil.name,
+    SYNC_TABLES.vaccinations.columns.createdByUserId.name,
+  ],
+}
+
+/** Tabela local (não sincronizada) com as operações recusadas pelo servidor. */
+export const REJECTIONS_TABLE = {
+  table: 'sync_rejections',
+  columns: {
+    entity: col('entity'),
+    tableName: col('table_name'),
+    rowId: col('row_id'),
+    op: col('op'),
+    opData: col('op_data'),
+    statusCode: col('status_code', 'integer'),
+    errorCode: col('error_code'),
+    message: col('message'),
+    /** Coluna apontada pelo servidor (`error.details.field`, snake_case), para destacar o campo no "Corrigir". */
+    field: col('field'),
+    createdAt: col('created_at'),
+  },
+} as const
+
+/** Nome da tabela (como aparece no SQL local e no `table` do CrudEntry). */
+export function tableOf(entity: SyncEntity): string {
+  return SYNC_TABLES[entity].table
+}
+
+/** Nome da coluna de um campo do app. */
+export function colOf<E extends SyncEntity>(entity: E, field: EntityField<E>): string {
+  const columns = SYNC_TABLES[entity].columns as Record<string, ColumnDef>
+  return columns[field as string].name
+}
+
+/** Campo do app a partir do nome da coluna (ex.: details.field "withdrawal_days" → "withdrawalDays"). */
+export function fieldOfColumn(entity: SyncEntity, column: string | null | undefined): string | null {
+  if (!column) return null
+  const columns = SYNC_TABLES[entity].columns as Record<string, ColumnDef>
+  for (const [field, def] of Object.entries(columns)) if (def.name === column) return field
+  return null
+}
+
+/** Entidade a partir do nome da tabela (CrudEntry.table). */
+export function entityOfTable(table: string): SyncEntity | null {
+  for (const [entity, def] of Object.entries(SYNC_TABLES)) {
+    if (def.table === table) return entity as SyncEntity
+  }
+  return null
+}
+
+/** Converte { campo: valor } do app para { coluna: valor } (ignora campos desconhecidos/undefined). */
+export function toColumns<E extends SyncEntity>(
+  entity: E,
+  values: Partial<Record<EntityField<E>, unknown>>,
+): Record<string, unknown> {
+  const columns = SYNC_TABLES[entity].columns as Record<string, ColumnDef>
+  const out: Record<string, unknown> = {}
+  for (const [field, value] of Object.entries(values)) {
+    if (value === undefined) continue
+    const def = columns[field]
+    if (def) out[def.name] = value
+  }
+  return out
+}
+
+/** Converte { coluna: valor } (ex.: opData de uma pendência) de volta para { campo: valor }. */
+export function fromColumns(entity: SyncEntity, data: Record<string, unknown> | null | undefined): Record<string, unknown> {
+  const out: Record<string, unknown> = {}
+  if (!data) return out
+  const columns = SYNC_TABLES[entity].columns as Record<string, ColumnDef>
+  for (const [field, def] of Object.entries(columns)) {
+    if (def.name in data) out[field] = data[def.name]
+  }
+  return out
+}
+
+/** Lista [nome, tipo] de colunas de uma tabela (para o schema PowerSync e para os testes). */
+export function columnList(entity: SyncEntity | 'rejections'): [string, ColumnType][] {
+  const columns = (entity === 'rejections' ? REJECTIONS_TABLE.columns : SYNC_TABLES[entity].columns) as Record<
+    string,
+    ColumnDef
+  >
+  return Object.values(columns).map((def) => [def.name, def.type])
+}
+
+/** Índices locais (nomes de colunas) para as consultas mais usadas. */
+export const LOCAL_INDEXES: Partial<Record<SyncEntity, Record<string, string[]>>> = {
+  animals: {
+    farm: [SYNC_TABLES.animals.columns.farmId.name],
+    type: [SYNC_TABLES.animals.columns.animalTypeId.name],
+    code: [SYNC_TABLES.animals.columns.code.name],
+  },
+  vaccinations: {
+    animal: [SYNC_TABLES.vaccinations.columns.animalId.name],
+    applied: [SYNC_TABLES.vaccinations.columns.appliedAt.name],
+    farm_applied: [SYNC_TABLES.vaccinations.columns.farmId.name, SYNC_TABLES.vaccinations.columns.appliedAt.name],
+    vaccine: [SYNC_TABLES.vaccinations.columns.vaccineId.name],
+  },
+}

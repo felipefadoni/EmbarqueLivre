@@ -7,6 +7,7 @@ import { emailIsValid } from '@/api/validation'
 import { AuthField, type AuthFieldRef } from '@/components/auth/AuthField'
 import { AuthScaffold } from '@/components/auth/AuthScaffold'
 import { FormBanner } from '@/components/auth/FormBanner'
+import { OfflineNotice } from '@/components/sync/OfflineNotice'
 import { useAuth } from '@/features/auth/AuthProvider'
 import { useRetryAfter } from '@/features/auth/useRetryAfter'
 import { TOQUE_MINIMO, TOQUE_PRINCIPAL } from '../../../tamagui.config'
@@ -97,6 +98,7 @@ export default function LoginScreen() {
   return (
     <AuthScaffold title="Entrar" subtitle="Acesse sua conta para conferir o curral." logoSize={128}>
       <YStack gap="4" w="100%">
+        <OfflineNotice />
         {formError ? <FormBanner message={formError} tone={formTone} /> : null}
 
         <AuthField

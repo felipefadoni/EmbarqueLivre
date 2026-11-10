@@ -1,8 +1,9 @@
 import { useLocalSearchParams } from 'expo-router'
 
 import { VaccinationEditor } from '@/features/vacinacoes/VaccinationEditor'
+import { firstParam } from '@/sync/params'
 
 export default function EditarLancamentoScreen() {
-  const { id } = useLocalSearchParams<{ id: string }>()
-  return <VaccinationEditor vaccinationId={typeof id === 'string' ? id : id?.[0]} />
+  const { id, pendencia } = useLocalSearchParams<{ id: string; pendencia?: string }>()
+  return <VaccinationEditor vaccinationId={firstParam(id)} pendenciaId={firstParam(pendencia)} />
 }

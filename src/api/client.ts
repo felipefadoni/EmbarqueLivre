@@ -5,7 +5,7 @@ import { deleteSecureItem, getSecureItem, setSecureItem } from './storage'
 import type { AuthUser, LoginRequest, MeResponse, MobileSessionResponse, RegisterUserRequest, UserResponse } from './types'
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:3000'
-const KEYS = { access: 'el.accessToken', refresh: 'el.refreshToken', accessExp: 'el.accessExp' } as const
+const KEYS = { access: 'el.accessToken', refresh: 'el.refreshToken', accessExp: 'el.accessExp', user: 'el.user' } as const
 
 let accessToken: string | null = null
 let accessExpiresAt = 0
@@ -27,8 +27,20 @@ async function saveSession(session: MobileSessionResponse) {
   await setSecureItem(KEYS.refresh, session.refreshToken)
   await setSecureItem(KEYS.access, session.accessToken)
   await setSecureItem(KEYS.accessExp, session.accessTokenExpiresAt)
+  await setSecureItem(KEYS.user, JSON.stringify(session.user))
   accessToken = session.accessToken
   accessExpiresAt = Date.parse(session.accessTokenExpiresAt)
+}
+
+/** Último usuário autenticado (para abrir o app offline com os dados locais). */
+async function readCachedUser(): Promise<AuthUser | null> {
+  try {
+    const raw = await getSecureItem(KEYS.user)
+    const user = raw ? (JSON.parse(raw) as AuthUser) : null
+    return user && typeof user.id === 'string' && typeof user.role === 'string' ? user : null
+  } catch {
+    return null
+  }
 }
 
 async function clearSession() {
@@ -132,8 +144,16 @@ export const authApi = {
     accessExpiresAt = Date.parse((await getSecureItem(KEYS.accessExp)) ?? '') || 0
     if (!(await getSecureItem(KEYS.refresh))) return null
     try {
-      return (await http.get<MeResponse>('/auth/me')).data
-    } catch {
+      const me = (await http.get<MeResponse>('/auth/me')).data
+      await setSecureItem(KEYS.user, JSON.stringify({ id: me.id, name: me.name, email: me.email, role: me.role, masterUserId: me.masterUserId }))
+      return me
+    } catch (error) {
+      // Offline-first: sem rede (ou servidor fora), mantém a sessão local com o último usuário.
+      // Sessão inválida (401 após refresh) já limpou os tokens e cai no null.
+      const apiError = toApiError(error)
+      if (apiError.code === 'NETWORK_ERROR' || apiError.status >= 500) {
+        if (await getSecureItem(KEYS.refresh)) return readCachedUser()
+      }
       return null
     }
   },
