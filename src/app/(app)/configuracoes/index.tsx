@@ -10,7 +10,7 @@ import { ConfirmDialog } from '@/components/cadastros/ConfirmDialog'
 import { AppCard } from '@/components/dashboard/AppCard'
 import { SyncStatusIndicator } from '@/components/sync/SyncStatusIndicator'
 import { useAuth } from '@/features/auth/AuthProvider'
-import { canManageUsers } from '@/features/cadastros/permissions'
+import { canManageFarms, canManageHerds, canManageUsers, canManageVaccines, canViewAnimalTypes } from '@/features/cadastros/permissions'
 import { db } from '@/sync'
 import { useSyncInfo } from '@/sync/hooks'
 import { countUnsentChanges, logoutWithGuard } from '@/sync/logout'
@@ -130,20 +130,37 @@ export default function ConfiguracoesScreen() {
 
         <AppCard padded={false}>
           <YStack>
-            <MenuLink href="/configuracoes/fazendas" icon="home-outline" label="Fazendas" chevron={chevron} />
-            <YStack h={1} bg={isDark ? '#3A5247' : '#EEF6EF'} mx={20} />
-            <MenuLink href="/configuracoes/vacinas" icon="medkit-outline" label="Vacinas" chevron={chevron} />
-            <YStack h={1} bg={isDark ? '#3A5247' : '#EEF6EF'} mx={20} />
-            <MenuLink
-              href="/configuracoes/tipos-de-animais"
-              icon="paw-outline"
-              label="Tipos de animais"
-              chevron={chevron}
-            />
-            <YStack h={1} bg={isDark ? '#3A5247' : '#EEF6EF'} mx={20} />
+            {canManageFarms(user?.role) ? (
+              <>
+                <MenuLink href="/configuracoes/fazendas" icon="home-outline" label="Fazendas" chevron={chevron} />
+                <YStack h={1} bg={isDark ? '#3A5247' : '#EEF6EF'} mx={20} />
+              </>
+            ) : null}
+            {canManageVaccines(user?.role) ? (
+              <>
+                <MenuLink href="/configuracoes/vacinas" icon="medkit-outline" label="Vacinas" chevron={chevron} />
+                <YStack h={1} bg={isDark ? '#3A5247' : '#EEF6EF'} mx={20} />
+              </>
+            ) : null}
+            {canViewAnimalTypes(user?.role) ? (
+              <>
+                <MenuLink
+                  href="/configuracoes/tipos-de-animais"
+                  icon="paw-outline"
+                  label="Tipos de animais"
+                  chevron={chevron}
+                />
+                <YStack h={1} bg={isDark ? '#3A5247' : '#EEF6EF'} mx={20} />
+              </>
+            ) : null}
             <MenuLink href="/configuracoes/animais" icon="list-outline" label="Animais" chevron={chevron} />
-            <YStack h={1} bg={isDark ? '#3A5247' : '#EEF6EF'} mx={20} />
-            <MenuLink href="/configuracoes/rebanhos" icon="layers-outline" label="Rebanho" chevron={chevron} />
+            {/* Embarques saiu do Menu: tem tab própria na barra de baixo (não duplicar aqui). */}
+            {canManageHerds(user?.role) ? (
+              <>
+                <YStack h={1} bg={isDark ? '#3A5247' : '#EEF6EF'} mx={20} />
+                <MenuLink href="/configuracoes/rebanhos" icon="layers-outline" label="Rebanho" chevron={chevron} />
+              </>
+            ) : null}
           </YStack>
         </AppCard>
 

@@ -9,7 +9,7 @@ import { AccountPicker } from '@/components/cadastros/AccountPicker'
 import type { Account } from '@/api/accounts'
 import { CadastroFormScreen } from '@/components/cadastros/CadastroFormScreen'
 import { ConfirmDialog } from '@/components/cadastros/ConfirmDialog'
-import { canManageCatalog } from '@/features/cadastros/permissions'
+import { canManageFarms } from '@/features/cadastros/permissions'
 import { useAuth } from '@/features/auth/AuthProvider'
 import { SelectField } from '@/components/cadastros/SelectField'
 import { LIMITS } from '@/features/cadastros/limits'
@@ -30,7 +30,7 @@ type FarmEditorProps = {
 export function FarmEditor({ farmId, pendenciaId }: FarmEditorProps) {
   const isEdit = Boolean(farmId)
   const { user } = useAuth()
-  const canManage = canManageCatalog(user?.role)
+  const canManage = canManageFarms(user?.role)
   const readOnly = !canManage
   const isAdmin = user?.role === 'admin'
   const [name, setName] = useState('')
@@ -282,7 +282,7 @@ export function FarmEditor({ farmId, pendenciaId }: FarmEditorProps) {
       <ConfirmDialog
         open={confirmOpen}
         title="Excluir fazenda?"
-        message="Fazendas com animais ou rebanhos vinculados não podem ser excluídas. Se houver os dois, a recusa é por causa dos animais (transfira ou remova os animais primeiro; depois, os rebanhos). Esta ação não pode ser desfeita."
+        message="Fazendas com animais, rebanhos ou embarques vinculados não podem ser excluídas. Se houver animais, a recusa é por causa deles (transfira ou remova os animais primeiro; depois, os rebanhos e os embarques). Esta ação não pode ser desfeita."
         onCancel={() => setConfirmOpen(false)}
         onConfirm={() => void onDelete()}
         busy={deleting}

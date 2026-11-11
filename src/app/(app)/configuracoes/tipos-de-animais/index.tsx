@@ -1,22 +1,28 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
-import { router } from 'expo-router'
+import { Redirect, router } from 'expo-router'
 import { FlatList, useColorScheme } from 'react-native'
 import { Text, XStack, YStack } from 'tamagui'
 
 import type { AnimalType } from '@/api/catalog'
 import { ListLoadingFooter, ListStatus } from '@/components/cadastros/ListStatus'
 import { AppCard } from '@/components/dashboard/AppCard'
-import { canManageCatalog } from '@/features/cadastros/permissions'
+import { canManageAnimalTypes, canViewAnimalTypes } from '@/features/cadastros/permissions'
 import { useAuth } from '@/features/auth/AuthProvider'
 import { useLocalList } from '@/sync/hooks'
 import { animalTypesListQuery, rowToAnimalType } from '@/sync/queries'
 import { TOQUE_MINIMO } from '../../../../../tamagui.config'
 
 export default function TiposDeAnimaisListScreen() {
+  const { user } = useAuth()
+  if (!canViewAnimalTypes(user?.role)) return <Redirect href="/configuracoes" />
+  return <TiposDeAnimaisList />
+}
+
+function TiposDeAnimaisList() {
   const isDark = useColorScheme() === 'dark'
   const chevron = isDark ? '#A8B8AF' : '#7A8B80'
   const { user } = useAuth()
-  const canManage = canManageCatalog(user?.role)
+  const canManage = canManageAnimalTypes(user?.role)
   // Lista local reativa (PowerSync): funciona offline e atualiza sozinha quando o sync traz dados.
   const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useLocalList(animalTypesListQuery, rowToAnimalType, [])
 

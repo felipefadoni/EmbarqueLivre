@@ -64,51 +64,93 @@ export type RejectionGroup = {
   dependentsLabel: string | null
 }
 
+/** Recusa de vínculo embarque ↔ animal cujo opData aponta para um embarque (vínculo feito no mesmo envio). */
+export function shipmentIdFromLinkOpData(data: Record<string, unknown>): string | null {
+  const value = data.shipment_id ?? data.shipmentId
+  return typeof value === 'string' && value.trim() ? String(value).toUpperCase() : null
+}
+
+export function isShipmentLinkRejection(rejection: Pick<Rejection, 'entity' | 'tableName' | 'opData'>): boolean {
+  const entity = entityOfTable(rejection.tableName) ?? rejection.entity
+  return entity === 'shipmentAnimals' && Boolean(shipmentIdFromLinkOpData(parseOpData(rejection)))
+}
+
+export function shipmentLinksWaitingLabel(count: number): string {
+  return count === 1 ? '1 animal aguarda este embarque' : `${count} animais aguardam este embarque`
+}
+
+/** Pais que agrupam recusas dependentes (o cadastro recusado leva junto os vínculos do mesmo envio). */
+const PARENT_RULES: {
+  parent: SyncEntity
+  isDependent: (row: Rejection) => boolean
+  parentIdOf: (row: Rejection) => string | null
+  label: (count: number) => string
+}[] = [
+  {
+    parent: 'herds',
+    isDependent: (row) => isHerdLinkRejection(row),
+    parentIdOf: (row) => herdIdFromAnimalOpData(parseOpData(row)),
+    label: herdLinksWaitingLabel,
+  },
+  {
+    parent: 'shipments',
+    isDependent: (row) => isShipmentLinkRejection(row),
+    parentIdOf: (row) => shipmentIdFromLinkOpData(parseOpData(row)),
+    label: shipmentLinksWaitingLabel,
+  },
+]
+
 /**
- * Agrupa recusas de vínculo de animal debaixo da recusa do rebanho quando o opData.herd_id
- * é o id daquele rebanho. As demais pendências seguem avulsas, na ordem original.
+ * Agrupa recusas dependentes debaixo da recusa do "pai" ainda aberta:
+ * - vínculos de animal (opData.herd_id) debaixo do rebanho recusado;
+ * - vínculos de embarque (shipment_animals.opData.shipment_id) debaixo do embarque recusado.
+ * As demais pendências seguem avulsas, na ordem original.
  */
 export function groupRejections(rows: readonly Rejection[]): RejectionGroup[] {
-  const herdRowIds = new Set(
-    rows.filter((row) => (entityOfTable(row.tableName) ?? row.entity) === 'herds').map((row) => String(row.rowId).toUpperCase()),
-  )
-  const dependentsByHerd = new Map<string, Rejection[]>()
-  const groupedAnimalIds = new Set<string>()
-  for (const row of rows) {
-    if (!isHerdLinkRejection(row)) continue
-    const herdId = herdIdFromAnimalOpData(parseOpData(row))
-    if (!herdId || !herdRowIds.has(herdId)) continue
-    const list = dependentsByHerd.get(herdId) ?? []
-    list.push(row)
-    dependentsByHerd.set(herdId, list)
-    groupedAnimalIds.add(row.id)
+  const entityOf = (row: Rejection) => entityOfTable(row.tableName) ?? row.entity
+  const dependentsByParent = new Map<string, Rejection[]>()
+  const groupedIds = new Set<string>()
+  for (const rule of PARENT_RULES) {
+    const parentIds = new Set(rows.filter((row) => entityOf(row) === rule.parent).map((row) => String(row.rowId).toUpperCase()))
+    for (const row of rows) {
+      if (groupedIds.has(row.id) || !rule.isDependent(row)) continue
+      const parentId = rule.parentIdOf(row)
+      if (!parentId || !parentIds.has(parentId)) continue
+      const key = `${rule.parent}:${parentId}`
+      const list = dependentsByParent.get(key) ?? []
+      list.push(row)
+      dependentsByParent.set(key, list)
+      groupedIds.add(row.id)
+    }
   }
   const groups: RejectionGroup[] = []
   const used = new Set<string>()
   for (const row of rows) {
-    if (used.has(row.id) || groupedAnimalIds.has(row.id)) continue
-    const entity = entityOfTable(row.tableName) ?? row.entity
-    if (entity === 'herds') {
-      const dependents = dependentsByHerd.get(String(row.rowId).toUpperCase()) ?? []
-      dependents.forEach((item) => used.add(item.id))
-      used.add(row.id)
-      groups.push({
-        primary: row,
-        dependents,
-        dependentsLabel: dependents.length ? herdLinksWaitingLabel(dependents.length) : null,
-      })
-    }
+    if (used.has(row.id) || groupedIds.has(row.id)) continue
+    const rule = PARENT_RULES.find((item) => item.parent === entityOf(row))
+    if (!rule) continue
+    const dependents = dependentsByParent.get(`${rule.parent}:${String(row.rowId).toUpperCase()}`) ?? []
+    dependents.forEach((item) => used.add(item.id))
+    used.add(row.id)
+    groups.push({ primary: row, dependents, dependentsLabel: dependents.length ? rule.label(dependents.length) : null })
   }
   for (const row of rows) {
-    if (used.has(row.id) || groupedAnimalIds.has(row.id)) continue
+    if (used.has(row.id) || groupedIds.has(row.id)) continue
     used.add(row.id)
     groups.push({ primary: row, dependents: [], dependentsLabel: null })
   }
   return groups
 }
 
+/** Animais que aguardavam o pai recusado (rebanho: row_id do animal; embarque: animal_id do vínculo). */
 export function dependentAnimalIds(group: Pick<RejectionGroup, 'dependents'>): string[] {
-  return group.dependents.map((item) => item.rowId)
+  return group.dependents.map((item) => {
+    if ((entityOfTable(item.tableName) ?? item.entity) === 'shipmentAnimals') {
+      const animalId = parseOpData(item).animal_id ?? parseOpData(item).animalId
+      return typeof animalId === 'string' ? animalId : item.rowId
+    }
+    return item.rowId
+  })
 }
 
 export async function listRejectionGroups(db: RejectionExecutor): Promise<RejectionGroup[]> {
@@ -159,6 +201,8 @@ const ENTITY_LABEL: Record<string, string> = {
   animals: 'Animal',
   vaccinations: 'Lançamento de vacina',
   herds: 'Rebanho',
+  shipments: 'Embarque',
+  shipmentAnimals: 'Animal no embarque',
 }
 
 const OP_LABEL: Record<string, string> = { PUT: 'Cadastro', PATCH: 'Alteração', DELETE: 'Exclusão' }
@@ -182,7 +226,24 @@ export const ENTITY_ROUTES = {
   animals: { list: '/configuracoes/animais', edit: '/configuracoes/animais/[id]', create: '/configuracoes/animais/nova' },
   vaccinations: { list: '/lancamentos', edit: '/lancamentos/[id]', create: '/lancamentos/nova' },
   herds: { list: '/configuracoes/rebanhos', edit: '/configuracoes/rebanhos/[id]', create: '/configuracoes/rebanhos/nova' },
+  // Embarques: área própria na tab bar (SHIPMENT_FLOW_CONTRACT.routes).
+  shipments: { list: '/embarques', edit: '/embarques/[id]', create: '/embarques/nova' },
 } as const
+
+/**
+ * "Corrigir" de um vínculo embarque ↔ animal recusado: abre o embarque (análise) do vínculo.
+ * Usa o shipment_id do opData; se não houver (ex.: DELETE), procura o vínculo ainda no aparelho.
+ */
+export async function shipmentIdForLinkRejection(db: RejectionExecutor, rejection: Pick<Rejection, 'rowId' | 'opData'>): Promise<string | null> {
+  const fromOp = shipmentIdFromLinkOpData(parseOpData(rejection))
+  if (fromOp) return fromOp
+  const T = SYNC_TABLES.shipmentAnimals
+  const row = await db.getOptional<{ shipmentId: string }>(
+    `SELECT ${T.columns.shipmentId.name} AS shipmentId FROM ${T.table} WHERE id = ?`,
+    [rejection.rowId],
+  )
+  return row?.shipmentId ?? null
+}
 
 /**
  * Para onde "Corrigir" leva:
@@ -221,6 +282,22 @@ const CODE_FIELD: Record<string, string> = {
   HERD_FARM_MISMATCH: 'herdId',
   HERD_FARM_IMMUTABLE: 'farmId',
   FARM_NOT_FOUND: 'farmId',
+  SHIPMENT_NAME_ALREADY_EXISTS: 'name',
+  INVALID_SHIPMENT_NAME: 'name',
+  INVALID_SHIPPED_ON: 'shippedOn',
+  SHIPMENT_FARM_IMMUTABLE: 'farmId',
+  SHIPMENT_ANIMAL_FARM_MISMATCH: 'animalIds',
+  ANIMAL_ALREADY_IN_SHIPMENT: 'animalIds',
+  // Status, finalizar, peso e foto (contrato final; no sync o servidor aponta weight_kg / photo_id)
+  SHIPMENT_FINISHED: 'animalIds',
+  SHIPMENT_EMPTY: 'animalIds',
+  INVALID_SHIPMENT_ANIMAL_WEIGHT: 'weightKg',
+  SHIPMENT_ANIMAL_PHOTO_REQUIRED: 'photoId',
+  SHIPMENT_PHOTO_NOT_FOUND: 'photoId',
+  SHIPMENT_PHOTO_IN_USE: 'photoId',
+  INVALID_SHIPMENT_PHOTO: 'photoId',
+  ANIMAL_ALREADY_SHIPPED: 'animalIds',
+  INVALID_SHIPMENT_STATUS: 'status',
 }
 
 /**
@@ -229,10 +306,15 @@ const CODE_FIELD: Record<string, string> = {
  */
 export function rejectionFormField(rejection: Pick<Rejection, 'entity' | 'tableName' | 'errorCode'> & { field?: string | null }): string | null {
   const entity = entityOfTable(rejection.tableName) ?? (rejection.entity as SyncEntity)
+  // Embarque: o servidor aponta o vínculo (REST `animalIds`; upload `animal_id`/`shipment_id`) → seção de animais.
+  if ((entity === 'shipments' || entity === 'shipmentAnimals') && rejection.field && ['animalIds', 'animal_id', 'shipment_id'].includes(rejection.field)) {
+    return 'animalIds'
+  }
+  if (entity === 'shipmentAnimals') return 'animalIds'
   if (rejection.field && rejection.field !== 'id') {
     const field = SYNC_TABLES[entity as SyncEntity] ? fieldOfColumn(entity as SyncEntity, rejection.field) : null
     if (field) return field
   }
-  if (rejection.errorCode === 'CONFLICT' && (entity === 'vaccines' || entity === 'animalTypes' || entity === 'herds')) return 'name'
+  if (rejection.errorCode === 'CONFLICT' && (entity === 'vaccines' || entity === 'animalTypes' || entity === 'herds' || entity === 'shipments')) return 'name'
   return CODE_FIELD[rejection.errorCode] ?? null
 }

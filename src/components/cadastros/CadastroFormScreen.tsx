@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Spinner, Text, XStack, YStack } from 'tamagui'
 
 import { FormBanner } from '@/components/auth/FormBanner'
@@ -14,6 +15,8 @@ type CadastroFormScreenProps = {
   onDelete?: () => void
   deleteLabel?: string
   readOnly?: boolean
+  /** Texto do aviso de somente leitura (padrão: cadastro sem permissão). */
+  readOnlyMessage?: string
   /** Desabilita o envio sem mostrar "Salvando…" (ex.: tela online sem internet). */
   submitDisabled?: boolean
   /** Conteúdo exibido depois dos botões (ex.: seção de carência no cadastro do animal). */
@@ -29,19 +32,21 @@ export function CadastroFormScreen({
   onDelete,
   deleteLabel = 'Excluir',
   readOnly = false,
+  readOnlyMessage = 'Somente leitura. Você não pode alterar este cadastro.',
   submitDisabled = false,
   footer,
 }: CadastroFormScreenProps) {
   const blocked = submitting || submitDisabled
+  const insets = useSafeAreaInsets()
   return (
     <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <YStack flex={1} bg="appBg">
         <ScrollView
-          contentContainerStyle={{ padding: 20, paddingBottom: 36, gap: 16 }}
+          contentContainerStyle={{ padding: 20, paddingBottom: Math.max(insets.bottom, 16) + 20, gap: 16 }}
           keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}>
           {error ? <FormBanner message={error} /> : null}
-          {readOnly ? <FormBanner message="Somente leitura. Você não pode alterar este cadastro." tone="info" /> : null}
+          {readOnly ? <FormBanner message={readOnlyMessage} tone="info" /> : null}
           {children}
           {readOnly ? null : (
           <>

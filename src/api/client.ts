@@ -134,6 +134,20 @@ http.interceptors.response.use(undefined, async (error: AxiosError<{ error?: str
   throw toApiError(error)
 })
 
+/** Base REST (para upload/GET de arquivo fora do axios, ex.: foto do animal no embarque). */
+export const API_BASE_URL = `${API_URL}/api/v1`
+
+/** Cabeçalho Authorization atual (renova antes se faltar menos de 1 min). Usado no upload/GET autenticado de fotos. */
+export async function authorizationHeader(): Promise<Record<string, string>> {
+  if (accessToken && accessExpiresAt - Date.now() < 60_000) await refresh()
+  return accessToken ? { Authorization: `Bearer ${accessToken}` } : {}
+}
+
+/** Renova o token depois de um 401 num upload de arquivo (fora do axios). null = sessão encerrada. */
+export function refreshAccessToken(): Promise<string | null> {
+  return refresh()
+}
+
 export const authApi = {
   register: (body: RegisterUserRequest) => http.post<UserResponse>('/users', body).then((res) => res.data),
 

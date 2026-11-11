@@ -73,16 +73,40 @@ type CollapsibleFiltersProps = {
   /** Uma linha com os filtros aplicados, mostrada com o painel fechado (toque abre o painel). */
   summary: string
   onOpen: () => void
+  /** Mostrada no painel aberto quando há filtros ativos. Fechar o painel não chama isto. */
+  onClear?: () => void
+  clearable?: boolean
   children: ReactNode
 }
 
 /** Painel de filtros recolhível. Fechar NÃO limpa os filtros: eles continuam aplicados. */
-export function CollapsibleFilters({ open, summary, onOpen, children }: CollapsibleFiltersProps) {
-  if (open) return <YStack gap={12}>{children}</YStack>
+export function CollapsibleFilters({ open, summary, onOpen, onClear, clearable = false, children }: CollapsibleFiltersProps) {
+  if (open) {
+    return (
+      <YStack gap={12}>
+        {children}
+        {onClear && clearable ? (
+          <XStack
+            minH={TOQUE_MINIMO}
+            items="center"
+            justify="center"
+            opacity={{ press: 0.85 }}
+            onPress={onClear}
+            accessibilityRole="button"
+            accessibilityLabel="Limpar filtros">
+            <Text fontSize={16} fontWeight="800" color="brandFg" textDecorationLine="underline">
+              Limpar filtros
+            </Text>
+          </XStack>
+        ) : null}
+      </YStack>
+    )
+  }
   return (
     <XStack
       items="center"
       gap={6}
+      minH={TOQUE_MINIMO}
       onPress={onOpen}
       accessibilityRole="button"
       accessibilityLabel={`Filtros: ${summary}. Toque para alterar`}>

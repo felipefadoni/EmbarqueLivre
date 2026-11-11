@@ -8,7 +8,7 @@ import { AuthField } from '@/components/auth/AuthField'
 import { CadastroFormScreen } from '@/components/cadastros/CadastroFormScreen'
 import { ConfirmDialog } from '@/components/cadastros/ConfirmDialog'
 import { LIMITS } from '@/features/cadastros/limits'
-import { canManageCatalog } from '@/features/cadastros/permissions'
+import { canManageAnimalTypes } from '@/features/cadastros/permissions'
 import { useAuth } from '@/features/auth/AuthProvider'
 import { repo } from '@/sync'
 import { clearPendencia, clearRowRejections, draftString, editorErrorMessage, loadEditorSource, showRejection } from '@/sync/editor'
@@ -23,7 +23,7 @@ type AnimalTypeEditorProps = {
 export function AnimalTypeEditor({ typeId, pendenciaId }: AnimalTypeEditorProps) {
   const isEdit = Boolean(typeId)
   const { user } = useAuth()
-  const canManage = canManageCatalog(user?.role)
+  const canManage = canManageAnimalTypes(user?.role)
   const readOnly = !canManage
   const [name, setName] = useState('')
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})

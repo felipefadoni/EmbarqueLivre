@@ -12,6 +12,10 @@ type ConfirmDialogProps = {
   onConfirm: () => void
   onCancel: () => void
   busy?: boolean
+  /** danger (padrão, vermelho: excluir) ou primary (confirmação que não apaga, ex.: finalizar). */
+  tone?: 'danger' | 'primary'
+  /** Texto do botão enquanto `busy` (padrão: "Excluindo…"). */
+  busyLabel?: string
 }
 
 export function ConfirmDialog({
@@ -23,6 +27,8 @@ export function ConfirmDialog({
   onConfirm,
   onCancel,
   busy = false,
+  tone = 'danger',
+  busyLabel = 'Excluindo…',
 }: ConfirmDialogProps) {
   const isDark = useColorScheme() === 'dark'
 
@@ -46,14 +52,14 @@ export function ConfirmDialog({
                 items="center"
                 justify="center"
                 rounded={16}
-                bg="brandError"
+                bg={tone === 'primary' ? 'brandPrimary' : 'brandError'}
                 opacity={{ default: busy ? 0.55 : 1, press: 0.85 }}
                 onPress={busy ? undefined : onConfirm}
                 accessibilityRole="button"
                 accessibilityLabel={confirmLabel}
                 accessibilityState={{ disabled: busy, busy }}>
-                <Text fontSize={18} fontWeight="800" color="white">
-                  {busy ? 'Excluindo…' : confirmLabel}
+                <Text fontSize={18} fontWeight="800" color={tone === 'primary' ? 'brandPrimaryFg' : 'white'}>
+                  {busy ? busyLabel : confirmLabel}
                 </Text>
               </XStack>
               <XStack

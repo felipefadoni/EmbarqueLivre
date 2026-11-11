@@ -74,3 +74,6 @@ export async function pendingHerdAnimalIds(pendenciaId: string | undefined): Pro
   const group = groupRejections(rows).find((item) => item.primary.id === pendenciaId)
   return group ? dependentAnimalIds(group) : []
 }
+
+/** Ao Corrigir um embarque recusado, os animais que aguardavam o vínculo (shipment_animals) voltam pré-selecionados. */
+export const pendingShipmentAnimalIds = pendingHerdAnimalIds

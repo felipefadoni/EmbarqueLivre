@@ -11,12 +11,14 @@ type TabIcon =
 const ICONS: Record<string, TabIcon> = {
   index: { family: 'ion', name: 'home' },
   lancamentos: { family: 'mci', name: 'needle' },
+  embarques: { family: 'mci', name: 'truck-delivery-outline' },
   configuracoes: { family: 'ion', name: 'menu' },
 }
 
 const LABELS: Record<string, string> = {
   index: 'Dashboard',
   lancamentos: 'Vacinas',
+  embarques: 'Embarques',
   configuracoes: 'Menu',
 }
 
@@ -90,7 +92,13 @@ export function AppTabBar({ state, descriptors, emitter, navigateToTab, insets }
               <View style={[styles.iconWrap, selected && { backgroundColor: activeBg }]}>
                 <TabBarIcon icon={icon} color={iconColor} />
               </View>
-              <Text style={[styles.label, { color: selected ? activeLabel : inactive }]}>{label}</Text>
+              <Text
+                style={[styles.label, { color: selected ? activeLabel : inactive }]}
+                numberOfLines={1}
+                adjustsFontSizeToFit
+                minimumFontScale={0.85}>
+                {label}
+              </Text>
             </Pressable>
           )
         })}

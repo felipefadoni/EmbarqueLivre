@@ -15,9 +15,11 @@
  *
  * Este arquivo é puro (sem React Native) para poder ser testado no Node.
  * Rebanho: nomes do contrato final em `HERDS_CONTRACT` (`src/api/herdsContract.ts`, §17.10 e §19).
+ * Embarque: nomes do contrato final em `SHIPMENTS_CONTRACT` (`src/api/shipmentsContract.ts`, §17.11 e §19).
  */
 
 import { HERDS_CONTRACT } from '../api/herdsContract'
+import { SHIPMENT_FLOW_CONTRACT, SHIPMENTS_CONTRACT } from '../api/shipmentsContract'
 
 export type ColumnType = 'text' | 'integer' | 'real'
 
@@ -70,6 +72,8 @@ export const SYNC_TABLES = {
       birthDate: col('birth_date'),
       /** Nullable; ausente num PUT de animal = null (desvincula). Sempre enviar quando o animal tem rebanho. */
       herdId: col(HERDS_CONTRACT.animalHerdColumn),
+      /** Flag oficial (do servidor): saiu num embarque finalizado → some da lista de cadastrados. O app grava ao finalizar. */
+      shippedAt: col(SHIPMENT_FLOW_CONTRACT.animalShippedAtColumn),
       createdAt: col('created_at'),
       updatedAt: col('updated_at'),
     },
@@ -83,6 +87,39 @@ export const SYNC_TABLES = {
       formedAt: col(HERDS_CONTRACT.columns.formedAt),
       createdAt: col(HERDS_CONTRACT.columns.createdAt),
       updatedAt: col(HERDS_CONTRACT.columns.updatedAt),
+    },
+  },
+  shipments: {
+    table: SHIPMENTS_CONTRACT.table,
+    columns: {
+      farmId: col(SHIPMENTS_CONTRACT.columns.farmId),
+      name: col(SHIPMENTS_CONTRACT.columns.name),
+      shippedOn: col(SHIPMENTS_CONTRACT.columns.shippedOn),
+      /** Calculado pelo servidor (quem criou); o app grava localmente e o upload o ignora. */
+      createdByUserId: col(SHIPMENTS_CONTRACT.columns.createdByUserId),
+      /** in_progress | finished (null = in_progress). `finished` no PATCH finaliza (sync). */
+      status: col(SHIPMENT_FLOW_CONTRACT.columns.status),
+      /** Do servidor: quando foi finalizado (o app grava localmente ao finalizar; nunca sobe). */
+      finishedAt: col(SHIPMENT_FLOW_CONTRACT.columns.finishedAt),
+      createdAt: col(SHIPMENTS_CONTRACT.columns.createdAt),
+      updatedAt: col(SHIPMENTS_CONTRACT.columns.updatedAt),
+    },
+  },
+  /** Vínculo embarque ↔ animal: uma linha por animal (um animal em no máximo um embarque). */
+  shipmentAnimals: {
+    table: SHIPMENTS_CONTRACT.linkTable,
+    columns: {
+      shipmentId: col(SHIPMENTS_CONTRACT.linkColumns.shipmentId),
+      animalId: col(SHIPMENTS_CONTRACT.linkColumns.animalId),
+      /** Peso em kg (1–2000, 1 casa). Obrigatório em vínculo novo; null só em vínculo antigo. */
+      weightKg: col(SHIPMENT_FLOW_CONTRACT.linkColumns.weightKg, 'real'),
+      /** Foto já enviada por POST /shipments/:id/photos (id gerado no app). Obrigatória em vínculo novo. */
+      photoId: col(SHIPMENT_FLOW_CONTRACT.linkColumns.photoId),
+      /** Do servidor (copiados do registro da foto); nunca sobem. */
+      photoContentType: col(SHIPMENT_FLOW_CONTRACT.linkColumns.photoContentType),
+      photoSizeBytes: col(SHIPMENT_FLOW_CONTRACT.linkColumns.photoSizeBytes, 'integer'),
+      createdAt: col(SHIPMENTS_CONTRACT.linkColumns.createdAt),
+      updatedAt: col(SHIPMENTS_CONTRACT.linkColumns.updatedAt),
     },
   },
   vaccinations: {
@@ -105,7 +142,7 @@ export const SYNC_TABLES = {
 } as const
 
 /** Entidades que o app escreve localmente. */
-export const WRITABLE_ENTITIES = ['farms', 'vaccines', 'animalTypes', 'animals', 'herds', 'vaccinations'] as const
+export const WRITABLE_ENTITIES = ['farms', 'vaccines', 'animalTypes', 'animals', 'herds', 'shipments', 'shipmentAnimals', 'vaccinations'] as const
 
 /** Limite de operações por POST /powersync/upload. */
 export const UPLOAD_BATCH_LIMIT = 500
@@ -143,7 +180,41 @@ export const SERVER_DERIVED_COLUMNS: Partial<Record<SyncEntity, string[]>> = {
     SYNC_TABLES.vaccinations.columns.withdrawalUntil.name,
     SYNC_TABLES.vaccinations.columns.createdByUserId.name,
   ],
+  shipments: [SYNC_TABLES.shipments.columns.createdByUserId.name, SYNC_TABLES.shipments.columns.finishedAt.name],
+  animals: [SYNC_TABLES.animals.columns.shippedAt.name],
+  shipmentAnimals: [SYNC_TABLES.shipmentAnimals.columns.photoContentType.name, SYNC_TABLES.shipmentAnimals.columns.photoSizeBytes.name],
 }
+
+/**
+ * Colunas só do servidor (readOnly no /powersync/upload) que o app grava localmente para as telas offline e que
+ * NUNCA sobem: finished_at, shipped_at (gravados ao finalizar) e os metadados da foto. Um PATCH que fique vazio
+ * depois de removê-las (ex.: o shipped_at dos animais ao finalizar) não é enviado.
+ */
+export const NEVER_UPLOAD_COLUMNS: Partial<Record<SyncEntity, string[]>> = {
+  shipments: [SYNC_TABLES.shipments.columns.finishedAt.name],
+  animals: [SYNC_TABLES.animals.columns.shippedAt.name],
+  shipmentAnimals: [SYNC_TABLES.shipmentAnimals.columns.photoContentType.name, SYNC_TABLES.shipmentAnimals.columns.photoSizeBytes.name],
+}
+
+/**
+ * Fila local (não sincronizada) das fotos de animais do embarque. Uma linha por foto: id = photo_id (ULID gerado no
+ * app e enviado como `id` no POST /shipments/:id/photos; repetir devolve a mesma foto). link_id = shipment_animals.id.
+ * status: pending (aguardando envio) | uploaded | failed (recusa definitiva do servidor).
+ */
+export const PHOTO_QUEUE_TABLE = {
+  table: SHIPMENT_FLOW_CONTRACT.photoQueueTable,
+  columns: {
+    shipmentId: col('shipment_id'),
+    animalId: col('animal_id'),
+    linkId: col('link_id'),
+    localUri: col('local_uri'),
+    status: col('status'),
+    attempts: col('attempts', 'integer'),
+    lastError: col('last_error'),
+    createdAt: col('created_at'),
+    updatedAt: col('updated_at'),
+  },
+} as const
 
 /** Tabela local (não sincronizada) com as operações recusadas pelo servidor. */
 export const REJECTIONS_TABLE = {
@@ -217,8 +288,10 @@ export function fromColumns(entity: SyncEntity, data: Record<string, unknown> | 
 }
 
 /** Lista [nome, tipo] de colunas de uma tabela (para o schema PowerSync e para os testes). */
-export function columnList(entity: SyncEntity | 'rejections'): [string, ColumnType][] {
-  const columns = (entity === 'rejections' ? REJECTIONS_TABLE.columns : SYNC_TABLES[entity].columns) as Record<
+export function columnList(entity: SyncEntity | 'rejections' | 'photoQueue'): [string, ColumnType][] {
+  const columns = (
+    entity === 'rejections' ? REJECTIONS_TABLE.columns : entity === 'photoQueue' ? PHOTO_QUEUE_TABLE.columns : SYNC_TABLES[entity].columns
+  ) as Record<
     string,
     ColumnDef
   >
@@ -236,6 +309,14 @@ export const LOCAL_INDEXES: Partial<Record<SyncEntity, Record<string, string[]>>
   herds: {
     farm: [SYNC_TABLES.herds.columns.farmId.name],
     name: [SYNC_TABLES.herds.columns.name.name],
+  },
+  shipments: {
+    farm: [SYNC_TABLES.shipments.columns.farmId.name],
+    name: [SYNC_TABLES.shipments.columns.name.name],
+  },
+  shipmentAnimals: {
+    shipment: [SYNC_TABLES.shipmentAnimals.columns.shipmentId.name],
+    animal: [SYNC_TABLES.shipmentAnimals.columns.animalId.name],
   },
   vaccinations: {
     animal: [SYNC_TABLES.vaccinations.columns.animalId.name],

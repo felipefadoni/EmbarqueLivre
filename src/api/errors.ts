@@ -17,7 +17,7 @@ const DOMAIN_MESSAGES: Record<string, string> = {
   INVALID_REFRESH_TOKEN: 'Sua sessão expirou. Entre novamente.',
   REFRESH_TOKEN_REUSED: 'Por segurança, sua sessão foi encerrada. Entre novamente.',
   UNAUTHENTICATED: 'Sua sessão expirou. Entre novamente.',
-  INSUFFICIENT_ROLE: 'Você não tem permissão para esta ação.',
+  INSUFFICIENT_ROLE: 'Você não tem permissão para executar esta ação',
   CSRF_TOKEN_INVALID: 'Não foi possível concluir. Recarregue a página.',
   ORIGIN_NOT_ALLOWED: 'Acesso não permitido a partir deste endereço.',
   RATE_LIMITED: 'Muitas tentativas. Aguarde alguns instantes.',
@@ -66,6 +66,27 @@ const DOMAIN_MESSAGES: Record<string, string> = {
   INVALID_HERD_DESCRIPTION: 'A descrição do rebanho deve ter no máximo 500 caracteres',
   INVALID_HERD_FORMED_AT: 'Data de formação inválida: use o formato AAAA-MM-DD, entre 1900-01-01 e hoje (não pode ser futura)',
   FARM_HAS_HERDS: 'Não é possível excluir a fazenda: existem rebanhos cadastrados nela. Exclua os rebanhos antes.',
+  // Embarque (contrato final: SHIPMENTS_CONTRACT, §17.11 / §19.8). Textos iguais aos do servidor.
+  SHIPMENT_NOT_FOUND: 'Embarque não encontrado',
+  SHIPMENT_ANIMAL_NOT_FOUND: 'Vínculo do animal com o embarque não encontrado',
+  SHIPMENT_NAME_ALREADY_EXISTS: 'Já existe um embarque com esse nome nesta fazenda',
+  INVALID_SHIPMENT_NAME: 'O nome do embarque deve ter entre 2 e 120 caracteres',
+  INVALID_SHIPPED_ON: 'Data do embarque inválida: use o formato AAAA-MM-DD, entre 1900-01-01 e daqui a 2 anos',
+  SHIPMENT_FARM_IMMUTABLE: 'Não é possível trocar a fazenda de um embarque já cadastrado',
+  SHIPMENT_ANIMAL_FARM_MISMATCH: 'Os animais do embarque precisam ser da mesma fazenda do embarque',
+  ANIMAL_ALREADY_IN_SHIPMENT: 'Há animais que já estão em outro embarque',
+  // Status, finalizar, peso e foto (contrato final, slice 2). Textos iguais aos do servidor.
+  SHIPMENT_FINISHED: 'Este embarque já foi finalizado e não pode mais ser alterado',
+  SHIPMENT_EMPTY: 'Inclua pelo menos um animal antes de finalizar o embarque',
+  INVALID_SHIPMENT_ANIMAL_WEIGHT: 'Peso inválido: informe o peso em kg, entre 1 e 2000, com no máximo 1 casa decimal',
+  SHIPMENT_ANIMAL_PHOTO_REQUIRED: 'Envie a foto do animal para incluí-lo no embarque',
+  ANIMAL_ALREADY_SHIPPED: 'Este animal já foi embarcado em um embarque finalizado',
+  INVALID_SHIPMENT_PHOTO: 'A foto deve ser uma imagem JPEG, PNG ou WEBP de até 10 MB',
+  SHIPMENT_PHOTO_NOT_FOUND: 'Foto não encontrada',
+  SHIPMENT_PHOTO_IN_USE: 'Esta foto já está vinculada a outro animal do embarque',
+  INVALID_SHIPMENT_STATUS: 'Situação inválida: use in_progress ou finished',
+  PAYLOAD_TOO_LARGE: 'A foto é maior que 10 MB. Tire outra foto.',
+  FARM_HAS_SHIPMENTS: 'Não é possível excluir a fazenda: existem embarques cadastrados nela. Exclua os embarques antes.',
   INVALID_DATE_FILTER: 'Filtro de data inválido. Verifique a data selecionada.',
   VACCINE_APPLICATION_NOT_FOUND: 'Lançamento de vacina não encontrado.',
   INVALID_APPLIED_AT: 'Informe uma data de aplicação válida, entre 01/01/1900 e hoje (não pode ser futura).',
@@ -134,6 +155,10 @@ const VALIDATION_MESSAGE_MAP: [string, string][] = [
   ['formedAt deve estar no formato', 'Informe a data de formação no formato AAAA-MM-DD.'],
   ['name deve ter no máximo 120 caracteres', 'O nome do rebanho deve ter entre 2 e 120 caracteres'],
   ['description deve ter no máximo 500 caracteres', 'A descrição do rebanho deve ter no máximo 500 caracteres'],
+  ['shipped_on should not be empty', 'Informe o dia do embarque.'],
+  ['shippedOn should not be empty', 'Informe o dia do embarque.'],
+  ['shippedOn deve estar no formato', 'Informe o dia do embarque no formato AAAA-MM-DD.'],
+  ['animalIds must contain no more than', 'Selecione no máximo 5000 animais por embarque.'],
   ['animal_type_id should not be empty', 'Selecione o tipo de animal.'],
   ['animalTypeId should not be empty', 'Selecione o tipo de animal.'],
   ['sex should not be empty', 'Selecione o sexo.'],
@@ -260,6 +285,7 @@ const PT_HINT =
   /[áàâãéêíóôõúçÁÀÂÃÉÊÍÓÔÕÚÇ]|\b(já|nao|não|cadastrad[oa]s?|vinculad[oa]s?|existe[m]?|animal(?:es)?|fazenda|código|codigo|brinco|carência|carencia|vacinas?|lançamentos?|obrigatório|obrigatorio|inválid[oa]|excluir)\b/i
 const EN_TECHNICAL =
   /\b(already|exists|cannot|must|should|invalid|not found|conflict|duplicate|unique constraint|internal server|bad request|forbidden|unauthorized)\b/i
+
 
 export function isPortugueseUserMessage(message: string): boolean {
   const trimmed = message.trim()

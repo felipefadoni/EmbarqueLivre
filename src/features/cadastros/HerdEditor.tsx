@@ -280,19 +280,7 @@ export function HerdEditor({ herdId, pendenciaId }: HerdEditorProps) {
         submitting={saving}
         onSubmit={() => void onSubmit()}
         onDelete={isEdit ? () => setConfirmOpen(true) : undefined}
-        deleteLabel="Excluir rebanho"
-        footer={
-          (
-            <HerdMembers
-              members={isEdit ? members : selectedAnimals}
-              currentHerdId={herdId}
-              addDisabled={!farmId}
-              addHint={!farmId ? 'Selecione a fazenda para adicionar animais.' : undefined}
-              onAdd={() => setPickerOpen(true)}
-              onRemove={(id) => (isEdit ? setRemoveId(id) : setSelectedAnimals((current) => current.filter((animal) => animal.id !== id)))}
-            />
-          )
-        }>
+        deleteLabel="Excluir rebanho">
         <AuthField
           label="Nome"
           value={name}
@@ -363,6 +351,14 @@ export function HerdEditor({ herdId, pendenciaId }: HerdEditorProps) {
           maximumDate={parseIsoDateLocal(todayIsoInHerdZone()) ?? new Date()}
           optional={!HERDS_CONTRACT.formedAtRequired}
           error={fieldErrors.formedAt}
+        />
+        <HerdMembers
+          members={isEdit ? members : selectedAnimals}
+          currentHerdId={herdId}
+          addDisabled={!farmId}
+          addHint={!farmId ? 'Selecione a fazenda para adicionar animais.' : undefined}
+          onAdd={() => setPickerOpen(true)}
+          onRemove={(id) => (isEdit ? setRemoveId(id) : setSelectedAnimals((current) => current.filter((animal) => animal.id !== id)))}
         />
       </CadastroFormScreen>
       <HerdAnimalsPicker

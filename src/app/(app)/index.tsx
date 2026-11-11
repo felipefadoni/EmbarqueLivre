@@ -16,7 +16,7 @@ import { WeekChart } from '@/components/dashboard/WeekChart'
 import { SyncStatusIndicator } from '@/components/sync/SyncStatusIndicator'
 import { useAuth } from '@/features/auth/AuthProvider'
 import { formatDatePtBr, formatDayMonthPtBr } from '@/features/cadastros/dates'
-import { canManageCatalog } from '@/features/cadastros/permissions'
+import { canManageFarms, canManageVaccines } from '@/features/cadastros/permissions'
 import { aptosHints, iniciaisDoNome, primeiroNome, saudacaoAgora, textoLiberados } from '@/features/dashboard/format'
 import { animalsLink, vaccinationsLink } from '@/features/dashboard/links'
 import type { ChartPeriod } from '@/features/dashboard/period'
@@ -34,7 +34,8 @@ export default function DashboardScreen() {
   const insets = useSafeAreaInsets()
   const isDark = useColorScheme() === 'dark'
   const { user } = useAuth()
-  const canManage = canManageCatalog(user?.role)
+  const canManageFarmsNow = canManageFarms(user?.role)
+  const canManageVaccinesNow = canManageVaccines(user?.role)
   const today = useToday()
   const farms = useLocalFarms()
   const sync = useSyncInfo()
@@ -105,8 +106,8 @@ export default function DashboardScreen() {
         {noFarms ? (
           <EmptyCta
             title="Comece cadastrando uma fazenda"
-            message={canManage ? 'Depois cadastre os animais e lance as vacinas.' : 'Peça ao responsável da conta para cadastrar as fazendas.'}
-            action={canManage ? { label: 'Cadastrar fazenda', onPress: () => router.push('/configuracoes/fazendas/nova') } : undefined}
+            message={canManageFarmsNow ? 'Depois cadastre os animais e lance as vacinas.' : 'Peça ao responsável da conta para cadastrar as fazendas.'}
+            action={canManageFarmsNow ? { label: 'Cadastrar fazenda', onPress: () => router.push('/configuracoes/fazendas/nova') } : undefined}
           />
         ) : null}
         {noAnimals ? (
@@ -248,7 +249,7 @@ export default function DashboardScreen() {
                   Rebanho
                 </Text>
                 <XStack gap={10}>
-                  <CountTile label="Fazendas" value={farm ? 1 : data.farms} onPress={() => router.push('/configuracoes/fazendas')} />
+                  <CountTile label="Fazendas" value={farm ? 1 : data.farms} onPress={canManageFarmsNow ? () => router.push('/configuracoes/fazendas') : undefined} />
                   <CountTile label="Animais" value={situation.total} onPress={() => router.push(animalsLink({ farmId: farm }))} />
                 </XStack>
                 {data.byType.items.length > 0 ? (
@@ -300,9 +301,9 @@ export default function DashboardScreen() {
                 items="center"
                 gap={12}
                 minH={56}
-                opacity={{ press: 0.85 }}
-                onPress={() => router.push('/configuracoes/vacinas')}
-                accessibilityRole="button"
+                opacity={canManageVaccinesNow ? { press: 0.85 } : undefined}
+                onPress={canManageVaccinesNow ? () => router.push('/configuracoes/vacinas') : undefined}
+                accessibilityRole={canManageVaccinesNow ? 'button' : undefined}
                 accessibilityLabel={
                   data.topVaccine.item
                     ? `Vacina mais usada nos últimos 30 dias: ${data.topVaccine.item.name}, ${data.topVaccine.item.n} aplicações`
@@ -319,7 +320,7 @@ export default function DashboardScreen() {
                       : 'Nenhuma aplicação nos últimos 30 dias'}
                   </Text>
                 </YStack>
-                <Ionicons name="chevron-forward" size={20} color={chevron} />
+                {canManageVaccinesNow ? <Ionicons name="chevron-forward" size={20} color={chevron} /> : null}
               </XStack>
             </AppCard>
           </>

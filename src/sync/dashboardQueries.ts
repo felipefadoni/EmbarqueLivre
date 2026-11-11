@@ -3,10 +3,11 @@
  * - O escopo do usuário já vem das streams (admin_all / account / catalogs): nenhum filtro de perfil aqui.
  * - Datas (hoje, início da semana/mês) chegam do JS no fuso do APARELHO. Nunca usar a data atual do SQLite (é UTC).
  * - Regra de carência: em carência se hoje < freeAt; livre NO dia withdrawal_until.
+ * - Animais embarcados (embarque finalizado) saíram da fazenda: não entram nas contagens de animais.
  * - Filtro de fazenda nas vacinações = fazenda atual do animal (ou a gravada no lançamento), igual à tela Vacinas.
  */
 import { colOf as c, tableOf as t } from './mapping'
-import { withdrawalAgg, type SqlQuery } from './queries'
+import { animalShippedExpr, withdrawalAgg, type SqlQuery } from './queries'
 
 const F = t('farms')
 const V = t('vaccines')
@@ -46,7 +47,7 @@ export function situationSummaryQuery(today: string, farmId?: string): SqlQuery 
   COALESCE(SUM(CASE WHEN w.freeAt > ? AND w.freeAt <= date(?, '+7 days') THEN 1 ELSE 0 END), 0) AS libera7,
   MAX(CASE WHEN w.freeAt > ? THEN w.freeAt END) AS allFreeAt
   FROM ${A} a LEFT JOIN (${withdrawalAgg}) w ON w.aid = a.id
-  WHERE 1 = 1${where}`,
+  WHERE NOT ${animalShippedExpr('a')}${where}`,
     params,
   }
 }
@@ -96,7 +97,7 @@ export function releasingSoonQuery(today: string, farmId?: string, limit = 5): S
     sql: `SELECT a.id AS id, a.${c('animals', 'code')} AS code, f.${c('farms', 'name')} AS farmName, w.freeAt AS freeAt
   FROM ${A} a JOIN (${withdrawalAgg}) w ON w.aid = a.id
   LEFT JOIN ${F} f ON f.id = ${animalFarm}
-  WHERE w.freeAt > ? AND w.freeAt <= date(?, '+7 days')${where}
+  WHERE w.freeAt > ? AND w.freeAt <= date(?, '+7 days') AND NOT ${animalShippedExpr('a')}${where}
   ORDER BY w.freeAt, a.${c('animals', 'code')} COLLATE NOCASE, a.id LIMIT ?`,
     params,
   }
@@ -113,7 +114,7 @@ export function animalsByTypeQuery(today: string, farmId?: string): SqlQuery {
   COALESCE(SUM(CASE WHEN w.freeAt > ? THEN 1 ELSE 0 END), 0) AS emCarencia
   FROM ${A} a LEFT JOIN ${T} at ON at.id = a.${c('animals', 'animalTypeId')}
   LEFT JOIN (${withdrawalAgg}) w ON w.aid = a.id
-  WHERE 1 = 1${where}
+  WHERE NOT ${animalShippedExpr('a')}${where}
   GROUP BY a.${c('animals', 'animalTypeId')} ORDER BY n DESC, name COLLATE NOCASE`,
     params,
   }
@@ -124,7 +125,7 @@ export function animalsByFarmQuery(today: string): SqlQuery {
   return {
     sql: `SELECT f.id AS id, f.${c('farms', 'name')} AS name, COUNT(a.id) AS n,
   COALESCE(SUM(CASE WHEN w.freeAt > ? THEN 1 ELSE 0 END), 0) AS emCarencia
-  FROM ${F} f LEFT JOIN ${A} a ON ${animalFarm} = f.id
+  FROM ${F} f LEFT JOIN ${A} a ON ${animalFarm} = f.id AND NOT ${animalShippedExpr('a')}
   LEFT JOIN (${withdrawalAgg}) w ON w.aid = a.id
   GROUP BY f.id ORDER BY n DESC, name COLLATE NOCASE`,
     params: [today],

@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "embarquelivre",
+    "name": "Embarque Livre",
     "slug": "embarquelivre",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -9,7 +9,10 @@
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/images/icon.png",
-      "bundleIdentifier": "com.fadoni.embarquelivre"
+      "bundleIdentifier": "com.fadoni.embarquelivre",
+      "infoPlist": {
+        "CFBundleDisplayName": "Embarque Livre"
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -19,7 +22,8 @@
       },
       "predictiveBackGestureEnabled": false,
       "icon": "./assets/images/icon.png",
-      "package": "com.fadoni.embarquelivre"
+      "package": "com.fadoni.embarquelivre",
+      "label": "Embarque Livre"
     },
     "web": {
       "output": "server",
@@ -38,6 +42,14 @@
             "backgroundColor": "#1C3C31",
             "image": "./assets/images/logo-512.png"
           }
+        }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "cameraPermission": "O Embarque Livre usa a câmera para fotografar os animais do embarque.",
+          "photosPermission": "O Embarque Livre acessa suas fotos só quando você escolhe uma foto do animal da galeria.",
+          "microphonePermission": false
         }
       ]
     ],

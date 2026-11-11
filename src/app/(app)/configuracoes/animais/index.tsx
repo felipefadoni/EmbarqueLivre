@@ -1,14 +1,16 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { router, useLocalSearchParams } from 'expo-router'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import { FlatList, useColorScheme } from 'react-native'
 import { Text, XStack, YStack } from 'tamagui'
 
 import type { Animal } from '@/api/catalog'
+import { animateFiltersToggle, CollapsibleFilters, FilterToggle } from '@/components/cadastros/CollapsibleFilters'
 import { ListLoadingFooter, ListStatus } from '@/components/cadastros/ListStatus'
 import { SelectField } from '@/components/cadastros/SelectField'
 import { WithdrawalBadge } from '@/components/cadastros/WithdrawalBadge'
 import { AppCard } from '@/components/dashboard/AppCard'
+import { summarizeAnimalFilters } from '@/features/cadastros/animalFilters'
 import { formatDayMonthPtBr, todayIso } from '@/features/cadastros/dates'
 import { useLocalAnimalTypes, useLocalFarms, useLocalHerds, useLocalList } from '@/sync/hooks'
 import { firstParam } from '@/sync/params'
@@ -38,6 +40,7 @@ export default function AnimaisListScreen() {
   const [typeId, setTypeId] = useState(paramType ?? '')
   const [situacao, setSituacao] = useState<'' | AnimalSituation>(isAnimalSituation(paramSituation) ? paramSituation : '')
   const [herdId, setHerdId] = useState(paramHerd ?? '')
+  const [filtersOpen, setFiltersOpen] = useState(false)
   // A tela pode já estar montada na pilha: parâmetros novos substituem os filtros (ajuste durante o render).
   const paramsKey = `${paramSituation ?? ''}|${paramFarm ?? ''}|${paramType ?? ''}|${paramHerd ?? ''}`
   const [appliedParams, setAppliedParams] = useState(paramsKey)
@@ -50,6 +53,33 @@ export default function AnimaisListScreen() {
   }
   const herds = useLocalHerds(farmId || undefined)
   const today = todayIso()
+  const selectedFarmName = farmId ? farms.find((farm) => farm.id === farmId)?.name : undefined
+  const selectedTypeName = typeId ? types.find((item) => item.id === typeId)?.name : undefined
+  const selectedHerdName = herdId ? herds.find((herd) => herd.id === herdId)?.name : undefined
+  const filterSummary = useMemo(
+    () =>
+      summarizeAnimalFilters({
+        situacao,
+        farmName: selectedFarmName,
+        typeName: selectedTypeName,
+        herdName: selectedHerdName,
+      }),
+    [situacao, selectedFarmName, selectedTypeName, selectedHerdName],
+  )
+
+  function toggleFilters(next = !filtersOpen) {
+    animateFiltersToggle()
+    setFiltersOpen(next)
+  }
+
+  function clearFilters() {
+    setSituacao('')
+    setFarmId('')
+    setTypeId('')
+    setHerdId('')
+    router.setParams({ situacao: undefined, farmId: undefined, animalTypeId: undefined, herdId: undefined })
+    setAppliedParams('|||')
+  }
 
   // Lista local reativa: carência (SUM/MAX) calculada no SQLite do aparelho.
   const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useLocalList(
@@ -67,51 +97,63 @@ export default function AnimaisListScreen() {
   return (
     <YStack flex={1} bg="appBg">
       <YStack px={20} pt={12} pb={8} gap={12}>
-        <XStack
-          minH={TOQUE_MINIMO}
-          items="center"
-          justify="center"
-          rounded={16}
-          bg="brandPrimary"
-          opacity={{ press: 0.85 }}
-          onPress={() => router.push('/configuracoes/animais/nova')}
-          accessibilityRole="button"
-          accessibilityLabel="Novo animal">
-          <Text fontSize={18} fontWeight="800" color="brandPrimaryFg">
-            Novo animal
-          </Text>
+        <XStack items="center" gap={12}>
+          <XStack
+            flex={1}
+            minH={TOQUE_MINIMO}
+            items="center"
+            justify="center"
+            rounded={16}
+            bg="brandPrimary"
+            opacity={{ press: 0.85 }}
+            onPress={() => router.push('/configuracoes/animais/nova')}
+            accessibilityRole="button"
+            accessibilityLabel="Novo animal">
+            <Text fontSize={18} fontWeight="800" color="brandPrimaryFg">
+              Novo animal
+            </Text>
+          </XStack>
+          <FilterToggle open={filtersOpen} activeCount={filterSummary.activeCount} onPress={() => toggleFilters()} />
         </XStack>
-        <SelectField
-          label="Filtrar por fazenda"
-          value={farmId}
-          options={[{ value: '', label: 'Todas as fazendas' }, ...farms.map((farm) => ({ value: farm.id, label: farm.name }))]}
-          onChange={(value) => {
-            setFarmId(value)
-            setHerdId('')
-          }}
-        />
-        <SelectField
-          label="Filtrar por tipo"
-          value={typeId}
-          options={[{ value: '', label: 'Todos os tipos' }, ...types.map((item) => ({ value: item.id, label: item.name }))]}
-          onChange={setTypeId}
-        />
-        <SelectField
-          label="Filtrar por rebanho"
-          value={herdId}
-          options={[{ value: '', label: 'Todos os rebanhos' }, ...herds.map((herd) => ({ value: herd.id, label: farmId ? herd.name : `${herd.name} · ${herd.farmName ?? 'Fazenda'}` }))]}
-          onChange={setHerdId}
-        />
-        <SelectField
-          label="Situação"
-          value={situacao}
-          options={SITUATION_OPTIONS}
-          onChange={(value) => setSituacao(isAnimalSituation(value) ? value : '')}
-        />
+        <CollapsibleFilters
+          open={filtersOpen}
+          summary={filterSummary.text}
+          onOpen={() => toggleFilters(true)}
+          onClear={clearFilters}
+          clearable={filterSummary.activeCount > 0}>
+          <SelectField
+            label="Filtrar por fazenda"
+            value={farmId}
+            options={[{ value: '', label: 'Todas as fazendas' }, ...farms.map((farm) => ({ value: farm.id, label: farm.name }))]}
+            onChange={(value) => {
+              setFarmId(value)
+              setHerdId('')
+            }}
+          />
+          <SelectField
+            label="Filtrar por tipo"
+            value={typeId}
+            options={[{ value: '', label: 'Todos os tipos' }, ...types.map((item) => ({ value: item.id, label: item.name }))]}
+            onChange={setTypeId}
+          />
+          <SelectField
+            label="Filtrar por rebanho"
+            value={herdId}
+            options={[{ value: '', label: 'Todos os rebanhos' }, ...herds.map((herd) => ({ value: herd.id, label: farmId ? herd.name : `${herd.name} · ${herd.farmName ?? 'Fazenda'}` }))]}
+            onChange={setHerdId}
+          />
+          <SelectField
+            label="Situação"
+            value={situacao}
+            options={SITUATION_OPTIONS}
+            onChange={(value) => setSituacao(isAnimalSituation(value) ? value : '')}
+          />
+        </CollapsibleFilters>
       </YStack>
       <FlatList
         data={items}
         keyExtractor={(item) => item.id || item.code}
+        keyboardShouldPersistTaps="handled"
         contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 28, flexGrow: 1, gap: 12 }}
         refreshing={refreshing}
         onRefresh={() => void refresh()}

@@ -2,9 +2,11 @@ import type { CommonPowerSyncDatabase, PowerSyncBackendConnector, PowerSyncCrede
 
 import { http } from '@/api/client'
 import { isApiError, publicApiMessage } from '@/api/errors'
+import { localFileExists, uploadShipmentPhoto } from '@/api/shipmentPhotos'
 import { POWERSYNC_CONFIG } from './config'
 import { newUlid } from './ids'
 import { parseTimestamp } from './mapping'
+import { ensurePhotosUploaded } from './photoQueue'
 import { saveRejections } from './rejections'
 import { SessionEndedUploadError, resolvePowerSyncEndpoint, uploadTransaction, type PostResponse } from './upload'
 
@@ -60,6 +62,14 @@ export class EmbarqueConnector implements PowerSyncBackendConnector {
       await uploadTransaction(transaction, {
         post: postBatch,
         saveRejections: (rows) => saveRejections(database, rows, newUlid),
+        // Ordem obrigatória: foto (POST /shipments/:id/photos) antes do PUT/PATCH do vínculo com photo_id.
+        ensurePhotos: (photoIds) =>
+          ensurePhotosUploaded(photoIds, {
+            db: database,
+            upload: uploadShipmentPhoto,
+            fileExists: localFileExists,
+            now: () => new Date().toISOString(),
+          }),
       })
     } catch (error) {
       if (error instanceof SessionEndedUploadError) {

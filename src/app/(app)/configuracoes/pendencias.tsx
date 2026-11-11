@@ -18,6 +18,7 @@ import {
   ENTITY_ROUTES,
   groupRejections,
   REJECTIONS_LIST_SQL,
+  shipmentIdForLinkRejection,
   type Rejection,
   type RejectionGroup,
 } from '@/sync/rejections'
@@ -46,6 +47,17 @@ export default function PendenciasScreen() {
   async function onCorrect(rejection: Rejection) {
     setError(null)
     const entity = (entityOfTable(rejection.tableName) ?? rejection.entity) as SyncEntity
+    if (entity === 'shipmentAnimals') {
+      // Vínculo embarque ↔ animal: corrige-se na análise do embarque (seleção de animais).
+      const shipmentId = await shipmentIdForLinkRejection(db, rejection)
+      const exists = shipmentId ? Boolean(await db.getOptional(`SELECT id FROM ${tableOf('shipments')} WHERE id = ?`, [shipmentId])) : false
+      router.push(
+        (exists
+          ? { pathname: ENTITY_ROUTES.shipments.edit, params: { id: shipmentId, pendencia: rejection.id } }
+          : ENTITY_ROUTES.shipments.list) as Href,
+      )
+      return
+    }
     const routes = ENTITY_ROUTES[entity as keyof typeof ENTITY_ROUTES]
     if (!routes) return
     const exists = Boolean(await db.getOptional(`SELECT id FROM ${tableOf(entity)} WHERE id = ?`, [rejection.rowId]))
@@ -167,7 +179,7 @@ export default function PendenciasScreen() {
         title="Descartar esta alteração?"
         message={
           discarding?.dependents.length
-            ? `${discarding.dependentsLabel}. O rebanho e esses vínculos voltam a ficar como estão no servidor. Esta ação não pode ser desfeita.`
+            ? `${discarding.dependentsLabel}. ${(entityOfTable(discarding.primary.tableName) ?? discarding.primary.entity) === 'shipments' ? 'O embarque' : 'O rebanho'} e esses vínculos voltam a ficar como estão no servidor. Esta ação não pode ser desfeita.`
             : 'O registro volta a ficar como está no servidor. Esta ação não pode ser desfeita.'
         }
         confirmLabel="Descartar"

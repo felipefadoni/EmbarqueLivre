@@ -1,5 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
-import { router, useLocalSearchParams } from 'expo-router'
+import { Redirect, router, useLocalSearchParams } from 'expo-router'
 import { useEffect, useMemo, useState } from 'react'
 import { FlatList, useColorScheme } from 'react-native'
 import { Input, Text, XStack, YStack } from 'tamagui'
@@ -11,12 +11,20 @@ import { SelectField } from '@/components/cadastros/SelectField'
 import { AppCard } from '@/components/dashboard/AppCard'
 import { formatDatePtBr } from '@/features/cadastros/dates'
 import { summarizeHerdFilters } from '@/features/cadastros/herdFilters'
+import { canManageHerds } from '@/features/cadastros/permissions'
+import { useAuth } from '@/features/auth/AuthProvider'
 import { useLocalFarms, useLocalList } from '@/sync/hooks'
 import { firstParam } from '@/sync/params'
 import { herdsListQuery, rowToHerd, type HerdRow } from '@/sync/queries'
 import { TOQUE_MINIMO } from '../../../../../tamagui.config'
 
 export default function RebanhosListScreen() {
+  const { user } = useAuth()
+  if (!canManageHerds(user?.role)) return <Redirect href="/configuracoes" />
+  return <RebanhosList />
+}
+
+function RebanhosList() {
   const isDark = useColorScheme() === 'dark'
   const chevron = isDark ? '#A8B8AF' : '#7A8B80'
   const iconColor = isDark ? '#A8B8AF' : '#3A5247'
@@ -53,6 +61,14 @@ export default function RebanhosListScreen() {
     setFiltersOpen(next)
   }
 
+  function clearFilters() {
+    setFarmId('')
+    setSearchInput('')
+    setSearch('')
+    router.setParams({ farmId: undefined })
+    setAppliedParams('')
+  }
+
   return (
     <YStack flex={1} bg="appBg">
       <YStack px={20} pt={12} pb={8} gap={12}>
@@ -74,7 +90,7 @@ export default function RebanhosListScreen() {
           </XStack>
           <FilterToggle open={filtersOpen} activeCount={filterSummary.activeCount} onPress={() => toggleFilters()} />
         </XStack>
-        <CollapsibleFilters open={filtersOpen} summary={filterSummary.text} onOpen={() => toggleFilters(true)}>
+        <CollapsibleFilters open={filtersOpen} summary={filterSummary.text} onOpen={() => toggleFilters(true)} onClear={clearFilters} clearable={filterSummary.activeCount > 0}>
           <SelectField
             label="Fazenda"
             value={farmId}

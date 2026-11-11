@@ -77,6 +77,15 @@ export default function LancamentosScreen() {
     setFiltersOpen(next)
   }
 
+  function clearFilters() {
+    setDate(todayIso())
+    setFarmId('')
+    setCodeInput('')
+    setCode('')
+    router.setParams({ date: undefined, farmId: undefined })
+    setAppliedParams('|')
+  }
+
   return (
     <YStack flex={1} bg="appBg">
       <YStack px={20} pt={insets.top + 8} pb={8} gap={12}>
@@ -108,7 +117,7 @@ export default function LancamentosScreen() {
             Informar Vacina
           </Text>
         </XStack>
-        <CollapsibleFilters open={filtersOpen} summary={filterSummary.text} onOpen={() => toggleFilters(true)}>
+        <CollapsibleFilters open={filtersOpen} summary={filterSummary.text} onOpen={() => toggleFilters(true)} onClear={clearFilters} clearable={filterSummary.activeCount > 0}>
           <DateField
             label={isToday ? 'Data do lançamento (hoje)' : 'Data do lançamento'}
             value={date}

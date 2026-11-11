@@ -120,6 +120,7 @@ não funciona no aparelho físico); por isso a variável do app vence enquanto e
 | `lifecycle.ts` | Conectar / limpar por usuário (usado pelo `AuthProvider`) |
 | `queries.ts` | SQL das listas e detalhes (joins, filtros, carência, paginação local) |
 | `withdrawal.ts` | Cálculo de carência (puro) |
+| `shipmentEligibility.ts` | Análise de embarque (livres / em carência / em outro embarque no dia), reaproveitando `withdrawal.ts` |
 | `repository.ts` | Escritas locais + validações equivalentes aos 409 do servidor |
 | `rejections.ts` / `editor.ts` | Pendências (recusas) e "Corrigir" nos formulários |
 | `hooks.ts` | `useLocalList`, `useSyncInfo`, `useWaitForSync`, `useIsOnline` |
@@ -132,8 +133,11 @@ não funciona no aparelho físico); por isso a variável do app vence enquanto e
 | Fazenda | `farms` | `account_id, owner_user_id` (alias deprecado), `name, city, state, created_at, updated_at` |
 | Vacina | `vaccines` | `name, withdrawal_days (integer), created_at, updated_at` |
 | Tipo de animal | `animal_types` | `name, created_at, updated_at` |
-| Animal | `animals` | `farm_id, animal_type_id, code, sex, breed, birth_date, herd_id` (nullable), `created_at, updated_at` |
+| Animal | `animals` | `farm_id, animal_type_id, code, sex, breed, birth_date, herd_id` (nullable), `shipped_at` (só leitura: embarcado em embarque finalizado; nunca sobe), `created_at, updated_at` |
 | Rebanho | `herds` | `farm_id, name, description, formed_at` (YYYY-MM-DD), `created_at, updated_at` — nomes em `HERDS_CONTRACT` (§17.10) |
+| Embarque | `shipments` | `farm_id, name, shipped_on` (YYYY-MM-DD), `status` (`in_progress`/`finished`), `finished_at` (só leitura, nunca sobe), `created_by_user_id` (calculado pelo servidor, ignorado no upload), `created_at, updated_at` — `SHIPMENTS_CONTRACT` + `SHIPMENT_FLOW_CONTRACT` (contrato final) |
+| Animal no embarque | `shipment_animals` | `shipment_id, animal_id, weight_kg` (real), `photo_id`, `photo_content_type`/`photo_size_bytes` (só leitura, nunca sobem), `created_at, updated_at` — uma linha por animal |
+| Fila de fotos (local) | `shipment_photo_queue` | `id` (= `photo_id`), `shipment_id, animal_id, link_id, local_uri, status` (`pending`/`uploaded`/`failed`), `attempts, last_error, created_at, updated_at` — `localOnly`, nunca sobe |
 | Lançamento | `animal_vaccinations` | `animal_id, farm_id, vaccine_id, applied_at, withdrawal_days (integer), withdrawal_until, created_by_user_id, created_at, updated_at` |
 | Pendências (local) | `sync_rejections` | `entity, table_name, row_id, op, op_data, status_code (integer), error_code, message, field, created_at` — `localOnly`, nunca sobe |
 
@@ -149,6 +153,42 @@ animais. Um PUT de animal sem `herd_id` desvincula — o app sempre grava a colu
 No cadastro de um rebanho novo, o insert em `herds` e os updates de `herd_id`/`updated_at` nos animais escolhidos
 correm na mesma `writeTransaction` do PowerSync: um único lote na fila, rebanho primeiro, depois os animais
 (funciona offline).
+
+Embarques (`shipments` + `shipment_animals`) seguem `src/api/shipmentsContract.ts` (`SHIPMENTS_CONTRACT` +
+`SHIPMENT_FLOW_CONTRACT`, contrato final da API, §17.11 e §19 de `API_INTEGRATION.md`). Streams `account` (master/basic)
+e `admin_all` (admin). Aba própria **Embarques** (abas Em andamento / Finalizado).
+
+- Criar: sempre `in_progress`, sem animais (`animalIds` não existe mais em POST/PUT/PATCH). A fazenda é imutável;
+  `shipped_on` vai de 1900-01-01 a hoje + 2 anos (America/Sao_Paulo).
+- Animais entram **um a um**, cada um com **peso** (kg, 1–2000, no máximo 1 casa decimal) e **foto** (câmera; galeria se
+  a câmera for negada), comprimida no aparelho (lado maior 1280 px, JPEG 0,7; o servidor aceita JPEG/PNG/WEBP até 10 MB,
+  413 acima). `addShipmentAnimal` grava na mesma `writeTransaction` o vínculo (`weight_kg` + `photo_id` gerado no app)
+  e a linha da fila local `shipment_photo_queue` (id = `photo_id`). Trocar a foto gera outro `photo_id`. Um animal só pode
+  estar em um embarque (409 `ANIMAL_ALREADY_IN_SHIPMENT`, mesmo no mesmo embarque).
+- **Ordem obrigatória de upload** (`uploadOrder: photo → link → finish`): o PUT do embarque vem numa transação anterior;
+  antes de enviar um lote que tenha PUT/PATCH de `shipment_animals` com `photo_id`, o connector chama
+  `ensurePhotosUploaded` (`src/sync/photoQueue.ts`), que faz `POST /shipments/:id/photos` (multipart `photo` + `id`,
+  idempotente) de cada foto ainda `pending`; só depois o lote do vínculo sobe. Finalizar é um PATCH posterior. O binário
+  nunca vai no upload do PowerSync. Falha temporária da foto (sem rede, 408, 429, 5xx) → lança e o PowerSync tenta de
+  novo (a fila não anda); 401 → sessão encerrada; outros 4xx (ex.: 413, `INVALID_SHIPMENT_PHOTO`) → foto `failed` com a
+  mensagem do servidor e o lote segue (o servidor recusa o vínculo com `SHIPMENT_ANIMAL_PHOTO_REQUIRED` → Pendência;
+  "Reenviar foto" na tela). Foto enviada mas nunca vinculada fica no servidor até o embarque ser excluído.
+- Finalizar (`finishShipment`, basic/master/admin): PATCH `{ status: "finished" }`. Vazio → 422 `SHIPMENT_EMPTY`.
+  Vínculos antigos sem peso/foto não impedem; peso + foto só são exigidos em vínculo novo. Localmente grava
+  `finished_at` e `animals.shipped_at` (somem da lista na hora, offline); essas colunas são do servidor e são
+  removidas do upload (`NEVER_UPLOAD_COLUMNS`; PATCH que fica vazio é descartado). Finalizado = só leitura (422
+  `SHIPMENT_FINISHED`; reenviar os mesmos valores é aceito pelo servidor).
+- **Flag oficial `animals.shipped_at`**: `shipped_at IS NOT NULL` some de Animais cadastrados, seletores, modal de
+  adicionar e dashboard (`animalShippedExpr`). Vincular embarcado → 409 `ANIMAL_ALREADY_SHIPPED`.
+- Carência **não bloqueia** (não existe mais `SHIPMENT_ANIMAL_IN_WITHDRAWAL`): ao adicionar um animal em carência no dia
+  do embarque o app avisa e pede confirmação (checkbox); ao mudar a data para um dia com animais em carência, aviso e
+  diálogo "Salvar mesmo assim". O repositório não valida carência.
+- Excluir embarque: só master/admin (basic → `INSUFFICIENT_ROLE`; no upload, 200 + `rejected` = definitivo). Em
+  andamento: desvincula os animais. Finalizado: os animais continuam embarcados (`shipped_at` fica). Vínculos, fotos da
+  fila e o embarque saem na mesma transação. Basic pode remover vínculos.
+- Animal: trocar de fazenda tira do embarque em andamento na mesma transação; se o embarque estiver finalizado → 422
+  `SHIPMENT_FINISHED` (não desvincula). Excluir animal embarcado **não** é bloqueado e o tira até do embarque finalizado
+  (CASCADE no servidor; o app apaga o vínculo na mesma transação).
 
 Datas: `YYYY-MM-DD` (texto). `timestamptz` chega como ISO UTC com microssegundos (`2026-11-10T15:17:43.051812Z`);
 `normalizeTimestamp` troca espaço por `T` (se vier) e trunca a fração em 3 casas antes de `new Date` (Hermes). IDs: ULID **em maiúsculas** gerado no app (`ids.ts`, PRNG do `expo-crypto`).
@@ -184,6 +224,18 @@ Datas: `YYYY-MM-DD` (texto). `timestamptz` chega como ISO UTC com microssegundos
   `withdrawal_until = applied_at + dias`; `farm_id` do animal; `created_by_user_id` = usuário atual. Editar mantendo a
   mesma vacina mantém a cópia de dias; trocar a vacina recalcula com a carência atual dela.
 - Fazenda: `account_id` só no cadastro feito por **admin** (`owner_user_id` é alias deprecado); nunca em alteração (também removido no upload de PATCH). Master/basic não enviam: o servidor atribui à conta de quem cria.
+- Embarque (todas as regras abaixo também valem para o basic, exceto excluir): nome 2–120, único por fazenda sem
+  diferenciar maiúsculas (`SHIPMENT_NAME_ALREADY_EXISTS`), `INVALID_SHIPPED_ON`, `SHIPMENT_FARM_IMMUTABLE`, embarque
+  finalizado (`SHIPMENT_FINISHED`). Animal novo, nesta ordem: `ANIMAL_NOT_FOUND` → `SHIPMENT_ANIMAL_FARM_MISMATCH` →
+  `ANIMAL_ALREADY_SHIPPED` → `ANIMAL_ALREADY_IN_SHIPMENT` (`details.conflicts`) → `INVALID_SHIPMENT_ANIMAL_WEIGHT`
+  (`weightKg`) → `SHIPMENT_ANIMAL_PHOTO_REQUIRED` (`photo`). Finalizar vazio: `SHIPMENT_EMPTY`. No upload os
+  `details.field` vêm em snake_case (`animal_id`, `shipment_id`, `shipped_on`, `farm_id`, `weight_kg`, `photo_id`);
+  Pendências leva os de vínculo para a seção de animais do embarque. Outros códigos do servidor (mensagem do servidor tem
+  prioridade): `INVALID_SHIPMENT_PHOTO`, `SHIPMENT_PHOTO_NOT_FOUND`, `SHIPMENT_PHOTO_IN_USE`, `INVALID_SHIPMENT_STATUS`
+  (filtro `status` da lista REST aceita só `in_progress|finished`), 413 (foto grande). A carência no dia do embarque (só
+  aviso) usa a regra do app (`isActiveOn` com o dia do embarque no lugar de "hoje"), considerando só as aplicações com
+  `applied_at <= shipped_on`; livre no próprio dia `freeAt`. Excluir fazenda com embarques: `FARM_HAS_SHIPMENTS`
+  (depois de `FARM_HAS_ANIMALS` e `FARM_HAS_HERDS`).
 - Carência calculada no SQLite: `totalWithdrawalDays` = soma de todas as aplicações (inclui vencidas),
   `freeAt` = maior `withdrawal_until`, `inWithdrawal` = hoje < `freeAt` (livre NO dia).
 
@@ -242,6 +294,15 @@ recusa de `herds` ainda aberta. Recusa de animal sem um rebanho recusado corresp
   salvar, a mesma `writeTransaction` recria o rebanho e reaplica os vínculos; `clearPendencia` descarta o grupo
   inteiro (rebanho + dependentes).
 
+### Embarque recusado e vínculos de animais (grupo)
+
+Mesmo esquema do rebanho: se o servidor recusa o cadastro do embarque, as recusas de `shipment_animals` cujo
+`op_data.shipment_id` é o `row_id` desse embarque aparecem como dependentes ("N animais aguardam este embarque").
+Descartar apaga o grupo; Corrigir abre "Novo embarque" preenchido; os animais precisam ser adicionados de novo, com
+foto e peso. "Corrigir" de um vínculo avulso abre o embarque dele (`/embarques/[id]`).
+Um 403 `INSUFFICIENT_ROLE` (ex.: exclusão feita por basic) volta como op `rejected`: vira pendência definitiva, sem retry,
+com a mensagem oficial.
+
 ## Telas
 
 - Menu → card **Sincronização** (online/offline/sincronizando, última sincronização, alterações aguardando envio)
@@ -257,9 +318,15 @@ recusa de `herds` ainda aberta. Recusa de animal sem um rebanho recusado corresp
 - Upload idempotente: o mesmo lote pode ser reenviado após 5xx/timeout (PUT = upsert pelo `id`; DELETE de registro
   inexistente = aplicado).
 - Colunas derivadas que o app envia mas o servidor deve **ignorar/recalcular**: `animal_vaccinations.farm_id`,
-  `withdrawal_until`, `created_by_user_id`; e `created_at`/`updated_at` de todas as tabelas.
+  `withdrawal_until`, `created_by_user_id`; e `created_at`/`updated_at` de todas as tabelas. Nunca sobem (removidas
+  antes do upload): `shipments.finished_at`, `animals.shipped_at`, `shipment_animals.photo_content_type` e
+  `photo_size_bytes`.
 
 ## Testar no aparelho
+
+- Embarques (modo avião; precisa de build nativo novo por causa da câmera): criar embarque, adicionar animais com foto
+  e peso (um em carência pede confirmação), finalizar; os animais somem de Animais cadastrados na hora. Voltar a rede:
+  as fotos sobem antes dos vínculos e a fila zera. Basic finaliza, mas não vê "Excluir embarque".
 
 - Modo avião: cadastrar animal e lançar vacina; voltar a rede e ver a fila zerar.
 - Mesmo código de animal criado em dois aparelhos offline → um vira pendência ("Já existe um animal com este código nesta fazenda.").

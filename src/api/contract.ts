@@ -19,6 +19,7 @@ import { http } from './client'
  * - O parser também aceita array puro, `{ items }`, `{ results }` e `nextCursor`
  */
 export { HERDS_CONTRACT } from './herdsContract'
+export { SHIPMENTS_CONTRACT, SHIPMENT_FLOW_CONTRACT } from './shipmentsContract'
 
 export const RESOURCE_CONTRACT = {
   updateMethod: 'patch' as const,

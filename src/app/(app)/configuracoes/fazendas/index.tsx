@@ -1,5 +1,5 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
-import { router } from 'expo-router'
+import { Redirect, router } from 'expo-router'
 import { FlatList, useColorScheme } from 'react-native'
 import { Text, XStack, YStack } from 'tamagui'
 
@@ -7,17 +7,23 @@ import type { Farm } from '@/api/catalog'
 import { AppCard } from '@/components/dashboard/AppCard'
 import { ListLoadingFooter, ListStatus } from '@/components/cadastros/ListStatus'
 import { labelUf } from '@/constants/ufs'
-import { canManageCatalog } from '@/features/cadastros/permissions'
+import { canManageFarms } from '@/features/cadastros/permissions'
 import { useAuth } from '@/features/auth/AuthProvider'
 import { useLocalList } from '@/sync/hooks'
 import { farmsListQuery, rowToFarm } from '@/sync/queries'
 import { TOQUE_MINIMO } from '../../../../../tamagui.config'
 
 export default function FazendasListScreen() {
+  const { user } = useAuth()
+  if (!canManageFarms(user?.role)) return <Redirect href="/configuracoes" />
+  return <FazendasList />
+}
+
+function FazendasList() {
   const isDark = useColorScheme() === 'dark'
   const chevron = isDark ? '#A8B8AF' : '#7A8B80'
   const { user } = useAuth()
-  const canManage = canManageCatalog(user?.role)
+  const canManage = canManageFarms(user?.role)
   // Lista local reativa (PowerSync): funciona offline e atualiza sozinha quando o sync traz dados.
   const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useLocalList(farmsListQuery, rowToFarm, [])
 

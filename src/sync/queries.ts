@@ -4,10 +4,11 @@
  * e os mappers convertem a linha nos tipos já usados pelas telas.
  * Puro (sem React Native) para testes no Node com SQLite real.
  */
-import type { Animal, AnimalType, Farm, Herd, Vaccine } from '../api/catalog'
+import type { Animal, AnimalType, Farm, Herd, Shipment, Vaccine } from '../api/catalog'
 import { HERDS_CONTRACT } from '../api/herdsContract'
+import { SHIPMENTS_CONTRACT, shipmentStatusOf, type ShipmentStatus } from '../api/shipmentsContract'
 import type { AnimalWithdrawal, VaccinationEntry, WithdrawalApplication } from '../api/contract'
-import { colOf as c, tableOf as t } from './mapping'
+import { colOf as c, PHOTO_QUEUE_TABLE, tableOf as t } from './mapping'
 import { isActiveOn, summarizeWithdrawal } from './withdrawal'
 
 export type SqlQuery = { sql: string; params: unknown[] }
@@ -22,6 +23,18 @@ const T = t('animalTypes')
 const A = t('animals')
 const AV = t('vaccinations')
 const H = t('herds')
+const S = t('shipments')
+const SA = t('shipmentAnimals')
+const PQ = PHOTO_QUEUE_TABLE.table
+
+/**
+ * Animal "embarcado" (saiu da fazenda num embarque FINALIZADO): some da lista de Animais, dos pickers e do Dashboard,
+ * mas continua no detalhe do embarque. Flag OFICIAL: `animals.shipped_at IS NOT NULL` (vem do servidor no sync; o app
+ * também grava localmente ao finalizar, para sumir na hora, mesmo offline).
+ */
+export function animalShippedExpr(alias = 'a'): string {
+  return `(${alias}.${c('animals', 'shippedAt')} IS NOT NULL)`
+}
 
 /** Data efetiva de fim de carência: a gravada; se ausente, applied_at + days no SQLite. */
 function untilExpr(alias: string) {
@@ -108,18 +121,27 @@ export const withdrawalAgg = `SELECT av.${c('vaccinations', 'animalId')} AS aid,
   SUM(av.${c('vaccinations', 'withdrawalDays')}) AS total, MAX(${untilExpr('av')}) AS freeAt
   FROM ${AV} av GROUP BY av.${c('vaccinations', 'animalId')}`
 
-function animalSelect(todayParam = '?') {
+/**
+ * Mesmo agregado, mas só com as aplicações feitas até `?` (inclusive): carência vista NO dia do embarque.
+ * Uma aplicação posterior ao embarque não conta (não pode deixar o animal "em carência" naquele embarque).
+ */
+export const withdrawalAggAppliedUntil = `SELECT av.${c('vaccinations', 'animalId')} AS aid,
+  SUM(av.${c('vaccinations', 'withdrawalDays')}) AS total, MAX(${untilExpr('av')}) AS freeAt
+  FROM ${AV} av WHERE substr(av.${c('vaccinations', 'appliedAt')}, 1, 10) <= ? GROUP BY av.${c('vaccinations', 'animalId')}`
+
+function animalSelect(todayParam = '?', agg = withdrawalAgg) {
   return `SELECT a.id AS id, a.${c('animals', 'code')} AS code, a.${c('animals', 'farmId')} AS farmId,
   a.${c('animals', 'animalTypeId')} AS animalTypeId, a.${c('animals', 'sex')} AS sex, a.${c('animals', 'breed')} AS breed,
   a.${c('animals', 'birthDate')} AS birthDate, a.${c('animals', 'herdId')} AS herdId, h.${c('herds', 'name')} AS herdName,
   f.${c('farms', 'name')} AS farmName, at.${c('animalTypes', 'name')} AS animalTypeName,
   COALESCE(w.total, 0) AS totalWithdrawalDays, w.freeAt AS freeAt,
-  CASE WHEN w.freeAt IS NOT NULL AND ${todayParam} < w.freeAt THEN 1 ELSE 0 END AS inWithdrawal
+  CASE WHEN w.freeAt IS NOT NULL AND ${todayParam} < w.freeAt THEN 1 ELSE 0 END AS inWithdrawal,
+  CASE WHEN ${animalShippedExpr('a')} THEN 1 ELSE 0 END AS shipped
   FROM ${A} a
   LEFT JOIN ${F} f ON f.id = a.${c('animals', 'farmId')}
   LEFT JOIN ${T} at ON at.id = a.${c('animals', 'animalTypeId')}
   LEFT JOIN ${H} h ON h.id = a.${c('animals', 'herdId')}
-  LEFT JOIN (${withdrawalAgg}) w ON w.aid = a.id`
+  LEFT JOIN (${agg}) w ON w.aid = a.id`
 }
 
 /**
@@ -135,11 +157,37 @@ export function isAnimalSituation(value: unknown): value is AnimalSituation {
   return typeof value === 'string' && (ANIMAL_SITUATIONS as readonly string[]).includes(value)
 }
 
-export type AnimalFilters = { farmId?: string; animalTypeId?: string; herdId?: string; code?: string; situacao?: AnimalSituation }
+/** Filtro de Situação (mesma regra da lista de Animais) em relação à data `ref` (hoje, ou o dia do embarque). */
+function situationWhere(situacao: AnimalSituation | undefined, ref: string, where: string[], params: unknown[]) {
+  // `ref` vem do JS (fuso do aparelho); date(?, '+7 days') só soma dias a essa data (nunca a data atual do SQLite, que é UTC).
+  if (situacao === 'liberado') {
+    where.push('w.freeAt IS NOT NULL AND w.freeAt <= ?')
+    params.push(ref)
+  } else if (situacao === 'carencia') {
+    where.push('w.freeAt > ?')
+    params.push(ref)
+  } else if (situacao === 'sem_historico') {
+    where.push('w.aid IS NULL')
+  } else if (situacao === 'libera7') {
+    where.push("w.freeAt > ? AND w.freeAt <= date(?, '+7 days')")
+    params.push(ref, ref)
+  }
+}
+
+export type AnimalFilters = {
+  farmId?: string
+  animalTypeId?: string
+  herdId?: string
+  code?: string
+  situacao?: AnimalSituation
+  /** Inclui os embarcados (embarque finalizado). Padrão: não (lista de cadastrados, pickers). */
+  includeShipped?: boolean
+}
 
 export function animalsListQuery(filters: AnimalFilters, today: string, limit?: number): SqlQuery {
   const where: string[] = []
   const params: unknown[] = [today]
+  if (!filters.includeShipped) where.push(`NOT ${animalShippedExpr('a')}`)
   if (filters.farmId) {
     where.push(`a.${c('animals', 'farmId')} = ?`)
     params.push(filters.farmId)
@@ -158,23 +206,34 @@ export function animalsListQuery(filters: AnimalFilters, today: string, limit?: 
     where.push(`instr(lower(a.${c('animals', 'code')}), lower(?)) > 0`)
     params.push(code)
   }
-  // `today` vem do JS (fuso do aparelho); date(?, '+7 days') só soma dias a essa data (nunca a data atual do SQLite, que é UTC).
-  if (filters.situacao === 'liberado') {
-    where.push('w.freeAt IS NOT NULL AND w.freeAt <= ?')
-    params.push(today)
-  } else if (filters.situacao === 'carencia') {
-    where.push('w.freeAt > ?')
-    params.push(today)
-  } else if (filters.situacao === 'sem_historico') {
-    where.push('w.aid IS NULL')
-  } else if (filters.situacao === 'libera7') {
-    where.push("w.freeAt > ? AND w.freeAt <= date(?, '+7 days')")
-    params.push(today, today)
-  }
+  situationWhere(filters.situacao, today, where, params)
   params.push(limitClause(limit) + 1)
   const order = filters.situacao === 'libera7' ? 'w.freeAt, ' : ''
   return {
     sql: `${animalSelect()} ${where.length ? `WHERE ${where.join(' AND ')}` : ''} ORDER BY ${order}a.${c('animals', 'code')} COLLATE NOCASE, a.id LIMIT ?`,
+    params,
+  }
+}
+
+/**
+ * Animais para a análise/validação de EMBARQUE no dia `shippedOn` (fonte única da tela e do repositório).
+ * freeAt = maior withdrawal_until só das aplicações com applied_at <= shippedOn; inWithdrawal = shippedOn < freeAt.
+ */
+export function shipmentAnimalsQuery(filters: { farmId?: string; animalId?: string }, shippedOn: string, limit?: number): SqlQuery {
+  const where: string[] = []
+  // 1º ? = CASE (shippedOn < freeAt); 2º ? = filtro applied_at <= shippedOn no agregado.
+  const params: unknown[] = [shippedOn, shippedOn]
+  if (filters.farmId) {
+    where.push(`a.${c('animals', 'farmId')} = ?`)
+    params.push(filters.farmId)
+  }
+  if (filters.animalId) {
+    where.push('a.id = ?')
+    params.push(filters.animalId)
+  }
+  params.push(limitClause(limit ?? ALL_ROWS) + 1)
+  return {
+    sql: `${animalSelect('?', withdrawalAggAppliedUntil)} ${where.length ? `WHERE ${where.join(' AND ')}` : ''} ORDER BY a.${c('animals', 'code')} COLLATE NOCASE, a.id LIMIT ?`,
     params,
   }
 }
@@ -198,6 +257,8 @@ export type AnimalRow = {
   totalWithdrawalDays: number
   freeAt: string | null
   inWithdrawal: number
+  /** 1 = embarcado (embarque finalizado). */
+  shipped?: number
 }
 
 export function rowToAnimal(row: AnimalRow, withdrawal: AnimalWithdrawal | null = null): Animal {
@@ -364,7 +425,7 @@ const herdSelect = `SELECT h.id AS id, h.${c('herds', 'farmId')} AS farmId, f.${
   COUNT(a.id) AS animalCount
   FROM ${H} h
   LEFT JOIN ${F} f ON f.id = h.${c('herds', 'farmId')}
-  LEFT JOIN ${A} a ON a.${c('animals', 'herdId')} = h.id`
+  LEFT JOIN ${A} a ON a.${c('animals', 'herdId')} = h.id AND NOT ${animalShippedExpr('a')}`
 
 export type HerdFilters = { farmId?: string; search?: string }
 
@@ -428,14 +489,207 @@ export function herdNameTakenQuery(farmId: string, name: string, excludeId?: str
   }
 }
 
+// ---------- Embarques (SHIPMENTS_CONTRACT + SHIPMENT_FLOW_CONTRACT, contrato final) ----------
+
+const shipmentSelect = `SELECT s.id AS id, s.${c('shipments', 'farmId')} AS farmId, f.${c('farms', 'name')} AS farmName,
+  s.${c('shipments', 'name')} AS name, s.${c('shipments', 'shippedOn')} AS shippedOn,
+  COALESCE(s.${c('shipments', 'status')}, 'in_progress') AS status, s.${c('shipments', 'finishedAt')} AS finishedAt,
+  COUNT(sa.id) AS animalCount, COALESCE(SUM(sa.${c('shipmentAnimals', 'weightKg')}), 0) AS totalWeightKg
+  FROM ${S} s
+  LEFT JOIN ${F} f ON f.id = s.${c('shipments', 'farmId')}
+  LEFT JOIN ${SA} sa ON sa.${c('shipmentAnimals', 'shipmentId')} = s.id`
+
+/** `when`: proximos = dia do embarque >= hoje; realizados = antes de hoje (hoje vem do JS, fuso do contrato). */
+export const SHIPMENT_WHEN = ['proximos', 'realizados'] as const
+export type ShipmentWhen = (typeof SHIPMENT_WHEN)[number]
+export function isShipmentWhen(value: unknown): value is ShipmentWhen {
+  return typeof value === 'string' && (SHIPMENT_WHEN as readonly string[]).includes(value)
+}
+
+export type ShipmentFilters = { farmId?: string; search?: string; when?: ShipmentWhen; today?: string; status?: ShipmentStatus }
+
+export function shipmentsListQuery(filters: ShipmentFilters = {}, limit?: number): SqlQuery {
+  const where: string[] = []
+  const params: unknown[] = []
+  const shipped = `s.${c('shipments', 'shippedOn')}`
+  if (filters.farmId) {
+    where.push(`s.${c('shipments', 'farmId')} = ?`)
+    params.push(filters.farmId)
+  }
+  const search = filters.search?.trim()
+  if (search) {
+    where.push(`instr(lower(s.${c('shipments', 'name')}), lower(?)) > 0`)
+    params.push(search)
+  }
+  if (filters.status) {
+    where.push(`COALESCE(s.${c('shipments', 'status')}, 'in_progress') = ?`)
+    params.push(filters.status)
+  }
+  if (filters.when && filters.today) {
+    where.push(filters.when === 'proximos' ? `${shipped} >= ?` : `${shipped} < ?`)
+    params.push(filters.today)
+  }
+  params.push(limitClause(limit) + 1)
+  // Próximos: o mais perto primeiro; demais: o mais recente primeiro.
+  const order = filters.when === 'proximos' ? `${shipped} ASC` : `${shipped} DESC`
+  return {
+    sql: `${shipmentSelect} ${where.length ? `WHERE ${where.join(' AND ')}` : ''} GROUP BY s.id
+      ORDER BY ${order}, s.${c('shipments', 'name')} COLLATE NOCASE, s.id LIMIT ?`,
+    params,
+  }
+}
+
+export function shipmentByIdQuery(id: string): SqlQuery {
+  return { sql: `${shipmentSelect} WHERE s.id = ? GROUP BY s.id`, params: [id] }
+}
+
+export type ShipmentRow = {
+  id: string
+  farmId: string
+  farmName: string | null
+  name: string
+  shippedOn: string | null
+  status?: string | null
+  finishedAt?: string | null
+  animalCount: number
+  totalWeightKg?: number | null
+}
+
+export function rowToShipment(row: ShipmentRow): Shipment {
+  return {
+    status: shipmentStatusOf(row.status),
+    finishedAt: row.finishedAt ?? null,
+    id: row.id,
+    farmId: row.farmId ?? '',
+    farmName: row.farmName ?? undefined,
+    name: row.name ?? '',
+    shippedOn: row.shippedOn ? String(row.shippedOn).slice(0, 10) : '',
+    animalCount: Number(row.animalCount ?? 0),
+    totalWeightKg: Math.round(Number(row.totalWeightKg ?? 0) * 10) / 10,
+  }
+}
+
+export function shipmentNameTakenQuery(farmId: string, name: string, excludeId?: string): SqlQuery {
+  const nameCol = c('shipments', 'name')
+  const farmCol = c('shipments', 'farmId')
+  const nameCmp = SHIPMENTS_CONTRACT.nameUniqueCaseInsensitive ? `lower(${nameCol}) = lower(?)` : `${nameCol} = ?`
+  const scope = SHIPMENTS_CONTRACT.nameUniquePerFarm ? ` AND ${farmCol} = ?` : ''
+  const params: unknown[] = SHIPMENTS_CONTRACT.nameUniquePerFarm ? [name.trim(), farmId, excludeId ?? ''] : [name.trim(), excludeId ?? '']
+  return { sql: `SELECT id FROM ${S} WHERE ${nameCmp}${scope} AND id <> ? LIMIT 1`, params }
+}
+
+/** Vínculos embarque ↔ animal. Filtra por fazenda do animal, por embarque ou por animal. */
+export function shipmentLinksQuery(filters: { farmId?: string; shipmentId?: string; animalId?: string }): SqlQuery {
+  const where: string[] = []
+  const params: unknown[] = []
+  if (filters.farmId) {
+    where.push(`a.${c('animals', 'farmId')} = ?`)
+    params.push(filters.farmId)
+  }
+  if (filters.shipmentId) {
+    where.push(`sa.${c('shipmentAnimals', 'shipmentId')} = ?`)
+    params.push(filters.shipmentId)
+  }
+  if (filters.animalId) {
+    where.push(`sa.${c('shipmentAnimals', 'animalId')} = ?`)
+    params.push(filters.animalId)
+  }
+  return {
+    sql: `SELECT sa.id AS id, sa.${c('shipmentAnimals', 'animalId')} AS animalId, sa.${c('shipmentAnimals', 'shipmentId')} AS shipmentId,
+      s.${c('shipments', 'name')} AS shipmentName, s.${c('shipments', 'shippedOn')} AS shipmentShippedOn
+      FROM ${SA} sa
+      LEFT JOIN ${S} s ON s.id = sa.${c('shipmentAnimals', 'shipmentId')}
+      LEFT JOIN ${A} a ON a.id = sa.${c('shipmentAnimals', 'animalId')}
+      ${where.length ? `WHERE ${where.join(' AND ')}` : ''}
+      ORDER BY sa.id`,
+    params,
+  }
+}
+
+export type ShipmentLinkRow = {
+  id: string
+  animalId: string
+  shipmentId: string
+  shipmentName: string | null
+  shipmentShippedOn: string | null
+}
+
+export type ShipmentPickerFilters = { farmId: string; shipmentId: string; code?: string; situacao?: AnimalSituation }
+
+/**
+ * Modal "Adicionar animal": animais cadastrados (não embarcados) da fazenda do embarque que ainda não estão NESTE
+ * embarque, com a carência vista NO dia do embarque (só aplicações com applied_at <= shippedOn).
+ * Situação no mesmo sentido da lista de Animais, com o dia do embarque no lugar de hoje.
+ * Animais em OUTRO embarque em andamento vêm com otherShipmentId/Name (a tela mostra, sem deixar adicionar).
+ */
+export function shipmentPickerQuery(filters: ShipmentPickerFilters, shippedOn: string, limit?: number): SqlQuery {
+  const where: string[] = [`a.${c('animals', 'farmId')} = ?`, `NOT ${animalShippedExpr('a')}`]
+  const params: unknown[] = [shippedOn, shippedOn, filters.farmId]
+  where.push(`NOT EXISTS (SELECT 1 FROM ${SA} own WHERE own.${c('shipmentAnimals', 'animalId')} = a.id AND own.${c('shipmentAnimals', 'shipmentId')} = ?)`)
+  params.push(filters.shipmentId)
+  const code = filters.code?.trim()
+  if (code) {
+    where.push(`instr(lower(a.${c('animals', 'code')}), lower(?)) > 0`)
+    params.push(code)
+  }
+  situationWhere(filters.situacao, shippedOn, where, params)
+  params.push(limitClause(limit) + 1)
+  const base = animalSelect('?', withdrawalAggAppliedUntil)
+  return {
+    sql: `SELECT base.*, os.id AS otherShipmentId, os.${c('shipments', 'name')} AS otherShipmentName FROM (${base}
+      WHERE ${where.join(' AND ')}) base
+      LEFT JOIN ${S} os ON os.id = (SELECT osa.${c('shipmentAnimals', 'shipmentId')} FROM ${SA} osa WHERE osa.${c('shipmentAnimals', 'animalId')} = base.id LIMIT 1)
+      ORDER BY base.code COLLATE NOCASE, base.id LIMIT ?`,
+    params,
+  }
+}
+
+export type ShipmentPickerRow = AnimalRow & { otherShipmentId: string | null; otherShipmentName: string | null }
+
+/**
+ * Animais NO embarque (vínculos), com peso, foto (local da fila ou do servidor) e a carência no dia do embarque.
+ * Inclui embarcados: é aqui que os animais de um embarque finalizado continuam visíveis.
+ */
+export function shipmentLinkedAnimalsQuery(shipmentId: string, shippedOn: string): SqlQuery {
+  return {
+    sql: `SELECT sa.id AS linkId, a.id AS animalId, a.${c('animals', 'code')} AS code, at.${c('animalTypes', 'name')} AS animalTypeName,
+      sa.${c('shipmentAnimals', 'weightKg')} AS weightKg, sa.${c('shipmentAnimals', 'photoId')} AS photoId,
+      q.${PHOTO_QUEUE_TABLE.columns.localUri.name} AS localPhotoUri, q.${PHOTO_QUEUE_TABLE.columns.status.name} AS photoStatus,
+      w.freeAt AS freeAt, CASE WHEN w.freeAt IS NOT NULL AND ? < w.freeAt THEN 1 ELSE 0 END AS inWithdrawal
+      FROM ${SA} sa
+      JOIN ${A} a ON a.id = sa.${c('shipmentAnimals', 'animalId')}
+      LEFT JOIN ${T} at ON at.id = a.${c('animals', 'animalTypeId')}
+      LEFT JOIN (${withdrawalAggAppliedUntil}) w ON w.aid = a.id
+      LEFT JOIN ${PQ} q ON q.id = sa.${c('shipmentAnimals', 'photoId')}
+      WHERE sa.${c('shipmentAnimals', 'shipmentId')} = ?
+      ORDER BY a.${c('animals', 'code')} COLLATE NOCASE, sa.id`,
+    params: [shippedOn, shippedOn, shipmentId],
+  }
+}
+
+export type ShipmentLinkedAnimalRow = {
+  linkId: string
+  animalId: string
+  code: string | null
+  animalTypeName: string | null
+  weightKg: number | null
+  /** null só em vínculo antigo (antes da foto obrigatória). */
+  photoId: string | null
+  localPhotoUri: string | null
+  photoStatus: string | null
+  freeAt: string | null
+  inWithdrawal: number
+}
+
 // ---------- Regras locais (equivalentes baratos dos 409) ----------
 
-export function countQuery(entity: 'animals' | 'vaccinations' | 'herds', field: string, value: string): SqlQuery {
+export function countQuery(entity: 'animals' | 'vaccinations' | 'herds' | 'shipments', field: string, value: string): SqlQuery {
   const columns: Record<string, string> = {
     'animals.farmId': `${A}.${c('animals', 'farmId')}`,
     'animals.animalTypeId': `${A}.${c('animals', 'animalTypeId')}`,
     'animals.herdId': `${A}.${c('animals', 'herdId')}`,
     'herds.farmId': `${H}.${c('herds', 'farmId')}`,
+    'shipments.farmId': `${S}.${c('shipments', 'farmId')}`,
     'vaccinations.vaccineId': `${AV}.${c('vaccinations', 'vaccineId')}`,
     'vaccinations.animalId': `${AV}.${c('vaccinations', 'animalId')}`,
   }

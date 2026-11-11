@@ -18,7 +18,7 @@
  * Puro (sem React Native) para testar com servidor simulado.
  */
 import { publicApiMessage } from '../api/errors'
-import { entityOfTable, UPLOAD_BATCH_LIMIT, colOf } from './mapping'
+import { entityOfTable, NEVER_UPLOAD_COLUMNS, UPLOAD_BATCH_LIMIT, colOf } from './mapping'
 
 export type UploadOpType = 'PUT' | 'PATCH' | 'DELETE'
 
@@ -99,8 +99,22 @@ export function toUploadOp(entry: CrudLike): UploadOp {
     const herdCol = colOf('animals', 'herdId')
     if (!(herdCol in opData) && entry.opData && herdCol in entry.opData) opData[herdCol] = entry.opData[herdCol]
   }
+  if (opData && entityOfTable(entry.table) === 'shipments' && op === 'PATCH') {
+    // Fazenda do embarque é imutável (SHIPMENT_FARM_IMMUTABLE): nunca enviar farm_id em alteração.
+    delete opData[colOf('shipments', 'farmId')]
+  }
+  if (opData) {
+    const entity = entityOfTable(entry.table)
+    // Colunas só do servidor (finished_at, shipped_at, metadados da foto): nunca sobem.
+    for (const column of entity ? NEVER_UPLOAD_COLUMNS[entity] ?? [] : []) delete opData[column]
+  }
   if (op === 'DELETE') opData = undefined
   return { op, table: entry.table, id: String(entry.id).toUpperCase(), ...(opData ? { opData } : {}) }
+}
+
+/** PATCH sem nenhuma coluna (só tinha colunas do servidor, removidas). */
+export function isEmptyPatch(op: UploadOp): boolean {
+  return op.op === 'PATCH' && (!op.opData || Object.keys(op.opData).length === 0)
 }
 
 export function chunk<T>(items: T[], size = UPLOAD_BATCH_LIMIT): T[][] {
@@ -131,10 +145,11 @@ function errorBody(data: unknown) {
 
 export function rejectionFrom(op: UploadOp, error: UploadError | undefined, fallbackStatus: number): RejectionRecord {
   const status = error?.statusCode ?? fallbackStatus
-  const code = error?.error && /^[A-Z][A-Z0-9_]+$/.test(error.error) ? error.error : status === 409 ? 'CONFLICT' : status === 404 ? 'NOT_FOUND' : status === 400 ? 'VALIDATION_ERROR' : 'INTERNAL_ERROR'
+  const code = error?.error && /^[A-Z][A-Z0-9_]+$/.test(error.error) ? error.error : status === 409 ? 'CONFLICT' : status === 404 ? 'NOT_FOUND' : status === 400 ? 'VALIDATION_ERROR' : status === 403 ? 'INSUFFICIENT_ROLE' : 'INTERNAL_ERROR'
+  const entity = entityOfTable(op.table) ?? op.table
   const message = publicApiMessage({ status, code: messageCodeFor(op.table, code), message: error?.message })
   return {
-    entity: entityOfTable(op.table) ?? op.table,
+    entity,
     tableName: op.table,
     rowId: op.id,
     op: op.op,
@@ -159,6 +174,7 @@ const DUPLICATE_NAME_CODE: Record<string, string> = {
   vaccines: 'VACCINE_NAME_ALREADY_EXISTS',
   animalTypes: 'ANIMAL_TYPE_NAME_ALREADY_EXISTS',
   herds: 'HERD_NAME_ALREADY_EXISTS',
+  shipments: 'SHIPMENT_NAME_ALREADY_EXISTS',
 }
 
 export function messageCodeFor(table: string, code: string): string {
@@ -175,15 +191,42 @@ export function isDuplicateNameRejection(rejection: { tableName: string; errorCo
 
 export type UploadSummary = { sent: number; applied: number; rejected: RejectionRecord[] }
 
+/**
+ * photo_id citados por PUT/PATCH de shipment_animals: essas fotos precisam estar no servidor ANTES do vínculo
+ * (ordem obrigatória: foto → vínculo → finalizar; SHIPMENT_FLOW_CONTRACT.uploadOrder).
+ */
+export function photoIdsOf(ops: UploadOp[]): string[] {
+  const photoCol = colOf('shipmentAnimals', 'photoId')
+  const ids: string[] = []
+  for (const op of ops) {
+    if (entityOfTable(op.table) !== 'shipmentAnimals' || op.op === 'DELETE') continue
+    const value = op.opData?.[photoCol]
+    if (typeof value === 'string' && value) ids.push(value)
+  }
+  return ids
+}
+
 export async function uploadTransaction(
   transaction: TransactionLike,
-  deps: { post: PostBatch; saveRejections: (rows: RejectionRecord[]) => Promise<void> },
+  deps: {
+    post: PostBatch
+    saveRejections: (rows: RejectionRecord[]) => Promise<void>
+    /** Sobe as fotos (POST /shipments/:id/photos) antes do lote que as cita. Lança Retryable/SessionEnded. */
+    ensurePhotos?: (photoIds: string[]) => Promise<unknown>
+  },
 ): Promise<UploadSummary> {
-  const ops = transaction.crud.map(toUploadOp)
+  // PATCH que FICOU vazio depois de remover colunas só do servidor (ex.: shipped_at dos animais ao finalizar) não
+  // sobe: nada a aplicar. PATCH que já veio vazio segue como antes (o servidor responde).
+  const ops = transaction.crud
+    .map((entry) => ({ op: toUploadOp(entry), hadData: Object.keys(entry.opData ?? {}).length > 0 }))
+    .filter(({ op, hadData }) => !(hadData && isEmptyPatch(op)))
+    .map(({ op }) => op)
   const rejected: RejectionRecord[] = []
   let applied = 0
 
   for (const batch of chunk(ops)) {
+    const photoIds = photoIdsOf(batch)
+    if (photoIds.length && deps.ensurePhotos) await deps.ensurePhotos(photoIds)
     let response: PostResponse
     try {
       response = await deps.post({ batch })
