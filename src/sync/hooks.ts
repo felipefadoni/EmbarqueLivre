@@ -17,6 +17,7 @@ import {
   type HerdRow,
   type SqlQuery,
 } from './queries'
+import { OUTBOX_COUNT_SQL } from './outbox'
 import { PHOTO_QUEUE_COUNTS_SQL } from './photoQueue'
 import { REJECTIONS_COUNT_SQL } from './rejections'
 
@@ -98,7 +99,7 @@ export function useLocalList<Row, Item>(build: (limit: number) => SqlQuery, map:
   }
 }
 
-export type SyncIndicatorState = 'offline' | 'unreachable' | 'connecting' | 'syncing' | 'online'
+export type SyncIndicatorState = 'offline' | 'unreachable' | 'disconnected' | 'connecting' | 'syncing' | 'online'
 
 /** Estado para o indicador: rede (NetInfo) + status do PowerSync + fila e pendências. */
 export function useSyncInfo() {
@@ -107,6 +108,8 @@ export function useSyncInfo() {
   const net = useNetInfo()
   const [pendingUploads, setPendingUploads] = useState(0)
   const rejections = useQuery<{ n: number }>(REJECTIONS_COUNT_SQL)
+  // Saída de reenvio (já fora do ps_crud, ainda não enviada): conta como "aguardando envio", nunca como Pendência.
+  const outbox = useQuery<{ n: number }>(OUTBOX_COUNT_SQL)
   // Fotos do embarque ainda no aparelho (aguardando envio) e recusadas (precisam de outra foto / Reenviar).
   const photos = useQuery<{ pending: number; failed: number }>(PHOTO_QUEUE_COUNTS_SQL)
 
@@ -130,7 +133,8 @@ export function useSyncInfo() {
   if (offline) state = 'offline'
   else if (status.connecting && !status.connected) state = 'connecting'
   // Aparelho com rede, mas o serviço PowerSync não responde (fora do ar, reiniciando, URL/IP errado).
-  else if (!status.connected) state = status.dataFlowStatus.downloadError ? 'unreachable' : 'offline'
+  // Antes caía em 'offline' ("Offline") com o aparelho online: enganava quem via a fila parada.
+  else if (!status.connected) state = status.dataFlowStatus.downloadError ? 'unreachable' : 'disconnected'
   else if (status.dataFlowStatus.uploading || status.dataFlowStatus.downloading) state = 'syncing'
 
   return {
@@ -139,7 +143,7 @@ export function useSyncInfo() {
     connected: status.connected,
     hasSynced: status.hasSynced ?? false,
     lastSyncedAt: status.lastSyncedAt ?? null,
-    pendingUploads,
+    pendingUploads: pendingUploads + Number(outbox.data[0]?.n ?? 0),
     rejectionCount: Number(rejections.data[0]?.n ?? 0),
     pendingPhotos: Number(photos.data[0]?.pending ?? 0),
     failedPhotos: Number(photos.data[0]?.failed ?? 0),

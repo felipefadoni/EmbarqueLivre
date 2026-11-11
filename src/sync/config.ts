@@ -5,6 +5,11 @@ export const POWERSYNC_CONFIG = {
    * Assim o app usa o IP da rede mesmo antes de a API ter POWERSYNC_URL configurado (o token traria localhost).
    */
   url: process.env.EXPO_PUBLIC_POWERSYNC_URL ?? '',
+  /**
+   * Mesma API do client http. Se EXPO_PUBLIC_POWERSYNC_URL for de outro ambiente (ex.: IP da rede local com a API na
+   * VPS), a env é ignorada em favor do `powersyncUrl` do token — ou a sync pausa — para não apagar dados locais.
+   */
+  apiUrl: process.env.EXPO_PUBLIC_API_URL ?? 'http://localhost:3000',
   /** Relativo a `${EXPO_PUBLIC_API_URL}/api/v1`. */
   tokenPath: process.env.EXPO_PUBLIC_POWERSYNC_TOKEN_PATH ?? '/powersync/token',
   uploadPath: process.env.EXPO_PUBLIC_POWERSYNC_UPLOAD_PATH ?? '/powersync/upload',

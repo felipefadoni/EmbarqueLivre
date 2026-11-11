@@ -1,3 +1,4 @@
+import { OUTBOX_COUNT_SQL } from './outbox'
 import { REJECTIONS_COUNT_SQL } from './rejections'
 
 export type UnsentCounter = {
@@ -10,11 +11,12 @@ export type UnsentCounter = {
  * alterações ainda na fila de envio + pendências recusadas não resolvidas.
  */
 export async function countUnsentChanges(db: UnsentCounter) {
-  const [stats, rejected] = await Promise.all([
+  const [stats, rejected, parked] = await Promise.all([
     db.getUploadQueueStats().catch(() => ({ count: 0 })),
     db.getOptional<{ n: number }>(REJECTIONS_COUNT_SQL).catch(() => null),
+    db.getOptional<{ n: number }>(OUTBOX_COUNT_SQL).catch(() => null),
   ])
-  const uploads = Number(stats.count ?? 0)
+  const uploads = Number(stats.count ?? 0) + Number(parked?.n ?? 0)
   const rejections = Number(rejected?.n ?? 0)
   return { uploads, rejections, total: uploads + rejections }
 }

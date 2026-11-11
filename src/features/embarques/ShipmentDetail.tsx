@@ -2,7 +2,7 @@ import Ionicons from '@expo/vector-icons/Ionicons'
 import { useQuery } from '@powersync/react'
 import { router } from 'expo-router'
 import { useEffect, useState } from 'react'
-import { useColorScheme } from 'react-native'
+import { Alert, useColorScheme } from 'react-native'
 import { Spinner, Text, XStack, YStack } from 'tamagui'
 
 import type { Shipment } from '@/api/catalog'
@@ -15,9 +15,10 @@ import { ConfirmDialog } from '@/components/cadastros/ConfirmDialog'
 import { SelectField } from '@/components/cadastros/SelectField'
 import { WithdrawalBadge } from '@/components/cadastros/WithdrawalBadge'
 import { formatDatePtBr } from '@/features/cadastros/dates'
-import { db, repo } from '@/sync'
+import { repo } from '@/sync'
 import { clearPendencia, clearRowRejections, draftString, editorErrorMessage, loadEditorSource, showRejection } from '@/sync/editor'
-import { PHOTO_STATUS_LABEL, retryPhoto, type PhotoQueueStatus } from '@/sync/photoQueue'
+import { PHOTO_STATUS_LABEL, type PhotoQueueStatus } from '@/sync/photoQueue'
+import { resendPhoto } from '@/sync/useUploadPump'
 import { rowToShipment, shipmentByIdQuery, shipmentLinkedAnimalsQuery, type ShipmentLinkedAnimalRow, type ShipmentRow } from '@/sync/queries'
 import { TOQUE_MINIMO, TOQUE_PRINCIPAL } from '../../../tamagui.config'
 import { ShipmentAnimalModal, type ShipmentAnimalModalTarget } from './ShipmentAnimalModal'
@@ -449,7 +450,13 @@ export function ShipmentDetail({
                 })
               }
               onRemove={() => setDialog({ kind: 'remove', linkId: row.linkId, code: row.code ?? '' })}
-              onRetry={() => (row.photoId ? void retryPhoto(db, row.photoId, new Date().toISOString()) : undefined)}
+              onRetry={() => {
+                if (!row.photoId) return
+                // Envia já e sempre informa o resultado (antes só marcava "pendente" e nada acontecia).
+                void resendPhoto(row.photoId, row.linkId)
+                  .then((result) => Alert.alert(result.ok ? 'Reenviar foto' : 'Foto não enviada', result.message))
+                  .catch((error) => Alert.alert('Foto não enviada', String((error as Error)?.message ?? error)))
+              }}
             />
           ))
         )}

@@ -13,7 +13,15 @@
  *   (nada é concluído; reenvio precisa ser idempotente no servidor).
  * - 401 UNAUTHENTICATED (usuário removido/inativo, ou refresh falhou): lança SessionEndedUploadError,
  *   sem retry; o connector encerra a sessão e mantém os dados locais.
- * - Outros 4xx no lote inteiro (400/403/404/409/422): todas as ops do lote viram pendências.
+ * - Lote inteiro recusado com 4xx (404/405 de rota ou proxy, 403 de firewall, 400 INVALID_BATCH, 413…): NÃO é problema
+ *   do cadastro. Nada vira Pendência; a transação fica na fila (BatchBlockedUploadError, com espera) e a tela mostra o
+ *   motivo. Pendência = só recusa da API para AQUELA operação (results[].status = 'rejected') com 4xx definitivo.
+ * - Recusa por operação com 401 → sessão encerrada; com 408/429/5xx (ex.: SYNC_UNAVAILABLE) → fila (retry), não Pendência.
+ * - Recusa por operação com 403/404/405/410… (FARM_NOT_FOUND, ANIMAL_TYPE_NOT_FOUND…) → fila, não Pendência: é referência
+ *   que o servidor ainda não tem ou acesso, não dado inválido. Concluir faria o checkpoint seguinte APAGAR a linha local.
+ *   DELETE com 404 = já apagado (aplicado). Só 400/409/422 viram Pendência (Corrigir).
+ * - 2xx sem JSON (portal cativo, proxy devolvendo HTML) ou sem o resultado de alguma op → fila (retry). Antes isso
+ *   contava como "aplicado" (perda silenciosa) ou virava Pendência SYNC_NO_RESULT.
  *
  * Puro (sem React Native) para testar com servidor simulado.
  */
@@ -64,6 +72,19 @@ export class RetryableUploadError extends Error {
   }
 }
 
+/**
+ * Lote inteiro recusado com 4xx (não é recusa de um cadastro): a transação fica na fila. Subclasse de
+ * RetryableUploadError para todos os caminhos tratarem como "não enviado ainda" (sem Pendência).
+ */
+export class BatchBlockedUploadError extends RetryableUploadError {
+  code: string
+  constructor(status: number, code: string, message: string) {
+    super(status, message)
+    this.name = 'BatchBlockedUploadError'
+    this.code = code
+  }
+}
+
 /** 401 UNAUTHENTICATED no upload: sessão encerrada, sem loop de retry. */
 export class SessionEndedUploadError extends Error {
   status = 401
@@ -73,6 +94,23 @@ export class SessionEndedUploadError extends Error {
     this.name = 'SessionEndedUploadError'
     this.code = code
   }
+}
+
+/**
+ * Recusa definitiva de UMA operação que o usuário resolve editando o cadastro (validação, duplicado, regra de negócio).
+ * Só estas viram Pendência; o resto (403/404/…) fica na fila para não perder o cadastro local.
+ */
+export function isDefinitiveRejectionStatus(status: number): boolean {
+  return status === 400 || status === 409 || status === 422
+}
+
+/** Mensagem do indicador quando uma op fica parada por referência ausente/acesso (não é Pendência). */
+export function dependencyMessage(rejection: Pick<RejectionRecord, 'statusCode' | 'errorCode' | 'message'>): string {
+  const base = rejection.message || `HTTP ${rejection.statusCode} ${rejection.errorCode}`
+  if (/NOT_FOUND$/.test(rejection.errorCode)) {
+    return `${base} (HTTP ${rejection.statusCode} ${rejection.errorCode}). O cadastro continua guardado no aparelho e será reenviado; se persistir, confira se a API e o PowerSync do app apontam para o mesmo servidor.`
+  }
+  return `${base} (HTTP ${rejection.statusCode} ${rejection.errorCode}). O cadastro continua guardado no aparelho e será reenviado.`
 }
 
 export function isRetryableStatus(status: number): boolean {
@@ -128,6 +166,20 @@ function readResults(data: unknown): UploadResult[] {
   return Array.isArray(record.results) ? (record.results as UploadResult[]) : []
 }
 
+function isJsonObject(data: unknown): boolean {
+  return Boolean(data && typeof data === 'object' && !Array.isArray(data))
+}
+
+/** Mensagem pt-BR do lote bloqueado (aparece no indicador de envio, não em Pendências). */
+export function blockedMessage(status: number, code: string): string {
+  if (status === 404 || status === 405) {
+    return `A API não reconheceu o envio (HTTP ${status}). Confira o endereço do servidor no app (EXPO_PUBLIC_API_URL).`
+  }
+  if (status === 403) return `A API recusou o envio (HTTP 403 ${code}). Confira o acesso do usuário ou o firewall/proxy do servidor.`
+  if (status === 413) return 'O envio ficou grande demais para o servidor (HTTP 413). Confira o limite do proxy.'
+  return `A API recusou o lote de envio (HTTP ${status} ${code}). As alterações continuam guardadas e serão reenviadas.`
+}
+
 function hasResultsArray(data: unknown): boolean {
   return Boolean(data && typeof data === 'object' && Array.isArray((data as Record<string, unknown>).results))
 }
@@ -165,8 +217,54 @@ export function rejectionFrom(op: UploadOp, error: UploadError | undefined, fall
  * URL do serviço PowerSync: a do .env (EXPO_PUBLIC_POWERSYNC_URL) tem precedência sobre a do token,
  * porque o token só traz o IP da rede depois que a API tiver POWERSYNC_URL configurado.
  */
-export function resolvePowerSyncEndpoint(envUrl: string | undefined | null, tokenUrl: string | undefined | null): string {
-  return (envUrl || '').trim() || (tokenUrl || '').trim()
+export function resolvePowerSyncEndpoint(
+  envUrl: string | undefined | null,
+  tokenUrl: string | undefined | null,
+  apiUrl?: string | null,
+): string {
+  const env = (envUrl || '').trim()
+  const token = (tokenUrl || '').trim()
+  if (!env) return token
+  if (apiUrl && isPrivateUrl(env) !== isPrivateUrl(apiUrl)) {
+    // API num servidor e PowerSync em outro (ex.: API na VPS, PowerSync no Mac da rede local). Perigoso: o app grava
+    // num banco e baixa de outro; o checkpoint do PowerSync que não conhece o cadastro o APAGA do aparelho.
+    if (token && !isLoopbackUrl(token)) {
+      console.warn(`[sync] EXPO_PUBLIC_POWERSYNC_URL (${env}) é de outro ambiente que a API (${apiUrl}); usando o PowerSync do token (${token})`)
+      return token
+    }
+    throw new PowerSyncEnvironmentMismatchError(env, apiUrl)
+  }
+  return env
+}
+
+/** EXPO_PUBLIC_POWERSYNC_URL e EXPO_PUBLIC_API_URL em ambientes diferentes e o token não traz URL utilizável. */
+export class PowerSyncEnvironmentMismatchError extends Error {
+  constructor(powersyncUrl: string, apiUrl: string) {
+    super(
+      `O PowerSync (${powersyncUrl}) e a API (${apiUrl}) estão em ambientes diferentes. A sincronização ficou pausada para não apagar dados do aparelho; as alterações continuam guardadas e são enviadas direto à API. Ajuste EXPO_PUBLIC_POWERSYNC_URL.`,
+    )
+    this.name = 'PowerSyncEnvironmentMismatchError'
+  }
+}
+
+function hostOf(url: string): string {
+  const match = /^[a-z][a-z0-9+.-]*:\/\/(\[[^\]]+\]|[^/:?#]+)/i.exec(url.trim())
+  return (match?.[1] ?? '').toLowerCase()
+}
+
+function isLoopbackUrl(url: string): boolean {
+  const host = hostOf(url)
+  return host === 'localhost' || host.startsWith('127.') || host === '[::1]' || host === '0.0.0.0'
+}
+
+/** Endereço de rede local/dev (localhost, 10.x, 192.168.x, 172.16-31.x, *.local, emulador). */
+export function isPrivateUrl(url: string): boolean {
+  const host = hostOf(url)
+  if (!host) return false
+  if (isLoopbackUrl(url) || host.endsWith('.local') || host === '10.0.2.2') return true
+  if (/^10\./.test(host) || /^192\.168\./.test(host)) return true
+  const m = /^172\.(\d+)\./.exec(host)
+  return Boolean(m && Number(m[1]) >= 16 && Number(m[1]) <= 31)
 }
 
 /** O servidor responde CONFLICT para nome duplicado de vacina/tipo: usa a mensagem específica em pt-BR. */
@@ -240,34 +338,59 @@ export async function uploadTransaction(
       throw new RetryableUploadError(response.status, `Upload recusado temporariamente (HTTP ${response.status})`)
     }
     if (response.status >= 400) {
-      // Lote inteiro recusado (ex.: 400 INVALID_BATCH / BATCH_TOO_LARGE = bug do app). Reenviar não adianta:
-      // registra no log e move as ops para Pendências, para a fila não travar.
+      // Lote inteiro recusado: rota/proxy/firewall/configuração ou bug do app — nunca culpa do cadastro. Fica na fila.
       const error = errorBody(response.data)
-      console.warn(`[sync] upload recusado por inteiro: HTTP ${response.status} ${error.error ?? ''} (${batch.length} ops)`)
-      for (const op of batch) rejected.push(rejectionFrom(op, error, response.status))
-      continue
+      const code = error.error && /^[A-Z][A-Z0-9_]+$/.test(error.error) ? error.error : `HTTP_${response.status}`
+      console.warn(
+        `[sync] upload recusado por inteiro: HTTP ${response.status} ${code} ${error.message ?? ''} (${batch.length} ops ficam na fila)`,
+      )
+      throw new BatchBlockedUploadError(response.status, code, blockedMessage(response.status, code))
+    }
+    if (!isJsonObject(response.data)) {
+      // 2xx que não é JSON da API (portal cativo do Wi‑Fi, proxy com HTML): nada foi confirmado. Fica na fila.
+      throw new RetryableUploadError(0, `Resposta inesperada do servidor (HTTP ${response.status}, sem JSON)`)
     }
     const results = readResults(response.data)
     if (!hasResultsArray(response.data)) {
-      // 2xx sem `results`: o servidor aplicou o lote inteiro (contrato mínimo).
+      // 2xx com JSON sem `results`: o servidor aplicou o lote inteiro (contrato mínimo).
       applied += batch.length
       continue
     }
-    batch.forEach((op, index) => {
+    for (let index = 0; index < batch.length; index++) {
+      const op = batch[index]
       const result =
         results.find((item) => item.id?.toUpperCase() === op.id && item.table === op.table && String(item.op).toUpperCase() === op.op) ??
         // Contrato: um item por op, na mesma ordem (o id pode vir null em op inválida).
         (results.length === batch.length ? results[index] : results[index]?.id?.toUpperCase() === op.id ? results[index] : undefined)
       if (result?.status === 'applied') {
         applied += 1
-      } else if (result?.status === 'rejected') {
-        rejected.push(rejectionFrom(op, result.error, result.error?.statusCode ?? 422))
-      } else {
-        rejected.push(
-          rejectionFrom(op, { statusCode: 502, error: 'SYNC_NO_RESULT', message: 'O servidor não confirmou esta alteração.' }, 502),
-        )
+        continue
       }
-    })
+      if (result?.status !== 'rejected') {
+        // Sem resultado para a op: não confirmada. Reenviar é seguro (PUT = criar ou substituir; DELETE ausente = ok).
+        throw new RetryableUploadError(502, 'O servidor não confirmou todas as alterações (sem resultado para uma operação)')
+      }
+      const status = result.error?.statusCode ?? 422
+      if (status === 401) throw new SessionEndedUploadError(result.error?.error ?? 'UNAUTHENTICATED')
+      if (isRetryableStatus(status)) {
+        // Ex.: SYNC_UNAVAILABLE (503) numa op: falha do servidor, não do cadastro. Lote volta inteiro para a fila.
+        throw new RetryableUploadError(status, `Servidor indisponível para uma operação (HTTP ${status} ${result.error?.error ?? ''})`.trim())
+      }
+      if (status === 404 && op.op === 'DELETE') {
+        // Apagar o que o servidor já não tem = objetivo cumprido.
+        applied += 1
+        continue
+      }
+      if (!isDefinitiveRejectionStatus(status)) {
+        // 403/404/405/410… numa op: referência que o servidor ainda não tem (fazenda/animal criados offline que não
+        // chegaram, catálogo de outro ambiente) ou acesso. NÃO é dado inválido: concluir a transação deixaria a linha
+        // só na Pendência e o próximo checkpoint do PowerSync a APAGARIA do aparelho. Fica na fila (retry com espera).
+        const rejection = rejectionFrom(op, result.error, status)
+        console.warn(`[sync] ${op.table} ${op.id}: HTTP ${status} ${rejection.errorCode} — fica na fila (não vira Pendência)`)
+        throw new BatchBlockedUploadError(status, rejection.errorCode, dependencyMessage(rejection))
+      }
+      rejected.push(rejectionFrom(op, result.error, status))
+    }
   }
 
   if (rejected.length) await deps.saveRejections(rejected)

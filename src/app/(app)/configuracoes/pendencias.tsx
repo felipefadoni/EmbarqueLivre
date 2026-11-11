@@ -8,8 +8,8 @@ import { Text, XStack, YStack } from 'tamagui'
 import { ConfirmDialog } from '@/components/cadastros/ConfirmDialog'
 import { ListStatus } from '@/components/cadastros/ListStatus'
 import { AppCard } from '@/components/dashboard/AppCard'
-import { SyncStatusIndicator } from '@/components/sync/SyncStatusIndicator'
 import { db } from '@/sync'
+import { isFixableRejection } from '@/sync/outbox'
 import { entityOfTable, tableOf, type SyncEntity } from '@/sync/mapping'
 import {
   correctionTarget,
@@ -32,7 +32,8 @@ function formatDateTime(iso: string) {
 }
 
 /**
- * Pendências: operações que o servidor recusou. Não travam a fila de envio.
+ * Pendências: SÓ operações que a API recusou por causa do dado (validação, duplicado, regra). Cadastro ainda não
+ * enviado (sem rede, servidor fora, 5xx, timeout…) nunca aparece aqui: fica na fila e sobe sozinho.
  * - Corrigir: abre o formulário com os valores recusados; salvar gera uma nova operação.
  * - Descartar: apaga o aviso; a linha local já voltou (ou volta no próximo checkpoint) ao estado do servidor.
  */
@@ -91,11 +92,9 @@ export default function PendenciasScreen() {
         contentContainerStyle={{ paddingHorizontal: 20, paddingTop: 12, paddingBottom: 28, flexGrow: 1, gap: 12 }}
         ListHeaderComponent={
           <YStack gap={12} pb={4}>
-            <AppCard>
-              <SyncStatusIndicator />
-            </AppCard>
             <Text fontSize={16} fontWeight="600" color="brandMuted">
-              Alterações feitas neste aparelho que o servidor não aceitou. As demais continuam sendo enviadas normalmente.
+              Alterações que o servidor recusou por causa dos dados. O que ainda não foi enviado não aparece aqui: é enviado
+              sozinho quando houver internet.
             </Text>
             {error ? (
               <Text fontSize={16} fontWeight="700" color="brandError" accessibilityLiveRegion="polite">
@@ -110,12 +109,14 @@ export default function PendenciasScreen() {
             error={result.error ? 'Não foi possível ler as pendências.' : null}
             empty={!result.isLoading && !result.error}
             emptyTitle="Nenhuma pendência"
-            emptyMessage="Tudo o que foi enviado foi aceito pelo servidor."
+            emptyMessage="Nenhuma alteração foi recusada pelo servidor."
             onRetry={() => void result.refresh?.()}
           />
         }
         renderItem={({ item }) => {
           const { title, subtitle } = describeRejection(item.primary)
+          // Corrigir só para recusa de dado (400/409/422). Outras recusas definitivas (ex.: permissão): só Descartar.
+          const fixable = isFixableRejection(item.primary)
           return (
             <AppCard>
               <YStack gap={8}>
@@ -136,22 +137,29 @@ export default function PendenciasScreen() {
                     {item.dependentsLabel}
                   </Text>
                 ) : null}
+                {fixable ? null : (
+                  <Text fontSize={15} fontWeight="600" color="brandMuted">
+                    Não há o que corrigir no cadastro: descarte para voltar ao que está no servidor.
+                  </Text>
+                )}
                 <XStack gap={12} pt={4}>
-                  <XStack
-                    flex={1}
-                    minH={TOQUE_MINIMO}
-                    items="center"
-                    justify="center"
-                    rounded={14}
-                    bg="brandPrimary"
-                    opacity={{ press: 0.85 }}
-                    onPress={() => void onCorrect(item.primary)}
-                    accessibilityRole="button"
-                    accessibilityLabel={`Corrigir ${title}`}>
-                    <Text fontSize={17} fontWeight="800" color="brandPrimaryFg">
-                      Corrigir
-                    </Text>
-                  </XStack>
+                  {fixable ? (
+                    <XStack
+                      flex={1}
+                      minH={TOQUE_MINIMO}
+                      items="center"
+                      justify="center"
+                      rounded={14}
+                      bg="brandPrimary"
+                      opacity={{ press: 0.85 }}
+                      onPress={() => void onCorrect(item.primary)}
+                      accessibilityRole="button"
+                      accessibilityLabel={`Corrigir ${title}`}>
+                      <Text fontSize={17} fontWeight="800" color="brandPrimaryFg">
+                        Corrigir
+                      </Text>
+                    </XStack>
+                  ) : null}
                   <XStack
                     flex={1}
                     minH={TOQUE_MINIMO}

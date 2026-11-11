@@ -216,6 +216,24 @@ export const PHOTO_QUEUE_TABLE = {
   },
 } as const
 
+/**
+ * Saída de reenvio (local, nunca sobe como tabela): operações que já saíram da fila do PowerSync (`ps_crud`) mas ainda
+ * precisam chegar à API — hoje, as que versões anteriores do app tinham marcado como Pendência por engano (falha de
+ * rede/servidor, 404 de rota/proxy, 401…). O connector as envia ANTES da fila, na ordem em que foram criadas.
+ */
+export const OUTBOX_TABLE = {
+  table: 'sync_outbox',
+  columns: {
+    tableName: col('table_name'),
+    rowId: col('row_id'),
+    op: col('op'),
+    opData: col('op_data'),
+    attempts: col('attempts', 'integer'),
+    lastError: col('last_error'),
+    createdAt: col('created_at'),
+  },
+} as const
+
 /** Tabela local (não sincronizada) com as operações recusadas pelo servidor. */
 export const REJECTIONS_TABLE = {
   table: 'sync_rejections',
@@ -288,9 +306,15 @@ export function fromColumns(entity: SyncEntity, data: Record<string, unknown> | 
 }
 
 /** Lista [nome, tipo] de colunas de uma tabela (para o schema PowerSync e para os testes). */
-export function columnList(entity: SyncEntity | 'rejections' | 'photoQueue'): [string, ColumnType][] {
+export function columnList(entity: SyncEntity | 'rejections' | 'photoQueue' | 'outbox'): [string, ColumnType][] {
   const columns = (
-    entity === 'rejections' ? REJECTIONS_TABLE.columns : entity === 'photoQueue' ? PHOTO_QUEUE_TABLE.columns : SYNC_TABLES[entity].columns
+    entity === 'rejections'
+      ? REJECTIONS_TABLE.columns
+      : entity === 'photoQueue'
+        ? PHOTO_QUEUE_TABLE.columns
+        : entity === 'outbox'
+          ? OUTBOX_TABLE.columns
+          : SYNC_TABLES[entity].columns
   ) as Record<
     string,
     ColumnDef

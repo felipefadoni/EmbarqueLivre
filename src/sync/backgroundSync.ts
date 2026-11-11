@@ -13,6 +13,7 @@ import { loadStoredSession } from '@/api/client'
 import { drainUploadQueue } from './backgroundDrain'
 import { initDatabase, getDb } from './database'
 import { connector } from './index'
+import { nextUploadKey } from './outbox'
 import { isOnline } from './syncTriggers'
 
 export const BACKGROUND_SYNC_TASK = 'embarquelivre-background-sync'
@@ -50,10 +51,8 @@ export async function runBackgroundSync(): Promise<boolean> {
   try {
     const database = getDb()
     const result = await drainUploadQueue({
-      nextTransactionId: async () => {
-        const transaction = await database.getNextCrudTransaction()
-        return transaction ? (transaction.transactionId ?? transaction.crud[0]?.clientId ?? 0) : null
-      },
+      // Saída de reenvio primeiro, depois a fila do PowerSync (mesma ordem do primeiro plano).
+      nextTransactionId: () => nextUploadKey(database),
       upload: () => connector.uploadData(database),
       now: Date.now,
       deadline: Date.now() + BACKGROUND_BUDGET_MS,

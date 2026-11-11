@@ -246,11 +246,12 @@ Datas: `YYYY-MM-DD` (texto). `timestamptz` chega como ISO UTC com microssegundos
 
 | Resposta | O que o app faz |
 | --- | --- |
-| 2xx com `results[]` | `applied` → ok; `rejected` → grava em `sync_rejections` com a mensagem pt-BR; op sem resultado → pendência `SYNC_NO_RESULT` |
-| 2xx sem `results` | (o contrato diz que nunca acontece) lote inteiro considerado aplicado |
+| 2xx com `results[]` | `applied` → ok; `rejected` com 4xx definitivo → grava em `sync_rejections` (Pendência) com a mensagem pt-BR; `rejected` com 408/429/5xx ou op sem resultado → **fila** (lança, nada concluído); `rejected` 401 → sessão encerrada |
+| 2xx com JSON sem `results` | (o contrato diz que nunca acontece) lote inteiro considerado aplicado |
+| 2xx sem JSON (portal cativo do Wi‑Fi, proxy com HTML) | **fila** (nada foi confirmado) |
 | 401 UNAUTHENTICATED | o cliente `http` tenta refresh; se o usuário foi removido/inativo (ou o refresh falhar), a sessão é encerrada **sem retry**, mantendo os dados locais |
 | 408, 429, 5xx (ex.: 503 `SYNC_UNAVAILABLE`), sem rede | **lança** → o PowerSync tenta de novo depois (nada é concluído) |
-| 400 `INVALID_BATCH` / `BATCH_TOO_LARGE` (ou outro 4xx no lote) | bug do app: `console.warn` e todas as ops do lote viram pendências (não re-tenta para sempre) |
+| 4xx no lote inteiro (404/405 de rota ou proxy, 403 de firewall, 413, 400 `INVALID_BATCH`) | **fila** (`BatchBlockedUploadError`): não é culpa do cadastro, nada vira Pendência; `console.warn` com status/código e o indicador mostra o que conferir (ex.: endereço da API) |
 
 `results` vem um por op, na ordem; o app casa por `id/table/op` e, se o tamanho bate, pela posição (op inválida pode vir
 com `id: null`). `error.details.field` (coluna snake_case) é gravado em `sync_rejections.field`.
@@ -339,6 +340,43 @@ a tarefa só para; a próxima abertura trata o login).
 
 O indicador de sync mostra "N foto(s) aguardando envio" e avisa que envia sozinho quando a rede
 voltar.
+
+### Envio direto para a API e falhas visíveis
+
+O SDK do PowerSync só envia a fila enquanto o **stream de download** (serviço PowerSync, porta 8080) está de pé:
+depois de uma falha com o stream desconectado ele sai do laço de envio e só volta com uma nova escrita local ou com
+o stream conectado; no modo `requests` ainda espera o checkpoint do serviço depois de esvaziar a fila. Com o serviço
+PowerSync fora (VPS com `wal_level` errado, URL/IP errado, serviço parado) e a API no ar, a fila ficava parada — e a
+tela não dizia nada (o `uploadError` do SDK não era exibido).
+
+- `src/sync/uploadPump.ts` (puro) + `useUploadPump.ts`: com o SDK **desconectado**, rede e fila não vazia, envia a fila
+  direto para `POST /api/v1/powersync/upload` pelo mesmo `connector.uploadData` (um por vez, mesma ordem e regras).
+  Verifica a cada 15 s com o app aberto e logo que a rede volta / o app abre; após falha temporária espera
+  15 s → 30 s → 1 min → 2 min → 5 min. Conectado, quem envia é o SDK.
+- Indicador de sync (Configurações e Pendências): "N alterações aguardando envio", o motivo da falha em vermelho
+  (ex.: "Envio falhou: Não foi possível falar com o servidor (192.168.1.77:3000)…", "HTTP 503", "Sua sessão expirou")
+  e o botão **Enviar agora**, que tenta na hora e mostra um alerta com o resultado.
+- **Pendências ≠ fila.** Pendências lista só o que o servidor **recusou** (`sync_rejections`, não reenviado
+  sozinho: "Corrigir" grava de novo, "Descartar" volta ao estado do servidor). O que ainda não subiu é a fila
+  (`ps_crud`) e aparece como "aguardando envio" no indicador.
+- "Reenviar foto": envia a foto na hora (ou a fila, se o vínculo ainda estiver nela) e mostra o resultado.
+- Upload de foto tem teto de 2 min (vira "pendente"), para não segurar a fila inteira sem aviso.
+
+### Pendência é só recusa do dado (offline-first)
+
+Regra do Felipe: cadastro feito sem sinal é dado normal do app e sobe **sozinho** quando houver internet; ninguém precisa
+abrir tela nem tocar em nada. Por isso:
+
+- **Pendências** lista só o que a API recusou para aquela operação por causa do dado. **Corrigir** aparece só em
+  400/409/422 (validação, nome duplicado, regra); outras recusas definitivas (ex.: 403 de permissão, 404 de registro
+  que não existe mais) mostram só **Descartar**, com a explicação.
+- Falha de envio (sem rede, timeout, 401, 408/429/5xx, lote inteiro recusado por rota/proxy, 2xx sem JSON, op sem
+  resultado) **nunca** vira Pendência: fica na fila e o SDK/envio direto reenvia (status só no indicador).
+- **Saída de reenvio** (`sync_outbox`, local): versões anteriores gravavam essas falhas como Pendência e tiravam a op do
+  `ps_crud`. Ao abrir o app (e antes de cada envio), `requeueDeliveryFailures` devolve essas "recusas" para o envio
+  automático — e junto as recusas `*_NOT_FOUND` que só aconteceram porque o "pai" (ex.: a fazenda do animal) não tinha
+  chegado. O connector envia a saída **antes** da fila, na ordem original; se a API recusar de verdade (ex.: 422),
+  vira Pendência normal. Enquanto isso, conta como "aguardando envio" no indicador e na confirmação do "Sair".
 
 ### Limites reais (iOS e Android)
 

@@ -55,9 +55,23 @@ export async function uploadShipmentPhoto(row: PhotoQueueRow): Promise<PhotoUplo
     })
     return { status: result.status, body: parseBody(result.body) }
   }
-  let response = await send()
-  if (response.status === 401 && (await refreshAccessToken())) response = await send()
+  let response = await withTimeout(send(), PHOTO_UPLOAD_TIMEOUT_MS)
+  if (response.status === 401 && (await refreshAccessToken())) response = await withTimeout(send(), PHOTO_UPLOAD_TIMEOUT_MS)
   return response
+}
+
+/**
+ * Teto de espera do envio da foto. Sem isso um upload que nunca responde segurava a fila inteira (o connector envia um
+ * por vez) sem nenhum aviso. Estourou = status 0 (fica pendente; reenviar com o mesmo photo_id é seguro).
+ */
+export const PHOTO_UPLOAD_TIMEOUT_MS = 120_000
+
+function withTimeout(promise: Promise<PhotoUploadResponse>, ms: number): Promise<PhotoUploadResponse> {
+  let timer: ReturnType<typeof setTimeout> | undefined
+  const timeout = new Promise<PhotoUploadResponse>((resolve) => {
+    timer = setTimeout(() => resolve({ status: 0 }), ms)
+  })
+  return Promise.race([promise, timeout]).finally(() => clearTimeout(timer))
 }
 
 export function localFileExists(uri: string): boolean {

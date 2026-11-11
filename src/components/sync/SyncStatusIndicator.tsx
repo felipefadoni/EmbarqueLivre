@@ -1,9 +1,11 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { router } from 'expo-router'
-import { useColorScheme } from 'react-native'
+import { Alert, useColorScheme } from 'react-native'
 import { Spinner, Text, XStack, YStack } from 'tamagui'
 
 import { useSyncInfo, type SyncIndicatorState } from '@/sync/hooks'
+import { describeSdkUploadError, useUploadPump } from '@/sync/useUploadPump'
+import { TOQUE_MINIMO } from '../../../tamagui.config'
 
 const LABEL: Record<SyncIndicatorState, string> = {
   online: 'Sincronizado',
@@ -11,6 +13,7 @@ const LABEL: Record<SyncIndicatorState, string> = {
   connecting: 'Conectando…',
   offline: 'Offline',
   unreachable: 'Servidor de sincronização indisponível. Tentando de novo…',
+  disconnected: 'Sem conexão com o servidor de sincronização',
 }
 
 export function formatLastSync(date: Date | null): string {
@@ -19,29 +22,57 @@ export function formatLastSync(date: Date | null): string {
   return `Última sincronização: ${pad(date.getDate())}/${pad(date.getMonth() + 1)} às ${pad(date.getHours())}:${pad(date.getMinutes())}`
 }
 
-/** Indicador de sincronização (online/offline/sincronizando, última sync, fila e pendências). */
+/**
+ * Indicador de sincronização (online/offline/sincronizando, última sync, fila e pendências).
+ * Com algo aguardando envio: mostra o motivo da última falha (envio direto ou SDK) e o botão "Enviar agora", que
+ * tenta já e informa o resultado (alerta) — falha de envio nunca fica muda.
+ */
 export function SyncStatusIndicator({ compact = false }: { compact?: boolean }) {
   const info = useSyncInfo()
+  const pump = useUploadPump()
   const isDark = useColorScheme() === 'dark'
-  const down = info.state === 'offline' || info.state === 'unreachable'
+  const waiting = info.pendingUploads
+  const hasQueue = waiting > 0 || info.pendingPhotos > 0
+  // Conectado mas com fila: não diz "Sincronizado".
+  const label = info.state === 'online' && waiting > 0 ? 'Conectado' : LABEL[info.state]
+  const down = info.state === 'offline' || info.state === 'unreachable' || info.state === 'disconnected'
   const color =
     info.state === 'online' ? (isDark ? '#7FD1A0' : '#1F7A45') : down ? (isDark ? '#F0C36B' : '#8A5A00') : isDark ? '#A8B8AF' : '#3A5247'
   const icon = info.state === 'online' ? 'cloud-done-outline' : down ? 'cloud-offline-outline' : 'cloud-upload-outline'
-  const waiting = info.pendingUploads
   const hasRejections = info.rejectionCount > 0
+  // Motivo da falha: o do envio direto (mais recente/preciso) ou o do SDK.
+  // PowerSync de outro ambiente que a API: a sync fica pausada de propósito (não apagar dados); avisa sempre.
+  const mismatch =
+    (info.downloadError as { name?: string } | null)?.name === 'PowerSyncEnvironmentMismatchError'
+      ? { message: String((info.downloadError as Error).message) }
+      : null
+  const problem = mismatch ?? (hasQueue ? (pump.problem ?? describeSdkUploadError(info.uploadError)) : null)
 
   const summary = [
-    LABEL[info.state],
+    label,
     waiting > 0 ? `${waiting} ${waiting === 1 ? 'alteração aguardando envio' : 'alterações aguardando envio'}` : null,
     info.pendingPhotos > 0 ? `${info.pendingPhotos} ${info.pendingPhotos === 1 ? 'foto aguardando envio' : 'fotos aguardando envio'}` : null,
   ]
     .filter(Boolean)
     .join(' · ')
 
+  async function onSendNow() {
+    const result = await pump.sendNow()
+    if (result.outcome === 'failed' || result.outcome === 'offline') {
+      Alert.alert('Não foi possível enviar', result.message)
+    } else if (result.outcome === 'partial') {
+      Alert.alert('Envio em andamento', result.message)
+    }
+  }
+
   return (
     <YStack gap={6} accessibilityRole="summary" accessibilityLabel={`${summary}. ${formatLastSync(info.lastSyncedAt)}`}>
       <XStack items="center" gap={8}>
-        {info.state === 'syncing' || info.state === 'connecting' ? <Spinner size="small" color="brandPrimary" /> : <Ionicons name={icon} size={20} color={color} />}
+        {info.state === 'syncing' || info.state === 'connecting' || pump.running ? (
+          <Spinner size="small" color="brandPrimary" />
+        ) : (
+          <Ionicons name={icon} size={20} color={color} />
+        )}
         <Text fontSize={16} fontWeight="800" color="brandFg" flex={1}>
           {summary}
         </Text>
@@ -51,12 +82,45 @@ export function SyncStatusIndicator({ compact = false }: { compact?: boolean }) 
           {formatLastSync(info.lastSyncedAt)}
         </Text>
       )}
-      {!compact && (info.pendingUploads > 0 || info.pendingPhotos > 0) ? (
+      {problem ? (
+        <XStack gap={6} items="flex-start" accessibilityLiveRegion="polite">
+          <Ionicons name="warning-outline" size={18} color={isDark ? '#FF8A80' : '#B3261E'} style={{ marginTop: 1 }} />
+          <Text flex={1} fontSize={14} fontWeight="700" color="brandError" numberOfLines={compact ? 2 : undefined}>
+            Envio falhou: {problem.message}
+          </Text>
+        </XStack>
+      ) : null}
+      {!compact && hasQueue && !problem ? (
         <Text fontSize={14} fontWeight="600" color="brandMuted">
           {info.networkOnline
             ? 'Enviando automaticamente. Pode deixar o app em segundo plano.'
             : 'Sem internet: envia sozinho quando a rede voltar (Wi‑Fi ou dados móveis).'}
         </Text>
+      ) : null}
+      {!compact && hasQueue && !pump.running && pump.lastResult?.outcome === 'partial' ? (
+        <Text fontSize={14} fontWeight="600" color="brandMuted">
+          {pump.lastResult.message}
+        </Text>
+      ) : null}
+      {!compact && waiting > 0 ? (
+        <XStack
+          minH={TOQUE_MINIMO}
+          items="center"
+          justify="center"
+          gap={8}
+          rounded={14}
+          borderWidth={2}
+          borderColor="brandBorder"
+          opacity={pump.running ? 0.6 : 1}
+          onPress={pump.running ? undefined : () => void onSendNow()}
+          accessibilityRole="button"
+          accessibilityState={{ busy: pump.running, disabled: pump.running }}
+          accessibilityLabel="Enviar agora as alterações aguardando envio">
+          {pump.running ? <Spinner size="small" color="brandPrimary" /> : <Ionicons name="cloud-upload-outline" size={20} color={isDark ? '#E8F1EC' : '#1D2B24'} />}
+          <Text fontSize={16} fontWeight="800" color="brandFg">
+            {pump.running ? 'Enviando…' : 'Enviar agora'}
+          </Text>
+        </XStack>
       ) : null}
       {!compact && info.failedPhotos > 0 ? (
         <Text fontSize={14} fontWeight="700" color="brandError">
