@@ -41,6 +41,30 @@ export type UploadResult = {
   op: string
   status: 'applied' | 'rejected'
   error?: UploadError
+  /** Aplicado com referência trocada pelo servidor, ex.: { animal_type_id: { from, to } } (tipo resolvido pelo nome). */
+  remapped?: Record<string, { from: string; to: string }>
+}
+
+/** Remapeamento devolvido pela API para uma op aplicada. */
+export type RemappedOp = { op: UploadOp; remapped: Record<string, { from: string; to: string }> }
+
+/**
+ * Coluna só de upload (contrato da API, 11/11): todo PUT/PATCH de animal que leva `animal_type_id` leva também o nome do
+ * tipo local, para o servidor resolver id de outro ambiente pelo nome. NUNCA é gravada no SQLite local.
+ */
+export const ANIMAL_TYPE_NAME_HINT = 'animal_type_name'
+
+/** Ordem do envio forçado (contrato da API): pais antes dos filhos. */
+export const FORCE_PUSH_TABLE_ORDER = ['farms', 'vaccines', 'herds', 'animals', 'animal_vaccinations', 'shipments', 'shipment_animals'] as const
+
+/** Acrescenta `animal_type_name` (do tipo local) ao PUT/PATCH de animal com `animal_type_id`. */
+export async function withAnimalTypeName(op: UploadOp, typeNameOf: (typeId: string) => Promise<string | null>): Promise<UploadOp> {
+  if (entityOfTable(op.table) !== 'animals' || op.op === 'DELETE' || !op.opData) return op
+  const typeId = op.opData[colOf('animals', 'animalTypeId')]
+  if (typeof typeId !== 'string' || !typeId) return op
+  const name = await typeNameOf(typeId).catch(() => null)
+  if (!name) return op
+  return { ...op, opData: { ...op.opData, [ANIMAL_TYPE_NAME_HINT]: name } }
 }
 
 export type UploadError = { statusCode?: number; error?: string; message?: string; details?: { field?: string } & Record<string, unknown> }
@@ -241,10 +265,19 @@ export function resolvePowerSyncEndpoint(
 export class PowerSyncEnvironmentMismatchError extends Error {
   constructor(powersyncUrl: string, apiUrl: string) {
     super(
-      `O PowerSync (${powersyncUrl}) e a API (${apiUrl}) estão em ambientes diferentes. A sincronização ficou pausada para não apagar dados do aparelho; as alterações continuam guardadas e são enviadas direto à API. Ajuste EXPO_PUBLIC_POWERSYNC_URL.`,
+      `A API (${hostLabel(apiUrl)}) e o PowerSync (${hostLabel(powersyncUrl)}) estão em ambientes diferentes. Download pausado para não apagar dados; seus cadastros continuam no aparelho e as alterações seguem direto para a API. Ajuste EXPO_PUBLIC_POWERSYNC_URL.`,
     )
     this.name = 'PowerSyncEnvironmentMismatchError'
   }
+}
+
+/** Só host[:porta] (sem caminho/credencial) para a mensagem. */
+function hostLabel(url: string): string {
+  return url.replace(/^[a-z][a-z0-9+.-]*:\/\//i, '').replace(/^[^@/]*@/, '').replace(/\/.*$/, '')
+}
+
+export function isEnvironmentMismatchError(error: unknown): boolean {
+  return (error as { name?: unknown } | null)?.name === 'PowerSyncEnvironmentMismatchError'
 }
 
 function hostOf(url: string): string {
@@ -287,7 +320,30 @@ export function isDuplicateNameRejection(rejection: { tableName: string; errorCo
   return rejection.errorCode === 'CONFLICT' || rejection.errorCode === DUPLICATE_NAME_CODE[entity]
 }
 
-export type UploadSummary = { sent: number; applied: number; rejected: RejectionRecord[] }
+export type UploadSummary = { sent: number; applied: number; rejected: RejectionRecord[]; parked: ParkedOp[] }
+
+/** Operação que o servidor não aceitou por referência ausente/acesso (403/404/…): guardada como conflito, sem travar a fila. */
+export type ParkedOp = { op: UploadOp; rejection: RejectionRecord }
+
+export type UploadDeps = {
+  post: PostBatch
+  saveRejections: (rows: RejectionRecord[]) => Promise<void>
+  /** Sobe as fotos (POST /shipments/:id/photos) antes do lote que as cita. Lança Retryable/SessionEnded. */
+  ensurePhotos?: (photoIds: string[]) => Promise<unknown>
+  /**
+   * Guarda (sem perder o dado local) as ops recusadas por referência ausente/acesso e deixa a transação concluir,
+   * para a fila andar. Sem `park`, essas ops travam a transação na fila (BatchBlockedUploadError).
+   */
+  park?: (items: ParkedOp[]) => Promise<void>
+  /** Ops aceitas pela API: guardadas até o download confirmar (o checkpoint não pode apagá-las do aparelho). */
+  markSent?: (ops: UploadOp[]) => Promise<void>
+  /** Troca ids locais de tipo/vacina pelo id do servidor (mapa confirmado pelo usuário). */
+  mapOp?: (op: UploadOp) => UploadOp
+  /** Completa a op só no envio (ex.: `animal_type_name`); roda ANTES de `mapOp` (precisa do id local). */
+  enrichOp?: (op: UploadOp) => Promise<UploadOp>
+  /** A API aplicou trocando uma referência (`remapped`): corrigir o id local sem duplicar nada. */
+  onRemapped?: (items: RemappedOp[]) => Promise<void>
+}
 
 /**
  * photo_id citados por PUT/PATCH de shipment_animals: essas fotos precisam estar no servidor ANTES do vínculo
@@ -304,22 +360,19 @@ export function photoIdsOf(ops: UploadOp[]): string[] {
   return ids
 }
 
-export async function uploadTransaction(
-  transaction: TransactionLike,
-  deps: {
-    post: PostBatch
-    saveRejections: (rows: RejectionRecord[]) => Promise<void>
-    /** Sobe as fotos (POST /shipments/:id/photos) antes do lote que as cita. Lança Retryable/SessionEnded. */
-    ensurePhotos?: (photoIds: string[]) => Promise<unknown>
-  },
-): Promise<UploadSummary> {
+export async function uploadTransaction(transaction: TransactionLike, deps: UploadDeps): Promise<UploadSummary> {
   // PATCH que FICOU vazio depois de remover colunas só do servidor (ex.: shipped_at dos animais ao finalizar) não
   // sobe: nada a aplicar. PATCH que já veio vazio segue como antes (o servidor responde).
-  const ops = transaction.crud
+  const baseOps = transaction.crud
     .map((entry) => ({ op: toUploadOp(entry), hadData: Object.keys(entry.opData ?? {}).length > 0 }))
     .filter(({ op, hadData }) => !(hadData && isEmptyPatch(op)))
     .map(({ op }) => op)
+  const enriched = deps.enrichOp ? await Promise.all(baseOps.map((op) => deps.enrichOp!(op))) : baseOps
+  const ops = enriched.map((op) => (deps.mapOp ? deps.mapOp(op) : op))
+  const remaps: RemappedOp[] = []
   const rejected: RejectionRecord[] = []
+  const parked: ParkedOp[] = []
+  const appliedOps: UploadOp[] = []
   let applied = 0
 
   for (const batch of chunk(ops)) {
@@ -354,6 +407,7 @@ export async function uploadTransaction(
     if (!hasResultsArray(response.data)) {
       // 2xx com JSON sem `results`: o servidor aplicou o lote inteiro (contrato mínimo).
       applied += batch.length
+      appliedOps.push(...batch)
       continue
     }
     for (let index = 0; index < batch.length; index++) {
@@ -364,6 +418,8 @@ export async function uploadTransaction(
         (results.length === batch.length ? results[index] : results[index]?.id?.toUpperCase() === op.id ? results[index] : undefined)
       if (result?.status === 'applied') {
         applied += 1
+        appliedOps.push(op)
+        if (result.remapped && typeof result.remapped === 'object' && Object.keys(result.remapped).length) remaps.push({ op, remapped: result.remapped })
         continue
       }
       if (result?.status !== 'rejected') {
@@ -379,6 +435,7 @@ export async function uploadTransaction(
       if (status === 404 && op.op === 'DELETE') {
         // Apagar o que o servidor já não tem = objetivo cumprido.
         applied += 1
+        appliedOps.push(op)
         continue
       }
       if (!isDefinitiveRejectionStatus(status)) {
@@ -386,6 +443,12 @@ export async function uploadTransaction(
         // chegaram, catálogo de outro ambiente) ou acesso. NÃO é dado inválido: concluir a transação deixaria a linha
         // só na Pendência e o próximo checkpoint do PowerSync a APAGARIA do aparelho. Fica na fila (retry com espera).
         const rejection = rejectionFrom(op, result.error, status)
+        if (deps.park) {
+          // Guardado como conflito (dado local intacto e protegido do checkpoint); a fila segue com o resto.
+          console.warn(`[sync] ${op.table} ${op.id}: HTTP ${status} ${rejection.errorCode} — guardado no aparelho como conflito`)
+          parked.push({ op, rejection })
+          continue
+        }
         console.warn(`[sync] ${op.table} ${op.id}: HTTP ${status} ${rejection.errorCode} — fica na fila (não vira Pendência)`)
         throw new BatchBlockedUploadError(status, rejection.errorCode, dependencyMessage(rejection))
       }
@@ -394,6 +457,11 @@ export async function uploadTransaction(
   }
 
   if (rejected.length) await deps.saveRejections(rejected)
+  // Guardar ANTES de concluir: se o app fechar no meio, a op continua no ps_crud (reenvio idempotente).
+  if (parked.length && deps.park) await deps.park(parked)
+  // Remapeamento antes da guarda: o snapshot guardado já leva o id do servidor.
+  if (remaps.length && deps.onRemapped) await deps.onRemapped(remaps)
+  if (appliedOps.length && deps.markSent) await deps.markSent(appliedOps)
   await transaction.complete()
-  return { sent: ops.length, applied, rejected }
+  return { sent: ops.length, applied, rejected, parked }
 }

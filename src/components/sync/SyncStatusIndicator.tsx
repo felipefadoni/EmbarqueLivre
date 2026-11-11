@@ -1,8 +1,10 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { router } from 'expo-router'
+import { useSyncExternalStore } from 'react'
 import { Alert, useColorScheme } from 'react-native'
 import { Spinner, Text, XStack, YStack } from 'tamagui'
 
+import { connector } from '@/sync'
 import { useSyncInfo, type SyncIndicatorState } from '@/sync/hooks'
 import { describeSdkUploadError, useUploadPump } from '@/sync/useUploadPump'
 import { TOQUE_MINIMO } from '../../../tamagui.config'
@@ -30,11 +32,12 @@ export function formatLastSync(date: Date | null): string {
 export function SyncStatusIndicator({ compact = false }: { compact?: boolean }) {
   const info = useSyncInfo()
   const pump = useUploadPump()
+  const envMismatch = useSyncExternalStore(connector.subscribeMismatch, connector.getMismatch, connector.getMismatch)
   const isDark = useColorScheme() === 'dark'
   const waiting = info.pendingUploads
   const hasQueue = waiting > 0 || info.pendingPhotos > 0
   // Conectado mas com fila: não diz "Sincronizado".
-  const label = info.state === 'online' && waiting > 0 ? 'Conectado' : LABEL[info.state]
+  const label = envMismatch && info.state !== 'offline' ? 'Sincronização pausada' : info.state === 'online' && waiting > 0 ? 'Conectado' : LABEL[info.state]
   const down = info.state === 'offline' || info.state === 'unreachable' || info.state === 'disconnected'
   const color =
     info.state === 'online' ? (isDark ? '#7FD1A0' : '#1F7A45') : down ? (isDark ? '#F0C36B' : '#8A5A00') : isDark ? '#A8B8AF' : '#3A5247'
@@ -42,11 +45,10 @@ export function SyncStatusIndicator({ compact = false }: { compact?: boolean }) 
   const hasRejections = info.rejectionCount > 0
   // Motivo da falha: o do envio direto (mais recente/preciso) ou o do SDK.
   // PowerSync de outro ambiente que a API: a sync fica pausada de propósito (não apagar dados); avisa sempre.
-  const mismatch =
-    (info.downloadError as { name?: string } | null)?.name === 'PowerSyncEnvironmentMismatchError'
-      ? { message: String((info.downloadError as Error).message) }
-      : null
-  const problem = mismatch ?? (hasQueue ? (pump.problem ?? describeSdkUploadError(info.uploadError)) : null)
+  const mismatchMessage =
+    envMismatch ??
+    ((info.downloadError as { name?: string } | null)?.name === 'PowerSyncEnvironmentMismatchError' ? String((info.downloadError as Error).message) : null)
+  const problem = hasQueue ? (pump.problem ?? describeSdkUploadError(info.uploadError)) : null
 
   const summary = [
     label,
@@ -82,6 +84,14 @@ export function SyncStatusIndicator({ compact = false }: { compact?: boolean }) 
           {formatLastSync(info.lastSyncedAt)}
         </Text>
       )}
+      {mismatchMessage ? (
+        <XStack gap={6} items="flex-start" accessibilityLiveRegion="polite">
+          <Ionicons name="pause-circle-outline" size={18} color={isDark ? '#F0C36B' : '#8A5A00'} style={{ marginTop: 1 }} />
+          <Text flex={1} fontSize={14} fontWeight="700" color="brandFg" numberOfLines={compact ? 3 : undefined}>
+            {mismatchMessage}
+          </Text>
+        </XStack>
+      ) : null}
       {problem ? (
         <XStack gap={6} items="flex-start" accessibilityLiveRegion="polite">
           <Ionicons name="warning-outline" size={18} color={isDark ? '#FF8A80' : '#B3261E'} style={{ marginTop: 1 }} />
@@ -138,6 +148,22 @@ export function SyncStatusIndicator({ compact = false }: { compact?: boolean }) 
           <Ionicons name="alert-circle" size={20} color={isDark ? '#FF8A80' : '#B3261E'} />
           <Text fontSize={15} fontWeight="800" color="brandError" textDecorationLine="underline">
             {info.rejectionCount === 1 ? '1 pendência para revisar' : `${info.rejectionCount} pendências para revisar`}
+          </Text>
+        </XStack>
+      ) : null}
+      {info.conflictCount > 0 ? (
+        <XStack
+          minH={44}
+          items="center"
+          gap={8}
+          onPress={() => router.push('/configuracoes/conflitos')}
+          accessibilityRole="button"
+          accessibilityLabel={`${info.conflictCount} cadastros salvos só neste aparelho. Abrir para enviar`}>
+          <Ionicons name="phone-portrait-outline" size={20} color={isDark ? '#99C2AB' : '#2B3D34'} />
+          <Text flex={1} fontSize={15} fontWeight="800" color="brandFg" textDecorationLine="underline">
+            {info.conflictCount === 1
+              ? '1 cadastro salvo só neste aparelho: toque para enviar'
+              : `${info.conflictCount} cadastros salvos só neste aparelho: toque para enviar`}
           </Text>
         </XStack>
       ) : null}

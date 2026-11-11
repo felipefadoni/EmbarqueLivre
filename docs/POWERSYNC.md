@@ -456,3 +456,32 @@ estado local pelo do servidor de sincronização. No teste:
 
 Limite conhecido: uma operação que aponta para algo que **nunca** vai existir no servidor (ex.: tipo de animal de outro
 ambiente) fica parada no topo da fila com o motivo no indicador, segurando as seguintes, até alguém resolver. Não some.
+
+## Política: o aparelho manda (11/11)
+
+Regra do Felipe: o que está no app vale mais que o online. Sync/checkpoint/download **nunca** apaga nem troca em
+silêncio cadastro local não confirmado; dado novo do servidor que não conflita desce normalmente; empurrar o local por
+cima do servidor só depois de o usuário confirmar.
+
+| Situação no upload | O que acontece |
+| --- | --- |
+| aplicado | sai da fila e fica guardado (`sync_outbox.state = 'sent'` + `snapshot`) até um checkpoint **posterior** trazer a linha. Não trouxe → a linha é restaurada e vira conflito `SERVER_DID_NOT_RETURN`. |
+| aplicado com `remapped` (ex.: `animal_type_id: { from, to }`) | grava `sync_id_map` (local → servidor) e corrige o id nas linhas do aparelho (escrita direta, sem nova op). Próximos envios já saem com o id do servidor. |
+| recusa 400/409/422 | Pendência (Corrigir), como antes. |
+| recusa 403/404/405/410… por op (`*_NOT_FOUND`, acesso) | **conflito** (`state = 'conflict'` + `snapshot`); a transação conclui e a fila anda. Nova tentativa automática com o MESMO dado depois de 5 min, 15 min, 1 h, 6 h (sem forçar nada). |
+| rede / 5xx / 408 / 429 / lote inteiro 4xx | fica na fila (retry), como antes. |
+
+- **Guarda** (`localGuard.ts`, `startLocalGuard` em `useSyncTriggers`): a cada checkpoint aplicado e a cada mudança
+  nas tabelas sincronizadas, toda linha em conflito/enviada que o download apagou ou trocou volta ao snapshot do
+  aparelho (escrita direta em `ps_data__<tabela>`: não gera op). Por linha vale o snapshot mais recente. Limite: o
+  PowerSync aplica o checkpoint e a guarda restaura logo depois (pode piscar), mas o dado nunca se perde.
+- **Contrato 11/11 da API**: PUT/PATCH de animal com `animal_type_id` leva `animal_type_name` (nome do tipo local) — só
+  no envio, nunca no SQLite. O servidor usa o id se conhece; senão o mesmo nome (devolve `remapped`); admin cria;
+  master/básico recebem `404 ANIMAL_TYPE_NOT_FOUND` (vira conflito, não Pendência).
+- **Tela "Salvos só no aparelho"** (`/configuracoes/conflitos`, link no indicador): lista os conflitos. "Enviar o do
+  aparelho" / "Enviar todos" abre confirmação: *"Isso vai sobrescrever no servidor o que estiver diferente com os dados
+  deste aparelho"*. Só depois disso `forcePushConflicts` reenvia os PUTs na ordem farms → vaccines → herds → animals →
+  animal_vaccinations → shipments → shipment_animals. A API não tem flag de força: PUT já cria/substitui a linha
+  inteira. `VACCINE_NOT_FOUND` (vacina de outro ambiente): procura no servidor uma vacina com o mesmo nome e liga a ela;
+  sem nenhuma, cria a do aparelho (PUT, master/admin). Tipo de animal fica com o servidor (pelo nome).
+- Logout conta conflitos como não enviados (`OUTBOX_UNSENT_COUNT_SQL`).

@@ -7,6 +7,7 @@ import { db, syncLifecycle } from './index'
 import { createSyncKicker, isOnline } from './syncTriggers'
 import { newUlid } from './ids'
 import { requeueDeliveryFailures } from './outbox'
+import { retryConflictsSoon, startLocalGuard } from './useConflicts'
 import { uploadPump } from './useUploadPump'
 
 /** Verificação periódica da fila (consulta local barata; só envia se o SDK não estiver enviando). */
@@ -33,8 +34,13 @@ export function useSyncTriggers() {
     const tickSoon = () => {
       if (soon) clearTimeout(soon)
       uploadPump.resetBackoff()
-      soon = setTimeout(tick, 4_000)
+      soon = setTimeout(() => {
+        tick()
+        void retryConflictsSoon()
+      }, 4_000)
     }
+    // Cadastro local não confirmado nunca some nem é trocado pelo download (ver localGuard.ts).
+    const stopGuard = startLocalGuard()
     let wasOnline: boolean | null = null
     const unsubscribeNet = NetInfo.addEventListener((state) => {
       kicker.onNetChange(state)
@@ -60,6 +66,7 @@ export function useSyncTriggers() {
       appState.remove()
       clearInterval(interval)
       if (soon) clearTimeout(soon)
+      stopGuard()
       kicker.dispose()
     }
   }, [])

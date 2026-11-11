@@ -31,6 +31,12 @@ export const syncLifecycle = createSyncLifecycle({
   storage: { get: getSecureItem, set: setSecureItem, remove: deleteSecureItem },
   connect: async () => {
     connector.invalidate()
+    // API e PowerSync de ambientes diferentes: não conecta (o checkpoint apagaria dados locais). Sem exceção: o aviso
+    // fica no indicador e o envio direto à API (uploadPump) continua com o SDK desconectado.
+    if (!(await connector.canConnect())) {
+      await db.disconnect().catch(() => undefined)
+      return
+    }
     await db.connect(connector, { checkpointMode: POWERSYNC_CONFIG.checkpointMode, retryDelayMs: POWERSYNC_CONFIG.retryDelayMs })
   },
 })

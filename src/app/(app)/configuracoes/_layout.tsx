@@ -38,6 +38,7 @@ export default function ConfiguracoesLayout() {
       <Stack.Screen name="usuarios/nova" options={{ title: 'Novo usuário' }} />
       <Stack.Screen name="usuarios/[id]" options={{ title: 'Usuário' }} />
       <Stack.Screen name="pendencias" options={{ title: 'Pendências' }} />
+      <Stack.Screen name="conflitos" options={{ title: 'Salvos só no aparelho' }} />
     </Stack>
   )
 }

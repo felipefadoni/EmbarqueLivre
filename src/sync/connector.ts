@@ -5,11 +5,12 @@ import { isApiError, publicApiMessage } from '@/api/errors'
 import { localFileExists, uploadShipmentPhoto } from '@/api/shipmentPhotos'
 import { POWERSYNC_CONFIG } from './config'
 import { newUlid } from './ids'
-import { parseTimestamp } from './mapping'
-import { flushOutbox, requeueDeliveryFailures } from './outbox'
+import { parseTimestamp, tableOf } from './mapping'
+import { applyIdMap, applyRemaps, loadIdMap, markSent, parkOps } from './localGuard'
+import { flushOutbox, requeueDeliveryFailures, retryDueConflicts } from './outbox'
 import { ensurePhotosUploaded } from './photoQueue'
 import { saveRejections } from './rejections'
-import { SessionEndedUploadError, resolvePowerSyncEndpoint, uploadTransaction, type PostResponse } from './upload'
+import { isEnvironmentMismatchError, SessionEndedUploadError, resolvePowerSyncEndpoint, uploadTransaction, withAnimalTypeName, type PostResponse } from './upload'
 
 type TokenResponse = { token: string; powersyncUrl?: string; expiresAt?: string }
 
@@ -28,6 +29,39 @@ export class EmbarqueConnector implements PowerSyncBackendConnector {
    */
   lastError: unknown = null
   onSessionEnded: () => void | Promise<void> = () => {}
+
+  /**
+   * API e PowerSync em ambientes diferentes (ver resolvePowerSyncEndpoint): mensagem para o indicador; null = ok.
+   * Com isso o download fica pausado (não conecta) e o envio direto à API continua (uploadPump).
+   */
+  environmentMismatch: string | null = null
+  private mismatchListeners = new Set<() => void>()
+
+  subscribeMismatch = (listener: () => void) => {
+    this.mismatchListeners.add(listener)
+    return () => void this.mismatchListeners.delete(listener)
+  }
+
+  getMismatch = () => this.environmentMismatch
+
+  private setMismatch(message: string | null) {
+    if (this.environmentMismatch === message) return
+    this.environmentMismatch = message
+    for (const listener of this.mismatchListeners) listener()
+  }
+
+  /**
+   * Antes de conectar o PowerSync: confere se o endpoint do download é do mesmo ambiente da API. false = NÃO conectar
+   * (aviso no indicador, sem exceção). Outras falhas (sem rede, 5xx) devolvem true: o SDK conecta e tenta de novo.
+   */
+  async canConnect(): Promise<boolean> {
+    try {
+      await this.fetchCredentials()
+      return true
+    } catch (error) {
+      return !isEnvironmentMismatchError(error)
+    }
+  }
 
   invalidate() {
     this.cached = null
@@ -50,7 +84,18 @@ export class EmbarqueConnector implements PowerSyncBackendConnector {
       }
       throw error
     }
-    const endpoint = resolvePowerSyncEndpoint(POWERSYNC_CONFIG.url, data.powersyncUrl, POWERSYNC_CONFIG.apiUrl)
+    let endpoint: string
+    try {
+      endpoint = resolvePowerSyncEndpoint(POWERSYNC_CONFIG.url, data.powersyncUrl, POWERSYNC_CONFIG.apiUrl)
+    } catch (error) {
+      if (isEnvironmentMismatchError(error)) {
+        // Proteção, não falha: vira aviso no indicador. Continua lançando para o SDK nunca conectar nesse endpoint.
+        if (this.environmentMismatch == null) console.warn(`[sync] ${(error as Error).message}`)
+        this.setMismatch((error as Error).message)
+      }
+      throw error
+    }
+    this.setMismatch(null)
     if (!data.token || !endpoint) throw new Error('Resposta inválida de /powersync/token (token ou URL ausente).')
     this.cached = {
       endpoint,
@@ -73,8 +118,9 @@ export class EmbarqueConnector implements PowerSyncBackendConnector {
     return run
   }
 
-  private async uploadNext(database: CommonPowerSyncDatabase): Promise<void> {
-    const deps = {
+  /** Dependências do upload (fila do PowerSync e saída de reenvio). */
+  uploadDeps(database: CommonPowerSyncDatabase) {
+    return {
       post: postBatch,
       saveRejections: (rows: Parameters<typeof saveRejections>[1]) => saveRejections(database, rows, newUlid),
       // Ordem obrigatória: foto (POST /shipments/:id/photos) antes do PUT/PATCH do vínculo com photo_id.
@@ -85,6 +131,27 @@ export class EmbarqueConnector implements PowerSyncBackendConnector {
           fileExists: localFileExists,
           now: () => new Date().toISOString(),
         }),
+      newId: newUlid,
+      // Contrato 11/11: animal leva o nome do tipo local (só no envio; nunca gravado no SQLite).
+      enrichOp: (op: Parameters<typeof withAnimalTypeName>[0]) =>
+        withAnimalTypeName(op, async (typeId) => {
+          const row = await database.getOptional<{ name: string }>(`SELECT name FROM ${tableOf('animalTypes')} WHERE upper(id) = upper(?)`, [typeId])
+          return row?.name ?? null
+        }),
+      onRemapped: (items: Parameters<typeof applyRemaps>[1]) => applyRemaps(database, items, newUlid).then(() => undefined),
+    }
+  }
+
+  private async uploadNext(database: CommonPowerSyncDatabase): Promise<void> {
+    const base = this.uploadDeps(database)
+    const map = await loadIdMap(database)
+    const deps = {
+      ...base,
+      mapOp: (op: Parameters<typeof applyIdMap>[0]) => applyIdMap(op, map),
+      // Recusa por referência ausente/acesso: guardada como conflito (dado local protegido), a fila anda.
+      park: (items: Parameters<typeof parkOps>[1]) => parkOps(database, items, newUlid),
+      // Aceito pela API: guardado até o download confirmar (o checkpoint não pode apagar do aparelho).
+      markSent: (ops: Parameters<typeof markSent>[1]) => markSent(database, ops, newUlid),
     }
     try {
       // 1) O que já saiu do ps_crud mas não chegou (inclui o que versões antigas marcaram como Pendência por engano),
@@ -95,6 +162,10 @@ export class EmbarqueConnector implements PowerSyncBackendConnector {
       const transaction = await database.getNextCrudTransaction()
       if (!transaction) {
         this.lastError = null
+        // Fila vazia: conflitos cuja espera venceu são tentados de novo com o MESMO dado (sem forçar nada).
+        await retryDueConflicts(database, { ...base, mapOp: deps.mapOp }).catch((error) => {
+          if (error instanceof SessionEndedUploadError) throw error
+        })
         return
       }
       await uploadTransaction(transaction, deps)

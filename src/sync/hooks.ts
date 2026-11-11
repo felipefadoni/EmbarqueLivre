@@ -17,6 +17,7 @@ import {
   type HerdRow,
   type SqlQuery,
 } from './queries'
+import { CONFLICT_COUNT_SQL } from './localGuard'
 import { OUTBOX_COUNT_SQL } from './outbox'
 import { PHOTO_QUEUE_COUNTS_SQL } from './photoQueue'
 import { REJECTIONS_COUNT_SQL } from './rejections'
@@ -110,6 +111,8 @@ export function useSyncInfo() {
   const rejections = useQuery<{ n: number }>(REJECTIONS_COUNT_SQL)
   // Saída de reenvio (já fora do ps_crud, ainda não enviada): conta como "aguardando envio", nunca como Pendência.
   const outbox = useQuery<{ n: number }>(OUTBOX_COUNT_SQL)
+  // Cadastros guardados no aparelho que o servidor ainda não aceitou (referência ausente/acesso): pedem confirmação.
+  const conflicts = useQuery<{ n: number }>(CONFLICT_COUNT_SQL)
   // Fotos do embarque ainda no aparelho (aguardando envio) e recusadas (precisam de outra foto / Reenviar).
   const photos = useQuery<{ pending: number; failed: number }>(PHOTO_QUEUE_COUNTS_SQL)
 
@@ -145,6 +148,7 @@ export function useSyncInfo() {
     lastSyncedAt: status.lastSyncedAt ?? null,
     pendingUploads: pendingUploads + Number(outbox.data[0]?.n ?? 0),
     rejectionCount: Number(rejections.data[0]?.n ?? 0),
+    conflictCount: Number(conflicts.data[0]?.n ?? 0),
     pendingPhotos: Number(photos.data[0]?.pending ?? 0),
     failedPhotos: Number(photos.data[0]?.failed ?? 0),
     uploadError: status.dataFlowStatus.uploadError ?? null,

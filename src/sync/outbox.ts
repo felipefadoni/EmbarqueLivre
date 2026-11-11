@@ -13,8 +13,9 @@
  *
  * Puro (sem React Native): recebe o executor SQL, testável no Node.
  */
-import { columnList, entityOfTable, OUTBOX_TABLE, REJECTIONS_TABLE, SYNC_TABLES, type SyncEntity } from './mapping'
-import { isDefinitiveRejectionStatus, uploadTransaction, type PostBatch, type RejectionRecord } from './upload'
+import { markSent, parkOps, syncedTable } from './localGuard'
+import { OUTBOX_TABLE, REJECTIONS_TABLE } from './mapping'
+import { isDefinitiveRejectionStatus, SessionEndedUploadError, uploadTransaction, type UploadDeps } from './upload'
 
 const O = OUTBOX_TABLE.table
 const OC = OUTBOX_TABLE.columns
@@ -29,7 +30,13 @@ export type OutboxExecutor = {
 
 export type OutboxRow = { id: string; tableName: string; rowId: string; op: string; opData: string | null; createdAt: string }
 
-export const OUTBOX_COUNT_SQL = `SELECT COUNT(*) AS n FROM ${O}`
+const RETRY = `COALESCE(${OC.state.name}, 'retry') = 'retry'`
+
+/** Saída de reenvio automático (aguardando envio). Conflitos e enviados-aguardando-download não contam aqui. */
+export const OUTBOX_COUNT_SQL = `SELECT COUNT(*) AS n FROM ${O} WHERE ${RETRY}`
+
+/** Tudo que ainda não chegou à API (reenvio + conflitos): usado na proteção do logout. */
+export const OUTBOX_UNSENT_COUNT_SQL = `SELECT COUNT(*) AS n FROM ${O} WHERE COALESCE(${OC.state.name}, 'retry') != 'sent'`
 
 /** Códigos genéricos que só aparecem quando o LOTE falhou (rota, proxy, rede, bug) — nunca recusa de um cadastro. */
 const ENVELOPE_CODES = new Set([
@@ -79,13 +86,6 @@ function referencedIds(opData: string | null): Set<string> {
     // opData inválido: sem referências
   }
   return out
-}
-
-/** Colunas sincronizadas da tabela (sem `id`); null = tabela que não é do PowerSync. */
-function syncedTable(tableName: string): { table: string; columns: string[] } | null {
-  const entity = entityOfTable(tableName)
-  if (!entity || !(entity in SYNC_TABLES)) return null
-  return { table: SYNC_TABLES[entity as SyncEntity].table, columns: columnList(entity as SyncEntity).map(([name]) => name) }
 }
 
 /**
@@ -181,36 +181,62 @@ async function requeueOnce(db: OutboxExecutor, newId: () => string): Promise<num
 export async function nextOutboxEntry(db: OutboxExecutor): Promise<OutboxRow | null> {
   return db.getOptional<OutboxRow>(
     `SELECT id, ${OC.tableName.name} AS tableName, ${OC.rowId.name} AS rowId, ${OC.op.name} AS op, ${OC.opData.name} AS opData,
-       ${OC.createdAt.name} AS createdAt FROM ${O} ORDER BY ${OC.createdAt.name}, id LIMIT 1`,
+       ${OC.createdAt.name} AS createdAt FROM ${O} WHERE ${RETRY} ORDER BY ${OC.createdAt.name}, id LIMIT 1`,
   )
 }
 
+type OutboxDeps = Omit<UploadDeps, 'park' | 'markSent'> & { newId?: () => string; now?: () => string }
+
+function parseOpData(text: string | null): Record<string, unknown> | undefined {
+  if (!text) return undefined
+  try {
+    return JSON.parse(text) as Record<string, unknown>
+  } catch {
+    return undefined
+  }
+}
+
 /**
- * Envia a saída de reenvio (uma op por vez, na ordem). Mesmas regras do upload: recusa real → Pendência e sai da
- * saída; falha temporária / lote bloqueado / 401 → lança e a op fica (a fila do PowerSync espera, mantendo a ordem).
+ * Envia UMA entrada da saída. Recusa por referência/acesso → a própria entrada vira (ou continua) conflito, guardada;
+ * aceita → sai da saída e fica guardada até o download confirmar; recusa real (400/409/422) → Pendência.
  */
-export async function flushOutbox(
-  db: OutboxExecutor,
-  deps: { post: PostBatch; saveRejections: (rows: RejectionRecord[]) => Promise<void>; ensurePhotos?: (photoIds: string[]) => Promise<unknown> },
-): Promise<number> {
+export async function sendOutboxEntry(db: OutboxExecutor, entry: OutboxRow, deps: OutboxDeps): Promise<'applied' | 'parked' | 'rejected'> {
+  const newId = deps.newId ?? (() => `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 10)}`.toUpperCase())
+  let outcome: 'applied' | 'parked' | 'rejected' = 'applied'
+  await uploadTransaction(
+    {
+      crud: [{ id: entry.rowId, op: entry.op, table: entry.tableName, opData: parseOpData(entry.opData) }],
+      complete: async () => {
+        if (outcome !== 'parked') await db.execute(`DELETE FROM ${O} WHERE id = ?`, [entry.id])
+      },
+    },
+    {
+      ...deps,
+      saveRejections: async (rows) => {
+        outcome = 'rejected'
+        await deps.saveRejections(rows)
+      },
+      park: async (items) => {
+        outcome = 'parked'
+        await parkOps(db, items, newId, deps.now, entry.id)
+      },
+      markSent: (ops) => markSent(db, ops, newId, deps.now),
+    },
+  )
+  return outcome
+}
+
+/**
+ * Envia a saída de reenvio (uma op por vez, na ordem). Falha temporária / lote bloqueado / 401 → lança e a op fica
+ * (a fila do PowerSync espera, mantendo a ordem). Referência ausente/acesso → conflito guardado, a saída anda.
+ */
+export async function flushOutbox(db: OutboxExecutor, deps: OutboxDeps): Promise<number> {
   let sent = 0
   for (let guard = 0; guard < 1000; guard++) {
     const entry = await nextOutboxEntry(db)
     if (!entry) return sent
-    let opData: Record<string, unknown> | undefined
     try {
-      opData = entry.opData ? (JSON.parse(entry.opData) as Record<string, unknown>) : undefined
-    } catch {
-      opData = undefined
-    }
-    try {
-      await uploadTransaction(
-        {
-          crud: [{ id: entry.rowId, op: entry.op, table: entry.tableName, opData }],
-          complete: async () => void (await db.execute(`DELETE FROM ${O} WHERE id = ?`, [entry.id])),
-        },
-        deps,
-      )
+      await sendOutboxEntry(db, entry, deps)
     } catch (error) {
       await db
         .execute(`UPDATE ${O} SET ${OC.attempts.name} = COALESCE(${OC.attempts.name}, 0) + 1, ${OC.lastError.name} = ? WHERE id = ?`, [
@@ -223,6 +249,31 @@ export async function flushOutbox(
     sent++
   }
   return sent
+}
+
+/**
+ * Tenta de novo, sozinho e SEM forçar nada (mesmo dado), os conflitos cuja espera venceu — ex.: o pai que faltava já
+ * chegou. Nunca lança (não trava a fila), exceto sessão encerrada.
+ */
+export async function retryDueConflicts(db: OutboxExecutor, deps: OutboxDeps, nowMs = Date.now()): Promise<number> {
+  const due = await db.getAll<OutboxRow>(
+    `SELECT id, ${OC.tableName.name} AS tableName, ${OC.rowId.name} AS rowId, ${OC.op.name} AS op, ${OC.opData.name} AS opData,
+       ${OC.createdAt.name} AS createdAt FROM ${O}
+     WHERE ${OC.state.name} = 'conflict' AND (${OC.nextAt.name} IS NULL OR ${OC.nextAt.name} <= ?) ORDER BY ${OC.createdAt.name}, id`,
+    [new Date(nowMs).toISOString()],
+  )
+  let applied = 0
+  for (const entry of due) {
+    try {
+      if ((await sendOutboxEntry(db, entry, deps)) === 'applied') applied++
+    } catch (error) {
+      if (error instanceof SessionEndedUploadError) throw error
+      // Rede/servidor: fica para a próxima janela.
+      await db.execute(`UPDATE ${O} SET ${OC.nextAt.name} = ? WHERE id = ?`, [new Date(nowMs + 5 * 60_000).toISOString(), entry.id]).catch(() => undefined)
+      break
+    }
+  }
+  return applied
 }
 
 /** Chave da próxima coisa a enviar (saída de reenvio primeiro, depois a fila do PowerSync); null = nada. */

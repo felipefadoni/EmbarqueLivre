@@ -17,13 +17,19 @@ export function isTransientSyncError(record: LogRecord): boolean {
   return TRANSIENT.test(text)
 }
 
+/** Proteção de propósito (API e PowerSync em ambientes diferentes): aviso, nunca o overlay vermelho. */
+export function isProtectionError(record: LogRecord): boolean {
+  const error = record.error as { name?: unknown; message?: unknown } | undefined
+  return error?.name === 'PowerSyncEnvironmentMismatchError' || /ambientes diferentes/.test(`${record.message} ${String(error?.message ?? '')}`)
+}
+
 export function createSyncLogger(sink: Sink = console, minLevel: number = LEVEL.info) {
   return {
     log(record: LogRecord) {
       if (record.level < minLevel) return
       const args: unknown[] = [`[PowerSync] ${record.message}`]
       if (record.error !== undefined) args.push(record.error)
-      if (record.level >= LEVEL.error) (isTransientSyncError(record) ? sink.warn : sink.error)(...args)
+      if (record.level >= LEVEL.error) (isTransientSyncError(record) || isProtectionError(record) ? sink.warn : sink.error)(...args)
       else if (record.level >= LEVEL.warn) sink.warn(...args)
       else if (record.level >= LEVEL.info) sink.info(...args)
       else sink.debug(...args)
