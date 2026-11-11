@@ -427,3 +427,32 @@ abrir tela nem tocar em nada. Por isso:
 - Excluir no aparelho A uma vacina que ganhou lançamento no aparelho B → pendência de exclusão.
 - Logout com pendências (aviso) e troca de usuário (banco limpo).
 - Token PowerSync expirando durante uso longo (TTL 5 min; renovado 1 min antes).
+
+## Cadastro local nunca some (incidente 11/11)
+
+**O que apagou a fazenda e o animal do iPhone (comprovado no banco do aparelho):** o PowerSync só preserva uma linha
+criada offline enquanto a operação dela está no `ps_crud`. Quando a fila esvazia, o checkpoint seguinte substitui o
+estado local pelo do servidor de sincronização. No teste:
+
+1. `EXPO_PUBLIC_API_URL` = VPS, `EXPO_PUBLIC_POWERSYNC_URL` = IP do Mac (PowerSync local). O app gravava na VPS e baixava
+   de outro banco, onde o usuário da VPS não existe (só o bucket global `catalogs` era sincronizado) e o tipo de animal
+   "Bovina" do catálogo local não existe na VPS.
+2. Fazenda subiu (aplicada na VPS). Animal: `404 ANIMAL_TYPE_NOT_FOUND`; vacinação: `404 ANIMAL_NOT_FOUND`. O upload
+   gravava as duas em `sync_rejections` e concluía a transação → `ps_crud` vazio.
+3. Checkpoint do PowerSync local (que não tem nenhum desses registros) → fazenda, animal e vacinação apagados do
+   aparelho. Sobrou só a cópia do animal e da vacinação dentro de `sync_rejections` ("2 pendências", só Descartar).
+
+**Proteções:**
+
+- Recusa por operação 403/404/405/410… (`*_NOT_FOUND`, acesso) **não conclui a transação**: fica na fila
+  (`BatchBlockedUploadError`, retry com espera, motivo no indicador). Só 400/409/422 viram Pendência. DELETE com 404 = já
+  apagado (aplicado).
+- `requeueDeliveryFailures` (abertura do app e antes de cada envio): toda Pendência que não é corrigível volta ao envio.
+  PUT é **regravado na própria tabela** (reaparece no app e volta ao `ps_crud`, o que bloqueia o checkpoint de apagá-lo);
+  PATCH/DELETE vão para `sync_outbox`.
+- `resolvePowerSyncEndpoint`: se `EXPO_PUBLIC_POWERSYNC_URL` é de rede local e a API não (ou o contrário), a env é
+  ignorada e vale o `powersyncUrl` do token; se o token não traz URL útil, a sync **pausa**
+  (`PowerSyncEnvironmentMismatchError`, aviso no indicador) e as alterações seguem pelo envio direto à API.
+
+Limite conhecido: uma operação que aponta para algo que **nunca** vai existir no servidor (ex.: tipo de animal de outro
+ambiente) fica parada no topo da fila com o motivo no indicador, segurando as seguintes, até alguém resolver. Não some.

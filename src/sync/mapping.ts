@@ -231,6 +231,32 @@ export const OUTBOX_TABLE = {
     attempts: col('attempts', 'integer'),
     lastError: col('last_error'),
     createdAt: col('created_at'),
+    /**
+     * null/'retry' = reenvio automático na ordem (antes da fila); 'conflict' = o servidor não aceitou por referência
+     * ausente/acesso (fica guardado, não trava a fila, só é forçado com confirmação); 'sent' = aceito pela API,
+     * guardado até o download confirmar (se o servidor não devolver, o cadastro local é restaurado).
+     */
+    state: col('state'),
+    statusCode: col('status_code', 'integer'),
+    errorCode: col('error_code'),
+    message: col('message'),
+    field: col('field'),
+    /** Linha local completa (JSON das colunas) no momento do envio/recusa: o que é restaurado se o download apagar. */
+    snapshot: col('snapshot'),
+    nextAt: col('next_at'),
+    sentAt: col('sent_at'),
+  },
+} as const
+
+/** Tabela local: id local de tipo/vacina → id do mesmo nome no servidor (confirmado pelo usuário no envio forçado). */
+export const ID_MAP_TABLE = {
+  table: 'sync_id_map',
+  columns: {
+    tableName: col('table_name'),
+    localId: col('local_id'),
+    serverId: col('server_id'),
+    name: col('name'),
+    createdAt: col('created_at'),
   },
 } as const
 
@@ -306,9 +332,11 @@ export function fromColumns(entity: SyncEntity, data: Record<string, unknown> | 
 }
 
 /** Lista [nome, tipo] de colunas de uma tabela (para o schema PowerSync e para os testes). */
-export function columnList(entity: SyncEntity | 'rejections' | 'photoQueue' | 'outbox'): [string, ColumnType][] {
+export function columnList(entity: SyncEntity | 'rejections' | 'photoQueue' | 'outbox' | 'idMap'): [string, ColumnType][] {
   const columns = (
-    entity === 'rejections'
+    entity === 'idMap'
+      ? ID_MAP_TABLE.columns
+      : entity === 'rejections'
       ? REJECTIONS_TABLE.columns
       : entity === 'photoQueue'
         ? PHOTO_QUEUE_TABLE.columns
