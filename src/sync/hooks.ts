@@ -17,6 +17,7 @@ import {
   type HerdRow,
   type SqlQuery,
 } from './queries'
+import { PHOTO_QUEUE_COUNTS_SQL } from './photoQueue'
 import { REJECTIONS_COUNT_SQL } from './rejections'
 
 /** Espera a sincronização (pull-to-refresh). Offline retorna logo; nunca trava mais que `timeoutMs`. */
@@ -106,6 +107,8 @@ export function useSyncInfo() {
   const net = useNetInfo()
   const [pendingUploads, setPendingUploads] = useState(0)
   const rejections = useQuery<{ n: number }>(REJECTIONS_COUNT_SQL)
+  // Fotos do embarque ainda no aparelho (aguardando envio) e recusadas (precisam de outra foto / Reenviar).
+  const photos = useQuery<{ pending: number; failed: number }>(PHOTO_QUEUE_COUNTS_SQL)
 
   useEffect(() => {
     let alive = true
@@ -138,6 +141,8 @@ export function useSyncInfo() {
     lastSyncedAt: status.lastSyncedAt ?? null,
     pendingUploads,
     rejectionCount: Number(rejections.data[0]?.n ?? 0),
+    pendingPhotos: Number(photos.data[0]?.pending ?? 0),
+    failedPhotos: Number(photos.data[0]?.failed ?? 0),
     uploadError: status.dataFlowStatus.uploadError ?? null,
     downloadError: status.dataFlowStatus.downloadError ?? null,
   }

@@ -33,6 +33,7 @@ export function SyncStatusIndicator({ compact = false }: { compact?: boolean }) 
   const summary = [
     LABEL[info.state],
     waiting > 0 ? `${waiting} ${waiting === 1 ? 'alteração aguardando envio' : 'alterações aguardando envio'}` : null,
+    info.pendingPhotos > 0 ? `${info.pendingPhotos} ${info.pendingPhotos === 1 ? 'foto aguardando envio' : 'fotos aguardando envio'}` : null,
   ]
     .filter(Boolean)
     .join(' · ')
@@ -50,6 +51,18 @@ export function SyncStatusIndicator({ compact = false }: { compact?: boolean }) 
           {formatLastSync(info.lastSyncedAt)}
         </Text>
       )}
+      {!compact && (info.pendingUploads > 0 || info.pendingPhotos > 0) ? (
+        <Text fontSize={14} fontWeight="600" color="brandMuted">
+          {info.networkOnline
+            ? 'Enviando automaticamente. Pode deixar o app em segundo plano.'
+            : 'Sem internet: envia sozinho quando a rede voltar (Wi‑Fi ou dados móveis).'}
+        </Text>
+      ) : null}
+      {!compact && info.failedPhotos > 0 ? (
+        <Text fontSize={14} fontWeight="700" color="brandError">
+          {info.failedPhotos === 1 ? '1 foto não foi aceita pelo servidor' : `${info.failedPhotos} fotos não foram aceitas pelo servidor`}: abra o embarque e use “Reenviar foto” ou tire outra.
+        </Text>
+      ) : null}
       {hasRejections ? (
         <XStack
           minH={44}

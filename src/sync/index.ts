@@ -31,7 +31,7 @@ export const syncLifecycle = createSyncLifecycle({
   storage: { get: getSecureItem, set: setSecureItem, remove: deleteSecureItem },
   connect: async () => {
     connector.invalidate()
-    await db.connect(connector, { checkpointMode: POWERSYNC_CONFIG.checkpointMode })
+    await db.connect(connector, { checkpointMode: POWERSYNC_CONFIG.checkpointMode, retryDelayMs: POWERSYNC_CONFIG.retryDelayMs })
   },
 })
 

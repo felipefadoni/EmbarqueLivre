@@ -53,7 +53,18 @@ export function createSyncLifecycle(deps: {
         await deps.storage.remove(SYNC_USER_KEY)
       })
     },
-    stopKeepData() {
+    /**
+     * Rede voltou / app voltou ao primeiro plano: reconecta já (sobe a fila e baixa mudanças) se houver sessão.
+     * Sem sessão não faz nada.
+     */
+    reconnect() {
+      return serial(async () => {
+        if (!current) return false
+        await deps.connect()
+        return true
+      })
+    },
+        stopKeepData() {
       return serial(async () => {
         current = null
         await deps.db.disconnect()

@@ -3,6 +3,7 @@ import { createContext, use, useCallback, useEffect, useMemo, useState, type Pro
 import { authApi, endSessionKeepData, setOnLoggedOut } from '@/api/client'
 import type { AuthUser } from '@/api/types'
 import { connector, setSyncUser, syncLifecycle } from '@/sync'
+import { unregisterBackgroundSync } from '@/sync/backgroundSync'
 
 type AuthContextValue = {
   user: AuthUser | null
@@ -59,6 +60,8 @@ export function AuthProvider({ children }: PropsWithChildren) {
     await authApi.logout(all)
     setSyncUser(null)
     await syncLifecycle.logoutAndClear().catch(() => undefined)
+    // Sem sessão não há o que enviar em segundo plano.
+    await unregisterBackgroundSync().catch(() => undefined)
     setUser(null)
   }, [])
 

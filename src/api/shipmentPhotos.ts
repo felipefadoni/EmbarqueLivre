@@ -50,6 +50,8 @@ export async function uploadShipmentPhoto(row: PhotoQueueRow): Promise<PhotoUplo
       mimeType: SHIPMENT_FLOW_CONTRACT.photo.mimeType,
       parameters: { [SHIPMENT_FLOW_CONTRACT.photo.idField]: row.id },
       headers: await authorizationHeader(),
+      // iOS: URLSession de segundo plano — o envio continua com o app suspenso (não se o app for encerrado à força).
+      sessionType: 'background',
     })
     return { status: result.status, body: parseBody(result.body) }
   }

@@ -55,7 +55,19 @@ export class EmbarqueConnector implements PowerSyncBackendConnector {
     return this.cached
   }
 
-  async uploadData(database: CommonPowerSyncDatabase): Promise<void> {
+  /**
+   * Um envio por vez: o SDK (primeiro plano) e a tarefa de segundo plano usam o mesmo connector; sem isto os dois
+   * pegariam a mesma transação da fila.
+   */
+  private uploading: Promise<void> = Promise.resolve()
+
+  uploadData(database: CommonPowerSyncDatabase): Promise<void> {
+    const run = this.uploading.then(() => this.uploadNext(database))
+    this.uploading = run.catch(() => undefined)
+    return run
+  }
+
+  private async uploadNext(database: CommonPowerSyncDatabase): Promise<void> {
     const transaction = await database.getNextCrudTransaction()
     if (!transaction) return
     try {

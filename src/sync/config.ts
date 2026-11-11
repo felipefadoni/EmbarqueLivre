@@ -15,4 +15,9 @@ export const POWERSYNC_CONFIG = {
   dbFilename: 'embarquelivre.db',
   /** Renova o token quando faltar menos que isso para expirar (TTL do servidor = 5 min / 300 s). */
   tokenRenewMarginMs: 60_000,
+  /**
+   * Espera do SDK entre tentativas depois de erro (rede, servidor). Maior que o padrão para poupar bateria: a volta
+   * da rede e o app em primeiro plano já reconectam na hora (syncTriggers).
+   */
+  retryDelayMs: 15_000,
 } as const

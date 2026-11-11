@@ -143,6 +143,23 @@ export async function authorizationHeader(): Promise<Record<string, string>> {
   return accessToken ? { Authorization: `Bearer ${accessToken}` } : {}
 }
 
+/**
+ * Tarefa de segundo plano (sem a UI montada): carrega o token salvo, sem chamar /auth/me.
+ * false = não há sessão (ou o Keychain está bloqueado: aparelho travado desde que ligou) → nada a enviar.
+ */
+export async function loadStoredSession(): Promise<boolean> {
+  try {
+    if (!(await getSecureItem(KEYS.refresh))) return false
+    if (!accessToken) {
+      accessToken = await getSecureItem(KEYS.access)
+      accessExpiresAt = Date.parse((await getSecureItem(KEYS.accessExp)) ?? '') || 0
+    }
+    return true
+  } catch {
+    return false
+  }
+}
+
 /** Renova o token depois de um 401 num upload de arquivo (fora do axios). null = sessão encerrada. */
 export function refreshAccessToken(): Promise<string | null> {
   return refresh()

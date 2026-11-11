@@ -303,6 +303,62 @@ foto e peso. "Corrigir" de um vínculo avulso abre o embarque dele (`/embarques/
 Um 403 `INSUFFICIENT_ROLE` (ex.: exclusão feita por basic) volta como op `rejected`: vira pendência definitiva, sem retry,
 com a mensagem oficial.
 
+## Sync automático e em segundo plano
+
+O app nunca fala com o RUSTFS: fotos e dados sobem só pelas rotas autenticadas da API
+(contrato de fotos inalterado). Vale para **qualquer rede** — Wi‑Fi ou dados móveis
+(3G/4G/5G); não há restrição a Wi‑Fi (`isOnline` em `src/sync/syncTriggers.ts` ignora o tipo).
+
+**Gatilhos** (`useSyncTriggers`, montado em `src/app/(app)/_layout.tsx`):
+
+- **Rede voltou** (NetInfo offline → online) e **app voltou ao primeiro plano**: se o PowerSync
+  estiver desconectado, reconecta na hora (`syncLifecycle.reconnect()`), sem esperar o retry interno.
+  Debounce de 1,5 s e no máximo uma reconexão forçada a cada 10 s — sem loop. Já conectado: nada a
+  fazer, o SDK envia a fila sozinho.
+- **Abertura do app**: retoma tudo que ficou pendente (fila CRUD + `shipment_photo_queue`).
+- **Segundo plano** (`src/sync/backgroundSync.ts`, `expo-background-task`): tarefa periódica
+  `embarquelivre-background-sync` (mínimo 15 min, **o SO decide quando**) que esvazia a fila de
+  upload em até ~25 s (`drainUploadQueue`). Registrada após o login; removida no logout explícito.
+  A tarefa é definida em `index.ts` (entrada do app, antes do `expo-router/entry`) para existir
+  mesmo quando o SO acorda o app sem UI.
+- **Fotos no iOS** sobem em `URLSession` de segundo plano (`sessionType: 'background'`): um upload
+  já iniciado continua com o app suspenso.
+
+**Ordem garantida** (a mesma do primeiro plano — o `uploadData` do connector é serializado, então
+SDK e tarefa de fundo nunca enviam em paralelo):
+
+1. `POST` da foto (o embarque já existe no servidor — `ensurePhotos` antes do vínculo);
+2. `PUT` do vínculo com `photo_id` + `weight_kg`;
+3. `finish` do embarque (transação posterior na fila).
+
+**Retry e backoff**: falha de rede/408/429/5xx deixa pendente; o SDK tenta de novo a cada 15 s
+(`retryDelayMs`, antes 5 s) enquanto o app está aberto; a tarefa de fundo para na primeira falha
+temporária e espera a próxima janela do SO. Recusa definitiva (outro 4xx) **não** é reenviada: vai
+para Pendências/foto "não aceita" e o lote segue. 401 encerra a sessão (em segundo plano, sem UI,
+a tarefa só para; a próxima abertura trata o login).
+
+O indicador de sync mostra "N foto(s) aguardando envio" e avisa que envia sozinho quando a rede
+voltar.
+
+### Limites reais (iOS e Android)
+
+- **Envio imediato não é garantido.** Nenhum dos dois SOs acorda o app quando a rede volta; com o
+  app em segundo plano o envio acontece na próxima janela do SO (≥ 15 min, pode levar horas: bateria,
+  modo economia, uso do app) ou quando o usuário abrir o app.
+- **iOS — app encerrado no multitarefa (swipe up)**: o iOS cancela as tarefas de fundo e os uploads
+  em `URLSession` de fundo até o usuário abrir o app de novo. Em segundo plano normal (só minimizado)
+  funcionam. `BGTaskScheduler` não roda no simulador de forma confiável — teste no aparelho.
+- **Android — "Forçar parada"** nas configurações cancela o WorkManager até a próxima abertura;
+  Doze/economia de bateria atrasa as execuções. Fechar pelo multitarefa normalmente mantém o agendamento
+  (varia por fabricante — Xiaomi/Samsung/Huawei podem matar).
+- **Aparelho bloqueado desde o boot (iOS)**: o Keychain com a sessão fica ilegível até o primeiro
+  desbloqueio; a tarefa pula essa janela.
+- **Download** (dados novos do servidor) só com o app aberto; em segundo plano só sobe a fila.
+- **Requer build nativo novo** (`npx expo prebuild --platform ios` + `npx expo run:ios --device`):
+  o plugin `expo-background-task` adiciona `UIBackgroundModes` (`fetch`, `processing`) e
+  `BGTaskSchedulerPermittedIdentifiers`. Sem rebuild, os gatilhos de primeiro plano funcionam, mas a
+  tarefa de fundo não.
+
 ## Telas
 
 - Menu → card **Sincronização** (online/offline/sincronizando, última sincronização, alterações aguardando envio)

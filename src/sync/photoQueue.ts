@@ -55,6 +55,10 @@ const SELECT_ROW = `SELECT id, ${C.shipmentId.name} AS shipmentId, ${C.animalId.
   ${C.localUri.name} AS localUri, ${C.status.name} AS status, COALESCE(${C.attempts.name}, 0) AS attempts,
   ${C.lastError.name} AS lastError FROM ${T}`
 
+/** Contadores para o indicador de sincronização. */
+export const PHOTO_QUEUE_COUNTS_SQL = `SELECT COALESCE(SUM(CASE WHEN ${C.status.name} = 'pending' THEN 1 ELSE 0 END), 0) AS pending,
+  COALESCE(SUM(CASE WHEN ${C.status.name} = 'failed' THEN 1 ELSE 0 END), 0) AS failed FROM ${T}`
+
 export function pendingPhotosQuery() {
   return { sql: `${SELECT_ROW} WHERE ${C.status.name} = 'pending' ORDER BY ${C.createdAt.name}, id`, params: [] as unknown[] }
 }
