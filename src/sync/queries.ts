@@ -681,6 +681,35 @@ export type ShipmentLinkedAnimalRow = {
   inWithdrawal: number
 }
 
+/**
+ * Relatório (PDF) do embarque: animais do embarque com rebanho, peso e foto (arquivo local da fila ou photo_id).
+ * Ordem estável: código (sem diferenciar maiúsculas), depois id do vínculo.
+ */
+export function shipmentReportAnimalsQuery(shipmentId: string): SqlQuery {
+  return {
+    sql: `SELECT sa.id AS linkId, a.${c('animals', 'code')} AS code, sa.${c('shipmentAnimals', 'weightKg')} AS weightKg,
+      sa.${c('shipmentAnimals', 'photoId')} AS photoId, q.${PHOTO_QUEUE_TABLE.columns.localUri.name} AS localPhotoUri,
+      a.${c('animals', 'herdId')} AS herdId, h.${c('herds', 'name')} AS herdName
+      FROM ${SA} sa
+      JOIN ${A} a ON a.id = sa.${c('shipmentAnimals', 'animalId')}
+      LEFT JOIN ${H} h ON h.id = a.${c('animals', 'herdId')}
+      LEFT JOIN ${PQ} q ON q.id = sa.${c('shipmentAnimals', 'photoId')}
+      WHERE sa.${c('shipmentAnimals', 'shipmentId')} = ?
+      ORDER BY a.${c('animals', 'code')} COLLATE NOCASE, sa.id`,
+    params: [shipmentId],
+  }
+}
+
+export type ShipmentReportAnimalRow = {
+  linkId: string
+  code: string | null
+  weightKg: number | null
+  photoId: string | null
+  localPhotoUri: string | null
+  herdId: string | null
+  herdName: string | null
+}
+
 // ---------- Regras locais (equivalentes baratos dos 409) ----------
 
 export function countQuery(entity: 'animals' | 'vaccinations' | 'herds' | 'shipments', field: string, value: string): SqlQuery {

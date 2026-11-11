@@ -11,7 +11,9 @@
       "icon": "./assets/images/icon.png",
       "bundleIdentifier": "com.fadoni.embarquelivre",
       "infoPlist": {
-        "CFBundleDisplayName": "Embarque Livre"
+        "CFBundleDisplayName": "Embarque Livre",
+        "NSCameraUsageDescription": "O Embarque Livre usa a câmera para fotografar o animal ao incluí-lo no embarque.",
+        "NSPhotoLibraryUsageDescription": "O Embarque Livre acessa suas fotos apenas quando você escolhe da galeria a foto do animal para incluí-lo no embarque."
       }
     },
     "android": {
@@ -47,11 +49,12 @@
       [
         "expo-image-picker",
         {
-          "cameraPermission": "O Embarque Livre usa a câmera para fotografar os animais do embarque.",
-          "photosPermission": "O Embarque Livre acessa suas fotos só quando você escolhe uma foto do animal da galeria.",
+          "cameraPermission": "O Embarque Livre usa a câmera para fotografar o animal ao incluí-lo no embarque.",
+          "photosPermission": "O Embarque Livre acessa suas fotos apenas quando você escolhe da galeria a foto do animal para incluí-lo no embarque.",
           "microphonePermission": false
         }
-      ]
+      ],
+      "expo-sharing"
     ],
     "experiments": {
       "typedRoutes": true,

@@ -5,7 +5,10 @@ import { canDeleteShipments, canFinishShipments, canManageShipments } from '@/fe
 import { ShipmentDetail } from '@/features/embarques/ShipmentDetail'
 import { firstParam } from '@/sync/params'
 
-/** Detalhe do embarque. Finalizar: basic, master, admin. Excluir: só master/admin (canDeleteShipments). */
+/**
+ * Detalhe do embarque. Finalizar: basic, master, admin. Excluir: só master/admin (canDeleteShipments).
+ * Exportar Dados (PDF, só finalizado): só master/admin — o papel vai para o detalhe, que esconde e recusa.
+ */
 export default function EmbarqueScreen() {
   const { id, pendencia, adicionar } = useLocalSearchParams<{ id: string; pendencia?: string; adicionar?: string }>()
   const { user } = useAuth()
@@ -20,6 +23,7 @@ export default function EmbarqueScreen() {
       openAdd={firstParam(adicionar) === '1'}
       canDelete={canDeleteShipments(user?.role)}
       canFinish={canFinishShipments(user?.role)}
+      role={user?.role ?? null}
     />
   )
 }

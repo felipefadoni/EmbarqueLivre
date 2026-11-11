@@ -6,6 +6,7 @@ import { useColorScheme } from 'react-native'
 import { Spinner, Text, XStack, YStack } from 'tamagui'
 
 import type { Shipment } from '@/api/catalog'
+import type { UserRole } from '@/api/types'
 import { fieldMessagesFromError, isApiError, publicApiMessage } from '@/api/errors'
 import { formatWeightKg, SHIPMENTS_CONTRACT, todayIsoInShipmentZone } from '@/api/shipmentsContract'
 import { FormBanner } from '@/components/auth/FormBanner'
@@ -24,6 +25,8 @@ import { animalsCountLabel, dateChangeWithdrawalMessage, deleteConfirmMessage, f
 import { ShipmentFields, validateShipmentForm } from './ShipmentForm'
 import { ShipmentPhotoThumb } from './ShipmentPhotoThumb'
 import { ShipmentStatusBadge } from './ShipmentStatusBadge'
+import { exportShipmentReport } from './exportShipmentReport'
+import { canExportShipment } from './shipmentReport'
 
 const FORM_FIELDS = ['name', 'shippedOn', 'farmId', 'animalIds'] as const
 const EMPTY_MESSAGE = 'Inclua pelo menos um animal antes de finalizar o embarque'
@@ -36,6 +39,7 @@ type Dialog = null | { kind: 'finish' } | { kind: 'delete' } | { kind: 'date' } 
  *   remove, salva (botão no fim da rolagem) e finaliza (basic, master, admin; confirmação; ≥ 1 animal).
  * - Finalizado: só leitura (os animais continuam listados aqui, mas saem da lista de Animais).
  * - Excluir: só master/admin (canDelete).
+ * - Exportar Dados (PDF + share sheet): só finalizado e só master/admin.
  */
 export function ShipmentDetail({
   shipmentId,
@@ -43,6 +47,7 @@ export function ShipmentDetail({
   openAdd,
   canDelete,
   canFinish,
+  role,
 }: {
   shipmentId: string
   pendenciaId?: string
@@ -50,6 +55,8 @@ export function ShipmentDetail({
   openAdd?: boolean
   canDelete: boolean
   canFinish: boolean
+  /** Papel do usuário: decide Exportar Dados (master/admin). */
+  role?: UserRole | null
 }) {
   const isDark = useColorScheme() === 'dark'
   const iconColor = isDark ? '#A8B8AF' : '#3A5247'
@@ -65,6 +72,7 @@ export function ShipmentDetail({
   const [dialog, setDialog] = useState<Dialog>(null)
   const [busy, setBusy] = useState(false)
   const [modal, setModal] = useState<ShipmentAnimalModalTarget | null>(null)
+  const [exporting, setExporting] = useState(false)
 
   async function load() {
     try {
@@ -259,22 +267,73 @@ export function ShipmentDetail({
       </YStack>
     ) : null
 
-  // Finalizado: só leitura; Excluir (master/admin) continua disponível no fim da rolagem.
+  const canExport = canExportShipment(role, status)
+
+  async function onExport() {
+    if (exporting) return
+    setFormError(null)
+    setNotice(null)
+    setExporting(true)
+    try {
+      const result = await exportShipmentReport(shipmentId, role)
+      if (result.photosMissing > 0) {
+        const n = result.photosMissing
+        setNotice(
+          `PDF gerado. ${n === 1 ? '1 foto não carregou e aparece' : `${n} fotos não carregaram e aparecem`} como "Foto indisponível" (confira a internet).`,
+        )
+      }
+    } catch (error) {
+      setFormError(isApiError(error) ? publicApiMessage(error) : 'Não foi possível gerar o PDF. Tente novamente.')
+    } finally {
+      setExporting(false)
+    }
+  }
+
+  // Finalizado: só leitura. Exportar Dados (master/admin) e Excluir (master/admin) no fim da rolagem.
   const finishedFooter =
-    !editable && canDelete ? (
-      <XStack
-        minH={TOQUE_MINIMO}
-        items="center"
-        justify="center"
-        rounded={16}
-        opacity={{ press: 0.85 }}
-        onPress={() => setDialog({ kind: 'delete' })}
-        accessibilityRole="button"
-        accessibilityLabel="Excluir embarque">
-        <Text fontSize={18} fontWeight="800" color="brandError">
-          Excluir embarque
-        </Text>
-      </XStack>
+    !editable && (canExport || canDelete) ? (
+      <YStack gap={8} mt={8}>
+        {canExport ? (
+          <>
+            <XStack
+              minH={TOQUE_PRINCIPAL}
+              items="center"
+              justify="center"
+              gap={8}
+              rounded={16}
+              bg="brandPrimary"
+              opacity={{ default: exporting ? 0.7 : 1, press: 0.85 }}
+              onPress={exporting ? undefined : () => void onExport()}
+              accessibilityRole="button"
+              accessibilityLabel="Exportar Dados"
+              accessibilityHint="Gera o relatório do embarque em PDF e abre as opções para salvar ou enviar"
+              accessibilityState={{ busy: exporting, disabled: exporting }}>
+              {exporting ? <Spinner color="brandPrimaryFg" /> : <Ionicons name="document-text-outline" size={22} color={isDark ? '#2B3D34' : '#D1EFEF'} />}
+              <Text fontSize={18} fontWeight="800" color="brandPrimaryFg">
+                {exporting ? 'Gerando PDF…' : 'Exportar Dados'}
+              </Text>
+            </XStack>
+            <Text fontSize={14} fontWeight="500" color="brandMuted" text="center">
+              Relatório em PDF com foto, código e peso dos animais, total em kg e em arroba.
+            </Text>
+          </>
+        ) : null}
+        {canDelete ? (
+          <XStack
+            minH={TOQUE_MINIMO}
+            items="center"
+            justify="center"
+            rounded={16}
+            opacity={{ press: 0.85 }}
+            onPress={() => setDialog({ kind: 'delete' })}
+            accessibilityRole="button"
+            accessibilityLabel="Excluir embarque">
+            <Text fontSize={18} fontWeight="800" color="brandError">
+              Excluir embarque
+            </Text>
+          </XStack>
+        ) : null}
+      </YStack>
     ) : null
 
   return (
@@ -484,7 +543,7 @@ function LinkedAnimalRow({
   return (
     <YStack bg="cardBg" rounded={16} p={12} gap={10}>
       <XStack gap={12} items="center">
-        <ShipmentPhotoThumb shipmentId={shipmentId} localUri={row.localPhotoUri} photoId={row.photoId} size={64} />
+        <ShipmentPhotoThumb shipmentId={shipmentId} localUri={row.localPhotoUri} photoId={row.photoId} size={64} title={row.code} />
         <YStack flex={1} gap={2}>
           <Text fontSize={18} fontWeight="800" color="brandFg" numberOfLines={1}>
             {row.code}

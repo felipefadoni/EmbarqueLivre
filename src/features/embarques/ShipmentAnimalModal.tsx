@@ -362,6 +362,7 @@ function CaptureStep({
               localUri={photoUri ?? edit?.localUri ?? null}
               photoId={photoUri ? null : edit?.photoId ?? null}
               size={96}
+              title={edit?.code ?? picked.code ?? null}
             />
             <YStack flex={1} gap={8}>
               <XStack

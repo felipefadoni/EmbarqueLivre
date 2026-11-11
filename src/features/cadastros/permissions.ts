@@ -52,6 +52,11 @@ export function canDeleteShipments(role: UserRole | null | undefined): boolean {
   return isStaff(role)
 }
 
+/** Exportar Dados (PDF do embarque finalizado): só master e admin. Basic não vê o item e a ação recusa. */
+export function canExportShipments(role: UserRole | null | undefined): boolean {
+  return isStaff(role)
+}
+
 /** Finalizar embarque (Em andamento → Finalizado): basic, master e admin. Excluir continua só master/admin. */
 export function canFinishShipments(role: UserRole | null | undefined): boolean {
   return canManageShipments(role)
