@@ -2,6 +2,7 @@ import { useFocusEffect } from 'expo-router'
 import { useCallback, useRef, useState } from 'react'
 
 import { RESOURCE_CONTRACT, type ListPage, type ListPagingRequest } from '@/api/contract'
+import { FIRST_PAGE_REQUEST } from '@/api/cursorPaging'
 import { isApiError, listErrorMessage } from '@/api/errors'
 
 type PagingState = {
@@ -46,7 +47,7 @@ export function useInfiniteList<T>(loader: (paging: ListPagingRequest) => Promis
       generationRef.current += 1
       ;(async () => {
         try {
-          const result = await loader({ page: firstPage, cursor: undefined })
+          const result = await loader({ ...FIRST_PAGE_REQUEST })
           if (cancelled) return
           applyPage(result, firstPage, 'replace')
         } catch (err) {
@@ -71,7 +72,7 @@ export function useInfiniteList<T>(loader: (paging: ListPagingRequest) => Promis
     generationRef.current += 1
     setRefreshing(true)
     try {
-      const result = await loader({ page: firstPage, cursor: undefined })
+      const result = await loader({ ...FIRST_PAGE_REQUEST })
       applyPage(result, firstPage, 'replace')
     } catch (err) {
       setError(listErrorMessage(isApiError(err) ? err : { status: 0, code: 'INTERNAL_ERROR' }))
@@ -85,7 +86,7 @@ export function useInfiniteList<T>(loader: (paging: ListPagingRequest) => Promis
     generationRef.current += 1
     setLoading(true)
     try {
-      const result = await loader({ page: firstPage, cursor: undefined })
+      const result = await loader({ ...FIRST_PAGE_REQUEST })
       applyPage(result, firstPage, 'replace')
     } catch (err) {
       setError(listErrorMessage(isApiError(err) ? err : { status: 0, code: 'INTERNAL_ERROR' }))

@@ -4,7 +4,9 @@
  * Contrato da API (12/11/2026): 1ª página `?pagination=cursor&limit=N` (máx. 100); próximas `?cursor=<nextCursor>&limit=N`
  * com os MESMOS filtros; resposta `{ data, nextCursor }` (null no fim, sem total). Cursor opaco; inválido →
  * 400 INVALID_CURSOR. O modo antigo (page/limit → `{ data, meta }`) continua existindo.
- * Endpoints com keyset na API: /farms, /herds, /animals, /account/users. /accounts e /users/masters: só page/limit.
+ * Endpoints com keyset na API (12/11/2026 22h): /farms, /animals, /herds, /account/users, /vaccinations, /shipments,
+ * /vaccines, /animal-types, /users/masters, /accounts. Ordem no modo cursor: id (ULID) desc = mais novos primeiro.
+ * Sem paginação: /shipments/:id/eligible-animals e os arrays dentro dos detalhes.
  *
  * Fallbacks (a VPS pode estar numa versão antiga; forbidNonWhitelisted → 400 em parâmetro desconhecido):
  * - 400 de validação citando um parâmetro novo → refaz a MESMA página em page/limit e fica assim até o app reiniciar;
@@ -30,6 +32,12 @@ export const CURSOR_PAGING = {
   pagingParams: ['pagination', 'cursor'],
   invalidCursorCode: 'INVALID_CURSOR',
 } as const
+
+/**
+ * Pedido da 1ª página: usado na carga inicial, no puxar-para-atualizar, no "tentar de novo" e quando o filtro muda
+ * (useInfiniteList). Nunca leva cursor: no modo cursor vira `pagination=cursor` (mais novos primeiro).
+ */
+export const FIRST_PAGE_REQUEST: Readonly<PageRequest> = Object.freeze({ page: 1, cursor: undefined })
 
 export function clampLimit(limit?: number): number {
   if (limit == null || !Number.isFinite(limit)) return CURSOR_PAGING.defaultLimit

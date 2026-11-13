@@ -44,8 +44,11 @@ export const RESOURCE_CONTRACT = {
   masters: {
     path: '/users/masters',
     searchParam: 'search',
-    /** Na API (12/11/2026) só page/limit (ListMastersRequest estende PaginationQuery). Com keyset na API → true. */
-    supportsCursor: false as boolean,
+    /**
+     * Keyset na API (12/11/2026 22h, ListMastersRequest estende KeysetPaginationQuery): `pagination=cursor` / `cursor=`,
+     * mais novos primeiro (id desc). VPS sem o deploy → fallback para page/limit (cursorPaging.ts).
+     */
+    supportsCursor: true as boolean,
   },
 }
 
@@ -110,10 +113,10 @@ export const USERS_CONTRACT = {
   activeStatus: 'active',
   searchDebounceMs: 400,
   /**
-   * GET /accounts: na API (12/11/2026) só page/limit (ListAccountsRequest estende PaginationQuery, ordem lower(name), id).
-   * `supportsCursor: false` → vai direto em page/limit (sem gastar um 400). Quando a API ganhar keyset, trocar para true.
+   * GET /accounts: keyset na API (12/11/2026 22h, ListAccountsRequest estende KeysetPaginationQuery), mais novas primeiro
+   * (id desc). VPS sem o deploy → fallback para page/limit (cursorPaging.ts). `false` = só page/limit (ordem por nome).
    */
-  accounts: { path: '/accounts', searchParam: 'search', masterCountField: 'masterCount', supportsCursor: false as boolean },
+  accounts: { path: '/accounts', searchParam: 'search', masterCountField: 'masterCount', supportsCursor: true as boolean },
 }
 
 export function clampLimit(limit?: number): number {
