@@ -5,8 +5,10 @@ import { Spinner, Text, YStack } from 'tamagui'
 import type { VaccinePayload } from '@/api/catalog'
 import { fieldMessagesFromError, isApiError, publicApiMessage, userMessage } from '@/api/errors'
 import { AuthField } from '@/components/auth/AuthField'
+import { AuthorLines } from '@/components/cadastros/AuthorLines'
 import { CadastroFormScreen } from '@/components/cadastros/CadastroFormScreen'
 import { ConfirmDialog } from '@/components/cadastros/ConfirmDialog'
+import { canSeeAuthor, type AuthorValue } from '@/features/cadastros/farmFilters'
 import { LIMITS } from '@/features/cadastros/limits'
 import { canManageVaccines } from '@/features/cadastros/permissions'
 import { useAuth } from '@/features/auth/AuthProvider'
@@ -25,6 +27,9 @@ export function VaccineEditor({ vaccineId, pendenciaId }: VaccineEditorProps) {
   const { user } = useAuth()
   const canManage = canManageVaccines(user?.role)
   const readOnly = !canManage
+  // Autor do catálogo: só o admin (consulta com o LEFT JOIN/colunas do autor); master/básico: SELECT de antes.
+  const showAuthor = canSeeAuthor(user?.role, 'vaccines')
+  const [author, setAuthor] = useState<AuthorValue | null>(null)
   const [name, setName] = useState('')
   const [withdrawalDays, setWithdrawalDays] = useState('')
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
@@ -44,12 +49,13 @@ export function VaccineEditor({ vaccineId, pendenciaId }: VaccineEditorProps) {
   async function load() {
     if (!vaccineId && !pendenciaId) return
     try {
-      const source = await loadEditorSource('vaccines', vaccineId ? vaccineByIdQuery(vaccineId) : null, rowToVaccine, pendenciaId)
+      const source = await loadEditorSource('vaccines', vaccineId ? vaccineByIdQuery(vaccineId, showAuthor) : null, rowToVaccine, pendenciaId)
       const item = source.record
       if (vaccineId && !item) {
         setLoadError('Vacina não encontrada neste aparelho. Ela pode ter sido excluída ou ainda não sincronizou.')
         return
       }
+      setAuthor(showAuthor && item ? { name: item.createdByName, email: item.createdByEmail } : null)
       const draft = source.draft
       setName(draftString(draft, 'name') ?? item?.name ?? '')
       setWithdrawalDays(draftString(draft, 'withdrawalDays') ?? (item ? String(item.withdrawalDays) : ''))
@@ -64,7 +70,7 @@ export function VaccineEditor({ vaccineId, pendenciaId }: VaccineEditorProps) {
   useEffect(() => {
     void load()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [vaccineId, pendenciaId])
+  }, [vaccineId, pendenciaId, showAuthor])
 
   function validate(): boolean {
     const next: Record<string, string> = {}
@@ -175,6 +181,7 @@ export function VaccineEditor({ vaccineId, pendenciaId }: VaccineEditorProps) {
         onSubmit={() => void onSubmit()}
         onDelete={isEdit && !readOnly ? () => setConfirmOpen(true) : undefined}
         deleteLabel="Excluir vacina">
+        {showAuthor && author ? <AuthorLines author={author} /> : null}
         <AuthField
           editable={!readOnly}
           label="Nome"

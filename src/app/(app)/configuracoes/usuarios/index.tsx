@@ -18,7 +18,8 @@ import { useAuth } from '@/features/auth/AuthProvider'
 import { canManageUsers } from '@/features/cadastros/permissions'
 import { useInfiniteList } from '@/features/cadastros/useInfiniteList'
 import { userStatusLabel } from '@/features/usuarios/rules'
-import { authorLine } from '@/features/cadastros/farmFilters'
+import { AuthorLines } from '@/components/cadastros/AuthorLines'
+import type { AuthorValue } from '@/features/cadastros/farmFilters'
 import { filterUsers, shouldAutoLoadMore, summarizeUserFilters, userServerFilters } from '@/features/usuarios/userFilters'
 import { TOQUE_MINIMO } from '../../../../../tamagui.config'
 
@@ -157,7 +158,7 @@ function UsuariosAdminList({ currentUserId }: { currentUserId: string | null }) 
             self={item.id === currentUserId}
             chevron={iconColor}
             // Quem cadastrou: só quando a API enviar `createdBy` (campo ausente = esconder).
-            author={item.createdBy !== undefined ? authorLine(item.createdBy, 'user') : undefined}
+            author={item.createdBy !== undefined ? (item.createdBy ?? null) : undefined}
           />
         )}
       />
@@ -295,7 +296,7 @@ function UsuariosList({ currentUserId, isAdmin }: { currentUserId: string | null
   )
 }
 
-function UserRow({ user, self, chevron, author }: { user: AccountUser; self: boolean; chevron: string; author?: string }) {
+function UserRow({ user, self, chevron, author }: { user: AccountUser; self: boolean; chevron: string; author?: AuthorValue | null }) {
   return (
     <AppCard padded={false}>
       <XStack
@@ -316,11 +317,7 @@ function UserRow({ user, self, chevron, author }: { user: AccountUser; self: boo
           <Text fontSize={16} fontWeight="500" color="brandMuted">
             {user.email}
           </Text>
-          {author ? (
-            <Text fontSize={15} fontWeight="600" color="brandMuted" numberOfLines={1}>
-              {author}
-            </Text>
-          ) : null}
+          {author !== undefined ? <AuthorLines author={author} /> : null}
           <XStack mt={4}>
             <RoleBadge role={user.role} self={self} status={userStatusLabel(user)} />
           </XStack>

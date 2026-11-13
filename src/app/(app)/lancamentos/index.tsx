@@ -16,7 +16,8 @@ import { DateField } from '@/components/form/DateField'
 import { SyncStatusIndicator } from '@/components/sync/SyncStatusIndicator'
 import { useAuth } from '@/features/auth/AuthProvider'
 import { formatDatePtBr, todayIso } from '@/features/cadastros/dates'
-import { authorLine, canFilterByAuthorEmail, canSeeAuthor } from '@/features/cadastros/farmFilters'
+import { AuthorLines } from '@/components/cadastros/AuthorLines'
+import { canFilterByAuthorEmail, canSeeAuthor, type AuthorValue } from '@/features/cadastros/farmFilters'
 import { summarizeVaccinationFilters } from '@/features/vacinacoes/filterSummary'
 import { useLocalFarms, useKeysetList } from '@/sync/hooks'
 import { firstParam } from '@/sync/params'
@@ -242,7 +243,7 @@ export default function LancamentosScreen() {
           <VaccinationRow
             entry={item}
             chevron={iconColor}
-            author={showAuthor ? authorLine({ name: item.createdByName, email: item.createdByEmail }, 'vaccination') : undefined}
+            author={showAuthor ? { name: item.createdByName, email: item.createdByEmail } : undefined}
           />
         )}
       />
@@ -250,7 +251,7 @@ export default function LancamentosScreen() {
   )
 }
 
-function VaccinationRow({ entry, chevron, author }: { entry: VaccinationEntry; chevron: string; author?: string }) {
+function VaccinationRow({ entry, chevron, author }: { entry: VaccinationEntry; chevron: string; author?: AuthorValue | null }) {
   return (
     <AppCard padded={false}>
       <XStack
@@ -283,11 +284,7 @@ function VaccinationRow({ entry, chevron, author }: { entry: VaccinationEntry; c
             Aplicada em {formatDatePtBr(entry.appliedAt) || '—'}
           </Text>
           {/* Só admin: quem cadastrou, ou "Autor não registrado" (src/api/authorContract.ts). */}
-          {author ? (
-            <Text fontSize={15} fontWeight="600" color="brandMuted" numberOfLines={1}>
-              {author}
-            </Text>
-          ) : null}
+          {author !== undefined ? <AuthorLines author={author} /> : null}
           {entry.withdrawalUntil ? (
             <XStack mt={4}>
               <WithdrawalBadge

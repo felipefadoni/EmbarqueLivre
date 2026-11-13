@@ -13,7 +13,8 @@ import { WithdrawalBadge } from '@/components/cadastros/WithdrawalBadge'
 import { AppCard } from '@/components/dashboard/AppCard'
 import { useAuth } from '@/features/auth/AuthProvider'
 import { summarizeAnimalFilters } from '@/features/cadastros/animalFilters'
-import { authorLine, canFilterByAuthorEmail, canSeeAuthor, canUseAdminFilters } from '@/features/cadastros/farmFilters'
+import { AuthorLines } from '@/components/cadastros/AuthorLines'
+import { canFilterByAuthorEmail, canSeeAuthor, canUseAdminFilters, type AuthorValue } from '@/features/cadastros/farmFilters'
 import { matchingFarmIds } from '@/features/cadastros/textFilter'
 import { formatDayMonthPtBr, todayIso } from '@/features/cadastros/dates'
 import { useKeysetList, useLocalAnimalTypes, useLocalFarms, useLocalHerds } from '@/sync/hooks'
@@ -218,7 +219,7 @@ export default function AnimaisListScreen() {
             farmName={farmName(item)}
             typeName={typeName(item)}
             chevron={chevron}
-            author={showAuthor ? authorLine({ name: item.createdByName, email: item.createdByEmail }, 'animal') : undefined}
+            author={showAuthor ? { name: item.createdByName, email: item.createdByEmail } : undefined}
           />
         )}
       />
@@ -238,7 +239,7 @@ function AnimalRow({
   typeName: string
   chevron: string
   /** Só admin: e-mail de quem cadastrou, ou "Autor não registrado" (src/api/authorContract.ts). */
-  author?: string
+  author?: AuthorValue | null
 }) {
   return (
     <AppCard padded={false}>
@@ -260,11 +261,7 @@ function AnimalRow({
           <Text fontSize={16} fontWeight="500" color="brandMuted">
             {farmName} · {typeName}{animal.herdName ? ` · ${animal.herdName}` : ''}
           </Text>
-          {author ? (
-            <Text fontSize={15} fontWeight="600" color="brandMuted" numberOfLines={1}>
-              {author}
-            </Text>
-          ) : null}
+          {author !== undefined ? <AuthorLines author={author} /> : null}
           {animal.withdrawalSummary?.inWithdrawal ? (
             <XStack mt={4}>
               <WithdrawalBadge

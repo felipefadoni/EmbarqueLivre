@@ -13,6 +13,7 @@ import { SyncStatusIndicator } from '@/components/sync/SyncStatusIndicator'
 import { useAuth } from '@/features/auth/AuthProvider'
 import { canManageFarms, canManageHerds, canManageUsers, canManageVaccines, canViewAnimalTypes } from '@/features/cadastros/permissions'
 import { db } from '@/sync'
+import { canSeeAuthorDiagnostics } from '@/sync/authorDiagnostics'
 import { useSyncInfo } from '@/sync/hooks'
 import { countUnsentChanges, logoutWithGuard } from '@/sync/logout'
 import { TOQUE_MINIMO } from '../../../../tamagui.config'
@@ -117,7 +118,7 @@ export default function ConfiguracoesScreen() {
               Sincronização
             </Text>
             <SyncStatusIndicator />
-            {user?.role === 'admin' ? <AuthorSyncDiagnostics /> : null}
+            {canSeeAuthorDiagnostics(user?.role) ? <AuthorSyncDiagnostics role={user?.role} /> : null}
           </YStack>
         </AppCard>
 

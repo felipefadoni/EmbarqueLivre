@@ -16,7 +16,8 @@ import { ConfirmDialog } from '@/components/cadastros/ConfirmDialog'
 import { SelectField } from '@/components/cadastros/SelectField'
 import { WithdrawalBadge } from '@/components/cadastros/WithdrawalBadge'
 import { formatDatePtBr } from '@/features/cadastros/dates'
-import { authorLine, canSeeAuthor } from '@/features/cadastros/farmFilters'
+import { AuthorLines } from '@/components/cadastros/AuthorLines'
+import { canSeeAuthor } from '@/features/cadastros/farmFilters'
 import { repo } from '@/sync'
 import { clearPendencia, clearRowRejections, draftString, editorErrorMessage, loadEditorSource, showRejection } from '@/sync/editor'
 import { PHOTO_STATUS_LABEL, type PhotoQueueStatus } from '@/sync/photoQueue'
@@ -397,11 +398,7 @@ export function ShipmentDetail({
             </Text>
           </YStack>
         )}
-        {showAuthor && liveShipment ? (
-          <Text fontSize={15} fontWeight="600" color="brandMuted">
-            {authorLine({ name: liveShipment.createdByName, email: liveShipment.createdByEmail }, 'shipment')}
-          </Text>
-        ) : null}
+        {showAuthor && liveShipment ? <AuthorLines author={{ name: liveShipment.createdByName, email: liveShipment.createdByEmail }} /> : null}
         {/* Fazenda imutável. */}
         <SelectField
           label="Fazenda"

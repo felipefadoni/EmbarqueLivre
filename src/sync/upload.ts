@@ -26,7 +26,7 @@
  * Puro (sem React Native) para testar com servidor simulado.
  */
 import { publicApiMessage } from '../api/errors'
-import { entityOfTable, NEVER_UPLOAD_COLUMNS, UPLOAD_BATCH_LIMIT, colOf } from './mapping'
+import { entityOfTable, isDownloadOnlyTable, NEVER_UPLOAD_COLUMNS, UPLOAD_BATCH_LIMIT, colOf } from './mapping'
 
 export type UploadOpType = 'PUT' | 'PATCH' | 'DELETE'
 
@@ -363,7 +363,9 @@ export function photoIdsOf(ops: UploadOp[]): string[] {
 export async function uploadTransaction(transaction: TransactionLike, deps: UploadDeps): Promise<UploadSummary> {
   // PATCH que FICOU vazio depois de remover colunas só do servidor (ex.: shipped_at dos animais ao finalizar) não
   // sobe: nada a aplicar. PATCH que já veio vazio segue como antes (o servidor responde).
+  // Tabelas só de download (ex.: vaccine_authors, autor do catálogo de vacinas) nunca sobem.
   const baseOps = transaction.crud
+    .filter((entry) => !isDownloadOnlyTable(entry.table))
     .map((entry) => ({ op: toUploadOp(entry), hadData: Object.keys(entry.opData ?? {}).length > 0 }))
     .filter(({ op, hadData }) => !(hadData && isEmptyPatch(op)))
     .map(({ op }) => op)

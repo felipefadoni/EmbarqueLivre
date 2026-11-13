@@ -10,7 +10,8 @@ import { animateFiltersToggle, CollapsibleFilters, FilterToggle } from '@/compon
 import { ListLoadingFooter, ListStatus } from '@/components/cadastros/ListStatus'
 import { TextFilterField } from '@/components/cadastros/TextFilterField'
 import { labelUf } from '@/constants/ufs'
-import { authorLine, canFilterByAuthorEmail, canSeeAuthor, canUseAdminFilters, summarizeFarmFilters } from '@/features/cadastros/farmFilters'
+import { AuthorLines } from '@/components/cadastros/AuthorLines'
+import { canFilterByAuthorEmail, canSeeAuthor, canUseAdminFilters, summarizeFarmFilters, type AuthorValue } from '@/features/cadastros/farmFilters'
 import { canManageFarms } from '@/features/cadastros/permissions'
 import { matchingFarmIds } from '@/features/cadastros/textFilter'
 import { useAuth } from '@/features/auth/AuthProvider'
@@ -116,7 +117,7 @@ function FazendasAdminList({ showAuthor, showAuthorEmail }: { showAuthor: boolea
           />
         }
         renderItem={({ item }) => (
-          <FarmRow farm={item} chevron={chevron} canManage author={showAuthor ? authorLine({ name: item.createdByName, email: item.createdByEmail }, 'farm') : undefined} />
+          <FarmRow farm={item} chevron={chevron} canManage author={showAuthor ? { name: item.createdByName, email: item.createdByEmail } : undefined} />
         )}
       />
     </YStack>
@@ -178,7 +179,7 @@ function FazendasList() {
   )
 }
 
-function FarmRow({ farm, chevron, canManage, author }: { farm: Farm; chevron: string; canManage: boolean; author?: string }) {
+function FarmRow({ farm, chevron, canManage, author }: { farm: Farm; chevron: string; canManage: boolean; author?: AuthorValue | null }) {
   return (
     <AppCard padded={false}>
       <XStack
@@ -200,11 +201,7 @@ function FarmRow({ farm, chevron, canManage, author }: { farm: Farm; chevron: st
             {farm.city} · {labelUf(farm.state)}
           </Text>
           {/* Só admin: e-mail de quem cadastrou, ou "Autor não registrado" (src/api/authorContract.ts). */}
-          {author ? (
-            <Text fontSize={15} fontWeight="600" color="brandMuted" numberOfLines={1}>
-              {author}
-            </Text>
-          ) : null}
+          {author !== undefined ? <AuthorLines author={author} /> : null}
         </YStack>
         {canManage ? <Ionicons name="chevron-forward" size={22} color={chevron} /> : null}
       </XStack>

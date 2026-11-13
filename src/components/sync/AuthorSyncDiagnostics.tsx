@@ -7,15 +7,27 @@ import {
   authorDiagnosticLine,
   authorDiagnosticsQuery,
   authorVerdict,
+  canSeeAuthorDiagnostics,
   formatDiagnosticDate,
   newestOf,
+  pendingVaccineCatalogRow,
   toDiagnosticRow,
+  vaccineCatalogDiagnosticsQuery,
   type AuthorDiagnosticRow,
 } from '@/sync/authorDiagnostics'
 import { TOQUE_MINIMO } from '../../../tamagui.config'
 
-/** Só admin (quem chama decide): quantos registros têm autor no aparelho e se o servidor está enviando o campo. */
-export function AuthorSyncDiagnostics() {
+/**
+ * Só ADMIN: quantos registros têm autor no aparelho e se o servidor está enviando o campo. Portão duplo: quem renderiza
+ * já confere o papel e este componente confere de novo; para os demais (ou papel ainda carregando) não monta o
+ * conteúdo, então nenhuma consulta roda.
+ */
+export function AuthorSyncDiagnostics({ role }: { role: string | null | undefined }) {
+  if (!canSeeAuthorDiagnostics(role)) return null
+  return <AuthorSyncDiagnosticsContent />
+}
+
+function AuthorSyncDiagnosticsContent() {
   const [rows, setRows] = useState<AuthorDiagnosticRow[] | null>(null)
   const [error, setError] = useState<string | null>(null)
 
@@ -23,7 +35,16 @@ export function AuthorSyncDiagnostics() {
     try {
       const query = authorDiagnosticsQuery()
       const result = await db.getAll<Record<string, unknown>>(query.sql, query.params)
-      setRows(result.map(toDiagnosticRow))
+      // Catálogo de vacinas (contrato pendente) em consulta separada: se falhar, vira "aguardando a API".
+      let catalog: AuthorDiagnosticRow
+      try {
+        const vaccineQuery = vaccineCatalogDiagnosticsQuery()
+        const [raw] = await db.getAll<Record<string, unknown>>(vaccineQuery.sql, vaccineQuery.params)
+        catalog = raw ? toDiagnosticRow(raw) : pendingVaccineCatalogRow()
+      } catch {
+        catalog = pendingVaccineCatalogRow()
+      }
+      setRows([...result.map(toDiagnosticRow), catalog])
       setError(null)
     } catch {
       setError('Não foi possível ler o diagnóstico neste aparelho.')

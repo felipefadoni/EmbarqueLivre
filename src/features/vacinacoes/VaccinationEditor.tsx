@@ -27,7 +27,8 @@ import { SelectField } from '@/components/cadastros/SelectField'
 import { DateField } from '@/components/form/DateField'
 import { useAuth } from '@/features/auth/AuthProvider'
 import { addDaysIso, formatDatePtBr, todayIso } from '@/features/cadastros/dates'
-import { authorLine, canSeeAuthor } from '@/features/cadastros/farmFilters'
+import { AuthorLines } from '@/components/cadastros/AuthorLines'
+import { canSeeAuthor } from '@/features/cadastros/farmFilters'
 
 type VaccinationEditorProps = {
   vaccinationId?: string
@@ -239,11 +240,7 @@ export function VaccinationEditor({ vaccinationId, pendenciaId }: VaccinationEdi
         onSubmit={() => void onSubmit()}
         onDelete={isEdit ? () => setConfirmOpen(true) : undefined}
         deleteLabel="Excluir lançamento">
-        {showAuthor && original ? (
-          <Text fontSize={15} fontWeight="600" color="brandMuted">
-            {authorLine({ name: original.createdByName, email: original.createdByEmail }, 'vaccination')}
-          </Text>
-        ) : null}
+        {showAuthor && original ? <AuthorLines author={{ name: original.createdByName, email: original.createdByEmail }} /> : null}
         <AnimalPicker
           label="Animal"
           selected={animal}

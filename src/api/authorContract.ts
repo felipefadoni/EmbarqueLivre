@@ -13,12 +13,11 @@
  * vaccinations (lançamentos, aba Vacinas) e shipments (embarques): contrato CONFIRMADO no código da API (13/11/2026
  * 16:10, uncommitted lá): migration `20261113150000_add_vaccination_shipment_authors` (colunas + triggers),
  * `docker/powersync/sync-config.yaml` (`created_by_name` / `created_by_email` SÓ no stream `admin_all`; `account` e
- * `catalogs` sem autor) e `sync-columns.ts` (created_by_* readOnly no upload). A vacina do catálogo (tabela vaccines)
- * NÃO tem autor.
+ * `catalogs` sem autor) e `sync-columns.ts` (created_by_* readOnly no upload).
  * Backfill (`20261113160000_backfill_record_authors`): farms/herds/animals/shipments sem autor recebem o master mais
  * antigo da conta; vacinações já tinham autor obrigatório. Linhas sem master na conta continuam null.
  */
-export type AuthorTable = 'farms' | 'animals' | 'herds' | 'vaccinations' | 'shipments'
+export type AuthorTable = 'farms' | 'animals' | 'herds' | 'vaccinations' | 'shipments' | 'vaccines'
 export type AuthorColumns = { email: string | null; name: string | null }
 
 export const AUTHOR_CONTRACT: Record<AuthorTable, AuthorColumns> = {
@@ -27,6 +26,48 @@ export const AUTHOR_CONTRACT: Record<AuthorTable, AuthorColumns> = {
   herds: { email: 'created_by_email', name: 'created_by_name' },
   vaccinations: { email: 'created_by_email', name: 'created_by_name' },
   shipments: { email: 'created_by_email', name: 'created_by_name' },
+  /** CONTRATO PENDENTE (ver VACCINE_AUTHOR_CONTRACT): nomes prováveis; sem dado chegando, a tela mostra "Autor não registrado". */
+  vaccines: { email: 'created_by_email', name: 'created_by_name' },
+}
+
+/** Tabelas cujo autor ainda depende do contrato da API (o diagnóstico mostra "aguardando" em vez de erro). */
+export const AUTHOR_PENDING_TABLES: readonly AuthorTable[] = ['vaccines']
+
+/**
+ * Autor do CATÁLOGO de vacinas (tabela vaccines) — CONTRATO PENDENTE (13/11/2026 17:07): a API vai mandar só para o admin.
+ *
+ * Problema: vaccines já chega a TODOS pelo stream `catalogs` (sem autor). No PowerSync, a mesma linha (tabela + id) vinda
+ * de dois buckets fica uma cópia por bucket no ps_oplog, mas só UMA vai para ps_data__vaccines: a de MAIOR op_id, e o PUT
+ * substitui o JSON INTEIRO (não há merge de colunas). Se `admin_all` também mandar vaccines com autor, o autor some/volta
+ * conforme o bucket que recebeu a op mais recente (edição da vacina, compactação/defrag do bucket, reprocessamento).
+ *
+ * Formas suportadas (todas lidas pelas MESMAS consultas, ver vaccineAuthorSql em queries.ts):
+ * - 'table'   (A, RECOMENDADA): tabela própria só do admin, ex. `SELECT vaccine_id AS id, vaccine_created_by_name AS
+ *             created_by_name, vaccine_created_by_email AS created_by_email FROM vaccines AS vaccine_authors WHERE
+ *             auth.parameter('role') = 'admin'` no stream admin_all. Linha com id próprio: sem conflito com `catalogs`.
+ *             O app faz LEFT JOIN só na consulta do admin.
+ * - 'columns' (B): created_by_* direto em vaccines (só é estável se o admin NÃO receber vaccines também por `catalogs`).
+ * - 'auto'    (padrão enquanto pendente): lê as duas (COALESCE tabela → colunas), funciona com A ou B sem trocar nada.
+ * Trocar a forma = mudar só `source` abaixo (e `joinColumn`/`table` se a API usar outros nomes).
+ */
+export type VaccineAuthorSource = 'auto' | 'table' | 'columns'
+
+export const VACCINE_AUTHOR_CONTRACT: {
+  pending: boolean
+  source: VaccineAuthorSource
+  /** Forma A: nome da tabela no app. */
+  table: string
+  /** Forma A: coluna da tabela de autor que aponta para vaccines.id ('id' se a linha usa o próprio id da vacina). */
+  joinColumn: 'id' | 'vaccine_id'
+  name: string
+  email: string
+} = {
+  pending: true,
+  source: 'auto', // ← ÚNICA linha a trocar quando o contrato chegar ('table' ou 'columns').
+  table: 'vaccine_authors',
+  joinColumn: 'id',
+  name: 'created_by_name',
+  email: 'created_by_email',
 }
 
 /**

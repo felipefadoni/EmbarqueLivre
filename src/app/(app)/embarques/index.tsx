@@ -13,7 +13,8 @@ import { AppCard } from '@/components/dashboard/AppCard'
 import { SyncStatusIndicator } from '@/components/sync/SyncStatusIndicator'
 import { useAuth } from '@/features/auth/AuthProvider'
 import { formatDatePtBr } from '@/features/cadastros/dates'
-import { authorLine, canFilterByAuthorEmail, canSeeAuthor } from '@/features/cadastros/farmFilters'
+import { AuthorLines } from '@/components/cadastros/AuthorLines'
+import { canFilterByAuthorEmail, canSeeAuthor } from '@/features/cadastros/farmFilters'
 import { canManageShipments } from '@/features/cadastros/permissions'
 import { SHIPMENT_WHEN_LABEL, summarizeShipmentFilters } from '@/features/cadastros/shipmentFilters'
 import { animalsCountLabel, SHIPMENT_TABS } from '@/features/embarques/shipmentFlow'
@@ -260,11 +261,7 @@ function EmbarquesList({ showAuthor, showAuthorEmail }: { showAuthor: boolean; s
                     {item.totalWeightKg ? ` · ${formatWeightKg(item.totalWeightKg)}` : ''}
                   </Text>
                   {/* Só admin: quem cadastrou, ou "Autor não registrado" (src/api/authorContract.ts). */}
-                  {showAuthor ? (
-                    <Text fontSize={15} fontWeight="600" color="brandMuted" numberOfLines={1}>
-                      {authorLine({ name: item.createdByName, email: item.createdByEmail }, 'shipment')}
-                    </Text>
-                  ) : null}
+                  {showAuthor ? <AuthorLines author={{ name: item.createdByName, email: item.createdByEmail }} /> : null}
                 </YStack>
                 <Ionicons name="chevron-forward" size={22} color={chevron} />
               </XStack>

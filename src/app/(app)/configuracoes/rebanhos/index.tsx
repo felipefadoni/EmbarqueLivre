@@ -12,7 +12,8 @@ import { TextFilterField } from '@/components/cadastros/TextFilterField'
 import { AppCard } from '@/components/dashboard/AppCard'
 import { formatDatePtBr } from '@/features/cadastros/dates'
 import { summarizeHerdFilters } from '@/features/cadastros/herdFilters'
-import { authorLine, canFilterByAuthorEmail, canSeeAuthor } from '@/features/cadastros/farmFilters'
+import { AuthorLines } from '@/components/cadastros/AuthorLines'
+import { canFilterByAuthorEmail, canSeeAuthor } from '@/features/cadastros/farmFilters'
 import { canManageHerds } from '@/features/cadastros/permissions'
 import { useAuth } from '@/features/auth/AuthProvider'
 import { useKeysetList, useLocalFarms } from '@/sync/hooks'
@@ -209,11 +210,7 @@ function RebanhosList({ showAuthor, showAuthorEmail }: { showAuthor: boolean; sh
                     Formado em {formatDatePtBr(item.formedAt)}
                   </Text>
                 ) : null}
-                {showAuthor ? (
-                  <Text fontSize={15} fontWeight="600" color="brandMuted" numberOfLines={1}>
-                    {authorLine({ name: item.createdByName, email: item.createdByEmail }, 'herd')}
-                  </Text>
-                ) : null}
+                {showAuthor ? <AuthorLines author={{ name: item.createdByName, email: item.createdByEmail }} /> : null}
               </YStack>
               <Ionicons name="chevron-forward" size={22} color={chevron} />
             </XStack>

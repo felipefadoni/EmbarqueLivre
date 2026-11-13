@@ -1,11 +1,16 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { Redirect, router } from 'expo-router'
+import { useMemo, useState } from 'react'
 import { FlatList, useColorScheme } from 'react-native'
 import { Text, XStack, YStack } from 'tamagui'
 
 import type { Vaccine } from '@/api/catalog'
+import { AuthorLines } from '@/components/cadastros/AuthorLines'
+import { animateFiltersToggle, CollapsibleFilters, FilterToggle } from '@/components/cadastros/CollapsibleFilters'
 import { ListLoadingFooter, ListStatus } from '@/components/cadastros/ListStatus'
+import { TextFilterField } from '@/components/cadastros/TextFilterField'
 import { AppCard } from '@/components/dashboard/AppCard'
+import { canFilterByAuthorEmail, canSeeAuthor, canUseAdminFilters, summarizeVaccineFilters, type AuthorValue } from '@/features/cadastros/farmFilters'
 import { canManageVaccines } from '@/features/cadastros/permissions'
 import { useAuth } from '@/features/auth/AuthProvider'
 import { useKeysetList } from '@/sync/hooks'
@@ -19,7 +24,101 @@ function carenciaLabel(days: number) {
 export default function VacinasListScreen() {
   const { user } = useAuth()
   if (!canManageVaccines(user?.role)) return <Redirect href="/configuracoes" />
+  // Admin: autor (AuthorLines) + filtro pelo e-mail de quem cadastrou. Master: a lista de antes (sem join, sem filtro).
+  if (canUseAdminFilters(user?.role))
+    return <VacinasAdminList showAuthor={canSeeAuthor(user?.role, 'vaccines')} showAuthorEmail={canFilterByAuthorEmail(user?.role, 'vaccines')} />
   return <VacinasList />
+}
+
+function VacinasAdminList({ showAuthor, showAuthorEmail }: { showAuthor: boolean; showAuthorEmail: boolean }) {
+  const isDark = useColorScheme() === 'dark'
+  const chevron = isDark ? '#A8B8AF' : '#7A8B80'
+  const [authorEmail, setAuthorEmail] = useState('')
+  const [filtersOpen, setFiltersOpen] = useState(false)
+  const summary = useMemo(() => summarizeVaccineFilters({ authorEmail }), [authorEmail])
+  // Scroll infinito com keyset (nome + id), offline; o autor só entra na consulta do admin.
+  const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useKeysetList(
+    () => vaccinesListSpec({ withAuthor: showAuthor, authorEmail: showAuthorEmail ? authorEmail : undefined }),
+    rowToVaccine,
+    [showAuthor, showAuthorEmail, authorEmail],
+  )
+
+  function toggleFilters(next = !filtersOpen) {
+    animateFiltersToggle()
+    setFiltersOpen(next)
+  }
+
+  return (
+    <YStack flex={1} bg="appBg">
+      <YStack px={20} pt={12} pb={8} gap={12}>
+        <XStack items="center" gap={12}>
+          <XStack
+            flex={1}
+            minH={TOQUE_MINIMO}
+            items="center"
+            justify="center"
+            rounded={16}
+            bg="brandPrimary"
+            opacity={{ press: 0.85 }}
+            onPress={() => router.push('/configuracoes/vacinas/nova')}
+            accessibilityRole="button"
+            accessibilityLabel="Nova vacina">
+            <Text fontSize={18} fontWeight="800" color="brandPrimaryFg">
+              Nova vacina
+            </Text>
+          </XStack>
+          {showAuthorEmail ? <FilterToggle open={filtersOpen} activeCount={summary.activeCount} onPress={() => toggleFilters()} /> : null}
+        </XStack>
+        {showAuthorEmail ? (
+          <CollapsibleFilters
+            open={filtersOpen}
+            summary={summary.text}
+            onOpen={() => toggleFilters(true)}
+            onClear={() => setAuthorEmail('')}
+            clearable={summary.activeCount > 0}>
+            <TextFilterField
+              label="E-mail de quem cadastrou"
+              value={authorEmail}
+              placeholder="Buscar pelo e-mail"
+              keyboardType="email-address"
+              onChange={setAuthorEmail}
+            />
+          </CollapsibleFilters>
+        ) : null}
+      </YStack>
+      <FlatList
+        data={items}
+        keyExtractor={(item) => item.id || item.name}
+        keyboardShouldPersistTaps="handled"
+        contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 28, flexGrow: 1, gap: 12 }}
+        refreshing={refreshing}
+        onRefresh={() => void refresh()}
+        onEndReached={() => {
+          if (hasMore && !loading && !refreshing && !loadingMore) void loadMore()
+        }}
+        onEndReachedThreshold={0.4}
+        ListFooterComponent={loadingMore ? <ListLoadingFooter /> : undefined}
+        ListEmptyComponent={
+          <ListStatus
+            loading={loading}
+            error={error}
+            empty={!loading && !error}
+            emptyTitle="Nenhuma vacina"
+            emptyMessage={summary.activeCount > 0 ? 'Nenhuma vacina com esse filtro.' : 'Cadastre a primeira vacina e os dias de carência.'}
+            onRetry={() => void reload()}
+          />
+        }
+        renderItem={({ item }) => (
+          <VaccineRow
+            vaccine={item}
+            chevron={chevron}
+            canManage
+            author={showAuthor ? { name: item.createdByName, email: item.createdByEmail } : undefined}
+          />
+        )}
+      />
+    </YStack>
+  )
 }
 
 function VacinasList() {
@@ -77,7 +176,18 @@ function VacinasList() {
   )
 }
 
-function VaccineRow({ vaccine, chevron, canManage }: { vaccine: Vaccine; chevron: string; canManage: boolean }) {
+function VaccineRow({
+  vaccine,
+  chevron,
+  canManage,
+  author,
+}: {
+  vaccine: Vaccine
+  chevron: string
+  canManage: boolean
+  /** Só admin: autor da vacina (undefined = não mostrar). */
+  author?: AuthorValue | null
+}) {
   return (
     <AppCard padded={false}>
       <XStack
@@ -98,6 +208,7 @@ function VaccineRow({ vaccine, chevron, canManage }: { vaccine: Vaccine; chevron
           <Text fontSize={16} fontWeight="500" color="brandMuted">
             {carenciaLabel(vaccine.withdrawalDays)}
           </Text>
+          {author !== undefined ? <AuthorLines author={author} /> : null}
         </YStack>
         {canManage ? <Ionicons name="chevron-forward" size={22} color={chevron} /> : null}
       </XStack>
