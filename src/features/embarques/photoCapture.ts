@@ -99,6 +99,19 @@ export function deleteLocalPhoto(uri: string | null | undefined) {
   }
 }
 
+/** Destino da foto baixada do servidor: a mesma pasta das tiradas no aparelho (vale a mesma limpeza de órfãos). */
+export function serverPhotoUri(photoId: string): string | null {
+  const fs = loadFileSystem()
+  if (!fs) return null
+  try {
+    const dir = new fs.Directory(fs.Paths.document, PHOTO_DIR)
+    if (!dir.exists) dir.create({ intermediates: true, idempotent: true })
+    return new fs.File(dir, `${photoId}.jpg`).uri
+  } catch {
+    return null
+  }
+}
+
 /** Remove arquivos da pasta de fotos que não estão mais na fila (vínculo removido, embarque excluído). */
 export function cleanupOrphanPhotos(referenced: Set<string>) {
   const fs = loadFileSystem()

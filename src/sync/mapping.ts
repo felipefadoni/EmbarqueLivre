@@ -217,7 +217,8 @@ export const NEVER_UPLOAD_COLUMNS: Partial<Record<SyncEntity, string[]>> = {
 /**
  * Fila local (não sincronizada) das fotos de animais do embarque. Uma linha por foto: id = photo_id (ULID gerado no
  * app e enviado como `id` no POST /shipments/:id/photos; repetir devolve a mesma foto). link_id = shipment_animals.id.
- * status: pending (aguardando envio) | uploaded | failed (recusa definitiva do servidor).
+ * status: pending (aguardando envio) | uploaded | failed (recusa definitiva do servidor) | downloaded (veio do servidor
+ * para uso offline; nunca sobe).
  */
 export const PHOTO_QUEUE_TABLE = {
   table: SHIPMENT_FLOW_CONTRACT.photoQueueTable,

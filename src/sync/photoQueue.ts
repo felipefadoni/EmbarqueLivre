@@ -10,6 +10,7 @@
  * - 2xx → uploaded. Sem rede, 408, 429, 5xx → RetryableUploadError (o SDK tenta o lote de novo depois). 401 →
  *   SessionEndedUploadError. Outros 4xx (INVALID_SHIPMENT_PHOTO, 413, SHIPMENT_NOT_FOUND…) → failed com a mensagem do
  *   servidor; o vínculo segue e o servidor o recusa (vira pendência), para a fila não travar.
+ * - downloaded: foto que veio do servidor, guardada no aparelho para uso offline (photoDownload.ts); nunca sobe.
  *
  * Puro (sem React Native): recebe executor SQL e a função de upload, para testar no Node.
  */
@@ -17,7 +18,7 @@ import { publicApiMessage } from '../api/errors'
 import { PHOTO_QUEUE_TABLE } from './mapping'
 import { RetryableUploadError, SessionEndedUploadError } from './upload'
 
-export type PhotoQueueStatus = 'pending' | 'uploaded' | 'failed'
+export type PhotoQueueStatus = 'pending' | 'uploaded' | 'failed' | 'downloaded'
 
 export type PhotoQueueRow = {
   id: string
@@ -77,7 +78,7 @@ function responseMessage(response: PhotoUploadResponse): string {
 
 /**
  * Sobe (antes do vínculo) as fotos citadas pelos photo_id do lote. Ignora ids sem linha na fila (foto de outro
- * aparelho, já no servidor) e as já enviadas.
+ * aparelho, já no servidor), as já enviadas e as baixadas do servidor.
  */
 export async function ensurePhotosUploaded(photoIds: string[], deps: EnsurePhotosDeps): Promise<EnsurePhotosSummary> {
   const summary: EnsurePhotosSummary = { uploaded: 0, failed: 0, skipped: 0 }
@@ -88,7 +89,7 @@ export async function ensurePhotosUploaded(photoIds: string[], deps: EnsurePhoto
     ids.map((id) => id.toUpperCase()),
   )
   for (const row of rows) {
-    if (row.status === 'uploaded') {
+    if (row.status === 'uploaded' || row.status === 'downloaded') {
       summary.skipped += 1
       continue
     }
@@ -143,4 +144,5 @@ export const PHOTO_STATUS_LABEL: Record<PhotoQueueStatus, string> = {
   pending: 'Foto aguardando envio',
   uploaded: 'Foto enviada',
   failed: 'Foto não enviada',
+  downloaded: 'Foto no servidor',
 }

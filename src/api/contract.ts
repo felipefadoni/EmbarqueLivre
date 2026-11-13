@@ -415,30 +415,6 @@ function nestedField(raw: unknown, field: string): string {
   return asString(asRecord(raw)[field])
 }
 
-export function parseVaccinationEntry(raw: unknown): VaccinationEntry {
-  const record = asRecord(raw)
-  const animal = record.animal
-  const vaccine = record.vaccine
-  const farm = record.farm ?? asRecord(animal).farm
-  const animalType = record.animalType ?? asRecord(animal).animalType
-  return {
-    id: asString(record.id),
-    animalId: asString(record.animalId) || nestedField(animal, 'id'),
-    animalCode: asString(record.animalCode) || nestedField(animal, 'code'),
-    farmId: asString(record.farmId) || nestedField(farm, 'id') || nestedField(animal, 'farmId'),
-    farmName: asString(record.farmName) || nestedField(farm, 'name'),
-    animalTypeName: asString(record.animalTypeName) || nestedField(animalType, 'name'),
-    vaccineId: asString(record.vaccineId) || nestedField(vaccine, 'id'),
-    vaccineName: asString(record.vaccineName) || nestedField(vaccine, 'name'),
-    appliedAt: asIsoDate(record.appliedAt),
-    withdrawalDays: asNumber(record.withdrawalDays ?? asRecord(vaccine).withdrawalDays),
-    withdrawalUntil: asIsoDate(record.withdrawalUntil),
-    createdByUserId: asNullableString(record.createdByUserId),
-    createdAt: asNullableString(record.createdAt),
-    updatedAt: asNullableString(record.updatedAt),
-  }
-}
-
 /** Mesma regra da API: em carência enquanto hoje < withdrawalUntil (livre NO próprio dia). */
 export function isWithdrawalActive(withdrawalUntil: string | null | undefined): boolean {
   return Boolean(withdrawalUntil) && todayIsoLocal() < (withdrawalUntil as string)

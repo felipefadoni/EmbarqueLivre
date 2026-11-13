@@ -1,8 +1,8 @@
 # Offline-first com PowerSync
 
-O app lê e grava em um **SQLite local** (PowerSync + OP-SQLite). As telas de cadastros e de
-lançamentos funcionam sem internet; o PowerSync baixa os dados do servidor e envia a fila de
-alterações quando há conexão.
+O app lê e grava em um **SQLite local** (PowerSync + OP-SQLite). As telas de cadastros, de
+lançamentos (aba Vacinas) e de embarques funcionam sem internet; o PowerSync baixa os dados do
+servidor e envia a fila de alterações quando há conexão.
 
 - SDK: `@powersync/react-native` **2.x** (linha atual; o OP-SQLite já vem embutido, não precisa de adaptador).
   Atenção: a tag `latest` do npm ainda aponta para a linha 1.x (quick-sqlite). Mantenha as versões fixadas no `package.json`.
@@ -137,7 +137,7 @@ não funciona no aparelho físico); por isso a variável do app vence enquanto e
 | Rebanho | `herds` | `farm_id, name, description, formed_at` (YYYY-MM-DD), `created_at, updated_at` — nomes em `HERDS_CONTRACT` (§17.10) |
 | Embarque | `shipments` | `farm_id, name, shipped_on` (YYYY-MM-DD), `status` (`in_progress`/`finished`), `finished_at` (só leitura, nunca sobe), `created_by_user_id` (calculado pelo servidor, ignorado no upload), `created_at, updated_at` — `SHIPMENTS_CONTRACT` + `SHIPMENT_FLOW_CONTRACT` (contrato final) |
 | Animal no embarque | `shipment_animals` | `shipment_id, animal_id, weight_kg` (real), `photo_id`, `photo_content_type`/`photo_size_bytes` (só leitura, nunca sobem), `created_at, updated_at` — uma linha por animal |
-| Fila de fotos (local) | `shipment_photo_queue` | `id` (= `photo_id`), `shipment_id, animal_id, link_id, local_uri, status` (`pending`/`uploaded`/`failed`), `attempts, last_error, created_at, updated_at` — `localOnly`, nunca sobe |
+| Fila de fotos (local) | `shipment_photo_queue` | `id` (= `photo_id`), `shipment_id, animal_id, link_id, local_uri, status` (`pending`/`uploaded`/`failed`/`downloaded`), `attempts, last_error, created_at, updated_at` — `localOnly`, nunca sobe |
 | Lançamento | `animal_vaccinations` | `animal_id, farm_id, vaccine_id, applied_at, withdrawal_days (integer), withdrawal_until, created_by_user_id, created_at, updated_at` |
 | Pendências (local) | `sync_rejections` | `entity, table_name, row_id, op, op_data, status_code (integer), error_code, message, field, created_at` — `localOnly`, nunca sobe |
 
@@ -173,6 +173,15 @@ e `admin_all` (admin). Aba própria **Embarques** (abas Em andamento / Finalizad
   novo (a fila não anda); 401 → sessão encerrada; outros 4xx (ex.: 413, `INVALID_SHIPMENT_PHOTO`) → foto `failed` com a
   mensagem do servidor e o lote segue (o servidor recusa o vínculo com `SHIPMENT_ANIMAL_PHOTO_REQUIRED` → Pendência;
   "Reenviar foto" na tela). Foto enviada mas nunca vinculada fica no servidor até o embarque ser excluído.
+- **Fotos do servidor offline** (`src/sync/photoDownload.ts`): com internet, as fotos dos embarques **em andamento** que
+  ainda não estão no aparelho (animal incluído em outro aparelho, reinstalação, troca de usuário) são baixadas uma por
+  vez (GET autenticado, `expo/fetch`) para `documents/shipment-photos` e entram na fila como `downloaded` (nunca sobem;
+  a tela mostra "Foto no servidor"). Lista, visualizador e PDF usam o arquivo local, então funcionam sem internet.
+  Continuam guardadas depois de finalizar; a linha sai quando nenhum vínculo cita mais o `photo_id` (animal removido,
+  foto trocada, embarque excluído) e o arquivo é apagado na abertura seguinte. Gatilhos: abertura do app (depois da
+  limpeza de órfãos), vínculo novo (sync ou aparelho), rede voltar, app voltar ao primeiro plano. Sem rede, timeout
+  (1 min), 401, 408, 429 ou 5xx → para e tenta no próximo gatilho; 403/404 → não tenta de novo até reabrir o app.
+  Embarque finalizado antes de o aparelho ver as fotos não é baixado (sem internet, a foto não aparece).
 - Finalizar (`finishShipment`, basic/master/admin): PATCH `{ status: "finished" }`. Vazio → 422 `SHIPMENT_EMPTY`.
   Vínculos antigos sem peso/foto não impedem; peso + foto só são exigidos em vínculo novo. Localmente grava
   `finished_at` e `animals.shipped_at` (somem da lista na hora, offline); essas colunas são do servidor e são
@@ -400,7 +409,7 @@ abrir tela nem tocar em nada. Por isso:
 ## Telas
 
 - Menu → card **Sincronização** (online/offline/sincronizando, última sincronização, alterações aguardando envio)
-  e **Pendências** (com contador). Indicador compacto também na aba Vacinas.
+  e **Pendências** (com contador). Indicador compacto também no Dashboard e nas abas Vacinas e Embarques.
 - Pull-to-refresh nas listas espera a sincronização (checkpoint em `requests`, ou fim de upload/download em `legacy`),
   com limite de 15 s; offline volta na hora.
 - Login, cadastro de conta e escolha do master dono (admin) continuam online, com aviso quando não há internet.
@@ -421,6 +430,9 @@ abrir tela nem tocar em nada. Por isso:
 - Embarques (modo avião; precisa de build nativo novo por causa da câmera): criar embarque, adicionar animais com foto
   e peso (um em carência pede confirmação), finalizar; os animais somem de Animais cadastrados na hora. Voltar a rede:
   as fotos sobem antes dos vínculos e a fila zera. Basic finaliza, mas não vê "Excluir embarque".
+- Fotos de outro aparelho: incluir animais num embarque em andamento no aparelho A; abrir o app no aparelho B com
+  internet e esperar a sincronização; pôr B em modo avião: as fotos aparecem na lista e no visualizador. Ainda
+  offline, finalizar e "Exportar Dados" (master/admin): o PDF sai com as fotos.
 
 - Modo avião: cadastrar animal e lançar vacina; voltar a rede e ver a fila zerar.
 - Mesmo código de animal criado em dois aparelhos offline → um vira pendência ("Já existe um animal com este código nesta fazenda.").

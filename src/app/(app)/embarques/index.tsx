@@ -9,6 +9,7 @@ import { animateFiltersToggle, CollapsibleFilters, FilterToggle } from '@/compon
 import { ListLoadingFooter, ListStatus } from '@/components/cadastros/ListStatus'
 import { SelectField } from '@/components/cadastros/SelectField'
 import { AppCard } from '@/components/dashboard/AppCard'
+import { SyncStatusIndicator } from '@/components/sync/SyncStatusIndicator'
 import { useAuth } from '@/features/auth/AuthProvider'
 import { formatDatePtBr } from '@/features/cadastros/dates'
 import { canManageShipments } from '@/features/cadastros/permissions'
@@ -70,6 +71,7 @@ function EmbarquesList() {
   return (
     <YStack flex={1} bg="appBg">
       <YStack px={20} pt={12} pb={8} gap={12}>
+        <SyncStatusIndicator compact />
         <XStack bg="brandSurface" rounded={18} p={4} gap={4} accessibilityRole="tablist">
           {SHIPMENT_TABS.map((tab) => {
             const selected = tab.value === status

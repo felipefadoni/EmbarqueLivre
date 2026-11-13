@@ -2,9 +2,12 @@
  * Foto do animal no embarque (contrato final, SHIPMENT_FLOW_CONTRACT.photo).
  * - Upload: POST multipart autenticado em /shipments/:id/photos (arquivo `photo` image/jpeg + `id` = photo_id gerado no
  *   app; repetir o mesmo id devolve a mesma foto, então o reenvio é seguro). Separado do /powersync/upload (sem base64).
- * - Exibição: GET autenticado /shipments/:id/photos/:photoId (expo-image com o cabeçalho Authorization).
+ * - Exibição: GET autenticado /shipments/:id/photos/:photoId (expo-image com o cabeçalho Authorization). O mesmo GET
+ *   guarda no aparelho as fotos dos embarques em andamento, para uso offline (src/sync/photoDownload.ts).
  * expo-file-system é carregado sob demanda: um dev build antigo (sem o módulo nativo) não quebra ao abrir o app.
  */
+import { fetch } from 'expo/fetch'
+
 import { SHIPMENT_FLOW_CONTRACT } from './shipmentsContract'
 import { API_BASE_URL, authorizationHeader, refreshAccessToken } from './client'
 import type { PhotoQueueRow, PhotoUploadResponse } from '../sync/photoQueue'
@@ -82,4 +85,29 @@ export function localFileExists(uri: string): boolean {
   } catch {
     return false
   }
+}
+
+/** Teto de espera do download de uma foto (estourou = status 0: tenta no próximo gatilho). */
+const PHOTO_DOWNLOAD_TIMEOUT_MS = 60_000
+
+/** Baixa a foto do servidor para `target` (só grava com 2xx). status 0 = sem rede, timeout, falha ao gravar ou sem o módulo. */
+export async function downloadShipmentPhoto(shipmentId: string, photoId: string, target: string): Promise<{ status: number }> {
+  const fs = loadFileSystem()
+  if (!fs) return { status: 0 }
+  const get = async () => {
+    const controller = new AbortController()
+    const timer = setTimeout(() => controller.abort(), PHOTO_DOWNLOAD_TIMEOUT_MS)
+    try {
+      const response = await fetch(shipmentPhotoUrl(shipmentId, photoId), { headers: await authorizationHeader(), signal: controller.signal })
+      if (response.ok) await new fs.File(target).write(await response.bytes())
+      return { status: response.status }
+    } catch {
+      return { status: 0 }
+    } finally {
+      clearTimeout(timer)
+    }
+  }
+  let result = await get()
+  if (result.status === 401 && (await refreshAccessToken())) result = await get()
+  return result
 }
