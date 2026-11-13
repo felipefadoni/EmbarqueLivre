@@ -1,6 +1,7 @@
 /** Contas (admin): GET /accounts?search&page → { id, name, masterCount, createdAt }. Online, não sincronizado. */
 import { http } from './client'
-import { compactParams, paginationParams, unwrapListPage, USERS_CONTRACT, type ListPagingRequest } from './contract'
+import { unwrapListPage, USERS_CONTRACT, type ListPagingRequest } from './contract'
+import { fetchCursorPage, pagingParams, withFilters, type PagingState } from './cursorPaging'
 
 export type Account = { id: string; name: string; masterCount: number | null; createdAt: string | null }
 
@@ -20,13 +21,20 @@ const masterCounts = new Map<string, number>()
 export const knownMasterCount = (accountId: string | null | undefined) =>
   accountId ? (masterCounts.get(accountId) ?? null) : null
 
+/** Modo da paginação de /accounts (ver cursorPaging.ts): page/limit enquanto a API não tiver keyset. */
+const accountsPaging: PagingState = { mode: USERS_CONTRACT.accounts.supportsCursor ? 'cursor' : 'legacy' }
+
 export function listAccounts(params: ListPagingRequest & { search?: string } = {}) {
   const { search, ...paging } = params
-  const query = compactParams({ ...paginationParams(paging), [USERS_CONTRACT.accounts.searchParam]: search?.trim() || undefined })
-  return http.get(USERS_CONTRACT.accounts.path, { params: query }).then((res) => {
-    const page = unwrapListPage(res.data, paging)
+  return fetchCursorPage(
+    (query) => http.get(USERS_CONTRACT.accounts.path, { params: query }).then((res) => res.data as unknown),
+    (mode, request) => withFilters(pagingParams(request, mode), { [USERS_CONTRACT.accounts.searchParam]: search }),
+    paging,
+    accountsPaging,
+  ).then(({ data, restarted }) => {
+    const page = unwrapListPage(data, { page: restarted ? 1 : paging.page, limit: paging.limit })
     const items = page.items.map(parseAccount)
     for (const item of items) if (item.id && item.masterCount != null) masterCounts.set(item.id, item.masterCount)
-    return { ...page, items }
+    return { ...page, items, restarted }
   })
 }

@@ -8,8 +8,8 @@ import { ListLoadingFooter, ListStatus } from '@/components/cadastros/ListStatus
 import { AppCard } from '@/components/dashboard/AppCard'
 import { canManageAnimalTypes, canViewAnimalTypes } from '@/features/cadastros/permissions'
 import { useAuth } from '@/features/auth/AuthProvider'
-import { useLocalList } from '@/sync/hooks'
-import { animalTypesListQuery, rowToAnimalType } from '@/sync/queries'
+import { useKeysetList } from '@/sync/hooks'
+import { animalTypesListSpec, rowToAnimalType } from '@/sync/queries'
 import { TOQUE_MINIMO } from '../../../../../tamagui.config'
 
 export default function TiposDeAnimaisListScreen() {
@@ -24,7 +24,7 @@ function TiposDeAnimaisList() {
   const { user } = useAuth()
   const canManage = canManageAnimalTypes(user?.role)
   // Lista local reativa (PowerSync): funciona offline e atualiza sozinha quando o sync traz dados.
-  const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useLocalList(animalTypesListQuery, rowToAnimalType, [])
+  const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useKeysetList(() => animalTypesListSpec(), rowToAnimalType, [])
 
   return (
     <YStack flex={1} bg="appBg">
@@ -53,7 +53,7 @@ function TiposDeAnimaisList() {
         refreshing={refreshing}
         onRefresh={() => void refresh()}
         onEndReached={() => {
-          if (hasMore && !loading && !refreshing) void loadMore()
+          if (hasMore && !loading && !refreshing && !loadingMore) void loadMore()
         }}
         onEndReachedThreshold={0.4}
         ListFooterComponent={loadingMore ? <ListLoadingFooter /> : undefined}

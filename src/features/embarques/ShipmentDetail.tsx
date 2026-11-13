@@ -10,6 +10,7 @@ import type { UserRole } from '@/api/types'
 import { fieldMessagesFromError, isApiError, publicApiMessage } from '@/api/errors'
 import { formatWeightKg, SHIPMENTS_CONTRACT, todayIsoInShipmentZone } from '@/api/shipmentsContract'
 import { FormBanner } from '@/components/auth/FormBanner'
+import { ListLoadingFooter } from '@/components/cadastros/ListStatus'
 import { CadastroFormScreen } from '@/components/cadastros/CadastroFormScreen'
 import { ConfirmDialog } from '@/components/cadastros/ConfirmDialog'
 import { SelectField } from '@/components/cadastros/SelectField'
@@ -19,7 +20,15 @@ import { repo } from '@/sync'
 import { clearPendencia, clearRowRejections, draftString, editorErrorMessage, loadEditorSource, showRejection } from '@/sync/editor'
 import { PHOTO_STATUS_LABEL, type PhotoQueueStatus } from '@/sync/photoQueue'
 import { resendPhoto } from '@/sync/useUploadPump'
-import { rowToShipment, shipmentByIdQuery, shipmentLinkedAnimalsQuery, type ShipmentLinkedAnimalRow, type ShipmentRow } from '@/sync/queries'
+import { useKeysetList } from '@/sync/hooks'
+import {
+  rowToShipment,
+  shipmentByIdQuery,
+  shipmentLinkedAnimalsSpec,
+  shipmentLinkedSummaryQuery,
+  type ShipmentLinkedAnimalRow,
+  type ShipmentRow,
+} from '@/sync/queries'
 import { TOQUE_MINIMO, TOQUE_PRINCIPAL } from '../../../tamagui.config'
 import { ShipmentAnimalModal, type ShipmentAnimalModalTarget } from './ShipmentAnimalModal'
 import { animalsCountLabel, dateChangeWithdrawalMessage, deleteConfirmMessage, finishConfirmMessage, isShipmentEditable } from './shipmentFlow'
@@ -111,12 +120,19 @@ export function ShipmentDetail({
 
   // Animais NO embarque, com a carência avaliada no dia (editado) do embarque.
   const day = shippedOn || todayIsoInShipmentZone()
-  const linkedQuery = shipmentLinkedAnimalsQuery(shipmentId, day)
-  const linked = useQuery<ShipmentLinkedAnimalRow>(linkedQuery.sql, linkedQuery.params)
-  const count = linked.data.length
+  // Lista com keyset (código + id do vínculo, mesma ordem de antes) e scroll infinito; os totais vêm de uma consulta
+  // agregada sobre TODOS os vínculos (não só os já carregados).
+  const linked = useKeysetList(
+    () => shipmentLinkedAnimalsSpec(shipmentId, day),
+    (row: ShipmentLinkedAnimalRow) => row,
+    [shipmentId, day],
+  )
+  const summaryQuery = shipmentLinkedSummaryQuery(shipmentId, day)
+  const summary = useQuery<{ total: number; inWithdrawal: number }>(summaryQuery.sql, summaryQuery.params)
+  const count = Number(summary.data[0]?.total ?? 0)
   const savedDay = String(liveShipment?.shippedOn ?? '').slice(0, 10)
   const dateChanged = Boolean(shippedOn) && shippedOn !== savedDay
-  const withdrawalOnNewDate = dateChanged ? linked.data.filter((row) => Boolean(row.inWithdrawal)).length : 0
+  const withdrawalOnNewDate = dateChanged ? Number(summary.data[0]?.inWithdrawal ?? 0) : 0
   const dirty = Boolean(shipment) && (name.trim() !== (liveShipment?.name ?? '') || dateChanged)
 
   function showError(error: unknown, fallback: string) {
@@ -348,7 +364,10 @@ export function ShipmentDetail({
         deleteLabel="Excluir embarque"
         readOnly={!editable}
         readOnlyMessage={`Embarque finalizado${finishedOn}: somente leitura.`}
-        footer={editable ? finishFooter : finishedFooter}>
+        footer={editable ? finishFooter : finishedFooter}
+        onEndReached={() => {
+          if (linked.hasMore && !linked.loading && !linked.refreshing && !linked.loadingMore) linked.loadMore()
+        }}>
         {notice ? <FormBanner message={notice} tone="info" /> : null}
         <ShipmentStatusBadge status={status} />
         {editable ? (
@@ -423,14 +442,14 @@ export function ShipmentDetail({
             </Text>
           </XStack>
         ) : null}
-        {linked.isLoading ? (
+        {linked.loading || summary.isLoading ? (
           <Spinner color="brandPrimary" />
         ) : count === 0 ? (
           <Text fontSize={15} fontWeight="500" color="brandMuted">
             Nenhum animal neste embarque ainda. Cada animal entra com foto e peso.
           </Text>
         ) : (
-          linked.data.map((row) => (
+          linked.items.map((row) => (
             <LinkedAnimalRow
               key={row.linkId}
               row={row}
@@ -460,6 +479,7 @@ export function ShipmentDetail({
             />
           ))
         )}
+        {linked.loadingMore ? <ListLoadingFooter /> : null}
       </CadastroFormScreen>
 
       {modal ? (

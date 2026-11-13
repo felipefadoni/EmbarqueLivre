@@ -162,6 +162,17 @@ export function vaccinesListQuery(limit?: number): SqlQuery {
   return { sql: `${vaccineSelect} ORDER BY v.${c('vaccines', 'name')} COLLATE NOCASE, v.id LIMIT ?`, params: [limitClause(limit) + 1] }
 }
 
+/** Lista de Vacinas com keyset (nome sem maiúsculas + id): mesma ordem de vaccinesListQuery. */
+export function vaccinesListSpec(): KeysetSpec {
+  return {
+    base: vaccineSelect,
+    baseParams: [],
+    where: [],
+    params: [],
+    keys: [{ expr: `v.${c('vaccines', 'name')}`, field: 'name', nocase: true }, { expr: 'v.id', field: 'id' }],
+  }
+}
+
 export function vaccineByIdQuery(id: string): SqlQuery {
   return { sql: `${vaccineSelect} WHERE v.id = ?`, params: [id] }
 }
@@ -174,6 +185,17 @@ const typeSelect = `SELECT at.id AS id, at.${c('animalTypes', 'name')} AS name F
 
 export function animalTypesListQuery(limit?: number): SqlQuery {
   return { sql: `${typeSelect} ORDER BY at.${c('animalTypes', 'name')} COLLATE NOCASE, at.id LIMIT ?`, params: [limitClause(limit) + 1] }
+}
+
+/** Lista de Tipos de animal com keyset (nome sem maiúsculas + id): mesma ordem de animalTypesListQuery. */
+export function animalTypesListSpec(): KeysetSpec {
+  return {
+    base: typeSelect,
+    baseParams: [],
+    where: [],
+    params: [],
+    keys: [{ expr: `at.${c('animalTypes', 'name')}`, field: 'name', nocase: true }, { expr: 'at.id', field: 'id' }],
+  }
 }
 
 export function animalTypeByIdQuery(id: string): SqlQuery {
@@ -404,7 +426,7 @@ function vaccinationSelect() {
 
 export type VaccinationFiltersLocal = { date?: string; dateFrom?: string; dateTo?: string; farmId?: string; code?: string; animalId?: string }
 
-export function vaccinationsListQuery(filters: VaccinationFiltersLocal, limit?: number): SqlQuery {
+function vaccinationsWhere(filters: VaccinationFiltersLocal) {
   const where: string[] = []
   const params: unknown[] = []
   const applied = `av.${c('vaccinations', 'appliedAt')}`
@@ -433,10 +455,31 @@ export function vaccinationsListQuery(filters: VaccinationFiltersLocal, limit?: 
     where.push(`instr(lower(a.${c('animals', 'code')}), lower(?)) > 0`)
     params.push(code)
   }
+  return { where, params }
+}
+
+export function vaccinationsListQuery(filters: VaccinationFiltersLocal, limit?: number): SqlQuery {
+  const { where, params } = vaccinationsWhere(filters)
+  const applied = `av.${c('vaccinations', 'appliedAt')}`
   params.push(limitClause(limit) + 1)
   return {
     sql: `${vaccinationSelect()} ${where.length ? `WHERE ${where.join(' AND ')}` : ''} ORDER BY ${applied} DESC, av.id DESC LIMIT ?`,
     params,
+  }
+}
+
+/** Lançamentos com keyset (aplicação mais recente primeiro, depois id desc): mesma ordem e filtros de vaccinationsListQuery. */
+export function vaccinationsListSpec(filters: VaccinationFiltersLocal): KeysetSpec {
+  const { where, params } = vaccinationsWhere(filters)
+  return {
+    base: vaccinationSelect(),
+    baseParams: [],
+    where,
+    params,
+    keys: [
+      { expr: `av.${c('vaccinations', 'appliedAt')}`, field: 'appliedAt', desc: true },
+      { expr: 'av.id', field: 'id', desc: true },
+    ],
   }
 }
 
@@ -649,7 +692,7 @@ export function isShipmentWhen(value: unknown): value is ShipmentWhen {
 
 export type ShipmentFilters = { farmId?: string; search?: string; when?: ShipmentWhen; today?: string; status?: ShipmentStatus }
 
-export function shipmentsListQuery(filters: ShipmentFilters = {}, limit?: number): SqlQuery {
+function shipmentsWhere(filters: ShipmentFilters) {
   const where: string[] = []
   const params: unknown[] = []
   const shipped = `s.${c('shipments', 'shippedOn')}`
@@ -670,6 +713,12 @@ export function shipmentsListQuery(filters: ShipmentFilters = {}, limit?: number
     where.push(filters.when === 'proximos' ? `${shipped} >= ?` : `${shipped} < ?`)
     params.push(filters.today)
   }
+  return { where, params }
+}
+
+export function shipmentsListQuery(filters: ShipmentFilters = {}, limit?: number): SqlQuery {
+  const { where, params } = shipmentsWhere(filters)
+  const shipped = `s.${c('shipments', 'shippedOn')}`
   params.push(limitClause(limit) + 1)
   // Próximos: o mais perto primeiro; demais: o mais recente primeiro.
   const order = filters.when === 'proximos' ? `${shipped} ASC` : `${shipped} DESC`
@@ -677,6 +726,26 @@ export function shipmentsListQuery(filters: ShipmentFilters = {}, limit?: number
     sql: `${shipmentSelect} ${where.length ? `WHERE ${where.join(' AND ')}` : ''} GROUP BY s.id
       ORDER BY ${order}, s.${c('shipments', 'name')} COLLATE NOCASE, s.id LIMIT ?`,
     params,
+  }
+}
+
+/**
+ * Embarques com keyset: mesma ordem de shipmentsListQuery (dia do embarque asc em "próximos", desc nos demais; depois
+ * nome sem maiúsculas asc e id asc). Direções misturadas: o cursor usa a expansão lexicográfica (keyset.ts).
+ */
+export function shipmentsListSpec(filters: ShipmentFilters = {}): KeysetSpec {
+  const { where, params } = shipmentsWhere(filters)
+  return {
+    base: shipmentSelect,
+    baseParams: [],
+    where,
+    params,
+    groupBy: 's.id',
+    keys: [
+      { expr: `s.${c('shipments', 'shippedOn')}`, field: 'shippedOn', desc: filters.when !== 'proximos' },
+      { expr: `s.${c('shipments', 'name')}`, field: 'name', nocase: true },
+      { expr: 's.id', field: 'id' },
+    ],
   }
 }
 
@@ -763,7 +832,7 @@ export type ShipmentPickerFilters = { farmId: string; shipmentId: string; code?:
  * Situação no mesmo sentido da lista de Animais, com o dia do embarque no lugar de hoje.
  * Animais em OUTRO embarque em andamento vêm com otherShipmentId/Name (a tela mostra, sem deixar adicionar).
  */
-export function shipmentPickerQuery(filters: ShipmentPickerFilters, shippedOn: string, limit?: number): SqlQuery {
+function shipmentPickerParts(filters: ShipmentPickerFilters, shippedOn: string) {
   const where: string[] = [`a.${c('animals', 'farmId')} = ?`, `NOT ${animalShippedExpr('a')}`]
   const params: unknown[] = [shippedOn, shippedOn, filters.farmId]
   where.push(`NOT EXISTS (SELECT 1 FROM ${SA} own WHERE own.${c('shipmentAnimals', 'animalId')} = a.id AND own.${c('shipmentAnimals', 'shipmentId')} = ?)`)
@@ -774,14 +843,35 @@ export function shipmentPickerQuery(filters: ShipmentPickerFilters, shippedOn: s
     params.push(code)
   }
   situationWhere(filters.situacao, shippedOn, where, params)
-  params.push(limitClause(limit) + 1)
   const base = animalSelect('?', withdrawalAggAppliedUntil)
-  return {
-    sql: `SELECT base.*, os.id AS otherShipmentId, os.${c('shipments', 'name')} AS otherShipmentName FROM (${base}
+  const from = `SELECT base.*, os.id AS otherShipmentId, os.${c('shipments', 'name')} AS otherShipmentName FROM (${base}
       WHERE ${where.join(' AND ')}) base
-      LEFT JOIN ${S} os ON os.id = (SELECT osa.${c('shipmentAnimals', 'shipmentId')} FROM ${SA} osa WHERE osa.${c('shipmentAnimals', 'animalId')} = base.id LIMIT 1)
+      LEFT JOIN ${S} os ON os.id = (SELECT osa.${c('shipmentAnimals', 'shipmentId')} FROM ${SA} osa WHERE osa.${c('shipmentAnimals', 'animalId')} = base.id LIMIT 1)`
+  return { from, params }
+}
+
+export function shipmentPickerQuery(filters: ShipmentPickerFilters, shippedOn: string, limit?: number): SqlQuery {
+  const { from, params } = shipmentPickerParts(filters, shippedOn)
+  params.push(limitClause(limit) + 1)
+  return {
+    sql: `${from}
       ORDER BY base.code COLLATE NOCASE, base.id LIMIT ?`,
     params,
+  }
+}
+
+/** Modal "Adicionar animal" com keyset (código sem maiúsculas + id): mesma ordem e escopo de shipmentPickerQuery. */
+export function shipmentPickerSpec(filters: ShipmentPickerFilters, shippedOn: string): KeysetSpec {
+  const { from, params } = shipmentPickerParts(filters, shippedOn)
+  return {
+    base: from,
+    baseParams: params,
+    where: [],
+    params: [],
+    keys: [
+      { expr: 'base.code', field: 'code', nocase: true },
+      { expr: 'base.id', field: 'id' },
+    ],
   }
 }
 
@@ -791,6 +881,38 @@ export type ShipmentPickerRow = AnimalRow & { otherShipmentId: string | null; ot
  * Animais NO embarque (vínculos), com peso, foto (local da fila ou do servidor) e a carência no dia do embarque.
  * Inclui embarcados: é aqui que os animais de um embarque finalizado continuam visíveis.
  */
+function shipmentLinkedFrom() {
+  return `SELECT sa.id AS linkId, a.id AS animalId, a.${c('animals', 'code')} AS code, at.${c('animalTypes', 'name')} AS animalTypeName,
+      sa.${c('shipmentAnimals', 'weightKg')} AS weightKg, sa.${c('shipmentAnimals', 'photoId')} AS photoId,
+      q.${PHOTO_QUEUE_TABLE.columns.localUri.name} AS localPhotoUri, q.${PHOTO_QUEUE_TABLE.columns.status.name} AS photoStatus,
+      w.freeAt AS freeAt, CASE WHEN w.freeAt IS NOT NULL AND ? < w.freeAt THEN 1 ELSE 0 END AS inWithdrawal
+      FROM ${SA} sa
+      JOIN ${A} a ON a.id = sa.${c('shipmentAnimals', 'animalId')}
+      LEFT JOIN ${T} at ON at.id = a.${c('animals', 'animalTypeId')}
+      LEFT JOIN (${withdrawalAggAppliedUntil}) w ON w.aid = a.id
+      LEFT JOIN ${PQ} q ON q.id = sa.${c('shipmentAnimals', 'photoId')}`
+}
+
+/** Animais NO embarque com keyset (código sem maiúsculas + id do vínculo): mesma ordem de shipmentLinkedAnimalsQuery. */
+export function shipmentLinkedAnimalsSpec(shipmentId: string, shippedOn: string): KeysetSpec {
+  return {
+    base: shipmentLinkedFrom(),
+    baseParams: [shippedOn, shippedOn],
+    where: [`sa.${c('shipmentAnimals', 'shipmentId')} = ?`],
+    params: [shipmentId],
+    keys: [
+      { expr: `a.${c('animals', 'code')}`, field: 'code', nocase: true },
+      { expr: 'sa.id', field: 'linkId' },
+    ],
+  }
+}
+
+/** Totais do embarque (todos os vínculos, não só os carregados): quantidade e quantos em carência no dia. */
+export function shipmentLinkedSummaryQuery(shipmentId: string, shippedOn: string): SqlQuery {
+  const q = shipmentLinkedAnimalsQuery(shipmentId, shippedOn)
+  return { sql: `SELECT COUNT(*) AS total, COALESCE(SUM(inWithdrawal), 0) AS inWithdrawal FROM (${q.sql})`, params: q.params }
+}
+
 export function shipmentLinkedAnimalsQuery(shipmentId: string, shippedOn: string): SqlQuery {
   return {
     sql: `SELECT sa.id AS linkId, a.id AS animalId, a.${c('animals', 'code')} AS code, at.${c('animalTypes', 'name')} AS animalTypeName,

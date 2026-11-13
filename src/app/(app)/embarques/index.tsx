@@ -15,8 +15,8 @@ import { canManageShipments } from '@/features/cadastros/permissions'
 import { SHIPMENT_WHEN_LABEL, summarizeShipmentFilters } from '@/features/cadastros/shipmentFilters'
 import { animalsCountLabel, SHIPMENT_TABS } from '@/features/embarques/shipmentFlow'
 import { ShipmentStatusBadge } from '@/features/embarques/ShipmentStatusBadge'
-import { useLocalFarms, useLocalList } from '@/sync/hooks'
-import { isShipmentWhen, rowToShipment, shipmentsListQuery, type ShipmentRow, type ShipmentWhen } from '@/sync/queries'
+import { useLocalFarms, useKeysetList } from '@/sync/hooks'
+import { isShipmentWhen, rowToShipment, shipmentsListSpec, type ShipmentRow, type ShipmentWhen } from '@/sync/queries'
 import { TOQUE_MINIMO } from '../../../../tamagui.config'
 
 /** Aba Embarques: lista com abas Em andamento / Finalizado e o botão Novo embarque. */
@@ -44,8 +44,9 @@ function EmbarquesList() {
     return () => clearTimeout(timer)
   }, [searchInput])
 
-  const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useLocalList(
-    (limit) => shipmentsListQuery({ farmId: farmId || undefined, search: search || undefined, when: when || undefined, today, status }, limit),
+  const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useKeysetList(
+    // Keyset: mesma ordem de antes (dia do embarque, nome, id); ver shipmentsListSpec.
+    () => shipmentsListSpec({ farmId: farmId || undefined, search: search || undefined, when: when || undefined, today, status }),
     (row: ShipmentRow) => rowToShipment(row),
     [farmId, search, when, today, status],
   )
@@ -182,7 +183,7 @@ function EmbarquesList() {
         refreshing={refreshing}
         onRefresh={() => void refresh()}
         onEndReached={() => {
-          if (hasMore && !loading && !refreshing) void loadMore()
+          if (hasMore && !loading && !refreshing && !loadingMore) void loadMore()
         }}
         onEndReachedThreshold={0.4}
         ListFooterComponent={loadingMore ? <ListLoadingFooter /> : undefined}

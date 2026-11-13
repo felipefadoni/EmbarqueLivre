@@ -44,6 +44,8 @@ export const RESOURCE_CONTRACT = {
   masters: {
     path: '/users/masters',
     searchParam: 'search',
+    /** Na API (12/11/2026) só page/limit (ListMastersRequest estende PaginationQuery). Com keyset na API → true. */
+    supportsCursor: false as boolean,
   },
 }
 
@@ -107,7 +109,11 @@ export const USERS_CONTRACT = {
   /** Status considerado normal (outros mostram um selo discreto). */
   activeStatus: 'active',
   searchDebounceMs: 400,
-  accounts: { path: '/accounts', searchParam: 'search', masterCountField: 'masterCount' },
+  /**
+   * GET /accounts: na API (12/11/2026) só page/limit (ListAccountsRequest estende PaginationQuery, ordem lower(name), id).
+   * `supportsCursor: false` → vai direto em page/limit (sem gastar um 400). Quando a API ganhar keyset, trocar para true.
+   */
+  accounts: { path: '/accounts', searchParam: 'search', masterCountField: 'masterCount', supportsCursor: false as boolean },
 }
 
 export function clampLimit(limit?: number): number {

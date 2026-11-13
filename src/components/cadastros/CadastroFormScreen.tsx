@@ -21,7 +21,12 @@ type CadastroFormScreenProps = {
   submitDisabled?: boolean
   /** Conteúdo exibido depois dos botões (ex.: seção de carência no cadastro do animal). */
   footer?: ReactNode
+  /** Rolou perto do fim (scroll infinito de uma lista dentro do formulário). Quem chama protege com hasMore/loadingMore. */
+  onEndReached?: () => void
 }
+
+/** Distância do fim (px) que dispara onEndReached. */
+const END_REACHED_PX = 400
 
 export function CadastroFormScreen({
   children,
@@ -35,6 +40,7 @@ export function CadastroFormScreen({
   readOnlyMessage = 'Somente leitura. Você não pode alterar este cadastro.',
   submitDisabled = false,
   footer,
+  onEndReached,
 }: CadastroFormScreenProps) {
   const blocked = submitting || submitDisabled
   const insets = useSafeAreaInsets()
@@ -44,7 +50,15 @@ export function CadastroFormScreen({
         <ScrollView
           contentContainerStyle={{ padding: 20, paddingBottom: Math.max(insets.bottom, 16) + 20, gap: 16 }}
           keyboardShouldPersistTaps="handled"
-          showsVerticalScrollIndicator={false}>
+          showsVerticalScrollIndicator={false}
+          scrollEventThrottle={onEndReached ? 200 : undefined}
+          onScroll={
+            onEndReached
+              ? ({ nativeEvent: { layoutMeasurement, contentOffset, contentSize } }) => {
+                  if (layoutMeasurement.height + contentOffset.y >= contentSize.height - END_REACHED_PX) onEndReached()
+                }
+              : undefined
+          }>
           {error ? <FormBanner message={error} /> : null}
           {readOnly ? <FormBanner message={readOnlyMessage} tone="info" /> : null}
           {children}

@@ -8,8 +8,8 @@ import { ListLoadingFooter, ListStatus } from '@/components/cadastros/ListStatus
 import { AppCard } from '@/components/dashboard/AppCard'
 import { canManageVaccines } from '@/features/cadastros/permissions'
 import { useAuth } from '@/features/auth/AuthProvider'
-import { useLocalList } from '@/sync/hooks'
-import { vaccinesListQuery, rowToVaccine } from '@/sync/queries'
+import { useKeysetList } from '@/sync/hooks'
+import { vaccinesListSpec, rowToVaccine } from '@/sync/queries'
 import { TOQUE_MINIMO } from '../../../../../tamagui.config'
 
 function carenciaLabel(days: number) {
@@ -28,7 +28,7 @@ function VacinasList() {
   const { user } = useAuth()
   const canManage = canManageVaccines(user?.role)
   // Lista local reativa (PowerSync): funciona offline e atualiza sozinha quando o sync traz dados.
-  const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useLocalList(vaccinesListQuery, rowToVaccine, [])
+  const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useKeysetList(() => vaccinesListSpec(), rowToVaccine, [])
 
   return (
     <YStack flex={1} bg="appBg">
@@ -57,7 +57,7 @@ function VacinasList() {
         refreshing={refreshing}
         onRefresh={() => void refresh()}
         onEndReached={() => {
-          if (hasMore && !loading && !refreshing) void loadMore()
+          if (hasMore && !loading && !refreshing && !loadingMore) void loadMore()
         }}
         onEndReachedThreshold={0.4}
         ListFooterComponent={loadingMore ? <ListLoadingFooter /> : undefined}

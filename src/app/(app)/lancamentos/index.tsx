@@ -15,9 +15,9 @@ import { DateField } from '@/components/form/DateField'
 import { SyncStatusIndicator } from '@/components/sync/SyncStatusIndicator'
 import { formatDatePtBr, todayIso } from '@/features/cadastros/dates'
 import { summarizeVaccinationFilters } from '@/features/vacinacoes/filterSummary'
-import { useLocalFarms, useLocalList } from '@/sync/hooks'
+import { useLocalFarms, useKeysetList } from '@/sync/hooks'
 import { firstParam } from '@/sync/params'
-import { rowToVaccination, vaccinationsListQuery } from '@/sync/queries'
+import { rowToVaccination, vaccinationsListSpec } from '@/sync/queries'
 import { TOQUE_MINIMO, TOQUE_PRINCIPAL } from '../../../../tamagui.config'
 
 /** Aceita só YYYY-MM-DD até hoje (data local); qualquer outra coisa é ignorada. */
@@ -55,8 +55,9 @@ export default function LancamentosScreen() {
   }, [codeInput])
 
   // Lançamentos do dia (padrão: hoje), por fazenda e código — consulta local reativa.
-  const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useLocalList(
-    (limit) => vaccinationsListQuery({ date, farmId: farmId || undefined, code: code || undefined }, limit),
+  const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useKeysetList(
+    // Keyset: aplicação mais recente primeiro, depois id desc (mesma ordem de antes).
+    () => vaccinationsListSpec({ date, farmId: farmId || undefined, code: code || undefined }),
     rowToVaccination,
     [date, farmId, code],
   )
@@ -199,7 +200,7 @@ export default function LancamentosScreen() {
         refreshing={refreshing}
         onRefresh={() => void refresh()}
         onEndReached={() => {
-          if (hasMore && !loading && !refreshing) void loadMore()
+          if (hasMore && !loading && !refreshing && !loadingMore) void loadMore()
         }}
         onEndReachedThreshold={0.4}
         ListFooterComponent={loadingMore ? <ListLoadingFooter /> : undefined}

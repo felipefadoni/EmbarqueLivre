@@ -8,8 +8,8 @@ import { HERDS_CONTRACT } from '@/api/herdsContract'
 import { ConfirmDialog } from '@/components/cadastros/ConfirmDialog'
 import { ListLoadingFooter, ListStatus } from '@/components/cadastros/ListStatus'
 import { todayIso } from '@/features/cadastros/dates'
-import { useLocalList } from '@/sync/hooks'
-import { animalsListQuery, rowToAnimal, type AnimalRow } from '@/sync/queries'
+import { useKeysetList } from '@/sync/hooks'
+import { animalsListSpec, rowToAnimal, type AnimalRow } from '@/sync/queries'
 import { TOQUE_MINIMO, TOQUE_PRINCIPAL } from '../../../tamagui.config'
 
 type HerdAnimalsPickerProps = {
@@ -49,8 +49,9 @@ export function HerdAnimalsPicker({ open, farmId, herdId, herdName, initialSelec
   }
 
   const today = todayIso()
-  const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useLocalList(
-    (limit) => animalsListQuery({ farmId: farmId || undefined, code: search || undefined }, today, limit),
+  const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useKeysetList(
+    // Keyset: código + id (mesma ordem da lista de Animais).
+    () => animalsListSpec({ farmId: farmId || undefined, code: search || undefined }, today),
     (row: AnimalRow) => rowToAnimal(row),
     [farmId, search, today, open],
   )
@@ -143,7 +144,7 @@ export function HerdAnimalsPicker({ open, farmId, herdId, herdName, initialSelec
               refreshing={refreshing}
               onRefresh={() => void refresh()}
               onEndReached={() => {
-                if (hasMore && !loading && !refreshing) void loadMore()
+                if (hasMore && !loading && !refreshing && !loadingMore) void loadMore()
               }}
               onEndReachedThreshold={0.4}
               ListFooterComponent={loadingMore ? <ListLoadingFooter /> : undefined}

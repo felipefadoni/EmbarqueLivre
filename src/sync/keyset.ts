@@ -20,6 +20,8 @@ export type KeyPart = {
   /** Campo da linha devolvida com o valor da chave (ex.: `name`). */
   field: string
   nocase?: boolean
+  /** Descendente (ex.: data mais recente primeiro). Pode misturar com ascendentes (ver keysetQuery). */
+  desc?: boolean
 }
 
 export type KeysetSpec = {
@@ -30,7 +32,7 @@ export type KeysetSpec = {
   where: string[]
   params: unknown[]
   groupBy?: string
-  /** Todas ascendentes; a última deve ser única (o `id`). */
+  /** A última deve ser única (o `id`). Cada chave pode ser ascendente ou descendente (`desc`). */
   keys: KeyPart[]
 }
 
@@ -43,7 +45,37 @@ function keyExpr(key: KeyPart): string {
 }
 
 export function orderBy(keys: KeyPart[]): string {
-  return keys.map(keyExpr).join(', ')
+  return keys.map((key) => `${keyExpr(key)}${key.desc ? ' DESC' : ''}`).join(', ')
+}
+
+/**
+ * "Depois do cursor" na ordem das chaves.
+ * - Todas na mesma direção: comparação de linha `(k1, …, id) > (?, …)` (ou `<` se todas desc).
+ * - Direções misturadas (ex.: Embarques: data desc, nome asc, id asc): expansão lexicográfica
+ *   `k1 ≻ v1 OR (k1 = v1 AND k2 ≻ v2) OR …`, onde ≻ é `>` (asc) ou `<` (desc).
+ * "Até o cursor (inclusive)" é a negação disso: `NOT (depois)`.
+ */
+function afterClause(keys: KeyPart[], cursor: Cursor): { sql: string; params: unknown[] } {
+  const allAsc = keys.every((key) => !key.desc)
+  const allDesc = keys.every((key) => key.desc)
+  if (allAsc || allDesc) {
+    const tuple = `(${keys.map(keyExpr).join(', ')})`
+    const marks = `(${keys.map(() => '?').join(', ')})`
+    return { sql: `${tuple} ${allAsc ? '>' : '<'} ${marks}`, params: [...cursor] }
+  }
+  const ors: string[] = []
+  const params: unknown[] = []
+  keys.forEach((key, i) => {
+    const ands: string[] = []
+    for (let j = 0; j < i; j++) {
+      ands.push(`${keyExpr(keys[j])} = ?`)
+      params.push(cursor[j])
+    }
+    ands.push(`${keyExpr(key)} ${key.desc ? '<' : '>'} ?`)
+    params.push(cursor[i])
+    ors.push(`(${ands.join(' AND ')})`)
+  })
+  return { sql: `(${ors.join(' OR ')})`, params }
 }
 
 /** Valor do cursor da linha (mesma normalização do SQL: null → ''). */
@@ -59,15 +91,15 @@ export function cursorOf(keys: KeyPart[], row: Record<string, unknown>): Cursor 
 export function keysetQuery(spec: KeysetSpec, opts: { after?: Cursor | null; until?: Cursor | null; limit?: number } = {}): SqlQuery {
   const where = [...spec.where]
   const params = [...spec.baseParams, ...spec.params]
-  const tuple = `(${spec.keys.map(keyExpr).join(', ')})`
-  const marks = `(${spec.keys.map(() => '?').join(', ')})`
   if (opts.after) {
-    where.push(`${tuple} > ${marks}`)
-    params.push(...opts.after)
+    const after = afterClause(spec.keys, opts.after)
+    where.push(after.sql)
+    params.push(...after.params)
   }
   if (opts.until) {
-    where.push(`${tuple} <= ${marks}`)
-    params.push(...opts.until)
+    const after = afterClause(spec.keys, opts.until)
+    where.push(`NOT ${after.sql}`)
+    params.push(...after.params)
   }
   let sql = `${spec.base} ${where.length ? `WHERE ${where.join(' AND ')} ` : ''}${spec.groupBy ? `GROUP BY ${spec.groupBy} ` : ''}ORDER BY ${orderBy(spec.keys)}`
   if (opts.limit != null) {

@@ -192,7 +192,7 @@ function MasterPickerList({
         refreshing={refreshing}
         onRefresh={() => void refresh()}
         onEndReached={() => {
-          if (hasMore && !loading && !refreshing) void loadMore()
+          if (hasMore && !loading && !refreshing && !loadingMore) void loadMore()
         }}
         onEndReachedThreshold={0.4}
         ListFooterComponent={loadingMore ? <ListLoadingFooter /> : undefined}

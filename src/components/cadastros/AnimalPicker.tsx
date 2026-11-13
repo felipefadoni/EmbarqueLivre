@@ -7,8 +7,8 @@ import { Input, Text, XStack, YStack } from 'tamagui'
 import { VACCINATION_CONTRACT } from '@/api/contract'
 import { ListLoadingFooter, ListStatus } from '@/components/cadastros/ListStatus'
 import { todayIso } from '@/features/cadastros/dates'
-import { useLocalList } from '@/sync/hooks'
-import { animalsListQuery, rowToAnimal, type AnimalRow } from '@/sync/queries'
+import { useKeysetList } from '@/sync/hooks'
+import { animalsListSpec, rowToAnimal, type AnimalRow } from '@/sync/queries'
 import { TOQUE_MINIMO } from '../../../tamagui.config'
 
 /** Dados mínimos para exibir o animal escolhido (vem da lista ou do lançamento em edição). */
@@ -158,8 +158,9 @@ function AnimalPickerList({
 
   // Busca local por código (contém, sem diferenciar maiúsculas).
   const today = todayIso()
-  const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useLocalList(
-    (limit) => animalsListQuery({ code: search || undefined }, today, limit),
+  const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useKeysetList(
+    // Keyset: código + id (mesma ordem da lista de Animais).
+    () => animalsListSpec({ code: search || undefined }, today),
     (row: AnimalRow) => rowToAnimal(row),
     [search, today],
   )
@@ -201,7 +202,7 @@ function AnimalPickerList({
         refreshing={refreshing}
         onRefresh={() => void refresh()}
         onEndReached={() => {
-          if (hasMore && !loading && !refreshing) void loadMore()
+          if (hasMore && !loading && !refreshing && !loadingMore) void loadMore()
         }}
         onEndReachedThreshold={0.4}
         ListFooterComponent={loadingMore ? <ListLoadingFooter /> : undefined}

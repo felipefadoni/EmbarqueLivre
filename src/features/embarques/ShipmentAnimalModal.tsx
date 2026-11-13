@@ -1,5 +1,4 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
-import { useQuery } from '@powersync/react'
 import { useMemo, useState } from 'react'
 import { FlatList, KeyboardAvoidingView, Modal, Platform, ScrollView, useColorScheme } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -10,12 +9,14 @@ import { formatWeightKg, parseWeightKg, WEIGHT_HINT } from '@/api/shipmentsContr
 import { AuthField } from '@/components/auth/AuthField'
 import { FormBanner } from '@/components/auth/FormBanner'
 import { animateFiltersToggle, CollapsibleFilters, FilterToggle } from '@/components/cadastros/CollapsibleFilters'
+import { ListLoadingFooter } from '@/components/cadastros/ListStatus'
 import { SelectField } from '@/components/cadastros/SelectField'
 import { WithdrawalBadge } from '@/components/cadastros/WithdrawalBadge'
 import { formatDatePtBr } from '@/features/cadastros/dates'
 import { ANIMAL_SITUATION_SUMMARY } from '@/features/cadastros/animalFilters'
 import { repo } from '@/sync'
-import { isAnimalSituation, shipmentPickerQuery, type AnimalSituation, type ShipmentPickerRow } from '@/sync/queries'
+import { useKeysetList } from '@/sync/hooks'
+import { isAnimalSituation, shipmentPickerSpec, type AnimalSituation, type ShipmentPickerRow } from '@/sync/queries'
 import { TOQUE_MINIMO, TOQUE_PRINCIPAL } from '../../../tamagui.config'
 import { deleteLocalPhoto, openAppSettings, pickShipmentPhotoFromLibrary, takeShipmentPhoto, type PhotoResult } from './photoCapture'
 import { withdrawalConfirmMessage } from './shipmentFlow'
@@ -117,12 +118,17 @@ function PickStep({ shipment, onClose, onPick }: { shipment: ShipmentRef; onClos
   const [code, setCode] = useState('')
   const [situacao, setSituacao] = useState<'' | AnimalSituation>('')
   const [filtersOpen, setFiltersOpen] = useState(false)
-  const query = shipmentPickerQuery(
-    { farmId: shipment.farmId, shipmentId: shipment.id, code: code.trim() || undefined, situacao: situacao || undefined },
-    shipment.shippedOn,
-    2000,
+  // Keyset (código + id, mesma ordem de antes) com scroll infinito, no lugar do LIMIT fixo de 2000.
+  const trimmedCode = code.trim()
+  const { items, loading, refreshing, loadingMore, hasMore, loadMore } = useKeysetList(
+    () =>
+      shipmentPickerSpec(
+        { farmId: shipment.farmId, shipmentId: shipment.id, code: trimmedCode || undefined, situacao: situacao || undefined },
+        shipment.shippedOn,
+      ),
+    (row: ShipmentPickerRow) => row,
+    [shipment.farmId, shipment.id, shipment.shippedOn, trimmedCode, situacao],
   )
-  const rows = useQuery<ShipmentPickerRow>(query.sql, query.params)
   const parts = [situacao ? ANIMAL_SITUATION_SUMMARY[situacao] : '', code.trim() ? `Brinco "${code.trim()}"` : ''].filter(Boolean)
 
   function toggleFilters(next = !filtersOpen) {
@@ -177,12 +183,17 @@ function PickStep({ shipment, onClose, onPick }: { shipment: ShipmentRef; onClos
         </CollapsibleFilters>
       </YStack>
       <FlatList
-        data={rows.data}
+        data={items}
         keyExtractor={(item) => item.id}
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: Math.max(insets.bottom, 16) + 20, gap: 8, flexGrow: 1 }}
+        onEndReached={() => {
+          if (hasMore && !loading && !refreshing && !loadingMore) loadMore()
+        }}
+        onEndReachedThreshold={0.4}
+        ListFooterComponent={loadingMore ? <ListLoadingFooter /> : undefined}
         ListEmptyComponent={
-          rows.isLoading ? (
+          loading ? (
             <Spinner color="brandPrimary" />
           ) : (
             <Text fontSize={16} fontWeight="600" color="brandMuted" mt={16}>
