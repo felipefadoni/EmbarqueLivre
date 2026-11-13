@@ -79,6 +79,13 @@ export const USERS_CONTRACT = {
   /** GET de um usuário. Ex.: '/account/users/:id'. */
   detailPath: '/account/users/:id' as string | null,
   searchParam: 'search',
+  /**
+   * Paginação por cursor (keyset) da lista do admin: ver src/api/usersPaging.ts (contrato, ordem id desc e fallback
+   * para page/limit numa API antiga). O master e as consultas internas (detalhe, contagem de masters) seguem page/limit.
+   */
+  cursorParam: 'cursor',
+  /** Tamanho da página no modo cursor (máx. 100 na API). */
+  cursorPageLimit: 50,
   roleParam: 'role',
   /** Escopo por conta (filtro do admin na lista e campo do POST do admin). */
   scopeParam: 'accountId',
@@ -123,6 +130,8 @@ export type ListPage<T> = {
   totalPages?: number
   nextCursor?: string | null
   hasMore: boolean
+  /** O cursor pedido era inválido e veio a 1ª página de novo: a lista substitui os itens (useInfiniteList). */
+  restarted?: boolean
 }
 
 function asOptionalNumber(raw: unknown): number | undefined {

@@ -8,6 +8,7 @@ import type { Animal, AnimalType, Farm, Herd, Shipment, Vaccine } from '../api/c
 import { HERDS_CONTRACT } from '../api/herdsContract'
 import { SHIPMENTS_CONTRACT, shipmentStatusOf, type ShipmentStatus } from '../api/shipmentsContract'
 import type { AnimalWithdrawal, VaccinationEntry, WithdrawalApplication } from '../api/contract'
+import { type KeyPart, type KeysetSpec } from './keyset'
 import { colOf as c, PHOTO_QUEUE_TABLE, tableOf as t } from './mapping'
 import { isActiveOn, summarizeWithdrawal } from './withdrawal'
 
@@ -54,8 +55,65 @@ const farmSelect = `SELECT f.id AS id,
   f.${c('farms', 'city')} AS city, f.${c('farms', 'state')} AS state
   FROM ${F} f`
 
-export function farmsListQuery(limit?: number): SqlQuery {
-  return { sql: `${farmSelect} ORDER BY f.${c('farms', 'name')} COLLATE NOCASE, f.id LIMIT ?`, params: [limitClause(limit) + 1] }
+/** Lista do admin: mesmas colunas + nome e e-mail de quem cadastrou (stream admin_all). */
+const farmSelectWithAuthor = `SELECT f.id AS id,
+  COALESCE(f.${c('farms', 'accountId')}, f.${c('farms', 'ownerUserId')}) AS accountId,
+  f.${c('farms', 'ownerUserId')} AS ownerUserId,
+  f.${c('farms', 'name')} AS name,
+  f.${c('farms', 'city')} AS city, f.${c('farms', 'state')} AS state,
+  f.${c('farms', 'createdByName')} AS createdByName, f.${c('farms', 'createdByEmail')} AS createdByEmail
+  FROM ${F} f`
+
+/**
+ * Ids já filtrados no JS (texto sem acentos, ver features/cadastros/textFilter.ts) num único parâmetro JSON:
+ * sem limite de variáveis do SQLite. `undefined` = sem filtro; `[]` = nenhum casou.
+ */
+function idsWhere(column: string, ids: readonly string[] | undefined, where: string[], params: unknown[]) {
+  if (ids === undefined) return
+  where.push(`${column} IN (SELECT value FROM json_each(?))`)
+  params.push(JSON.stringify(ids))
+}
+
+/**
+ * E-mail contém o texto, sem diferenciar maiúsculas (e-mail é ASCII: lower() do SQLite basta). instr evita tratar
+ * % e _ como curingas. Autor null (registro antigo) nunca casa.
+ */
+function emailWhere(column: string, email: string | undefined, where: string[], params: unknown[]) {
+  const value = email?.trim()
+  if (!value) return
+  where.push(`instr(lower(${column}), lower(?)) > 0`)
+  params.push(value)
+}
+
+/** Só admin: `withAuthor` traz nome e e-mail de quem cadastrou; `authorEmail` filtra pelo e-mail. Sem eles: SQL de antes. */
+export type FarmListFilters = { ids?: readonly string[]; withAuthor?: boolean; authorEmail?: string }
+
+export function farmsListQuery(limit?: number, filters: FarmListFilters = {}): SqlQuery {
+  const where: string[] = []
+  const params: unknown[] = []
+  idsWhere('f.id', filters.ids, where, params)
+  if (filters.withAuthor) emailWhere(`f.${c('farms', 'createdByEmail')}`, filters.authorEmail, where, params)
+  params.push(limitClause(limit) + 1)
+  const select = filters.withAuthor ? farmSelectWithAuthor : farmSelect
+  return {
+    sql: `${select} ${where.length ? `WHERE ${where.join(' AND ')} ` : ''}ORDER BY f.${c('farms', 'name')} COLLATE NOCASE, f.id LIMIT ?`,
+    params,
+  }
+}
+
+/** Chaves da lista de fazendas: a ordem de sempre (nome sem maiúsculas) + id. */
+export const FARM_KEYS: KeyPart[] = [
+  { expr: `f.${c('farms', 'name')}`, field: 'name', nocase: true },
+  { expr: 'f.id', field: 'id' },
+]
+
+/** Lista de Fazendas com keyset (ver keyset.ts). Sem filtros de admin: mesmas linhas e ordem de farmsListQuery. */
+export function farmsListSpec(filters: FarmListFilters = {}): KeysetSpec {
+  const where: string[] = []
+  const params: unknown[] = []
+  idsWhere('f.id', filters.ids, where, params)
+  if (filters.withAuthor) emailWhere(`f.${c('farms', 'createdByEmail')}`, filters.authorEmail, where, params)
+  return { base: filters.withAuthor ? farmSelectWithAuthor : farmSelect, baseParams: [], where, params, keys: FARM_KEYS }
 }
 
 export function farmByIdQuery(id: string): SqlQuery {
@@ -70,6 +128,17 @@ export type FarmRow = {
   name: string
   city: string
   state: string
+  /** Só nas consultas do admin (withAuthor). */
+  createdByName?: string | null
+  createdByEmail?: string | null
+}
+
+/** Autor só quando a consulta é a do admin (colunas presentes); senão nenhuma chave (master/básico). */
+function authorOf(row: { createdByName?: string | null; createdByEmail?: string | null }) {
+  return {
+    ...(row.createdByName !== undefined ? { createdByName: row.createdByName || null } : {}),
+    ...(row.createdByEmail !== undefined ? { createdByEmail: row.createdByEmail || null } : {}),
+  }
 }
 
 export function rowToFarm(row: FarmRow): Farm {
@@ -81,6 +150,7 @@ export function rowToFarm(row: FarmRow): Farm {
     name: row.name ?? '',
     city: row.city ?? '',
     state: row.state ?? '',
+    ...authorOf(row),
   }
 }
 
@@ -129,8 +199,11 @@ export const withdrawalAggAppliedUntil = `SELECT av.${c('vaccinations', 'animalI
   SUM(av.${c('vaccinations', 'withdrawalDays')}) AS total, MAX(${untilExpr('av')}) AS freeAt
   FROM ${AV} av WHERE substr(av.${c('vaccinations', 'appliedAt')}, 1, 10) <= ? GROUP BY av.${c('vaccinations', 'animalId')}`
 
-function animalSelect(todayParam = '?', agg = withdrawalAgg) {
-  return `SELECT a.id AS id, a.${c('animals', 'code')} AS code, a.${c('animals', 'farmId')} AS farmId,
+function animalSelect(todayParam = '?', agg = withdrawalAgg, withAuthor = false) {
+  const author = withAuthor
+    ? ` a.${c('animals', 'createdByName')} AS createdByName, a.${c('animals', 'createdByEmail')} AS createdByEmail,`
+    : ''
+  return `SELECT a.id AS id, a.${c('animals', 'code')} AS code, a.${c('animals', 'farmId')} AS farmId,${author}
   a.${c('animals', 'animalTypeId')} AS animalTypeId, a.${c('animals', 'sex')} AS sex, a.${c('animals', 'breed')} AS breed,
   a.${c('animals', 'birthDate')} AS birthDate, a.${c('animals', 'herdId')} AS herdId, h.${c('herds', 'name')} AS herdName,
   f.${c('farms', 'name')} AS farmName, at.${c('animalTypes', 'name')} AS animalTypeName,
@@ -180,18 +253,25 @@ export type AnimalFilters = {
   herdId?: string
   code?: string
   situacao?: AnimalSituation
+  /** Só admin: fazendas cujo nome casou com o texto (ids do JS). Soma-se (AND) ao `farmId`. */
+  farmIds?: readonly string[]
+  /** Só admin: traz nome e e-mail de quem cadastrou e permite filtrar pelo e-mail (`authorEmail`). */
+  withAuthor?: boolean
+  authorEmail?: string
   /** Inclui os embarcados (embarque finalizado). Padrão: não (lista de cadastrados, pickers). */
   includeShipped?: boolean
 }
 
-export function animalsListQuery(filters: AnimalFilters, today: string, limit?: number): SqlQuery {
+function animalsWhere(filters: AnimalFilters, today: string): { where: string[]; params: unknown[] } {
   const where: string[] = []
-  const params: unknown[] = [today]
+  const params: unknown[] = []
   if (!filters.includeShipped) where.push(`NOT ${animalShippedExpr('a')}`)
   if (filters.farmId) {
     where.push(`a.${c('animals', 'farmId')} = ?`)
     params.push(filters.farmId)
   }
+  idsWhere(`a.${c('animals', 'farmId')}`, filters.farmIds, where, params)
+  if (filters.withAuthor) emailWhere(`a.${c('animals', 'createdByEmail')}`, filters.authorEmail, where, params)
   if (filters.animalTypeId) {
     where.push(`a.${c('animals', 'animalTypeId')} = ?`)
     params.push(filters.animalTypeId)
@@ -207,12 +287,30 @@ export function animalsListQuery(filters: AnimalFilters, today: string, limit?: 
     params.push(code)
   }
   situationWhere(filters.situacao, today, where, params)
-  params.push(limitClause(limit) + 1)
+  return { where, params }
+}
+
+export function animalsListQuery(filters: AnimalFilters, today: string, limit?: number): SqlQuery {
+  const { where, params: whereParams } = animalsWhere(filters, today)
+  const params: unknown[] = [today, ...whereParams, limitClause(limit) + 1]
   const order = filters.situacao === 'libera7' ? 'w.freeAt, ' : ''
   return {
-    sql: `${animalSelect()} ${where.length ? `WHERE ${where.join(' AND ')}` : ''} ORDER BY ${order}a.${c('animals', 'code')} COLLATE NOCASE, a.id LIMIT ?`,
+    sql: `${animalSelect('?', withdrawalAgg, filters.withAuthor)} ${where.length ? `WHERE ${where.join(' AND ')}` : ''} ORDER BY ${order}a.${c('animals', 'code')} COLLATE NOCASE, a.id LIMIT ?`,
     params,
   }
+}
+
+/** Chaves da lista de animais: código (sem maiúsculas) + id; em "livres em até 7 dias", a data de liberação antes. */
+export function animalKeys(situacao?: AnimalSituation): KeyPart[] {
+  const code: KeyPart = { expr: `a.${c('animals', 'code')}`, field: 'code', nocase: true }
+  const id: KeyPart = { expr: 'a.id', field: 'id' }
+  return situacao === 'libera7' ? [{ expr: 'w.freeAt', field: 'freeAt' }, code, id] : [code, id]
+}
+
+/** Lista de Animais com keyset (ver keyset.ts): mesmos filtros (embarcados escondidos) e mesma ordem. */
+export function animalsListSpec(filters: AnimalFilters, today: string): KeysetSpec {
+  const { where, params } = animalsWhere(filters, today)
+  return { base: animalSelect('?', withdrawalAgg, filters.withAuthor), baseParams: [today], where, params, keys: animalKeys(filters.situacao) }
 }
 
 /**
@@ -259,6 +357,9 @@ export type AnimalRow = {
   inWithdrawal: number
   /** 1 = embarcado (embarque finalizado). */
   shipped?: number
+  /** Só nas consultas do admin (withAuthor). */
+  createdByName?: string | null
+  createdByEmail?: string | null
 }
 
 export function rowToAnimal(row: AnimalRow, withdrawal: AnimalWithdrawal | null = null): Animal {
@@ -281,6 +382,7 @@ export function rowToAnimal(row: AnimalRow, withdrawal: AnimalWithdrawal | null 
       freeAt: row.freeAt ?? null,
       totalWithdrawalDays: Number(row.totalWithdrawalDays ?? 0),
     },
+    ...authorOf(row),
   }
 }
 
@@ -419,15 +521,28 @@ export function rowsToWithdrawal(rows: ApplicationRow[], today: string): AnimalW
 
 // ---------- Rebanhos (contrato final: HERDS_CONTRACT) ----------
 
-const herdSelect = `SELECT h.id AS id, h.${c('herds', 'farmId')} AS farmId, f.${c('farms', 'name')} AS farmName,
+/** `withAuthor` (só admin): + nome e e-mail de quem cadastrou. Sem ele: o SELECT de antes. */
+function herdSelectOf(withAuthor = false) {
+  const author = withAuthor
+    ? ` h.${c('herds', 'createdByName')} AS createdByName, h.${c('herds', 'createdByEmail')} AS createdByEmail,`
+    : ''
+  return `SELECT h.id AS id, h.${c('herds', 'farmId')} AS farmId, f.${c('farms', 'name')} AS farmName,
   h.${c('herds', 'name')} AS name, h.${c('herds', 'description')} AS description,
-  h.${c('herds', 'formedAt')} AS formedAt,
+  h.${c('herds', 'formedAt')} AS formedAt,${author}
   COUNT(a.id) AS animalCount
   FROM ${H} h
   LEFT JOIN ${F} f ON f.id = h.${c('herds', 'farmId')}
   LEFT JOIN ${A} a ON a.${c('animals', 'herdId')} = h.id AND NOT ${animalShippedExpr('a')}`
+}
+const herdSelect = herdSelectOf()
 
-export type HerdFilters = { farmId?: string; search?: string }
+export type HerdFilters = {
+  farmId?: string
+  search?: string
+  /** Só admin: traz nome e e-mail de quem cadastrou e permite filtrar pelo e-mail (`authorEmail`). */
+  withAuthor?: boolean
+  authorEmail?: string
+}
 
 export function herdsListQuery(filters: HerdFilters = {}, limit?: number): SqlQuery {
   const where: string[] = []
@@ -449,6 +564,28 @@ export function herdsListQuery(filters: HerdFilters = {}, limit?: number): SqlQu
   }
 }
 
+export const HERD_KEYS: KeyPart[] = [
+  { expr: `h.${c('herds', 'name')}`, field: 'name', nocase: true },
+  { expr: 'h.id', field: 'id' },
+]
+
+/** Lista de Rebanhos com keyset (ver keyset.ts): mesmos filtros e ordem de herdsListQuery. */
+export function herdsListSpec(filters: HerdFilters = {}): KeysetSpec {
+  const where: string[] = []
+  const params: unknown[] = []
+  if (filters.farmId) {
+    where.push(`h.${c('herds', 'farmId')} = ?`)
+    params.push(filters.farmId)
+  }
+  const search = filters.search?.trim()
+  if (search) {
+    where.push(`instr(lower(h.${c('herds', 'name')}), lower(?)) > 0`)
+    params.push(search)
+  }
+  if (filters.withAuthor) emailWhere(`h.${c('herds', 'createdByEmail')}`, filters.authorEmail, where, params)
+  return { base: herdSelectOf(filters.withAuthor), baseParams: [], where, params, groupBy: 'h.id', keys: HERD_KEYS }
+}
+
 export function herdByIdQuery(id: string): SqlQuery {
   return { sql: `${herdSelect} WHERE h.id = ? GROUP BY h.id`, params: [id] }
 }
@@ -461,6 +598,9 @@ export type HerdRow = {
   description: string | null
   formedAt: string | null
   animalCount: number
+  /** Só nas consultas do admin (withAuthor). */
+  createdByName?: string | null
+  createdByEmail?: string | null
 }
 
 export function rowToHerd(row: HerdRow): Herd {
@@ -472,6 +612,7 @@ export function rowToHerd(row: HerdRow): Herd {
     description: row.description ?? null,
     formedAt: row.formedAt ? String(row.formedAt).slice(0, 10) : '',
     animalCount: Number(row.animalCount ?? 0),
+    ...authorOf(row),
   }
 }
 

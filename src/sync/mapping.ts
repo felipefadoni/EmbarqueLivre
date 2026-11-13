@@ -18,6 +18,7 @@
  * Embarque: nomes do contrato final em `SHIPMENTS_CONTRACT` (`src/api/shipmentsContract.ts`, §17.11 e §19).
  */
 
+import { AUTHOR_CONTRACT } from '../api/authorContract'
 import { HERDS_CONTRACT } from '../api/herdsContract'
 import { SHIPMENT_FLOW_CONTRACT, SHIPMENTS_CONTRACT } from '../api/shipmentsContract'
 
@@ -40,6 +41,9 @@ export const SYNC_TABLES = {
       name: col('name'),
       city: col('city'),
       state: col('state'),
+      /** Só download, só admin (stream admin_all): nome/e-mail de quem cadastrou. Nunca sobem (NEVER_UPLOAD_COLUMNS). */
+      createdByName: col(AUTHOR_CONTRACT.farms.name ?? 'created_by_name'),
+      createdByEmail: col(AUTHOR_CONTRACT.farms.email ?? 'created_by_email'),
       createdAt: col('created_at'),
       updatedAt: col('updated_at'),
     },
@@ -74,6 +78,9 @@ export const SYNC_TABLES = {
       herdId: col(HERDS_CONTRACT.animalHerdColumn),
       /** Flag oficial (do servidor): saiu num embarque finalizado → some da lista de cadastrados. O app grava ao finalizar. */
       shippedAt: col(SHIPMENT_FLOW_CONTRACT.animalShippedAtColumn),
+      /** Só download, só admin (stream admin_all): nome/e-mail de quem cadastrou. Nunca sobem (NEVER_UPLOAD_COLUMNS). */
+      createdByName: col(AUTHOR_CONTRACT.animals.name ?? 'created_by_name'),
+      createdByEmail: col(AUTHOR_CONTRACT.animals.email ?? 'created_by_email'),
       createdAt: col('created_at'),
       updatedAt: col('updated_at'),
     },
@@ -85,6 +92,9 @@ export const SYNC_TABLES = {
       name: col(HERDS_CONTRACT.columns.name),
       description: col(HERDS_CONTRACT.columns.description),
       formedAt: col(HERDS_CONTRACT.columns.formedAt),
+      /** Só download, só admin (stream admin_all): nome/e-mail de quem cadastrou. Nunca sobem (NEVER_UPLOAD_COLUMNS). */
+      createdByName: col(AUTHOR_CONTRACT.herds.name ?? 'created_by_name'),
+      createdByEmail: col(AUTHOR_CONTRACT.herds.email ?? 'created_by_email'),
       createdAt: col(HERDS_CONTRACT.columns.createdAt),
       updatedAt: col(HERDS_CONTRACT.columns.updatedAt),
     },
@@ -191,8 +201,16 @@ export const SERVER_DERIVED_COLUMNS: Partial<Record<SyncEntity, string[]>> = {
  * depois de removê-las (ex.: o shipped_at dos animais ao finalizar) não é enviado.
  */
 export const NEVER_UPLOAD_COLUMNS: Partial<Record<SyncEntity, string[]>> = {
+  // created_by_name/created_by_email: autor (só download, admin). A API já ignora, mas o app também tira de PUT/PATCH,
+  // da saída de reenvio e do envio forçado (todos passam por toUploadOp); o snapshot local guarda para a restauração.
+  farms: [SYNC_TABLES.farms.columns.createdByName.name, SYNC_TABLES.farms.columns.createdByEmail.name],
+  herds: [SYNC_TABLES.herds.columns.createdByName.name, SYNC_TABLES.herds.columns.createdByEmail.name],
   shipments: [SYNC_TABLES.shipments.columns.finishedAt.name],
-  animals: [SYNC_TABLES.animals.columns.shippedAt.name],
+  animals: [
+    SYNC_TABLES.animals.columns.shippedAt.name,
+    SYNC_TABLES.animals.columns.createdByName.name,
+    SYNC_TABLES.animals.columns.createdByEmail.name,
+  ],
   shipmentAnimals: [SYNC_TABLES.shipmentAnimals.columns.photoContentType.name, SYNC_TABLES.shipmentAnimals.columns.photoSizeBytes.name],
 }
 

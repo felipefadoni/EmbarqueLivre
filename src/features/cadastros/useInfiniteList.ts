@@ -29,6 +29,8 @@ export function useInfiniteList<T>(loader: (paging: ListPagingRequest) => Promis
   const [hasMore, setHasMore] = useState(false)
   const pagingRef = useRef<PagingState>({ hasMore: false, nextPage: firstPage + 1, nextCursor: null })
   const loadingMoreRef = useRef(false)
+  /** Muda a cada 1ª página (troca de filtro, refresh): página "mais" de um filtro antigo é descartada. */
+  const generationRef = useRef(0)
 
   const applyPage = useCallback((result: ListPage<T>, requestedPage: number, mode: 'replace' | 'append') => {
     const paging = nextPaging(result, requestedPage)
@@ -41,6 +43,7 @@ export function useInfiniteList<T>(loader: (paging: ListPagingRequest) => Promis
   useFocusEffect(
     useCallback(() => {
       let cancelled = false
+      generationRef.current += 1
       ;(async () => {
         try {
           const result = await loader({ page: firstPage, cursor: undefined })
@@ -65,6 +68,7 @@ export function useInfiniteList<T>(loader: (paging: ListPagingRequest) => Promis
   )
 
   const refresh = useCallback(async () => {
+    generationRef.current += 1
     setRefreshing(true)
     try {
       const result = await loader({ page: firstPage, cursor: undefined })
@@ -78,6 +82,7 @@ export function useInfiniteList<T>(loader: (paging: ListPagingRequest) => Promis
   }, [loader, applyPage])
 
   const reload = useCallback(async () => {
+    generationRef.current += 1
     setLoading(true)
     try {
       const result = await loader({ page: firstPage, cursor: undefined })
@@ -96,13 +101,18 @@ export function useInfiniteList<T>(loader: (paging: ListPagingRequest) => Promis
     loadingMoreRef.current = true
     setLoadingMore(true)
     const requestedPage = paging.nextPage
+    const generation = generationRef.current
     try {
       const result = await loader({
         page: requestedPage,
         cursor: paging.nextCursor ?? undefined,
       })
-      applyPage(result, requestedPage, 'append')
+      if (generation !== generationRef.current) return
+      // Cursor inválido (400 INVALID_CURSOR): o loader recomeçou da 1ª página → substitui em vez de anexar.
+      if (result.restarted) applyPage(result, firstPage, 'replace')
+      else applyPage(result, requestedPage, 'append')
     } catch (err) {
+      if (generation !== generationRef.current) return
       setError(listErrorMessage(isApiError(err) ? err : { status: 0, code: 'INTERNAL_ERROR' }))
     } finally {
       loadingMoreRef.current = false

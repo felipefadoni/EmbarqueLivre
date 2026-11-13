@@ -27,6 +27,10 @@ export type Farm = {
   name: string
   city: string
   state: string
+  /** Só admin, do sync (admin_all). null = autor não registrado; ausente = não consultado (master/básico). */
+  createdByEmail?: string | null
+  /** Nome de quem cadastrou: ainda não exposto pela API (ver src/api/authorContract.ts). */
+  createdByName?: string | null
 }
 
 export type FarmPayload = {
@@ -76,6 +80,10 @@ export type Animal = {
   withdrawal: AnimalWithdrawal | null
   /** `totalWithdrawalDays`, `freeAt`, `inWithdrawal` do topo do animal (lista e detalhe). */
   withdrawalSummary: WithdrawalSummary | null
+  /** Só admin, do sync (admin_all). null = autor não registrado; ausente = não consultado (master/básico). */
+  createdByEmail?: string | null
+  /** Nome de quem cadastrou: ainda não exposto pela API (ver src/api/authorContract.ts). */
+  createdByName?: string | null
 }
 
 export type AnimalPayload = {
@@ -169,6 +177,9 @@ export type Herd = {
   animalCount?: number
   createdAt?: string | null
   updatedAt?: string | null
+  /** Só admin, quando a API expuser em herds (ainda não: ver src/api/authorContract.ts). */
+  createdByName?: string | null
+  createdByEmail?: string | null
 }
 
 export type HerdPayload = {

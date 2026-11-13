@@ -8,23 +8,26 @@ import { HERDS_CONTRACT } from '@/api/herdsContract'
 import { animateFiltersToggle, CollapsibleFilters, FilterToggle } from '@/components/cadastros/CollapsibleFilters'
 import { ListLoadingFooter, ListStatus } from '@/components/cadastros/ListStatus'
 import { SelectField } from '@/components/cadastros/SelectField'
+import { TextFilterField } from '@/components/cadastros/TextFilterField'
 import { AppCard } from '@/components/dashboard/AppCard'
 import { formatDatePtBr } from '@/features/cadastros/dates'
 import { summarizeHerdFilters } from '@/features/cadastros/herdFilters'
+import { authorLine, canFilterByAuthorEmail, canSeeAuthor } from '@/features/cadastros/farmFilters'
 import { canManageHerds } from '@/features/cadastros/permissions'
 import { useAuth } from '@/features/auth/AuthProvider'
-import { useLocalFarms, useLocalList } from '@/sync/hooks'
+import { useKeysetList, useLocalFarms } from '@/sync/hooks'
 import { firstParam } from '@/sync/params'
-import { herdsListQuery, rowToHerd, type HerdRow } from '@/sync/queries'
+import { herdsListSpec, rowToHerd, type HerdRow } from '@/sync/queries'
 import { TOQUE_MINIMO } from '../../../../../tamagui.config'
 
 export default function RebanhosListScreen() {
   const { user } = useAuth()
   if (!canManageHerds(user?.role)) return <Redirect href="/configuracoes" />
-  return <RebanhosList />
+  // Admin: autor (nome + e-mail) e filtro pelo e-mail de quem cadastrou (src/api/authorContract.ts). Master: inalterado.
+  return <RebanhosList showAuthor={canSeeAuthor(user?.role, 'herds')} showAuthorEmail={canFilterByAuthorEmail(user?.role, 'herds')} />
 }
 
-function RebanhosList() {
+function RebanhosList({ showAuthor, showAuthorEmail }: { showAuthor: boolean; showAuthorEmail: boolean }) {
   const isDark = useColorScheme() === 'dark'
   const chevron = isDark ? '#A8B8AF' : '#7A8B80'
   const iconColor = isDark ? '#A8B8AF' : '#3A5247'
@@ -40,6 +43,7 @@ function RebanhosList() {
   }
   const [searchInput, setSearchInput] = useState('')
   const [search, setSearch] = useState('')
+  const [authorEmail, setAuthorEmail] = useState('')
   const [filtersOpen, setFiltersOpen] = useState(false)
 
   useEffect(() => {
@@ -47,14 +51,24 @@ function RebanhosList() {
     return () => clearTimeout(timer)
   }, [searchInput])
 
-  const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useLocalList(
-    (limit) => herdsListQuery({ farmId: farmId || undefined, search: search || undefined }, limit),
+  // Scroll infinito com keyset (nome + id).
+  const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useKeysetList(
+    () =>
+      herdsListSpec({
+        farmId: farmId || undefined,
+        search: search || undefined,
+        // Só admin: colunas e filtro de autor; master/básico: consulta de antes.
+        ...(showAuthor ? { withAuthor: true, authorEmail: showAuthorEmail ? authorEmail : undefined } : {}),
+      }),
     (row: HerdRow) => rowToHerd(row),
-    [farmId, search],
+    [farmId, search, showAuthor, showAuthorEmail, authorEmail],
   )
 
   const farmName = farmId ? farms.find((farm) => farm.id === farmId)?.name : undefined
-  const filterSummary = useMemo(() => summarizeHerdFilters({ farmName, search: searchInput }), [farmName, searchInput])
+  const filterSummary = useMemo(
+    () => summarizeHerdFilters({ farmName, search: searchInput, authorEmail: showAuthorEmail ? authorEmail : undefined }),
+    [farmName, searchInput, showAuthorEmail, authorEmail],
+  )
 
   function toggleFilters(next = !filtersOpen) {
     animateFiltersToggle()
@@ -65,6 +79,7 @@ function RebanhosList() {
     setFarmId('')
     setSearchInput('')
     setSearch('')
+    setAuthorEmail('')
     router.setParams({ farmId: undefined })
     setAppliedParams('')
   }
@@ -137,6 +152,15 @@ function RebanhosList() {
               </XStack>
             ) : null}
           </XStack>
+          {showAuthorEmail ? (
+            <TextFilterField
+              label="E-mail de quem cadastrou"
+              value={authorEmail}
+              placeholder="Buscar pelo e-mail"
+              keyboardType="email-address"
+              onChange={setAuthorEmail}
+            />
+          ) : null}
         </CollapsibleFilters>
       </YStack>
       <FlatList
@@ -146,7 +170,7 @@ function RebanhosList() {
         refreshing={refreshing}
         onRefresh={() => void refresh()}
         onEndReached={() => {
-          if (hasMore && !loading && !refreshing) void loadMore()
+          if (hasMore && !loading && !refreshing && !loadingMore) loadMore()
         }}
         onEndReachedThreshold={0.4}
         ListFooterComponent={loadingMore ? <ListLoadingFooter /> : undefined}
@@ -156,7 +180,7 @@ function RebanhosList() {
             error={error}
             empty={!loading && !error}
             emptyTitle="Nenhum rebanho"
-            emptyMessage={farmId || search ? 'Nenhum rebanho com esses filtros.' : 'Cadastre o primeiro rebanho para começar.'}
+            emptyMessage={farmId || search || (showAuthorEmail && authorEmail.trim()) ? 'Nenhum rebanho com esses filtros.' : 'Cadastre o primeiro rebanho para começar.'}
             onRetry={() => void reload()}
           />
         }
@@ -183,6 +207,11 @@ function RebanhosList() {
                 {item.formedAt ? (
                   <Text fontSize={15} fontWeight="500" color="brandMuted">
                     Formado em {formatDatePtBr(item.formedAt)}
+                  </Text>
+                ) : null}
+                {showAuthor ? (
+                  <Text fontSize={15} fontWeight="600" color="brandMuted" numberOfLines={1}>
+                    {authorLine({ name: item.createdByName, email: item.createdByEmail }, 'herd')}
                   </Text>
                 ) : null}
               </YStack>

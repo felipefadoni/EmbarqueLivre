@@ -6,6 +6,8 @@ import { http } from './client'
 import { compactParams, paginationParams, unwrapListPage, USERS_CONTRACT, type ListPagingRequest } from './contract'
 import { isApiError } from './errors'
 import type { UserRole } from './types'
+import { parseCreatedBy, type UserCreatedBy } from './userAuthor'
+import { fetchUsersPage, type UsersFilters, type UsersPagingState } from './usersPaging'
 
 export type CreatableRole = (typeof USERS_CONTRACT.creatableRoles)[number]
 
@@ -20,6 +22,11 @@ export type AccountUser = {
   createdByUserId: string | null
   createdAt: string | null
   updatedAt: string | null
+  /**
+   * Quem cadastrou (só admin vê). `undefined` = a API ainda não envia o campo (esconder);
+   * `null` = sem autor registrado.
+   */
+  createdBy?: UserCreatedBy | null
   /** Mesmos nomes do signup; null se a API não enviar. */
   mobilePhone: string | null
   whatsAppPhone: string | null
@@ -52,6 +59,7 @@ export function parseAccountUser(raw: unknown): AccountUser {
     createdByUserId: nullableStr(r.createdByUserId),
     createdAt: nullableStr(r.createdAt),
     updatedAt: nullableStr(r.updatedAt),
+    ...parseCreatedBy(r),
     mobilePhone: phoneFrom(r, mobile, ['mobile_phone']),
     whatsAppPhone: phoneFrom(r, whatsApp, ['whatsappPhone', 'whats_app_phone', 'whatsapp_phone']),
   }
@@ -64,6 +72,7 @@ export const forgetUser = (id: string) => void userCache.delete(id)
 
 export type ListUsersParams = ListPagingRequest & { search?: string; accountId?: string; role?: CreatableRole }
 
+/** page/limit (master, detalhe, contagem de masters): mesma consulta de antes. */
 export function listUsersQuery(params: ListUsersParams = {}) {
   const { search, accountId, role, ...paging } = params
   return compactParams({
@@ -80,6 +89,28 @@ export function listUsers(params: ListUsersParams = {}) {
     const items = page.items.map(parseAccountUser)
     for (const item of items) if (item.id) userCache.set(item.id, item)
     return { ...page, items }
+  })
+}
+
+/** Modo da paginação da lista do admin; cai para 'legacy' (e fica) se a API ainda não tiver o keyset. */
+const usersPaging: UsersPagingState = { mode: 'cursor' }
+
+/**
+ * Lista do ADMIN em modo cursor (keyset, mais novos primeiro), com os fallbacks de usersPaging.ts.
+ * Filtros do servidor: os de UsersFilters (a tela manda só `email`; o nome é filtrado no aparelho, ver userFilters.ts).
+ */
+export function listUsersCursor(params: ListPagingRequest & UsersFilters) {
+  const { page, cursor, limit, ...filters } = params
+  return fetchUsersPage(
+    (query) => http.get(USERS_CONTRACT.path, { params: query }).then((res) => res.data as unknown),
+    filters,
+    { page, cursor, limit: limit ?? USERS_CONTRACT.cursorPageLimit },
+    usersPaging,
+  ).then(({ data, restarted }) => {
+    const page = unwrapListPage(data, { page: restarted ? 1 : params.page, limit: limit ?? USERS_CONTRACT.cursorPageLimit })
+    const items = page.items.map(parseAccountUser)
+    for (const item of items) if (item.id) userCache.set(item.id, item)
+    return { ...page, items, restarted }
   })
 }
 

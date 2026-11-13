@@ -1,6 +1,6 @@
 import { useNetInfo } from '@react-native-community/netinfo'
 import { usePowerSync, useQuery, useStatus } from '@powersync/react'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import { POWERSYNC_CONFIG } from './config'
 import {
@@ -17,6 +17,7 @@ import {
   type HerdRow,
   type SqlQuery,
 } from './queries'
+import { hasMoreQuery, keysetQuery, nextUntil, sliceWindow, windowQuery, type Cursor, type KeysetSpec } from './keyset'
 import { CONFLICT_COUNT_SQL } from './localGuard'
 import { OUTBOX_COUNT_SQL } from './outbox'
 import { PHOTO_QUEUE_COUNTS_SQL } from './photoQueue'
@@ -97,6 +98,90 @@ export function useLocalList<Row, Item>(build: (limit: number) => SqlQuery, map:
     loadMore: () => {
       if (hasMore) setLimit((value) => value + LOCAL_PAGE_SIZE)
     },
+  }
+}
+
+/** Consulta que nunca devolve linhas (o probe de "há mais" fica parado enquanto não há cursor). */
+const NO_ROWS_SQL = 'SELECT 1 AS x WHERE 0'
+
+/**
+ * Lista local reativa com paginação KEYSET e scroll infinito (ver keyset.ts para a estratégia).
+ * - Primeira página: LIMIT página+1 (observada).
+ * - "Carregar mais": busca única `(chaves) > cursor do último item LIMIT página`; o fim dela vira `until`, e a tela
+ *   passa a observar `(chaves) <= until` — uma consulta só, então o watch do PowerSync (inserção/edição local,
+ *   download) nunca duplica nem pula linhas.
+ * - `hasMore`: probe observado `(chaves) > until LIMIT 1`.
+ * - Um "carregar mais" por vez (ref), e nada depois do fim.
+ * Mesmo formato de retorno de useLocalList.
+ */
+export function useKeysetList<Row, Item>(
+  buildSpec: () => KeysetSpec,
+  map: (row: Row) => Item,
+  deps: unknown[],
+  pageSize = LOCAL_PAGE_SIZE,
+) {
+  const db = usePowerSync()
+  const [until, setUntil] = useState<Cursor | null>(null)
+  const [refreshing, setRefreshing] = useState(false)
+  const [fetchingMore, setFetchingMore] = useState(false)
+  const busyRef = useRef(false)
+  const waitForSync = useWaitForSync()
+  // Filtros mudaram: volta para a primeira página.
+  const depsKey = JSON.stringify(deps)
+  const [lastKey, setLastKey] = useState(depsKey)
+  if (lastKey !== depsKey) {
+    setLastKey(depsKey)
+    setUntil(null)
+  }
+  const spec = buildSpec()
+  const query = windowQuery(spec, until, pageSize)
+  const result = useQuery<Row>(query.sql, query.params as unknown[])
+  const probe = until ? hasMoreQuery(spec, until) : { sql: NO_ROWS_SQL, params: [] }
+  const probeResult = useQuery<Row>(probe.sql, probe.params as unknown[])
+  const { rows, hasMore } = sliceWindow(result.data, until, pageSize, probeResult.data.length > 0)
+  const items = useMemo(() => rows.map(map), [rows, map])
+  const last = rows[rows.length - 1]
+  // Continua do último item visível; se a faixa ficou vazia (tudo apagado), continua do próprio `until`.
+  const after: Cursor | null = last ? spec.keys.map((key) => (last as Record<string, unknown>)[key.field] ?? '') : until
+
+  const loadMore = async () => {
+    if (!hasMore || !after || busyRef.current) return
+    busyRef.current = true
+    setFetchingMore(true)
+    try {
+      const current = spec
+      const next = keysetQuery(current, { after, limit: pageSize })
+      const page = await db.getAll<Row>(next.sql, next.params as unknown[])
+      const cursor = nextUntil(current.keys, page as Record<string, unknown>[])
+      if (cursor) setUntil(cursor)
+    } catch (error) {
+      console.warn('[lista] não deu para carregar mais', error)
+    } finally {
+      busyRef.current = false
+      setFetchingMore(false)
+    }
+  }
+
+  const refresh = useCallback(async () => {
+    setRefreshing(true)
+    try {
+      await waitForSync()
+      await result.refresh?.()
+    } finally {
+      setRefreshing(false)
+    }
+  }, [waitForSync, result])
+
+  return {
+    items,
+    loading: result.isLoading,
+    refreshing,
+    loadingMore: fetchingMore || (result.isFetching && !result.isLoading && until != null),
+    error: result.error ? 'Não foi possível ler os dados deste aparelho.' : null,
+    hasMore,
+    reload: () => void result.refresh?.(),
+    refresh,
+    loadMore: () => void loadMore(),
   }
 }
 

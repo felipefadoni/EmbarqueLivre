@@ -8,13 +8,17 @@ import type { Animal } from '@/api/catalog'
 import { animateFiltersToggle, CollapsibleFilters, FilterToggle } from '@/components/cadastros/CollapsibleFilters'
 import { ListLoadingFooter, ListStatus } from '@/components/cadastros/ListStatus'
 import { SelectField } from '@/components/cadastros/SelectField'
+import { TextFilterField } from '@/components/cadastros/TextFilterField'
 import { WithdrawalBadge } from '@/components/cadastros/WithdrawalBadge'
 import { AppCard } from '@/components/dashboard/AppCard'
+import { useAuth } from '@/features/auth/AuthProvider'
 import { summarizeAnimalFilters } from '@/features/cadastros/animalFilters'
+import { authorLine, canFilterByAuthorEmail, canSeeAuthor, canUseAdminFilters } from '@/features/cadastros/farmFilters'
+import { matchingFarmIds } from '@/features/cadastros/textFilter'
 import { formatDayMonthPtBr, todayIso } from '@/features/cadastros/dates'
-import { useLocalAnimalTypes, useLocalFarms, useLocalHerds, useLocalList } from '@/sync/hooks'
+import { useKeysetList, useLocalAnimalTypes, useLocalFarms, useLocalHerds } from '@/sync/hooks'
 import { firstParam } from '@/sync/params'
-import { animalsListQuery, isAnimalSituation, rowToAnimal, type AnimalRow as LocalAnimalRow, type AnimalSituation } from '@/sync/queries'
+import { animalsListSpec, isAnimalSituation, rowToAnimal, type AnimalRow as LocalAnimalRow, type AnimalSituation } from '@/sync/queries'
 import { TOQUE_MINIMO } from '../../../../../tamagui.config'
 
 const SITUATION_OPTIONS: { value: '' | AnimalSituation; label: string }[] = [
@@ -30,6 +34,14 @@ export default function AnimaisListScreen() {
   const chevron = isDark ? '#A8B8AF' : '#7A8B80'
   const farms = useLocalFarms()
   const types = useLocalAnimalTypes()
+  const { user } = useAuth()
+  // Só admin: filtro por nome da fazenda (texto, sem acentos) e, com o contrato do autor, por e-mail.
+  const adminFilters = canUseAdminFilters(user?.role)
+  const showAuthor = canSeeAuthor(user?.role, 'animals')
+  const showAuthorEmail = canFilterByAuthorEmail(user?.role, 'animals')
+  const [farmSearch, setFarmSearch] = useState('')
+  const [authorEmail, setAuthorEmail] = useState('')
+  const farmIds = useMemo(() => (adminFilters ? matchingFarmIds(farms, farmSearch) : undefined), [adminFilters, farms, farmSearch])
   // Filtros podem vir do Dashboard: ?situacao=carencia&farmId=...&animalTypeId=...
   const params = useLocalSearchParams<{ situacao?: string; farmId?: string; animalTypeId?: string; herdId?: string }>()
   const paramSituation = firstParam(params.situacao)
@@ -63,8 +75,10 @@ export default function AnimaisListScreen() {
         farmName: selectedFarmName,
         typeName: selectedTypeName,
         herdName: selectedHerdName,
+        farmSearch: adminFilters ? farmSearch : undefined,
+        authorEmail: showAuthorEmail ? authorEmail : undefined,
       }),
-    [situacao, selectedFarmName, selectedTypeName, selectedHerdName],
+    [situacao, selectedFarmName, selectedTypeName, selectedHerdName, adminFilters, farmSearch, showAuthorEmail, authorEmail],
   )
 
   function toggleFilters(next = !filtersOpen) {
@@ -77,16 +91,30 @@ export default function AnimaisListScreen() {
     setFarmId('')
     setTypeId('')
     setHerdId('')
+    setFarmSearch('')
+    setAuthorEmail('')
     router.setParams({ situacao: undefined, farmId: undefined, animalTypeId: undefined, herdId: undefined })
     setAppliedParams('|||')
   }
 
   // Lista local reativa: carência (SUM/MAX) calculada no SQLite do aparelho.
-  const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useLocalList(
-    (limit) =>
-      animalsListQuery({ farmId: farmId || undefined, animalTypeId: typeId || undefined, herdId: herdId || undefined, situacao: situacao || undefined }, today, limit),
+  // Scroll infinito com keyset (código + id; "livres em 7 dias": data + código + id).
+  const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useKeysetList(
+    () =>
+      animalsListSpec(
+        {
+          farmId: farmId || undefined,
+          farmIds,
+          animalTypeId: typeId || undefined,
+          herdId: herdId || undefined,
+          situacao: situacao || undefined,
+          // Só admin: e-mail de quem cadastrou (lista e filtro). Master/básico: undefined = SQL de antes.
+          ...(showAuthor ? { withAuthor: true, authorEmail: showAuthorEmail ? authorEmail : undefined } : {}),
+        },
+        today,
+      ),
     (row: LocalAnimalRow) => rowToAnimal(row),
-    [farmId, typeId, herdId, situacao, today],
+    [farmId, farmIds, typeId, herdId, situacao, today, showAuthor, showAuthorEmail, authorEmail],
   )
 
   const farmName = (animal: Animal) =>
@@ -130,6 +158,18 @@ export default function AnimaisListScreen() {
               setHerdId('')
             }}
           />
+          {adminFilters ? (
+            <TextFilterField label="Nome da fazenda" value={farmSearch} placeholder="Buscar pelo nome da fazenda" onChange={setFarmSearch} />
+          ) : null}
+          {showAuthorEmail ? (
+            <TextFilterField
+              label="E-mail de quem cadastrou"
+              value={authorEmail}
+              placeholder="Buscar pelo e-mail"
+              keyboardType="email-address"
+              onChange={setAuthorEmail}
+            />
+          ) : null}
           <SelectField
             label="Filtrar por tipo"
             value={typeId}
@@ -158,7 +198,7 @@ export default function AnimaisListScreen() {
         refreshing={refreshing}
         onRefresh={() => void refresh()}
         onEndReached={() => {
-          if (hasMore && !loading && !refreshing) void loadMore()
+          if (hasMore && !loading && !refreshing && !loadingMore) loadMore()
         }}
         onEndReachedThreshold={0.4}
         ListFooterComponent={loadingMore ? <ListLoadingFooter /> : undefined}
@@ -173,7 +213,13 @@ export default function AnimaisListScreen() {
           />
         }
         renderItem={({ item }) => (
-          <AnimalRow animal={item} farmName={farmName(item)} typeName={typeName(item)} chevron={chevron} />
+          <AnimalRow
+            animal={item}
+            farmName={farmName(item)}
+            typeName={typeName(item)}
+            chevron={chevron}
+            author={showAuthor ? authorLine({ name: item.createdByName, email: item.createdByEmail }, 'animal') : undefined}
+          />
         )}
       />
     </YStack>
@@ -185,11 +231,14 @@ function AnimalRow({
   farmName,
   typeName,
   chevron,
+  author,
 }: {
   animal: Animal
   farmName: string
   typeName: string
   chevron: string
+  /** Só admin: e-mail de quem cadastrou, ou "Autor não registrado" (src/api/authorContract.ts). */
+  author?: string
 }) {
   return (
     <AppCard padded={false}>
@@ -211,6 +260,11 @@ function AnimalRow({
           <Text fontSize={16} fontWeight="500" color="brandMuted">
             {farmName} · {typeName}{animal.herdName ? ` · ${animal.herdName}` : ''}
           </Text>
+          {author ? (
+            <Text fontSize={15} fontWeight="600" color="brandMuted" numberOfLines={1}>
+              {author}
+            </Text>
+          ) : null}
           {animal.withdrawalSummary?.inWithdrawal ? (
             <XStack mt={4}>
               <WithdrawalBadge
