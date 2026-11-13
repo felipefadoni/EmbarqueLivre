@@ -410,8 +410,12 @@ export function rowToAnimal(row: AnimalRow, withdrawal: AnimalWithdrawal | null 
 
 // ---------- Lançamentos (vacinações) ----------
 
-function vaccinationSelect() {
-  return `SELECT av.id AS id, av.${c('vaccinations', 'animalId')} AS animalId, a.${c('animals', 'code')} AS animalCode,
+/** `withAuthor` (só admin): + nome e e-mail de quem cadastrou. Sem ele: o SELECT de antes. */
+function vaccinationSelect(withAuthor = false) {
+  const author = withAuthor
+    ? ` av.${c('vaccinations', 'createdByName')} AS createdByName, av.${c('vaccinations', 'createdByEmail')} AS createdByEmail,`
+    : ''
+  return `SELECT av.id AS id,${author} av.${c('vaccinations', 'animalId')} AS animalId, a.${c('animals', 'code')} AS animalCode,
   COALESCE(a.${c('animals', 'farmId')}, av.${c('vaccinations', 'farmId')}) AS farmId, f.${c('farms', 'name')} AS farmName,
   at.${c('animalTypes', 'name')} AS animalTypeName, av.${c('vaccinations', 'vaccineId')} AS vaccineId, v.${c('vaccines', 'name')} AS vaccineName,
   av.${c('vaccinations', 'appliedAt')} AS appliedAt, av.${c('vaccinations', 'withdrawalDays')} AS withdrawalDays,
@@ -424,7 +428,17 @@ function vaccinationSelect() {
   LEFT JOIN ${V} v ON v.id = av.${c('vaccinations', 'vaccineId')}`
 }
 
-export type VaccinationFiltersLocal = { date?: string; dateFrom?: string; dateTo?: string; farmId?: string; code?: string; animalId?: string }
+export type VaccinationFiltersLocal = {
+  date?: string
+  dateFrom?: string
+  dateTo?: string
+  farmId?: string
+  code?: string
+  animalId?: string
+  /** Só admin: traz nome e e-mail de quem cadastrou e permite filtrar pelo e-mail (`authorEmail`). */
+  withAuthor?: boolean
+  authorEmail?: string
+}
 
 function vaccinationsWhere(filters: VaccinationFiltersLocal) {
   const where: string[] = []
@@ -455,6 +469,7 @@ function vaccinationsWhere(filters: VaccinationFiltersLocal) {
     where.push(`instr(lower(a.${c('animals', 'code')}), lower(?)) > 0`)
     params.push(code)
   }
+  if (filters.withAuthor) emailWhere(`av.${c('vaccinations', 'createdByEmail')}`, filters.authorEmail, where, params)
   return { where, params }
 }
 
@@ -463,7 +478,7 @@ export function vaccinationsListQuery(filters: VaccinationFiltersLocal, limit?: 
   const applied = `av.${c('vaccinations', 'appliedAt')}`
   params.push(limitClause(limit) + 1)
   return {
-    sql: `${vaccinationSelect()} ${where.length ? `WHERE ${where.join(' AND ')}` : ''} ORDER BY ${applied} DESC, av.id DESC LIMIT ?`,
+    sql: `${vaccinationSelect(filters.withAuthor)} ${where.length ? `WHERE ${where.join(' AND ')}` : ''} ORDER BY ${applied} DESC, av.id DESC LIMIT ?`,
     params,
   }
 }
@@ -472,7 +487,7 @@ export function vaccinationsListQuery(filters: VaccinationFiltersLocal, limit?: 
 export function vaccinationsListSpec(filters: VaccinationFiltersLocal): KeysetSpec {
   const { where, params } = vaccinationsWhere(filters)
   return {
-    base: vaccinationSelect(),
+    base: vaccinationSelect(filters.withAuthor),
     baseParams: [],
     where,
     params,
@@ -483,8 +498,8 @@ export function vaccinationsListSpec(filters: VaccinationFiltersLocal): KeysetSp
   }
 }
 
-export function vaccinationByIdQuery(id: string): SqlQuery {
-  return { sql: `${vaccinationSelect()} WHERE av.id = ?`, params: [id] }
+export function vaccinationByIdQuery(id: string, withAuthor = false): SqlQuery {
+  return { sql: `${vaccinationSelect(withAuthor)} WHERE av.id = ?`, params: [id] }
 }
 
 export type VaccinationRow = {
@@ -502,10 +517,14 @@ export type VaccinationRow = {
   createdByUserId: string | null
   createdAt: string | null
   updatedAt: string | null
+  /** Só nas consultas do admin (withAuthor). */
+  createdByName?: string | null
+  createdByEmail?: string | null
 }
 
 export function rowToVaccination(row: VaccinationRow): VaccinationEntry {
   return {
+    ...authorOf(row),
     id: row.id,
     animalId: row.animalId ?? '',
     animalCode: row.animalCode ?? '',
@@ -675,13 +694,19 @@ export function herdNameTakenQuery(farmId: string, name: string, excludeId?: str
 
 // ---------- Embarques (SHIPMENTS_CONTRACT + SHIPMENT_FLOW_CONTRACT, contrato final) ----------
 
-const shipmentSelect = `SELECT s.id AS id, s.${c('shipments', 'farmId')} AS farmId, f.${c('farms', 'name')} AS farmName,
+/** `withAuthor` (só admin): + nome e e-mail de quem cadastrou. Sem ele: o SELECT de antes. */
+function shipmentSelectOf(withAuthor = false) {
+  const author = withAuthor
+    ? ` s.${c('shipments', 'createdByName')} AS createdByName, s.${c('shipments', 'createdByEmail')} AS createdByEmail,`
+    : ''
+  return `SELECT s.id AS id,${author} s.${c('shipments', 'farmId')} AS farmId, f.${c('farms', 'name')} AS farmName,
   s.${c('shipments', 'name')} AS name, s.${c('shipments', 'shippedOn')} AS shippedOn,
   COALESCE(s.${c('shipments', 'status')}, 'in_progress') AS status, s.${c('shipments', 'finishedAt')} AS finishedAt,
   COUNT(sa.id) AS animalCount, COALESCE(SUM(sa.${c('shipmentAnimals', 'weightKg')}), 0) AS totalWeightKg
   FROM ${S} s
   LEFT JOIN ${F} f ON f.id = s.${c('shipments', 'farmId')}
   LEFT JOIN ${SA} sa ON sa.${c('shipmentAnimals', 'shipmentId')} = s.id`
+}
 
 /** `when`: proximos = dia do embarque >= hoje; realizados = antes de hoje (hoje vem do JS, fuso do contrato). */
 export const SHIPMENT_WHEN = ['proximos', 'realizados'] as const
@@ -690,7 +715,16 @@ export function isShipmentWhen(value: unknown): value is ShipmentWhen {
   return typeof value === 'string' && (SHIPMENT_WHEN as readonly string[]).includes(value)
 }
 
-export type ShipmentFilters = { farmId?: string; search?: string; when?: ShipmentWhen; today?: string; status?: ShipmentStatus }
+export type ShipmentFilters = {
+  farmId?: string
+  search?: string
+  when?: ShipmentWhen
+  today?: string
+  status?: ShipmentStatus
+  /** Só admin: traz nome e e-mail de quem cadastrou e permite filtrar pelo e-mail (`authorEmail`). */
+  withAuthor?: boolean
+  authorEmail?: string
+}
 
 function shipmentsWhere(filters: ShipmentFilters) {
   const where: string[] = []
@@ -713,6 +747,7 @@ function shipmentsWhere(filters: ShipmentFilters) {
     where.push(filters.when === 'proximos' ? `${shipped} >= ?` : `${shipped} < ?`)
     params.push(filters.today)
   }
+  if (filters.withAuthor) emailWhere(`s.${c('shipments', 'createdByEmail')}`, filters.authorEmail, where, params)
   return { where, params }
 }
 
@@ -723,7 +758,7 @@ export function shipmentsListQuery(filters: ShipmentFilters = {}, limit?: number
   // Próximos: o mais perto primeiro; demais: o mais recente primeiro.
   const order = filters.when === 'proximos' ? `${shipped} ASC` : `${shipped} DESC`
   return {
-    sql: `${shipmentSelect} ${where.length ? `WHERE ${where.join(' AND ')}` : ''} GROUP BY s.id
+    sql: `${shipmentSelectOf(filters.withAuthor)} ${where.length ? `WHERE ${where.join(' AND ')}` : ''} GROUP BY s.id
       ORDER BY ${order}, s.${c('shipments', 'name')} COLLATE NOCASE, s.id LIMIT ?`,
     params,
   }
@@ -736,7 +771,7 @@ export function shipmentsListQuery(filters: ShipmentFilters = {}, limit?: number
 export function shipmentsListSpec(filters: ShipmentFilters = {}): KeysetSpec {
   const { where, params } = shipmentsWhere(filters)
   return {
-    base: shipmentSelect,
+    base: shipmentSelectOf(filters.withAuthor),
     baseParams: [],
     where,
     params,
@@ -749,8 +784,8 @@ export function shipmentsListSpec(filters: ShipmentFilters = {}): KeysetSpec {
   }
 }
 
-export function shipmentByIdQuery(id: string): SqlQuery {
-  return { sql: `${shipmentSelect} WHERE s.id = ? GROUP BY s.id`, params: [id] }
+export function shipmentByIdQuery(id: string, withAuthor = false): SqlQuery {
+  return { sql: `${shipmentSelectOf(withAuthor)} WHERE s.id = ? GROUP BY s.id`, params: [id] }
 }
 
 export type ShipmentRow = {
@@ -763,10 +798,14 @@ export type ShipmentRow = {
   finishedAt?: string | null
   animalCount: number
   totalWeightKg?: number | null
+  /** Só nas consultas do admin (withAuthor). */
+  createdByName?: string | null
+  createdByEmail?: string | null
 }
 
 export function rowToShipment(row: ShipmentRow): Shipment {
   return {
+    ...authorOf(row),
     status: shipmentStatusOf(row.status),
     finishedAt: row.finishedAt ?? null,
     id: row.id,

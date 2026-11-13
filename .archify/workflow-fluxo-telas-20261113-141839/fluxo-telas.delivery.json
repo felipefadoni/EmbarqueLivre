@@ -1,17 +1,17 @@
 {
   "schemaVersion": 1,
-  "receiptId": "c00cddf5-7bba-472a-869a-debcb055823c",
+  "receiptId": "8e2f014a-0da4-4720-a7b6-180697bfd5b4",
   "status": "current",
   "command": "deliver",
   "type": "workflow",
   "input": "/Users/felipefadoni/Work/Pessoal/embarquelivre/.archify/workflow-fluxo-telas-20261113-141839/candidate.json",
   "output": "/Users/felipefadoni/Work/Pessoal/embarquelivre/.archify/workflow-fluxo-telas-20261113-141839/fluxo-telas.html",
   "specification": {
-    "sha256": "2f48b4a0e0c70b227aecbf21fdeaa9826efbea3dd4ac86dfeb2c20b27e1d16a9",
-    "bytes": 43865
+    "sha256": "bc64ee0b47ce0e9321c1c0fe64397e8e9a5de66c34253695ea69b3e155a4ba05",
+    "bytes": 44972
   },
   "artifact": {
-    "sha256": "ae5f695167beb3ab33d980576ec32999ad9cc299a0a5a0422556b8c1ac5cb294",
-    "bytes": 861643
+    "sha256": "f4dc98ed578e9a7be667e3cc45a78f1dc71f05a7b92eff96ed2975ba63008bc4",
+    "bytes": 862820
   }
 }

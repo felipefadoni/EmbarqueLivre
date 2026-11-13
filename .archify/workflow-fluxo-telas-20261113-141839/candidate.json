@@ -509,7 +509,7 @@
     "repository": {
       "url": "git@github.com:felipefadoni/EmbarqueLivre.git",
       "link_mode": "local-only",
-      "revision": "238aa4fa6b8fa37c7ab3b90a041cc4885dcd2994"
+      "revision": "656ddb0e9a68117ba242d01b2bc978d96ecfcd71"
     },
     "output": ".archify/workflow-fluxo-telas-20261113-141839/fluxo-telas.html"
   },
@@ -625,9 +625,15 @@
       "sources": [
         {
           "path": "src/app/(app)/_layout.tsx",
-          "line": 12,
-          "end_line": 18,
+          "line": 14,
+          "end_line": 19,
           "label": "Quatro abas"
+        },
+        {
+          "path": "src/app/(app)/index.tsx",
+          "line": 85,
+          "end_line": 85,
+          "label": "Estado da sincronização"
         },
         {
           "path": "src/app/(app)/index.tsx",
@@ -647,16 +653,16 @@
       "icon": "frontend",
       "sources": [
         {
-          "path": "src/app/(app)/lancamentos/_layout.tsx",
-          "line": 21,
-          "end_line": 23,
-          "label": "Lista, nova e edição"
+          "path": "src/app/(app)/lancamentos/index.tsx",
+          "line": 57,
+          "end_line": 63,
+          "label": "Lista do banco local"
         },
         {
           "path": "src/app/(app)/lancamentos/index.tsx",
-          "line": 105,
-          "end_line": 119,
-          "label": "Informar vacina"
+          "line": 104,
+          "end_line": 120,
+          "label": "Sincronização e informar vacina"
         },
         {
           "path": "src/app/(app)/lancamentos/index.tsx",
@@ -680,6 +686,12 @@
           "line": 22,
           "end_line": 23,
           "label": "Títulos das telas"
+        },
+        {
+          "path": "src/features/vacinacoes/VaccinationEditor.tsx",
+          "line": 154,
+          "end_line": 160,
+          "label": "Grava no aparelho"
         }
       ]
     },
@@ -695,14 +707,14 @@
       "sources": [
         {
           "path": "src/app/(app)/embarques/index.tsx",
-          "line": 100,
-          "end_line": 110,
-          "label": "Novo embarque"
+          "line": 48,
+          "end_line": 114,
+          "label": "Lista local, sincronização e novo"
         },
         {
           "path": "src/app/(app)/embarques/index.tsx",
-          "line": 210,
-          "end_line": 220,
+          "line": 208,
+          "end_line": 222,
           "label": "Abrir embarque"
         },
         {
@@ -720,6 +732,7 @@
       "type": "frontend",
       "label": "Embarque",
       "sublabel": "Novo abre o detalhe",
+      "tag": "fotos offline",
       "icon": "frontend",
       "sources": [
         {
@@ -733,6 +746,12 @@
           "line": 88,
           "end_line": 100,
           "label": "Salvar abre o detalhe"
+        },
+        {
+          "path": "src/sync/photoDownload.ts",
+          "line": 43,
+          "end_line": 84,
+          "label": "Fotos baixadas para o aparelho"
         }
       ]
     },
@@ -986,6 +1005,15 @@
         "Fazendas, catálogo de vacinas, tipos, rebanho e usuários só aparecem para master e admin.",
         "Tipos de animais: master vê a lista; só admin cria e edita.",
         "Excluir embarque e exportar PDF são de master e admin; finalizar é de todos."
+      ]
+    },
+    {
+      "dot": "violet",
+      "title": "Sem internet",
+      "items": [
+        "Vacinas e Embarques leem e gravam no aparelho; o envio ao servidor acontece quando a internet volta.",
+        "Dashboard, Vacinas e Embarques mostram no topo o estado da sincronização. Pendência recusada ou cadastro salvo só no aparelho vira atalho para a Revisão.",
+        "Fotos de embarques em andamento, inclusive as tiradas em outro aparelho, são baixadas quando há internet e continuam no aparelho depois de finalizar."
       ]
     },
     {

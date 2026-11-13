@@ -9,11 +9,14 @@ import { isWithdrawalActive, VACCINATION_CONTRACT, type VaccinationEntry } from 
 import { animateFiltersToggle, CollapsibleFilters, FilterToggle } from '@/components/cadastros/CollapsibleFilters'
 import { ListLoadingFooter, ListStatus } from '@/components/cadastros/ListStatus'
 import { SelectField } from '@/components/cadastros/SelectField'
+import { TextFilterField } from '@/components/cadastros/TextFilterField'
 import { WithdrawalBadge } from '@/components/cadastros/WithdrawalBadge'
 import { AppCard } from '@/components/dashboard/AppCard'
 import { DateField } from '@/components/form/DateField'
 import { SyncStatusIndicator } from '@/components/sync/SyncStatusIndicator'
+import { useAuth } from '@/features/auth/AuthProvider'
 import { formatDatePtBr, todayIso } from '@/features/cadastros/dates'
+import { authorLine, canFilterByAuthorEmail, canSeeAuthor } from '@/features/cadastros/farmFilters'
 import { summarizeVaccinationFilters } from '@/features/vacinacoes/filterSummary'
 import { useLocalFarms, useKeysetList } from '@/sync/hooks'
 import { firstParam } from '@/sync/params'
@@ -44,6 +47,12 @@ export default function LancamentosScreen() {
     setFarmId(paramFarm ?? '')
   }
   const farms = useLocalFarms()
+  // Só admin: autor (nome · e-mail) em cada lançamento e filtro pelo e-mail de quem cadastrou. Master/básico: inalterado.
+  const { user } = useAuth()
+  const showAuthor = canSeeAuthor(user?.role, 'vaccinations')
+  const showAuthorEmail = canFilterByAuthorEmail(user?.role, 'vaccinations')
+  const [authorEmail, setAuthorEmail] = useState('')
+  const authorFilter = showAuthorEmail ? authorEmail : undefined
   const [codeInput, setCodeInput] = useState('')
   const [code, setCode] = useState('')
   // Painel de filtros começa FECHADO; fechar não limpa os filtros.
@@ -57,9 +66,9 @@ export default function LancamentosScreen() {
   // Lançamentos do dia (padrão: hoje), por fazenda e código — consulta local reativa.
   const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useKeysetList(
     // Keyset: aplicação mais recente primeiro, depois id desc (mesma ordem de antes).
-    () => vaccinationsListSpec({ date, farmId: farmId || undefined, code: code || undefined }),
+    () => vaccinationsListSpec({ date, farmId: farmId || undefined, code: code || undefined, withAuthor: showAuthor, authorEmail: authorFilter }),
     rowToVaccination,
-    [date, farmId, code],
+    [date, farmId, code, showAuthor, authorFilter],
   )
   const isToday = date === todayIso()
   const farmName = farmId ? farms.find((farm) => farm.id === farmId)?.name : undefined
@@ -70,8 +79,9 @@ export default function LancamentosScreen() {
         today: todayIso(),
         farmName,
         code: codeInput,
+        authorEmail: authorFilter,
       }),
-    [date, farmName, codeInput],
+    [date, farmName, codeInput, authorFilter],
   )
   function toggleFilters(next = !filtersOpen) {
     animateFiltersToggle()
@@ -83,6 +93,7 @@ export default function LancamentosScreen() {
     setFarmId('')
     setCodeInput('')
     setCode('')
+    setAuthorEmail('')
     router.setParams({ date: undefined, farmId: undefined })
     setAppliedParams('|')
   }
@@ -184,6 +195,15 @@ export default function LancamentosScreen() {
               </XStack>
             ) : null}
           </XStack>
+          {showAuthorEmail ? (
+            <TextFilterField
+              label="E-mail de quem cadastrou"
+              value={authorEmail}
+              placeholder="Buscar pelo e-mail"
+              keyboardType="email-address"
+              onChange={setAuthorEmail}
+            />
+          ) : null}
         </CollapsibleFilters>
       </YStack>
       <FlatList
@@ -211,20 +231,26 @@ export default function LancamentosScreen() {
             empty={!loading && !error}
             emptyTitle="Nenhum lançamento"
             emptyMessage={
-              code || farmId
+              code || farmId || authorFilter?.trim()
                 ? 'Nenhuma vacina encontrada com esses filtros.'
                 : `Nenhuma vacina lançada em ${formatDatePtBr(date)}. Toque em "Informar Vacina" para lançar.`
             }
             onRetry={() => void reload()}
           />
         }
-        renderItem={({ item }) => <VaccinationRow entry={item} chevron={iconColor} />}
+        renderItem={({ item }) => (
+          <VaccinationRow
+            entry={item}
+            chevron={iconColor}
+            author={showAuthor ? authorLine({ name: item.createdByName, email: item.createdByEmail }, 'vaccination') : undefined}
+          />
+        )}
       />
     </YStack>
   )
 }
 
-function VaccinationRow({ entry, chevron }: { entry: VaccinationEntry; chevron: string }) {
+function VaccinationRow({ entry, chevron, author }: { entry: VaccinationEntry; chevron: string; author?: string }) {
   return (
     <AppCard padded={false}>
       <XStack
@@ -256,6 +282,12 @@ function VaccinationRow({ entry, chevron }: { entry: VaccinationEntry; chevron: 
           <Text fontSize={15} fontWeight="600" color="brandMuted" mt={4}>
             Aplicada em {formatDatePtBr(entry.appliedAt) || '—'}
           </Text>
+          {/* Só admin: quem cadastrou, ou "Autor não registrado" (src/api/authorContract.ts). */}
+          {author ? (
+            <Text fontSize={15} fontWeight="600" color="brandMuted" numberOfLines={1}>
+              {author}
+            </Text>
+          ) : null}
           {entry.withdrawalUntil ? (
             <XStack mt={4}>
               <WithdrawalBadge

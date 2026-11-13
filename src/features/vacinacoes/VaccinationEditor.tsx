@@ -25,7 +25,9 @@ import { CadastroFormScreen } from '@/components/cadastros/CadastroFormScreen'
 import { ConfirmDialog } from '@/components/cadastros/ConfirmDialog'
 import { SelectField } from '@/components/cadastros/SelectField'
 import { DateField } from '@/components/form/DateField'
+import { useAuth } from '@/features/auth/AuthProvider'
 import { addDaysIso, formatDatePtBr, todayIso } from '@/features/cadastros/dates'
+import { authorLine, canSeeAuthor } from '@/features/cadastros/farmFilters'
 
 type VaccinationEditorProps = {
   vaccinationId?: string
@@ -43,6 +45,9 @@ export function VaccinationEditor({ vaccinationId, pendenciaId }: VaccinationEdi
   const [vaccineId, setVaccineId] = useState('')
   const [appliedAt, setAppliedAt] = useState<string>(() => todayIso())
   const [original, setOriginal] = useState<VaccinationEntry | null>(null)
+  // Só admin: quem cadastrou o lançamento (nome · e-mail, ou "Autor não registrado").
+  const { user } = useAuth()
+  const showAuthor = canSeeAuthor(user?.role, 'vaccinations')
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [formError, setFormError] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
@@ -63,7 +68,7 @@ export function VaccinationEditor({ vaccinationId, pendenciaId }: VaccinationEdi
       try {
         const source = await loadEditorSource<VaccinationRow, VaccinationEntry>(
           'vaccinations',
-          vaccinationId ? vaccinationByIdQuery(vaccinationId) : null,
+          vaccinationId ? vaccinationByIdQuery(vaccinationId, showAuthor) : null,
           rowToVaccination,
           pendenciaId,
         )
@@ -111,7 +116,7 @@ export function VaccinationEditor({ vaccinationId, pendenciaId }: VaccinationEdi
     return () => {
       cancelled = true
     }
-  }, [vaccinationId, pendenciaId, reloadKey])
+  }, [vaccinationId, pendenciaId, reloadKey, showAuthor])
 
   const vaccineOptions = vaccines.map((vaccine) => ({
     value: vaccine.id,
@@ -234,6 +239,11 @@ export function VaccinationEditor({ vaccinationId, pendenciaId }: VaccinationEdi
         onSubmit={() => void onSubmit()}
         onDelete={isEdit ? () => setConfirmOpen(true) : undefined}
         deleteLabel="Excluir lançamento">
+        {showAuthor && original ? (
+          <Text fontSize={15} fontWeight="600" color="brandMuted">
+            {authorLine({ name: original.createdByName, email: original.createdByEmail }, 'vaccination')}
+          </Text>
+        ) : null}
         <AnimalPicker
           label="Animal"
           selected={animal}

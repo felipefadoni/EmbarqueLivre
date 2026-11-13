@@ -16,6 +16,7 @@ import { ConfirmDialog } from '@/components/cadastros/ConfirmDialog'
 import { SelectField } from '@/components/cadastros/SelectField'
 import { WithdrawalBadge } from '@/components/cadastros/WithdrawalBadge'
 import { formatDatePtBr } from '@/features/cadastros/dates'
+import { authorLine, canSeeAuthor } from '@/features/cadastros/farmFilters'
 import { repo } from '@/sync'
 import { clearPendencia, clearRowRejections, draftString, editorErrorMessage, loadEditorSource, showRejection } from '@/sync/editor'
 import { PHOTO_STATUS_LABEL, type PhotoQueueStatus } from '@/sync/photoQueue'
@@ -111,8 +112,9 @@ export function ShipmentDetail({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shipmentId, pendenciaId])
 
-  // Status/contagem ao vivo (finalizar, sincronização).
-  const liveQuery = shipmentByIdQuery(shipmentId)
+  // Status/contagem ao vivo (finalizar, sincronização). Admin: + autor (nome · e-mail de quem cadastrou).
+  const showAuthor = canSeeAuthor(role, 'shipments')
+  const liveQuery = shipmentByIdQuery(shipmentId, showAuthor)
   const live = useQuery<ShipmentRow>(liveQuery.sql, liveQuery.params)
   const liveShipment = live.data[0] ? rowToShipment(live.data[0]) : shipment
   const status = liveShipment?.status ?? 'in_progress'
@@ -395,6 +397,11 @@ export function ShipmentDetail({
             </Text>
           </YStack>
         )}
+        {showAuthor && liveShipment ? (
+          <Text fontSize={15} fontWeight="600" color="brandMuted">
+            {authorLine({ name: liveShipment.createdByName, email: liveShipment.createdByEmail }, 'shipment')}
+          </Text>
+        ) : null}
         {/* Fazenda imutável. */}
         <SelectField
           label="Fazenda"

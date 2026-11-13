@@ -8,10 +8,12 @@ import { formatWeightKg, SHIPMENTS_CONTRACT, todayIsoInShipmentZone, type Shipme
 import { animateFiltersToggle, CollapsibleFilters, FilterToggle } from '@/components/cadastros/CollapsibleFilters'
 import { ListLoadingFooter, ListStatus } from '@/components/cadastros/ListStatus'
 import { SelectField } from '@/components/cadastros/SelectField'
+import { TextFilterField } from '@/components/cadastros/TextFilterField'
 import { AppCard } from '@/components/dashboard/AppCard'
 import { SyncStatusIndicator } from '@/components/sync/SyncStatusIndicator'
 import { useAuth } from '@/features/auth/AuthProvider'
 import { formatDatePtBr } from '@/features/cadastros/dates'
+import { authorLine, canFilterByAuthorEmail, canSeeAuthor } from '@/features/cadastros/farmFilters'
 import { canManageShipments } from '@/features/cadastros/permissions'
 import { SHIPMENT_WHEN_LABEL, summarizeShipmentFilters } from '@/features/cadastros/shipmentFilters'
 import { animalsCountLabel, SHIPMENT_TABS } from '@/features/embarques/shipmentFlow'
@@ -24,10 +26,11 @@ import { TOQUE_MINIMO } from '../../../../tamagui.config'
 export default function EmbarquesListScreen() {
   const { user } = useAuth()
   if (!canManageShipments(user?.role)) return <Redirect href="/" />
-  return <EmbarquesList />
+  // Só admin: autor e filtro pelo e-mail de quem cadastrou. Master/básico: lista inalterada.
+  return <EmbarquesList showAuthor={canSeeAuthor(user?.role, 'shipments')} showAuthorEmail={canFilterByAuthorEmail(user?.role, 'shipments')} />
 }
 
-function EmbarquesList() {
+function EmbarquesList({ showAuthor, showAuthorEmail }: { showAuthor: boolean; showAuthorEmail: boolean }) {
   const isDark = useColorScheme() === 'dark'
   const chevron = isDark ? '#A8B8AF' : '#7A8B80'
   const iconColor = isDark ? '#A8B8AF' : '#3A5247'
@@ -38,6 +41,8 @@ function EmbarquesList() {
   const [search, setSearch] = useState('')
   const [filtersOpen, setFiltersOpen] = useState(false)
   const [status, setStatus] = useState<ShipmentStatus>('in_progress')
+  const [authorEmail, setAuthorEmail] = useState('')
+  const authorFilter = showAuthorEmail ? authorEmail : undefined
   const today = todayIsoInShipmentZone()
 
   useEffect(() => {
@@ -47,13 +52,25 @@ function EmbarquesList() {
 
   const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useKeysetList(
     // Keyset: mesma ordem de antes (dia do embarque, nome, id); ver shipmentsListSpec.
-    () => shipmentsListSpec({ farmId: farmId || undefined, search: search || undefined, when: when || undefined, today, status }),
+    () =>
+      shipmentsListSpec({
+        farmId: farmId || undefined,
+        search: search || undefined,
+        when: when || undefined,
+        today,
+        status,
+        withAuthor: showAuthor,
+        authorEmail: authorFilter,
+      }),
     (row: ShipmentRow) => rowToShipment(row),
-    [farmId, search, when, today, status],
+    [farmId, search, when, today, status, showAuthor, authorFilter],
   )
 
   const farmName = farmId ? farms.find((farm) => farm.id === farmId)?.name : undefined
-  const filterSummary = useMemo(() => summarizeShipmentFilters({ farmName, when, search: searchInput }), [farmName, when, searchInput])
+  const filterSummary = useMemo(
+    () => summarizeShipmentFilters({ farmName, when, search: searchInput, authorEmail: authorFilter }),
+    [farmName, when, searchInput, authorFilter],
+  )
   const hasFilters = filterSummary.activeCount > 0
 
   function toggleFilters(next = !filtersOpen) {
@@ -66,6 +83,7 @@ function EmbarquesList() {
     setWhen('')
     setSearchInput('')
     setSearch('')
+    setAuthorEmail('')
   }
 
   return (
@@ -176,6 +194,15 @@ function EmbarquesList() {
               </XStack>
             ) : null}
           </XStack>
+          {showAuthorEmail ? (
+            <TextFilterField
+              label="E-mail de quem cadastrou"
+              value={authorEmail}
+              placeholder="Buscar pelo e-mail"
+              keyboardType="email-address"
+              onChange={setAuthorEmail}
+            />
+          ) : null}
         </CollapsibleFilters>
       </YStack>
       <FlatList
@@ -232,6 +259,12 @@ function EmbarquesList() {
                     {item.farmName || 'Fazenda não informada'} · {animalsCountLabel(count)}
                     {item.totalWeightKg ? ` · ${formatWeightKg(item.totalWeightKg)}` : ''}
                   </Text>
+                  {/* Só admin: quem cadastrou, ou "Autor não registrado" (src/api/authorContract.ts). */}
+                  {showAuthor ? (
+                    <Text fontSize={15} fontWeight="600" color="brandMuted" numberOfLines={1}>
+                      {authorLine({ name: item.createdByName, email: item.createdByEmail }, 'shipment')}
+                    </Text>
+                  ) : null}
                 </YStack>
                 <Ionicons name="chevron-forward" size={22} color={chevron} />
               </XStack>

@@ -1,5 +1,5 @@
 /**
- * Filtros e autor das listas do ADMIN (Fazendas, Animais, Rebanhos, Usuários). Puro, testável no Node.
+ * Filtros e autor das listas do ADMIN (Fazendas, Animais, Rebanhos, Usuários, Vacinas e Embarques). Puro, testável no Node.
  * Master e básico não têm filtros de texto nem veem o autor (comportamento inalterado).
  */
 import { AUTHOR_CONTRACT, AUTHOR_UNKNOWN_LABEL, hasAuthor, hasAuthorEmail, type AuthorColumns, type AuthorTable } from '@/api/authorContract'
@@ -31,7 +31,7 @@ export function canSeeAuthorEmail(role: UserRole | null | undefined, table: Auth
   return canFilterByAuthorEmail(role, table, contract)
 }
 
-export type AuthorKind = 'farm' | 'animal' | 'herd' | 'user'
+export type AuthorKind = 'farm' | 'animal' | 'herd' | 'user' | 'vaccination' | 'shipment'
 
 /**
  * Linha do autor: "Cadastrada por Nome · email" (o que houver). Nenhum dos dois (registro antigo, null) →
@@ -43,7 +43,7 @@ export function authorLine(author: { name?: string | null; email?: string | null
   const email = typeof value.email === 'string' ? value.email.trim() : ''
   const who = [name, email].filter(Boolean).join(' · ')
   if (!who) return AUTHOR_UNKNOWN_LABEL
-  return `${kind === 'farm' ? 'Cadastrada' : 'Cadastrado'} por ${who}`
+  return `${kind === 'farm' || kind === 'vaccination' ? 'Cadastrada' : 'Cadastrado'} por ${who}`
 }
 
 export function summarizeFarmFilters({ farmName, authorEmail }: FarmTextFilters, contract: Contract = AUTHOR_CONTRACT) {

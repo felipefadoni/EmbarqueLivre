@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 1,
+  "ok": true,
+  "command": "finalize",
+  "status": "pass",
+  "type": "workflow",
+  "quality": "showcase",
+  "specification": {
+    "path": "/Users/felipefadoni/Work/Pessoal/embarquelivre/.archify/workflow-fluxo-telas-20261113-141839/candidate.json",
+    "sha256": "bc64ee0b47ce0e9321c1c0fe64397e8e9a5de66c34253695ea69b3e155a4ba05",
+    "bytes": 44972
+  },
+  "artifact": {
+    "path": "/Users/felipefadoni/Work/Pessoal/embarquelivre/.archify/workflow-fluxo-telas-20261113-141839/fluxo-telas.html",
+    "sha256": "f4dc98ed578e9a7be667e3cc45a78f1dc71f05a7b92eff96ed2975ba63008bc4",
+    "bytes": 862820
+  },
+  "gates": {
+    "validate": "pass",
+    "deliver": "pass",
+    "check": "pass",
+    "browser-check": "pass"
+  },
+  "diagnostics": [],
+  "diagnosticSummary": {
+    "total": 0,
+    "shown": 0,
+    "truncated": false
+  },
+  "evidence": {
+    "receipt": "/Users/felipefadoni/Work/Pessoal/embarquelivre/.archify/workflow-fluxo-telas-20261113-141839/fluxo-telas.review-2/fluxo-telas.finalize.json",
+    "summaryReceipt": "/Users/felipefadoni/Work/Pessoal/embarquelivre/.archify/workflow-fluxo-telas-20261113-141839/fluxo-telas.review-2/fluxo-telas.finalize-summary.json",
+    "browserCheckReceipt": "/Users/felipefadoni/Work/Pessoal/embarquelivre/.archify/workflow-fluxo-telas-20261113-141839/fluxo-telas.review-2/fluxo-telas.browser-check.json"
+  },
+  "update": {
+    "status": "current",
+    "installedVersion": "3.2.0",
+    "availableVersion": "3.2.0",
+    "releaseNotes": null,
+    "checkedAt": "2026-11-13T17:19:14.815Z",
+    "source": "cache",
+    "noticeRequired": false,
+    "noticeText": null
+  },
+  "visualReview": "not-requested",
+  "durationMs": 2353,
+  "browserCheck": {
+    "requested": true,
+    "ran": true
+  }
+}

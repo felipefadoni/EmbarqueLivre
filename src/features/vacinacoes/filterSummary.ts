@@ -4,18 +4,22 @@
  * difere do padrão (data ≠ hoje, fazenda escolhida, código buscado).
  */
 import { formatDatePtBr } from '@/features/cadastros/dates'
+import { textFilterLabel } from '@/features/cadastros/textFilter'
 
 export type VaccinationFilters = {
   date: string
   today: string
   farmName?: string | null
   code?: string | null
+  /** Só admin: e-mail de quem cadastrou. */
+  authorEmail?: string | null
 }
 
-export function summarizeVaccinationFilters({ date, today, farmName, code }: VaccinationFilters) {
+export function summarizeVaccinationFilters({ date, today, farmName, code, authorEmail }: VaccinationFilters) {
   const farm = farmName?.trim() || ''
   const search = code?.trim() || ''
-  const parts = [formatDatePtBr(date) || date, farm, search ? `"${search}"` : ''].filter(Boolean)
-  const activeCount = (date !== today ? 1 : 0) + (farm ? 1 : 0) + (search ? 1 : 0)
+  const email = textFilterLabel('E-mail', authorEmail)
+  const parts = [formatDatePtBr(date) || date, farm, search ? `"${search}"` : '', email].filter(Boolean)
+  const activeCount = (date !== today ? 1 : 0) + (farm ? 1 : 0) + (search ? 1 : 0) + (email ? 1 : 0)
   return { text: parts.join(' · '), activeCount }
 }

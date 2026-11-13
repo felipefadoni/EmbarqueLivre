@@ -8,6 +8,7 @@ import { Text, XStack, YStack } from 'tamagui'
 
 import { ConfirmDialog } from '@/components/cadastros/ConfirmDialog'
 import { AppCard } from '@/components/dashboard/AppCard'
+import { AuthorSyncDiagnostics } from '@/components/sync/AuthorSyncDiagnostics'
 import { SyncStatusIndicator } from '@/components/sync/SyncStatusIndicator'
 import { useAuth } from '@/features/auth/AuthProvider'
 import { canManageFarms, canManageHerds, canManageUsers, canManageVaccines, canViewAnimalTypes } from '@/features/cadastros/permissions'
@@ -116,6 +117,7 @@ export default function ConfiguracoesScreen() {
               Sincronização
             </Text>
             <SyncStatusIndicator />
+            {user?.role === 'admin' ? <AuthorSyncDiagnostics /> : null}
           </YStack>
         </AppCard>
 

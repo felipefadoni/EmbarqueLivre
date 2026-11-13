@@ -364,6 +364,9 @@ export type VaccinationEntry = {
   createdByUserId: string | null
   createdAt: string | null
   updatedAt: string | null
+  /** Só admin (sync admin_all; ver src/api/authorContract.ts). */
+  createdByName?: string | null
+  createdByEmail?: string | null
 }
 
 export type VaccinationPayload = {

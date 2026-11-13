@@ -4,6 +4,8 @@
  */
 import type { ShipmentWhen } from '@/sync/queries'
 
+import { textFilterLabel } from './textFilter'
+
 export const SHIPMENT_WHEN_LABEL: Record<ShipmentWhen, string> = {
   proximos: 'Próximos',
   realizados: 'Já realizados',
@@ -13,14 +15,17 @@ export function summarizeShipmentFilters({
   farmName,
   when,
   search,
+  authorEmail,
 }: {
   farmName?: string | null
   when?: ShipmentWhen | '' | null
   search?: string | null
+  /** Só admin: e-mail de quem cadastrou. */
+  authorEmail?: string | null
 }) {
   const farm = farmName?.trim() || ''
   const period = when ? SHIPMENT_WHEN_LABEL[when] : ''
   const query = search?.trim() || ''
-  const parts = [period, farm, query ? `"${query}"` : ''].filter(Boolean)
+  const parts = [period, farm, query ? `"${query}"` : '', textFilterLabel('E-mail', authorEmail)].filter(Boolean)
   return { text: parts.join(' · ') || 'Todos os embarques', activeCount: parts.length }
 }

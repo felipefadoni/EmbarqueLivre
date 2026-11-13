@@ -111,6 +111,9 @@ export const SYNC_TABLES = {
       status: col(SHIPMENT_FLOW_CONTRACT.columns.status),
       /** Do servidor: quando foi finalizado (o app grava localmente ao finalizar; nunca sobe). */
       finishedAt: col(SHIPMENT_FLOW_CONTRACT.columns.finishedAt),
+      /** Só download, só admin (stream admin_all): nome/e-mail de quem cadastrou. Nunca sobem (NEVER_UPLOAD_COLUMNS). */
+      createdByName: col(AUTHOR_CONTRACT.shipments.name ?? 'created_by_name'),
+      createdByEmail: col(AUTHOR_CONTRACT.shipments.email ?? 'created_by_email'),
       createdAt: col(SHIPMENTS_CONTRACT.columns.createdAt),
       updatedAt: col(SHIPMENTS_CONTRACT.columns.updatedAt),
     },
@@ -145,6 +148,9 @@ export const SYNC_TABLES = {
       /** Gerada no servidor (applied_at + days). Localmente o app calcula e grava. */
       withdrawalUntil: col('withdrawal_until'),
       createdByUserId: col('created_by_user_id'),
+      /** Só download, só admin (stream admin_all): nome/e-mail de quem cadastrou. Nunca sobem (NEVER_UPLOAD_COLUMNS). */
+      createdByName: col(AUTHOR_CONTRACT.vaccinations.name ?? 'created_by_name'),
+      createdByEmail: col(AUTHOR_CONTRACT.vaccinations.email ?? 'created_by_email'),
       createdAt: col('created_at'),
       updatedAt: col('updated_at'),
     },
@@ -205,7 +211,12 @@ export const NEVER_UPLOAD_COLUMNS: Partial<Record<SyncEntity, string[]>> = {
   // da saída de reenvio e do envio forçado (todos passam por toUploadOp); o snapshot local guarda para a restauração.
   farms: [SYNC_TABLES.farms.columns.createdByName.name, SYNC_TABLES.farms.columns.createdByEmail.name],
   herds: [SYNC_TABLES.herds.columns.createdByName.name, SYNC_TABLES.herds.columns.createdByEmail.name],
-  shipments: [SYNC_TABLES.shipments.columns.finishedAt.name],
+  shipments: [
+    SYNC_TABLES.shipments.columns.finishedAt.name,
+    SYNC_TABLES.shipments.columns.createdByName.name,
+    SYNC_TABLES.shipments.columns.createdByEmail.name,
+  ],
+  vaccinations: [SYNC_TABLES.vaccinations.columns.createdByName.name, SYNC_TABLES.vaccinations.columns.createdByEmail.name],
   animals: [
     SYNC_TABLES.animals.columns.shippedAt.name,
     SYNC_TABLES.animals.columns.createdByName.name,
