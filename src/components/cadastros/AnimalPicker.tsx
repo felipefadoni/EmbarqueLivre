@@ -95,42 +95,42 @@ export function AnimalPicker({
 
       <Modal visible={open} transparent animationType="slide" onRequestClose={() => setOpen(false)}>
         <KeyboardSheet onDismiss={() => setOpen(false)} minHeight={420} maxHeightRatio={0.85}>
-            <YStack
-              flexGrow={1}
-              flexShrink={1}
-              bg="cardBg"
-              p={20}
-              gap={12}
-              style={{
-                borderTopLeftRadius: 24,
-                borderTopRightRadius: 24,
-                paddingBottom: Math.max(insets.bottom, 16),
-              }}>
-              <XStack items="center" justify="space-between" minH={56}>
-                <Text fontSize={22} fontWeight="800" color="brandFg" flex={1}>
-                  {label}
+          <YStack
+            grow={1}
+            shrink={1}
+            bg="cardBg"
+            p={20}
+            gap={12}
+            style={{
+              borderTopLeftRadius: 24,
+              borderTopRightRadius: 24,
+              paddingBottom: Math.max(insets.bottom, 16),
+            }}>
+            <XStack items="center" justify="space-between" minH={56}>
+              <Text fontSize={22} fontWeight="800" color="brandFg" flex={1}>
+                {label}
+              </Text>
+              <XStack
+                minH={56}
+                px={12}
+                items="center"
+                onPress={() => setOpen(false)}
+                accessibilityRole="button"
+                accessibilityLabel="Fechar">
+                <Text fontSize={16} fontWeight="800" color="brandFg">
+                  Fechar
                 </Text>
-                <XStack
-                  minH={56}
-                  px={12}
-                  items="center"
-                  onPress={() => setOpen(false)}
-                  accessibilityRole="button"
-                  accessibilityLabel="Fechar">
-                  <Text fontSize={16} fontWeight="800" color="brandFg">
-                    Fechar
-                  </Text>
-                </XStack>
               </XStack>
-              <AnimalPickerList
-                selectedId={selected?.id ?? ''}
-                isDark={isDark}
-                onSelect={(animal) => {
-                  onChange(animal)
-                  setOpen(false)
-                }}
-              />
-            </YStack>
+            </XStack>
+            <AnimalPickerList
+              selectedId={selected?.id ?? ''}
+              isDark={isDark}
+              onSelect={(animal) => {
+                onChange(animal)
+                setOpen(false)
+              }}
+            />
+          </YStack>
         </KeyboardSheet>
       </Modal>
     </YStack>

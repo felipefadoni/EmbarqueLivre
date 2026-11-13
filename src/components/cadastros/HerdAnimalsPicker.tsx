@@ -84,137 +84,137 @@ export function HerdAnimalsPicker({ open, farmId, herdId, herdName, initialSelec
 
   return (
     <Modal visible={open} transparent animationType="slide" onRequestClose={onClose}>
-      <KeyboardSheet onDismiss={onClose} minHeight={480} maxHeightRatio={0.90}>
-          <YStack
-            flexGrow={1}
-            flexShrink={1}
-            bg="cardBg"
-            p={20}
-            gap={12}
-            style={{
-              borderTopLeftRadius: 24,
-              borderTopRightRadius: 24,
-              paddingBottom: Math.max(insets.bottom, 16),
-            }}>
-            <XStack items="center" justify="space-between" minH={56}>
-              <Text fontSize={22} fontWeight="800" color="brandFg" flex={1}>
-                Adicionar animais
+      <KeyboardSheet onDismiss={onClose} minHeight={480} maxHeightRatio={0.9}>
+        <YStack
+          grow={1}
+          shrink={1}
+          bg="cardBg"
+          p={20}
+          gap={12}
+          style={{
+            borderTopLeftRadius: 24,
+            borderTopRightRadius: 24,
+            paddingBottom: Math.max(insets.bottom, 16),
+          }}>
+          <XStack items="center" justify="space-between" minH={56}>
+            <Text fontSize={22} fontWeight="800" color="brandFg" flex={1}>
+              Adicionar animais
+            </Text>
+            <XStack minH={56} px={12} items="center" onPress={onClose} accessibilityRole="button" accessibilityLabel="Fechar">
+              <Text fontSize={16} fontWeight="800" color="brandFg">
+                Fechar
               </Text>
-              <XStack minH={56} px={12} items="center" onPress={onClose} accessibilityRole="button" accessibilityLabel="Fechar">
-                <Text fontSize={16} fontWeight="800" color="brandFg">
-                  Fechar
-                </Text>
-              </XStack>
             </XStack>
-            <XStack
-              minH={TOQUE_MINIMO}
-              items="center"
-              bg="brandSurface"
-              borderColor="brandBorder"
-              borderWidth={2}
-              rounded={16}
-              px="3"
-              gap={8}>
-              <Ionicons name="search" size={20} color={iconColor} />
-              <Input
-                flex={1}
-                h="100%"
-                fontSize={18}
-                fontWeight="600"
-                color="brandFg"
-                bg="transparent"
-                borderWidth={0}
-                placeholder="Buscar pelo código"
-                placeholderTextColor="brandMuted"
-                value={input}
-                onChangeText={setInput}
-                autoCapitalize="characters"
-                autoCorrect={false}
-                returnKeyType="search"
-                accessibilityLabel="Buscar pelo código"
-              />
-            </XStack>
-            <FlatList
-              data={candidates}
-              keyExtractor={(item) => item.id}
-              keyboardShouldPersistTaps="handled"
-              style={{ minHeight: 240 }}
-              contentContainerStyle={{ flexGrow: 1, gap: 4, paddingBottom: 8 }}
-              refreshing={refreshing}
-              onRefresh={() => void refresh()}
-              onEndReached={() => {
-                if (hasMore && !loading && !refreshing && !loadingMore) void loadMore()
-              }}
-              onEndReachedThreshold={0.4}
-              ListFooterComponent={loadingMore ? <ListLoadingFooter /> : undefined}
-              ListEmptyComponent={
-                <ListStatus
-                  loading={loading}
-                  error={error}
-                  empty={!loading && !error}
-                  emptyTitle="Nenhum animal"
-                  emptyMessage={
-                    farmId
-                      ? 'Todos os animais desta fazenda já estão neste rebanho, ou não há animais para selecionar.'
-                      : 'Selecione a fazenda do rebanho para listar os animais.'
-                  }
-                  onRetry={() => void reload()}
-                />
-              }
-              renderItem={({ item }) => {
-                const checked = Boolean(selected[item.id])
-                const otherHerd = item.herdId && item.herdId !== herdId
-                return (
-                  <XStack
-                    items="center"
-                    gap={12}
-                    minH={TOQUE_MINIMO}
-                    px={4}
-                    opacity={{ press: 0.85 }}
-                    onPress={() => toggle(item.id)}
-                    accessibilityRole="checkbox"
-                    accessibilityState={{ checked }}
-                    accessibilityLabel={`Animal ${item.code}`}>
-                    <Ionicons
-                      name={checked ? 'checkbox' : 'square-outline'}
-                      size={26}
-                      color={checked ? (isDark ? '#7DFFB3' : '#1B6B43') : iconColor}
-                    />
-                    <YStack flex={1} gap={2}>
-                      <Text fontSize={17} fontWeight="800" color="brandFg">
-                        {item.code}
-                      </Text>
-                      <Text fontSize={14} fontWeight="500" color="brandMuted">
-                        {item.animalTypeName || 'Tipo não informado'}
-                      </Text>
-                      {otherHerd ? (
-                        <Text fontSize={13} fontWeight="700" color="brandMuted">
-                          Já está no rebanho {item.herdName || 'outro'} e será movido
-                        </Text>
-                      ) : null}
-                    </YStack>
-                  </XStack>
-                )
-              }}
+          </XStack>
+          <XStack
+            minH={TOQUE_MINIMO}
+            items="center"
+            bg="brandSurface"
+            borderColor="brandBorder"
+            borderWidth={2}
+            rounded={16}
+            px="3"
+            gap={8}>
+            <Ionicons name="search" size={20} color={iconColor} />
+            <Input
+              flex={1}
+              h="100%"
+              fontSize={18}
+              fontWeight="600"
+              color="brandFg"
+              bg="transparent"
+              borderWidth={0}
+              placeholder="Buscar pelo código"
+              placeholderTextColor="brandMuted"
+              value={input}
+              onChangeText={setInput}
+              autoCapitalize="characters"
+              autoCorrect={false}
+              returnKeyType="search"
+              accessibilityLabel="Buscar pelo código"
             />
-            <XStack
-              minH={TOQUE_PRINCIPAL}
-              items="center"
-              justify="center"
-              rounded={16}
-              bg="brandPrimary"
-              opacity={{ default: selectedIds.length === 0 ? 0.55 : 1, press: 0.85 }}
-              onPress={selectedIds.length === 0 ? undefined : requestAdd}
-              accessibilityRole="button"
-              accessibilityLabel="Confirmar animais"
-              accessibilityState={{ disabled: selectedIds.length === 0 }}>
-              <Text fontSize={18} fontWeight="800" color="brandPrimaryFg">
-                {selectedIds.length === 0
-                  ? 'Selecione animais'
-                  : `Adicionar ${selectedIds.length} ${selectedIds.length === 1 ? 'animal' : 'animais'}`}
-              </Text>
-            </XStack>
-          </YStack>
+          </XStack>
+          <FlatList
+            data={candidates}
+            keyExtractor={(item) => item.id}
+            keyboardShouldPersistTaps="handled"
+            style={{ minHeight: 120, flexShrink: 1 }}
+            contentContainerStyle={{ flexGrow: 1, gap: 4, paddingBottom: 8 }}
+            refreshing={refreshing}
+            onRefresh={() => void refresh()}
+            onEndReached={() => {
+              if (hasMore && !loading && !refreshing && !loadingMore) void loadMore()
+            }}
+            onEndReachedThreshold={0.4}
+            ListFooterComponent={loadingMore ? <ListLoadingFooter /> : undefined}
+            ListEmptyComponent={
+              <ListStatus
+                loading={loading}
+                error={error}
+                empty={!loading && !error}
+                emptyTitle="Nenhum animal"
+                emptyMessage={
+                  farmId
+                    ? 'Todos os animais desta fazenda já estão neste rebanho, ou não há animais para selecionar.'
+                    : 'Selecione a fazenda do rebanho para listar os animais.'
+                }
+                onRetry={() => void reload()}
+              />
+            }
+            renderItem={({ item }) => {
+              const checked = Boolean(selected[item.id])
+              const otherHerd = item.herdId && item.herdId !== herdId
+              return (
+                <XStack
+                  items="center"
+                  gap={12}
+                  minH={TOQUE_MINIMO}
+                  px={4}
+                  opacity={{ press: 0.85 }}
+                  onPress={() => toggle(item.id)}
+                  accessibilityRole="checkbox"
+                  accessibilityState={{ checked }}
+                  accessibilityLabel={`Animal ${item.code}`}>
+                  <Ionicons
+                    name={checked ? 'checkbox' : 'square-outline'}
+                    size={26}
+                    color={checked ? (isDark ? '#7DFFB3' : '#1B6B43') : iconColor}
+                  />
+                  <YStack flex={1} gap={2}>
+                    <Text fontSize={17} fontWeight="800" color="brandFg">
+                      {item.code}
+                    </Text>
+                    <Text fontSize={14} fontWeight="500" color="brandMuted">
+                      {item.animalTypeName || 'Tipo não informado'}
+                    </Text>
+                    {otherHerd ? (
+                      <Text fontSize={13} fontWeight="700" color="brandMuted">
+                        Já está no rebanho {item.herdName || 'outro'} e será movido
+                      </Text>
+                    ) : null}
+                  </YStack>
+                </XStack>
+              )
+            }}
+          />
+          <XStack
+            minH={TOQUE_PRINCIPAL}
+            items="center"
+            justify="center"
+            rounded={16}
+            bg="brandPrimary"
+            opacity={{ default: selectedIds.length === 0 ? 0.55 : 1, press: 0.85 }}
+            onPress={selectedIds.length === 0 ? undefined : requestAdd}
+            accessibilityRole="button"
+            accessibilityLabel="Confirmar animais"
+            accessibilityState={{ disabled: selectedIds.length === 0 }}>
+            <Text fontSize={18} fontWeight="800" color="brandPrimaryFg">
+              {selectedIds.length === 0
+                ? 'Selecione animais'
+                : `Adicionar ${selectedIds.length} ${selectedIds.length === 1 ? 'animal' : 'animais'}`}
+            </Text>
+          </XStack>
+        </YStack>
       </KeyboardSheet>
       <ConfirmDialog
         open={confirmMove}

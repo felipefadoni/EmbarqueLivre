@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react'
-import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Spinner, Text, XStack, YStack } from 'tamagui'
 
 import { FormBanner } from '@/components/auth/FormBanner'
+import { KeyboardAwareScrollView } from '@/components/form/KeyboardAwareScrollView'
 import { TOQUE_MINIMO, TOQUE_PRINCIPAL } from '../../../tamagui.config'
 
 type CadastroFormScreenProps = {
@@ -45,11 +45,11 @@ export function CadastroFormScreen({
   const blocked = submitting || submitDisabled
   const insets = useSafeAreaInsets()
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
-      <YStack flex={1} bg="appBg">
-        <ScrollView
+    // Sem KeyboardAvoidingView: abaixo do header nativo ele calculava o recuo sem a altura do header (offset 0) e
+    // cobria o fim do formulário; o inset automático do ScrollView usa a posição real na tela.
+    <YStack flex={1} bg="appBg">
+        <KeyboardAwareScrollView
           contentContainerStyle={{ padding: 20, paddingBottom: Math.max(insets.bottom, 16) + 20, gap: 16 }}
-          keyboardShouldPersistTaps="handled"
           showsVerticalScrollIndicator={false}
           scrollEventThrottle={onEndReached ? 200 : undefined}
           onScroll={
@@ -99,8 +99,7 @@ export function CadastroFormScreen({
           </>
           )}
           {footer}
-        </ScrollView>
-      </YStack>
-    </KeyboardAvoidingView>
+        </KeyboardAwareScrollView>
+    </YStack>
   )
 }

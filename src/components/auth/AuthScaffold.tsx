@@ -1,10 +1,11 @@
 import { StatusBar } from 'expo-status-bar'
 import type { ReactNode } from 'react'
-import { KeyboardAvoidingView, Platform, ScrollView } from 'react-native'
+import { KeyboardAvoidingView, Platform } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Text, YStack, useThemeName } from 'tamagui'
 
 import { Logo } from '@/components/Logo'
+import { KeyboardAwareScrollView } from '@/components/form/KeyboardAwareScrollView'
 
 type AuthScaffoldProps = {
   children: ReactNode
@@ -21,13 +22,10 @@ export function AuthScaffold({ children, title, subtitle, logoSize = 120 }: Auth
   return (
     <YStack flex={1} bg="brandBg">
       <StatusBar style={isDark ? 'light' : 'dark'} />
-      <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 8 : 0}>
-        <ScrollView
-          keyboardShouldPersistTaps="handled"
-          keyboardDismissMode="on-drag"
+      {/* iOS: sem KeyboardAvoidingView. O inset do ScrollView acompanha o teclado sem refazer o layout (o padding
+          + LayoutAnimation recentralizava o formulário e o placeholder só se ajustava no fim). Android: como antes. */}
+      <KeyboardAvoidingView style={{ flex: 1 }} behavior="height" enabled={Platform.OS === 'android'}>
+        <KeyboardAwareScrollView
           contentContainerStyle={{
             flexGrow: 1,
             paddingTop: Math.max(insets.top, 16) + 8,
@@ -55,7 +53,7 @@ export function AuthScaffold({ children, title, subtitle, logoSize = 120 }: Auth
             </YStack>
             {children}
           </YStack>
-        </ScrollView>
+        </KeyboardAwareScrollView>
       </KeyboardAvoidingView>
     </YStack>
   )

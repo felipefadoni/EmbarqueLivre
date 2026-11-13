@@ -1,6 +1,6 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { useMemo, useState } from 'react'
-import { FlatList, KeyboardAvoidingView, Modal, Platform, ScrollView, useColorScheme } from 'react-native'
+import { FlatList, Modal, Platform, useColorScheme } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Input, Spinner, Text, XStack, YStack } from 'tamagui'
 
@@ -12,6 +12,7 @@ import { animateFiltersToggle, CollapsibleFilters, FilterToggle } from '@/compon
 import { ListLoadingFooter } from '@/components/cadastros/ListStatus'
 import { SelectField } from '@/components/cadastros/SelectField'
 import { WithdrawalBadge } from '@/components/cadastros/WithdrawalBadge'
+import { KEYBOARD_SCROLL_PROPS, KeyboardAwareScrollView } from '@/components/form/KeyboardAwareScrollView'
 import { formatDatePtBr } from '@/features/cadastros/dates'
 import { ANIMAL_SITUATION_SUMMARY } from '@/features/cadastros/animalFilters'
 import { repo } from '@/sync'
@@ -185,7 +186,7 @@ function PickStep({ shipment, onClose, onPick }: { shipment: ShipmentRef; onClos
       <FlatList
         data={items}
         keyExtractor={(item) => item.id}
-        keyboardShouldPersistTaps="handled"
+        {...KEYBOARD_SCROLL_PROPS}
         contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: Math.max(insets.bottom, 16) + 20, gap: 8, flexGrow: 1 }}
         onEndReached={() => {
           if (hasMore && !loading && !refreshing && !loadingMore) loadMore()
@@ -332,11 +333,10 @@ function CaptureStep({
 
   const title = edit ? `Ajustar ${picked.code}` : `Animal ${picked.code}`
   return (
-    <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
+    <YStack flex={1}>
       <ModalHeader title={title} subtitle={picked.detail || undefined} actionLabel={backLabel} onAction={discardAndBack} />
-      <ScrollView
-        contentContainerStyle={{ padding: 20, paddingTop: 8, paddingBottom: Math.max(insets.bottom, 16) + 20, gap: 16 }}
-        keyboardShouldPersistTaps="handled">
+      <KeyboardAwareScrollView
+        contentContainerStyle={{ padding: 20, paddingTop: 8, paddingBottom: Math.max(insets.bottom, 16) + 20, gap: 16 }}>
         {error ? <FormBanner message={error} /> : null}
 
         {picked.inWithdrawal ? (
@@ -462,7 +462,7 @@ function CaptureStep({
             {saving ? 'Salvando…' : edit ? 'Salvar ajustes' : 'Adicionar ao embarque'}
           </Text>
         </XStack>
-      </ScrollView>
-    </KeyboardAvoidingView>
+      </KeyboardAwareScrollView>
+    </YStack>
   )
 }

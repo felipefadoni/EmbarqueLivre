@@ -1,8 +1,9 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
 import type { ReactNode } from 'react'
-import { LayoutAnimation, Platform, UIManager, useColorScheme } from 'react-native'
+import { LayoutAnimation, Platform, ScrollView, UIManager, useColorScheme } from 'react-native'
 import { Text, XStack, YStack } from 'tamagui'
 
+import { KEYBOARD_SCROLL_PROPS } from '@/components/form/KeyboardAwareScrollView'
 import { TOQUE_MINIMO } from '../../../tamagui.config'
 
 // Arquitetura antiga do Android precisa habilitar o LayoutAnimation (no-op na nova).
@@ -82,8 +83,16 @@ type CollapsibleFiltersProps = {
 /** Painel de filtros recolhível. Fechar NÃO limpa os filtros: eles continuam aplicados. */
 export function CollapsibleFilters({ open, summary, onOpen, onClear, clearable = false, children }: CollapsibleFiltersProps) {
   if (open) {
+    // ScrollView do tamanho do conteúdo (flexGrow 0): sem teclado nada muda; com o teclado, um campo do painel que
+    // ficaria atrás dele é rolado para cima dentro do próprio painel (inset automático no iOS).
     return (
-      <YStack gap={12}>
+      <ScrollView
+        {...KEYBOARD_SCROLL_PROPS}
+        style={{ flexGrow: 0 }}
+        contentContainerStyle={{ gap: 12 }}
+        alwaysBounceVertical={false}
+        showsVerticalScrollIndicator={false}
+        nestedScrollEnabled>
         {children}
         {onClear && clearable ? (
           <XStack
@@ -99,7 +108,7 @@ export function CollapsibleFilters({ open, summary, onOpen, onClear, clearable =
             </Text>
           </XStack>
         ) : null}
-      </YStack>
+      </ScrollView>
     )
   }
   return (

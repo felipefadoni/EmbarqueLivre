@@ -1,6 +1,6 @@
 import { Redirect, router, useLocalSearchParams } from 'expo-router'
 import { useCallback, useEffect, useState } from 'react'
-import { ActivityIndicator, ScrollView } from 'react-native'
+import { ActivityIndicator } from 'react-native'
 import { Text, XStack, YStack } from 'tamagui'
 
 import { USERS_CONTRACT } from '@/api/contract'
@@ -16,6 +16,7 @@ import { RoleBadge } from '@/components/cadastros/RoleBadge'
 import { SelectField } from '@/components/cadastros/SelectField'
 import { AppCard } from '@/components/dashboard/AppCard'
 import { OfflineNotice } from '@/components/sync/OfflineNotice'
+import { KeyboardAwareScrollView } from '@/components/form/KeyboardAwareScrollView'
 import { useAuth } from '@/features/auth/AuthProvider'
 import { canManageUsers } from '@/features/cadastros/permissions'
 import {
@@ -121,7 +122,7 @@ function UsuarioDetail({ id, hint, currentUserId }: { id: string; hint?: string;
   const block = deleteBlockReason({ target, currentUserId, accountMastersCount: state.masters })
 
   return (
-    <ScrollView contentContainerStyle={{ padding: 20, gap: 16 }} style={{ flex: 1 }} keyboardShouldPersistTaps="handled">
+    <KeyboardAwareScrollView contentContainerStyle={{ padding: 20, gap: 16 }} style={{ flex: 1 }}>
       <OfflineNotice message="Sem internet. Gerenciar usuários precisa de conexão." />
       <AppCard>
         <YStack gap={12}>
@@ -165,7 +166,7 @@ function UsuarioDetail({ id, hint, currentUserId }: { id: string; hint?: string;
         onConfirm={() => void onConfirmDelete()}
         onCancel={() => setConfirming(false)}
       />
-    </ScrollView>
+    </KeyboardAwareScrollView>
   )
 }
 
