@@ -1,11 +1,12 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { useCallback, useEffect, useState } from 'react'
-import { FlatList, Modal, Pressable, useColorScheme } from 'react-native'
+import { FlatList, Modal, useColorScheme } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Input, Text, XStack, YStack } from 'tamagui'
 
 import { listMasters, type MasterUser } from '@/api/masters'
 import { type ListPagingRequest } from '@/api/contract'
+import { KeyboardSheet } from '@/components/form/KeyboardSheet'
 import { ListLoadingFooter, ListStatus } from '@/components/cadastros/ListStatus'
 import { useInfiniteList } from '@/features/cadastros/useInfiniteList'
 import { OfflineNotice } from '@/components/sync/OfflineNotice'
@@ -86,11 +87,10 @@ export function MasterPicker({
       {disabled ? null : <OfflineNotice message="Sem internet. A escolha do master dono precisa de conexão." />}
 
       <Modal visible={open} transparent animationType="slide" onRequestClose={() => setOpen(false)}>
-        <Pressable
-          style={{ flex: 1, backgroundColor: 'rgba(15, 28, 24, 0.55)', justifyContent: 'flex-end' }}
-          onPress={() => setOpen(false)}>
-          <Pressable onPress={(event) => event.stopPropagation()} style={{ maxHeight: '85%' }}>
+        <KeyboardSheet onDismiss={() => setOpen(false)} minHeight={420} maxHeightRatio={0.85}>
             <YStack
+              flexGrow={1}
+              flexShrink={1}
               bg="cardBg"
               p={20}
               gap={12}
@@ -98,7 +98,6 @@ export function MasterPicker({
                 borderTopLeftRadius: 24,
                 borderTopRightRadius: 24,
                 paddingBottom: Math.max(insets.bottom, 16),
-                minHeight: 420,
               }}>
               <XStack items="center" justify="space-between" minH={56}>
                 <Text fontSize={22} fontWeight="800" color="brandFg" flex={1}>
@@ -125,8 +124,7 @@ export function MasterPicker({
                 }}
               />
             </YStack>
-          </Pressable>
-        </Pressable>
+        </KeyboardSheet>
       </Modal>
     </YStack>
   )

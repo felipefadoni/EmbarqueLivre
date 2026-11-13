@@ -1,11 +1,12 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { useEffect, useMemo, useState } from 'react'
-import { FlatList, Modal, Pressable, useColorScheme } from 'react-native'
+import { FlatList, Modal, useColorScheme } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Input, Text, XStack, YStack } from 'tamagui'
 
 import { HERDS_CONTRACT } from '@/api/herdsContract'
 import { ConfirmDialog } from '@/components/cadastros/ConfirmDialog'
+import { KeyboardSheet } from '@/components/form/KeyboardSheet'
 import { ListLoadingFooter, ListStatus } from '@/components/cadastros/ListStatus'
 import { todayIso } from '@/features/cadastros/dates'
 import { useKeysetList } from '@/sync/hooks'
@@ -83,11 +84,10 @@ export function HerdAnimalsPicker({ open, farmId, herdId, herdName, initialSelec
 
   return (
     <Modal visible={open} transparent animationType="slide" onRequestClose={onClose}>
-      <Pressable
-        style={{ flex: 1, backgroundColor: 'rgba(15, 28, 24, 0.55)', justifyContent: 'flex-end' }}
-        onPress={onClose}>
-        <Pressable onPress={(event) => event.stopPropagation()} style={{ maxHeight: '90%' }}>
+      <KeyboardSheet onDismiss={onClose} minHeight={480} maxHeightRatio={0.90}>
           <YStack
+            flexGrow={1}
+            flexShrink={1}
             bg="cardBg"
             p={20}
             gap={12}
@@ -95,7 +95,6 @@ export function HerdAnimalsPicker({ open, farmId, herdId, herdName, initialSelec
               borderTopLeftRadius: 24,
               borderTopRightRadius: 24,
               paddingBottom: Math.max(insets.bottom, 16),
-              minHeight: 480,
             }}>
             <XStack items="center" justify="space-between" minH={56}>
               <Text fontSize={22} fontWeight="800" color="brandFg" flex={1}>
@@ -216,8 +215,7 @@ export function HerdAnimalsPicker({ open, farmId, herdId, herdName, initialSelec
               </Text>
             </XStack>
           </YStack>
-        </Pressable>
-      </Pressable>
+      </KeyboardSheet>
       <ConfirmDialog
         open={confirmMove}
         title="Mover animais de outro rebanho?"
