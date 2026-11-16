@@ -9,8 +9,11 @@ import { AuthField, type AuthFieldRef } from '@/components/auth/AuthField'
 import { PhoneFields } from '@/components/auth/PhoneFields'
 import { AuthScaffold } from '@/components/auth/AuthScaffold'
 import { FormBanner } from '@/components/auth/FormBanner'
+import { LegalConsent } from '@/components/auth/LegalConsent'
 import { OfflineNotice } from '@/components/sync/OfflineNotice'
 import { PasswordChecklist } from '@/components/auth/PasswordChecklist'
+import { buildSignupConsent, consentBlockReason, consentErrorAction } from '@/features/auth/legalConsent'
+import { useCurrentLegal } from '@/features/auth/useCurrentLegal'
 import { useRetryAfter } from '@/features/auth/useRetryAfter'
 import { TOQUE_MINIMO, TOQUE_PRINCIPAL } from '../../../tamagui.config'
 
@@ -34,8 +37,15 @@ export default function CadastroScreen() {
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
   const [formError, setFormError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const { state: legalState, reload: reloadLegal } = useCurrentLegal()
+  const [acceptedTerms, setAcceptedTerms] = useState(false)
+  const [consentError, setConsentError] = useState<string | null>(null)
 
   const disabled = loading || isCoolingDown
+  /** Campos do aceite para o POST /users; null = caixa desmarcada ou Termos não carregados. */
+  const consent = buildSignupConsent(legalState, acceptedTerms)
+  const consentBlock = consentBlockReason(legalState, acceptedTerms)
+  const submitDisabled = disabled || !consent
   function clearField(field: string) {
     setFieldErrors((current) => ({ ...current, [field]: '' }))
   }
@@ -59,6 +69,10 @@ export default function CadastroScreen() {
     if (disabled) return
     setFormError(null)
     if (!validate()) return
+    if (!consent) {
+      setConsentError(consentBlock)
+      return
+    }
 
     setLoading(true)
     try {
@@ -68,12 +82,23 @@ export default function CadastroScreen() {
         mobilePhone,
         whatsAppPhone: resolvedWhatsAppPhone(mobilePhone, whatsAppPhone, sameWhatsApp),
         password,
+        ...consent,
       })
       router.replace({ pathname: '/login', params: { email: email.trim(), created: '1' } })
     } catch (error) {
       const apiError = isApiError(error) ? error : null
       if (!apiError) {
         setFormError('Ocorreu um erro inesperado. Tente novamente.')
+        return
+      }
+      const consentAction = consentErrorAction(apiError)
+      if (consentAction) {
+        setConsentError(consentAction.message)
+        if (consentAction.kind === 'version-changed') {
+          // Texto novo no servidor: recarrega os Termos/Política e pede o aceite de novo (não reenvia sozinho).
+          setAcceptedTerms(false)
+          reloadLegal()
+        }
         return
       }
       if (apiError.code === 'RATE_LIMITED') {
@@ -233,6 +258,19 @@ export default function CadastroScreen() {
           }
         />
 
+        <LegalConsent
+          state={legalState}
+          accepted={acceptedTerms}
+          onChangeAccepted={(value) => {
+            setAcceptedTerms(value)
+            if (value) setConsentError(null)
+          }}
+          onRetry={reloadLegal}
+          hint={consentError ?? (legalState.status === 'ready' ? consentBlock : null)}
+          hintIsError={Boolean(consentError)}
+          disabled={loading}
+        />
+
         <Button
           h={TOQUE_PRINCIPAL}
           bg="brandPrimary"
@@ -241,14 +279,15 @@ export default function CadastroScreen() {
           fontWeight="800"
           rounded={16}
           borderWidth={0}
-          disabled={disabled}
-          opacity={{ default: disabled ? 0.55 : 1, press: 0.85 }}
+          disabled={submitDisabled}
+          opacity={{ default: submitDisabled ? 0.55 : 1, press: 0.85 }}
           scale="press:0.99"
           icon={loading ? () => <Spinner color="brandPrimaryFg" /> : undefined}
           onPress={onSubmit}
           accessibilityRole="button"
           accessibilityLabel="Cadastrar"
-          accessibilityState={{ disabled, busy: loading }}>
+          accessibilityHint={consentBlock ?? undefined}
+          accessibilityState={{ disabled: submitDisabled, busy: loading }}>
           {loading ? 'Cadastrando…' : isCoolingDown ? `Aguarde ${retryAfter}s` : 'Cadastrar'}
         </Button>
 

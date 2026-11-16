@@ -10,6 +10,9 @@ const DOMAIN_MESSAGES: Record<string, string> = {
     'A senha precisa ter ao menos 8 caracteres, 1 letra maiúscula e 1 caractere especial.',
   EMAIL_ALREADY_REGISTERED: 'Este email já está cadastrado.',
   WHATSAPP_ALREADY_VERIFIED: 'Este WhatsApp já está em uso por outra conta.',
+  TERMS_NOT_ACCEPTED: 'Para criar a conta, aceite os Termos de Uso e a Política de Privacidade.',
+  TERMS_VERSION_MISMATCH: 'Os Termos de Uso foram atualizados. Leia a nova versão e aceite novamente.',
+  PRIVACY_VERSION_MISMATCH: 'A Política de Privacidade foi atualizada. Leia a nova versão e aceite novamente.',
   INVALID_CREDENTIALS: 'Email ou senha incorretos.',
   ACCOUNT_NOT_VERIFIED:
     'Sua conta ainda não foi verificada. Confirme seu email e WhatsApp para entrar.',

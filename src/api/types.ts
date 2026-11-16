@@ -14,6 +14,11 @@ export interface RegisterUserRequest {
   mobilePhone: string
   whatsAppPhone: string
   password: string
+  /** Aceite dos Termos de Uso + Política de Privacidade (um checkbox cobre os dois). O app sempre envia true. */
+  acceptTerms?: boolean
+  /** Versões recebidas do GET /legal/current (precisam ser as vigentes). */
+  termsVersion?: string
+  privacyVersion?: string
 }
 
 export interface UserResponse {
