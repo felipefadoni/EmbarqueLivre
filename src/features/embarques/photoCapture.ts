@@ -127,6 +127,29 @@ export function cleanupOrphanPhotos(referenced: Set<string>) {
   }
 }
 
+/**
+ * Exclusão de conta: apaga TODAS as fotos de embarque guardadas no aparelho e os relatórios gerados no cache.
+ * Melhor esforço (arquivo em uso é ignorado).
+ */
+export function deleteAllLocalShipmentFiles() {
+  const fs = loadFileSystem()
+  if (!fs) return
+  try {
+    const dir = new fs.Directory(fs.Paths.document, PHOTO_DIR)
+    if (dir.exists) dir.delete()
+  } catch {
+    // melhor esforço
+  }
+  try {
+    const cache = new fs.Directory(fs.Paths.cache)
+    for (const entry of cache.list()) {
+      if (entry instanceof fs.File && /^(relatorio-foto-.*\.jpg|embarque-.*\.pdf)$/.test(entry.name)) entry.delete()
+    }
+  } catch {
+    // melhor esforço
+  }
+}
+
 /** Abre os Ajustes do app para liberar a câmera. */
 export function openAppSettings() {
   void Linking.openSettings()

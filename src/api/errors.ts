@@ -24,6 +24,9 @@ const DOMAIN_MESSAGES: Record<string, string> = {
   CSRF_TOKEN_INVALID: 'Não foi possível concluir. Recarregue a página.',
   ORIGIN_NOT_ALLOWED: 'Acesso não permitido a partir deste endereço.',
   RATE_LIMITED: 'Muitas tentativas. Aguarde alguns instantes.',
+  INVALID_CURRENT_PASSWORD: 'Senha atual incorreta.',
+  ADMIN_SELF_DELETION_FORBIDDEN: 'Administradores não podem excluir a própria conta pelo aplicativo.',
+  ACCOUNT_DELETION_SCOPE_MISMATCH: 'Sua permissão na conta mudou. Revise o aviso e confirme de novo.',
   NOT_FOUND: 'Recurso não encontrado.',
   INTERNAL_ERROR: 'Ocorreu um erro inesperado. Tente novamente.',
   NETWORK_ERROR: 'Sem conexão com o servidor',
@@ -205,7 +208,16 @@ export function toApiError(error: unknown): ApiError {
   const retryAfterSeconds = readRetryAfter(headers)
 
   if (status === 429) {
-    return { status: 429, code: 'RATE_LIMITED', retryAfterSeconds: retryAfterSeconds ?? 60 }
+    // code continua RATE_LIMITED (compatível com as telas); o motivo de domínio vai em reason.
+    const details = typeof body.details === 'object' && body.details ? (body.details as Record<string, unknown>) : undefined
+    const fromDetails = Number(details?.retryAfterSeconds)
+    const reason = typeof body.error === 'string' && /^[A-Z][A-Z0-9_]+$/.test(body.error) ? body.error : undefined
+    return {
+      status: 429,
+      code: 'RATE_LIMITED',
+      retryAfterSeconds: retryAfterSeconds ?? (Number.isFinite(fromDetails) && fromDetails > 0 ? fromDetails : 60),
+      ...(reason ? { reason, details } : {}),
+    }
   }
 
   if (typeof body.error === 'string' && /^[A-Z][A-Z0-9_]+$/.test(body.error)) {

@@ -1,6 +1,7 @@
 import axios, { AxiosError, create, type InternalAxiosRequestConfig } from 'axios'
 
 import { toApiError } from './errors'
+import { canRefreshAndReplay } from './refreshPolicy'
 import { deleteSecureItem, getSecureItem, setSecureItem } from './storage'
 import { normalizeAuthUser, type AuthUser, type LoginRequest, type MeResponse, type MobileSessionResponse, type RegisterUserRequest, type UserResponse } from './types'
 
@@ -11,6 +12,8 @@ let accessToken: string | null = null
 let accessExpiresAt = 0
 let refreshing: Promise<string | null> | null = null
 let onLoggedOut: () => void = () => {}
+/** Muda a cada clearSession: um refresh que termine depois disso não pode regravar tokens (ex.: conta excluída). */
+let sessionEpoch = 0
 
 export const setOnLoggedOut = (fn: () => void) => {
   onLoggedOut = fn
@@ -46,6 +49,7 @@ async function readCachedUser(): Promise<AuthUser | null> {
 }
 
 async function clearSession() {
+  sessionEpoch += 1
   accessToken = null
   accessExpiresAt = 0
   await Promise.all(Object.values(KEYS).map((key) => deleteSecureItem(key)))
@@ -61,12 +65,15 @@ function sleep(ms: number) {
   return new Promise((resolve) => setTimeout(resolve, ms))
 }
 
-async function refreshOnce(refreshToken: string): Promise<string> {
+async function refreshOnce(refreshToken: string): Promise<string | null> {
+  const epoch = sessionEpoch
   const { data } = await axios.post<MobileSessionResponse>(
     `${API_URL}/api/v1/auth/refresh`,
     { refreshToken },
     { headers: { 'Content-Type': 'application/json' }, timeout: 15_000 },
   )
+  // A sessão foi encerrada enquanto o refresh estava no ar (logout/exclusão): descarta os tokens novos.
+  if (epoch !== sessionEpoch) return null
   await saveSession(data)
   return data.accessToken
 }
@@ -121,9 +128,7 @@ http.interceptors.request.use(async (config) => {
 
 http.interceptors.response.use(undefined, async (error: AxiosError<{ error?: string }>) => {
   const original = error.config as (InternalAxiosRequestConfig & { _retry?: boolean }) | undefined
-  const url = original?.url ?? ''
-  const isAuthCall = ['/auth/login', '/auth/refresh', '/auth/logout'].some((path) => url.includes(path))
-  if (error.response?.status === 401 && original && !original._retry && !isAuthCall) {
+  if (original && canRefreshAndReplay({ status: error.response?.status, url: original.url, alreadyRetried: !!original._retry })) {
     original._retry = true
     const token = await refresh()
     if (token) {
@@ -158,6 +163,14 @@ export async function loadStoredSession(): Promise<boolean> {
   } catch {
     return false
   }
+}
+
+/**
+ * Apaga tokens e usuário em cache (SecureStore + memória) SEM chamar a API e SEM avisar o AuthProvider.
+ * Usado depois da exclusão da conta: as sessões já foram revogadas no servidor.
+ */
+export function forgetSession(): Promise<void> {
+  return clearSession()
 }
 
 /** Renova o token depois de um 401 num upload de arquivo (fora do axios). null = sessão encerrada. */

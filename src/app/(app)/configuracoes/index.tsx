@@ -13,6 +13,7 @@ import { SyncStatusIndicator } from '@/components/sync/SyncStatusIndicator'
 import { useAuth } from '@/features/auth/AuthProvider'
 import { canManageFarms, canManageHerds, canManageUsers, canManageVaccines, canViewAnimalTypes } from '@/features/cadastros/permissions'
 import { db } from '@/sync'
+import { canDeleteOwnAccount } from '@/features/account/accountDeletion'
 import { canSeeAuthorDiagnostics } from '@/sync/authorDiagnostics'
 import { useSyncInfo } from '@/sync/hooks'
 import { countUnsentChanges, logoutWithGuard } from '@/sync/logout'
@@ -191,6 +192,32 @@ export default function ConfiguracoesScreen() {
             <Ionicons name="log-out-outline" size={26} color={isDark ? '#FF8A80' : '#8B1515'} />
           </XStack>
         </AppCard>
+
+        {/* Exclusão de conta (Play Store): separada do resto, no fim. Admin não vê: a API proíbe (403
+            ADMIN_SELF_DELETION_FORBIDDEN) e admin é conta interna do Embarque Livre; a tela trata o 403 mesmo assim. */}
+        {canDeleteOwnAccount(user?.role) ? (
+          <YStack gap={8} mt={16}>
+            <AppCard padded={false}>
+              <XStack
+                items="center"
+                justify="space-between"
+                px={20}
+                py={16}
+                minH={TOQUE_MINIMO}
+                gap={12}
+                opacity={{ press: 0.85 }}
+                onPress={() => router.push('/configuracoes/excluir-conta')}
+                accessibilityRole="button"
+                accessibilityLabel="Excluir minha conta"
+                accessibilityHint="Abre a tela que explica o que será apagado e pede confirmação">
+                <Text fontSize={18} fontWeight="800" color="brandError">
+                  Excluir minha conta
+                </Text>
+                <Ionicons name="trash-outline" size={26} color={isDark ? '#FF8A80' : '#8B1515'} />
+              </XStack>
+            </AppCard>
+          </YStack>
+        ) : null}
       </ScrollView>
       <ConfirmDialog
         open={confirmCount != null}

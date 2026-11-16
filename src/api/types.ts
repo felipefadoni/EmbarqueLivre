@@ -163,4 +163,6 @@ export interface ApiError {
   fieldErrors?: Record<string, string[]>
   details?: Record<string, unknown>
   retryAfterSeconds?: number
+  /** No 429: código de domínio original (ex.: TOO_MANY_PASSWORD_ATTEMPTS). Ausente no limite genérico por IP. */
+  reason?: string
 }

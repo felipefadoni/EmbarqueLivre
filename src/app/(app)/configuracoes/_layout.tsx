@@ -39,6 +39,7 @@ export default function ConfiguracoesLayout() {
       <Stack.Screen name="usuarios/[id]" options={{ title: 'Usuário' }} />
       <Stack.Screen name="pendencias" options={{ title: 'Pendências' }} />
       <Stack.Screen name="conflitos" options={{ title: 'Salvos só no aparelho' }} />
+      <Stack.Screen name="excluir-conta" options={{ title: 'Excluir minha conta' }} />
     </Stack>
   )
 }

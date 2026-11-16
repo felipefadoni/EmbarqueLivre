@@ -22,7 +22,7 @@ function firstParam(value: string | string[] | undefined): string | undefined {
 }
 
 export default function LoginScreen() {
-  const { login } = useAuth()
+  const { login, notice } = useAuth()
   const { retryAfter, setRetryAfter, isCoolingDown } = useRetryAfter()
   const passwordRef = useRef<AuthFieldRef>(null)
   const params = useLocalSearchParams<{ email?: string | string[]; created?: string | string[] }>()
@@ -33,8 +33,10 @@ export default function LoginScreen() {
   const [password, setPassword] = useState('')
   const [showPassword, setShowPassword] = useState(false)
   const [fieldErrors, setFieldErrors] = useState<Record<string, string>>({})
-  const [formError, setFormError] = useState<string | null>(createdParam === '1' ? CONTA_CRIADA : null)
-  const [formTone, setFormTone] = useState<'error' | 'info'>(createdParam === '1' ? 'info' : 'error')
+  // Aviso inicial: conta recém-criada ou conta excluída (vem do AuthProvider depois da limpeza).
+  const initialInfo = createdParam === '1' ? CONTA_CRIADA : notice
+  const [formError, setFormError] = useState<string | null>(initialInfo)
+  const [formTone, setFormTone] = useState<'error' | 'info'>(initialInfo ? 'info' : 'error')
   const [loading, setLoading] = useState(false)
 
   const disabled = loading || isCoolingDown
