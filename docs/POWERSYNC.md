@@ -28,10 +28,10 @@ development build" em vez de quebrar com `Base module not found. Did you do a po
 cd ~/Work/Pessoal/embarquelivre
 pnpm install                                 # instala @babel/runtime (agora dependência direta) e o PowerSync
 rm -rf node_modules/.cache/tamagui           # cache do compilador Tamagui com o resolve-failed antigo
-npx expo prebuild --clean --platform ios     # recria ios/ (gitignored) e roda pod install (OPSQLite + powersync-sqlite-core)
+pnpm expo prebuild --clean --platform ios     # recria ios/ (gitignored) e roda pod install (OPSQLite + powersync-sqlite-core)
 (cd ios && pod install)                      # só se o passo anterior avisar que o pod install falhou (ou: pod install --repo-update)
-npx expo run:ios                             # compila e instala o app "embarquelivre" no simulador (1ª vez: alguns minutos)
-npx expo start --dev-client --clear          # próximas vezes; abra o app "embarquelivre", NÃO o Expo Go
+pnpm expo run:ios                             # compila e instala o app "embarquelivre" no simulador (1ª vez: alguns minutos)
+pnpm expo start --dev-client --clear          # próximas vezes; abra o app "embarquelivre", NÃO o Expo Go
 ```
 
 ### iOS (simulador) — passo a passo
@@ -41,39 +41,39 @@ cd ~/Work/Pessoal/embarquelivre
 # 0) pare o `expo start` que estiver rodando (Ctrl+C) e feche o Expo Go no simulador
 pnpm install
 cp -n .env.example .env                 # se ainda não existir
-npx expo prebuild --clean --platform ios   # gera ios/ (no .gitignore) e roda pod install
+pnpm expo prebuild --clean --platform ios   # gera ios/ (no .gitignore) e roda pod install
 #   se o pod install falhar: (cd ios && pod install --repo-update)
-npx expo run:ios                         # compila, instala e abre o app "embarquelivre" (1ª vez: alguns minutos)
-#   escolher simulador: npx expo run:ios --device "iPhone 17 Pro"
+pnpm expo run:ios                         # compila, instala e abre o app "embarquelivre" (1ª vez: alguns minutos)
+#   escolher simulador: pnpm expo run:ios --device "iPhone 17 Pro"
 ```
 
 Nas próximas vezes (sem mudar dependências nativas) basta:
 
 ```bash
-npx expo start --dev-client --clear      # aperte "i" ou abra o app "embarquelivre" no simulador
+pnpm expo start --dev-client --clear      # aperte "i" ou abra o app "embarquelivre" no simulador
 ```
 
 Abra o app **embarquelivre** (ícone do projeto), **não o Expo Go**. Sempre que instalar/atualizar um pacote
-nativo, rode de novo `npx expo prebuild --clean --platform ios && npx expo run:ios`.
+nativo, rode de novo `pnpm expo prebuild --clean --platform ios && pnpm expo run:ios`.
 
 ### Android (emulador) — passo a passo
 
 ```bash
 cd ~/Work/Pessoal/embarquelivre
 # no .env: o IP do Mac (http://192.168.1.77:3000 / :8080) funciona; ou 10.0.2.2 no lugar de localhost
-npx expo prebuild --clean --platform android
-npx expo run:android                     # compila, instala e abre "embarquelivre" no emulador
-# depois: npx expo start --dev-client --clear  (aperte "a")
+pnpm expo prebuild --clean --platform android
+pnpm expo run:android                     # compila, instala e abre "embarquelivre" no emulador
+# depois: pnpm expo start --dev-client --clear  (aperte "a")
 # se o Gradle reclamar de cache: (cd android && ./gradlew clean) e rode run:android de novo
 ```
 
 ### EAS (nuvem), alternativa
 
 ```bash
-npx eas-cli@latest build --profile development --platform ios        # simulador iOS
-npx eas-cli@latest build --profile development-device --platform ios # aparelho
-npx eas-cli@latest build --profile development --platform android    # APK
-npx expo start --dev-client
+pnpm dlx eas-cli@latest build --profile development --platform ios        # simulador iOS
+pnpm dlx eas-cli@latest build --profile development-device --platform ios # aparelho
+pnpm dlx eas-cli@latest build --profile development --platform android    # APK
+pnpm expo start --dev-client
 ```
 
 Observações:
@@ -401,7 +401,7 @@ abrir tela nem tocar em nada. Por isso:
 - **Aparelho bloqueado desde o boot (iOS)**: o Keychain com a sessão fica ilegível até o primeiro
   desbloqueio; a tarefa pula essa janela.
 - **Download** (dados novos do servidor) só com o app aberto; em segundo plano só sobe a fila.
-- **Requer build nativo novo** (`npx expo prebuild --platform ios` + `npx expo run:ios --device`):
+- **Requer build nativo novo** (`pnpm expo prebuild --platform ios` + `pnpm expo run:ios --device`):
   o plugin `expo-background-task` adiciona `UIBackgroundModes` (`fetch`, `processing`) e
   `BGTaskSchedulerPermittedIdentifiers`. Sem rebuild, os gatilhos de primeiro plano funcionam, mas a
   tarefa de fundo não.

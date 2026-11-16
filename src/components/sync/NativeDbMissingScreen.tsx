@@ -27,9 +27,9 @@ const MESSAGE: Record<Reason, string> = {
 const MONO = Platform.select({ ios: 'Menlo', default: 'monospace' })
 
 const COMMANDS = [
-  'npx expo prebuild --clean',
-  'npx expo run:ios        # ou: npx expo run:android',
-  'npx expo start --dev-client',
+  'pnpm expo prebuild --clean',
+  'pnpm expo run:ios        # ou: pnpm expo run:android',
+  'pnpm expo start --dev-client',
 ]
 
 /** Tela cheia quando o banco local nativo não existe (em vez do erro "Base module not found"). */

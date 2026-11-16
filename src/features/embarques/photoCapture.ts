@@ -17,7 +17,7 @@ export type PhotoResult =
 
 const PHOTO_DIR = 'shipment-photos'
 const MISSING_NATIVE =
-  'A câmera ainda não está disponível neste app. Atualize o app de desenvolvimento (npx expo run:ios / run:android) e tente de novo.'
+  'A câmera ainda não está disponível neste app. Atualize o app de desenvolvimento (pnpm expo run:ios / run:android) e tente de novo.'
 
 type PickerModule = typeof import('expo-image-picker')
 type ManipulatorModule = typeof import('expo-image-manipulator')
