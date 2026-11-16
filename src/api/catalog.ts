@@ -44,7 +44,7 @@ export type Vaccine = {
   id: string
   name: string
   withdrawalDays: number
-  /** Só admin (catálogo, contrato PENDENTE: ver VACCINE_AUTHOR_CONTRACT). Ausente para master/básico. */
+  /** Só admin (tabela vaccine_authors, ver VACCINE_AUTHOR_CONTRACT). Ausente para master/básico. */
   createdByName?: string | null
   createdByEmail?: string | null
 }

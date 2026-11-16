@@ -7,7 +7,7 @@
  * denuncia um PowerSync do servidor parado (o aparelho sincroniza, mas nada novo chega).
  * Não mostra nenhum dado pessoal: só contagens e datas.
  */
-import { AUTHOR_CONTRACT, AUTHOR_PENDING_TABLES, VACCINE_AUTHOR_CONTRACT, type AuthorTable, type VaccineAuthorSource } from '../api/authorContract'
+import { AUTHOR_CONTRACT, AUTHOR_PENDING_TABLES, VACCINE_AUTHOR_CONTRACT, type AuthorTable } from '../api/authorContract'
 import type { UserRole } from '../api/types'
 import { normalizeTimestamp, tableOf, type SyncEntity } from './mapping'
 
@@ -67,33 +67,26 @@ export function authorDiagnosticsQuery(): { sql: string; params: unknown[] } {
 export const VACCINE_CATALOG_LABEL = 'Vacinas (catálogo)'
 
 /**
- * Catálogo de vacinas (contrato PENDENTE): conta o autor na forma configurada em VACCINE_AUTHOR_CONTRACT.source —
- * tabela só do admin (ps_data__vaccine_authors, LEFT JOIN), colunas da própria vaccines, ou as duas ('auto').
- * Consulta separada: se a tabela do autor não existir (ou falhar), o card mostra "aguardando a API" e o resto segue.
+ * Catálogo de vacinas: autor na tabela só do admin vaccine_authors (LEFT JOIN por id). "Campo recebido" = a vacina tem
+ * linha em vaccine_authors; "com autor" = nome ou e-mail preenchido (antigas sem backfill ficam sem: esperado).
+ * Consulta separada: se falhar (ex.: tabela ainda não criada no aparelho), o card mostra a linha pendente e o resto segue.
  */
-export function vaccineCatalogDiagnosticsQuery(source: VaccineAuthorSource = VACCINE_AUTHOR_CONTRACT.source): { sql: string; params: unknown[] } {
+export function vaccineCatalogDiagnosticsQuery(): { sql: string; params: unknown[] } {
   const { name, email, joinColumn } = VACCINE_AUTHOR_CONTRACT
-  const useTable = source !== 'columns'
-  const useColumns = source !== 'table'
-  const pick = (col: string) =>
-    `COALESCE(${[useTable ? `NULLIF(json_extract(va.data, '$.${col}'), '')` : '', useColumns ? `NULLIF(json_extract(v.data, '$.${col}'), '')` : '']
-      .filter(Boolean)
-      .join(', ')}, '')`
-  const keyParts = [useTable ? 'va.id IS NOT NULL' : '', useColumns ? `json_type(v.data, '$.${email}') IS NOT NULL` : ''].filter(Boolean)
-  const joinOn = joinColumn === 'id' ? 'va.id = v.id' : `json_extract(va.data, '$.${joinColumn}') = v.id`
+  const filled = (col: string) => `COALESCE(json_extract(va.data, '$.${col}'), '') <> ''`
   const pending = AUTHOR_PENDING_TABLES.includes('vaccines') ? 1 : 0
   return {
     sql: `SELECT '${VACCINE_CATALOG_LABEL}' AS label, COUNT(*) AS total,
-      COALESCE(SUM(${keyParts.join(' OR ')}), 0) AS withKey,
-      COALESCE(SUM(${pick(email)} <> '' OR ${pick(name)} <> ''), 0) AS withAuthor,
+      COALESCE(SUM(va.id IS NOT NULL), 0) AS withKey,
+      COALESCE(SUM(${filled(email)} OR ${filled(name)}), 0) AS withAuthor,
       MAX(json_extract(v.data, '$.created_at')) AS newest,
       ${pending} AS pendingContract
-      FROM ps_data__${tableOf('vaccines')} v${useTable ? ` LEFT JOIN ps_data__${tableOf('vaccineAuthors')} va ON ${joinOn}` : ''}`,
+      FROM ps_data__${tableOf('vaccines')} v LEFT JOIN ps_data__${tableOf('vaccineAuthors')} va ON va.${joinColumn} = v.id`,
     params: [],
   }
 }
 
-/** Linha "aguardando a API" quando a consulta do catálogo falha (ex.: tabela do autor ainda não criada). */
+/** Linha pendente quando a consulta do catálogo falha (ex.: tabela do autor ainda não criada no aparelho). */
 export function pendingVaccineCatalogRow(): AuthorDiagnosticRow {
   return { label: VACCINE_CATALOG_LABEL, total: 0, withKey: 0, withAuthor: 0, newest: null, pending: true }
 }

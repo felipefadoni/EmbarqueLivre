@@ -14,7 +14,7 @@
  *
  * Puro (sem React Native): http e banco injetados.
  */
-import { applyIdMap, loadIdMap, rawTableOf, saveIdMap, snapshotOf, syncedTable, type ConflictRow, type GuardExecutor } from './localGuard'
+import { applyIdMap, loadIdMap, purgeDownloadOnly, rawTableOf, saveIdMap, snapshotOf, syncedTable, type ConflictRow, type GuardExecutor } from './localGuard'
 import { OUTBOX_TABLE } from './mapping'
 import { sendOutboxEntry } from './outbox'
 import { publicApiMessage } from '../api/errors'
@@ -111,6 +111,8 @@ async function putCatalogItem(post: PostBatch, table: 'animal_types' | 'vaccines
  * Força o envio dos conflitos escolhidos (todos se `ids` vazio). Chame SÓ depois da confirmação do usuário.
  */
 export async function forcePushConflicts(db: GuardExecutor, deps: ForcePushDeps, ids?: string[]): Promise<ForcePushResult[]> {
+  // Somente leitura (vaccine_authors): nunca é forçada; some da guarda antes de listar.
+  await purgeDownloadOnly(db)
   const all = await db.getAll<{ id: string; tableName: string }>(
     `SELECT id, ${OC.tableName.name} AS tableName FROM ${O} WHERE ${OC.state.name} = 'conflict' ORDER BY ${OC.createdAt.name}, id`,
   )

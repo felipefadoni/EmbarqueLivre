@@ -5,7 +5,7 @@
  * Puro (sem React Native) para testes no Node com SQLite real.
  */
 import type { Animal, AnimalType, Farm, Herd, Shipment, Vaccine } from '../api/catalog'
-import { VACCINE_AUTHOR_CONTRACT, type VaccineAuthorSource } from '../api/authorContract'
+import { VACCINE_AUTHOR_CONTRACT } from '../api/authorContract'
 import { HERDS_CONTRACT } from '../api/herdsContract'
 import { SHIPMENTS_CONTRACT, shipmentStatusOf, type ShipmentStatus } from '../api/shipmentsContract'
 import type { AnimalWithdrawal, VaccinationEntry, WithdrawalApplication } from '../api/contract'
@@ -159,43 +159,36 @@ export function rowToFarm(row: FarmRow): Farm {
 // ---------- Vacinas e tipos ----------
 
 /**
- * Autor do catálogo de vacinas (SÓ admin): o ÚNICO ponto que sabe de onde ele vem (contrato PENDENTE, ver
- * VACCINE_AUTHOR_CONTRACT). 'table' = LEFT JOIN na tabela só do admin; 'columns' = colunas da própria vaccines;
- * 'auto' = as duas (tabela primeiro). Master/básico nunca chamam: sem join, sem colunas, sem filtro.
+ * Autor do catálogo de vacinas (SÓ admin): LEFT JOIN na tabela vaccine_authors (id = vaccines.id), contrato final em
+ * VACCINE_AUTHOR_CONTRACT. Vacina sem linha de autor (antiga) → null → "Autor não registrado". Master/básico nunca
+ * chamam: sem join, sem colunas, sem filtro.
  */
-export function vaccineAuthorSql(source: VaccineAuthorSource = VACCINE_AUTHOR_CONTRACT.source) {
-  const useTable = source !== 'columns'
-  const useColumns = source !== 'table'
-  const joinCol = VACCINE_AUTHOR_CONTRACT.joinColumn === 'id' ? 'va.id' : `va.${c('vaccineAuthors', 'vaccineId')}`
-  const pick = (field: 'createdByName' | 'createdByEmail') => {
-    const exprs = [useTable ? `NULLIF(va.${c('vaccineAuthors', field)}, '')` : '', useColumns ? `NULLIF(v.${c('vaccines', field)}, '')` : ''].filter(Boolean)
-    return exprs.length > 1 ? `COALESCE(${exprs.join(', ')})` : exprs[0]
-  }
+export function vaccineAuthorSql() {
   return {
-    join: useTable ? ` LEFT JOIN ${VA} va ON ${joinCol} = v.id` : '',
-    name: pick('createdByName'),
-    email: pick('createdByEmail'),
+    join: ` LEFT JOIN ${VA} va ON va.${VACCINE_AUTHOR_CONTRACT.joinColumn} = v.id`,
+    name: `NULLIF(va.${c('vaccineAuthors', 'createdByName')}, '')`,
+    email: `NULLIF(va.${c('vaccineAuthors', 'createdByEmail')}, '')`,
   }
 }
 
 /** `withAuthor` (só admin): + nome e e-mail de quem cadastrou. Sem ele: o SELECT de antes (sem join). */
-function vaccineSelectOf(withAuthor = false, source?: VaccineAuthorSource) {
+function vaccineSelectOf(withAuthor = false) {
   const base = `SELECT v.id AS id, v.${c('vaccines', 'name')} AS name, v.${c('vaccines', 'withdrawalDays')} AS withdrawalDays`
   if (!withAuthor) return `${base} FROM ${V} v`
-  const author = vaccineAuthorSql(source)
+  const author = vaccineAuthorSql()
   return `${base}, ${author.name} AS createdByName, ${author.email} AS createdByEmail FROM ${V} v${author.join}`
 }
 
-/** Só admin: `withAuthor` traz o autor; `authorEmail` filtra pelo e-mail (contém, sem maiúsculas). `source`: só testes. */
-export type VaccineListFilters = { withAuthor?: boolean; authorEmail?: string; source?: VaccineAuthorSource }
+/** Só admin: `withAuthor` traz o autor; `authorEmail` filtra pelo e-mail (contém, sem maiúsculas). */
+export type VaccineListFilters = { withAuthor?: boolean; authorEmail?: string }
 
 export function vaccinesListQuery(limit?: number, filters: VaccineListFilters = {}): SqlQuery {
   const where: string[] = []
   const params: unknown[] = []
-  if (filters.withAuthor) emailWhere(vaccineAuthorSql(filters.source).email, filters.authorEmail, where, params)
+  if (filters.withAuthor) emailWhere(vaccineAuthorSql().email, filters.authorEmail, where, params)
   params.push(limitClause(limit) + 1)
   return {
-    sql: `${vaccineSelectOf(filters.withAuthor, filters.source)} ${where.length ? `WHERE ${where.join(' AND ')} ` : ''}ORDER BY v.${c('vaccines', 'name')} COLLATE NOCASE, v.id LIMIT ?`,
+    sql: `${vaccineSelectOf(filters.withAuthor)} ${where.length ? `WHERE ${where.join(' AND ')} ` : ''}ORDER BY v.${c('vaccines', 'name')} COLLATE NOCASE, v.id LIMIT ?`,
     params,
   }
 }
@@ -204,9 +197,9 @@ export function vaccinesListQuery(limit?: number, filters: VaccineListFilters = 
 export function vaccinesListSpec(filters: VaccineListFilters = {}): KeysetSpec {
   const where: string[] = []
   const params: unknown[] = []
-  if (filters.withAuthor) emailWhere(vaccineAuthorSql(filters.source).email, filters.authorEmail, where, params)
+  if (filters.withAuthor) emailWhere(vaccineAuthorSql().email, filters.authorEmail, where, params)
   return {
-    base: vaccineSelectOf(filters.withAuthor, filters.source),
+    base: vaccineSelectOf(filters.withAuthor),
     baseParams: [],
     where,
     params,

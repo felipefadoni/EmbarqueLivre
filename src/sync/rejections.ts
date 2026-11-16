@@ -1,4 +1,4 @@
-import { entityOfTable, fieldOfColumn, REJECTIONS_TABLE, SYNC_TABLES, type SyncEntity } from './mapping'
+import { entityOfTable, fieldOfColumn, isDownloadOnlyTable, REJECTIONS_TABLE, SYNC_TABLES, type SyncEntity } from './mapping'
 import type { RejectionRecord } from './upload'
 
 const R = REJECTIONS_TABLE.table
@@ -21,6 +21,8 @@ export const REJECTIONS_COUNT_SQL = `SELECT COUNT(*) AS n FROM ${R}`
 /** Guarda as recusas (substitui uma anterior da mesma linha+op). Tabela local: não gera upload. */
 export async function saveRejections(db: RejectionExecutor, rows: RejectionRecord[], newId: () => string, now = () => new Date().toISOString()) {
   for (const row of rows) {
+    // Somente leitura (vaccine_authors): não vira Pendência (não há o que corrigir no aparelho).
+    if (isDownloadOnlyTable(row.tableName)) continue
     await db.execute(`DELETE FROM ${R} WHERE ${C.tableName.name} = ? AND ${C.rowId.name} = ? AND ${C.op.name} = ?`, [row.tableName, row.rowId, row.op])
     await db.execute(
       `INSERT INTO ${R} (id, ${C.entity.name}, ${C.tableName.name}, ${C.rowId.name}, ${C.op.name}, ${C.opData.name}, ${C.statusCode.name}, ${C.errorCode.name}, ${C.message.name}, ${C.field.name}, ${C.createdAt.name})

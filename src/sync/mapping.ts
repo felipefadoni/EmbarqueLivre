@@ -53,26 +53,18 @@ export const SYNC_TABLES = {
     columns: {
       name: col('name'),
       withdrawalDays: col('withdrawal_days', 'integer'),
-      /**
-       * Autor, forma B do contrato (PENDENTE, ver VACCINE_AUTHOR_CONTRACT): só download, só admin. Null para todos
-       * enquanto a API não mandar (e sempre para master/básico). Nunca sobem (NEVER_UPLOAD_COLUMNS).
-       */
-      createdByName: col(VACCINE_AUTHOR_CONTRACT.name),
-      createdByEmail: col(VACCINE_AUTHOR_CONTRACT.email),
       createdAt: col('created_at'),
       updatedAt: col('updated_at'),
     },
   },
   /**
-   * Autor do catálogo de vacinas, forma A do contrato (PENDENTE, recomendada): tabela só do admin (stream admin_all),
-   * uma linha por vacina. SÓ DOWNLOAD: o app nunca escreve aqui; qualquer op dela é descartada no upload
-   * (DOWNLOAD_ONLY_ENTITIES). Vazia enquanto a API não mandar e sempre vazia para master/básico.
+   * Autor do catálogo de vacinas (contrato final, VACCINE_AUTHOR_CONTRACT): tabela só do admin (stream admin_all), uma
+   * linha por vacina, id = vaccines.id. SOMENTE LEITURA (API: 400 READ_ONLY_TABLE): o app nunca escreve nem enfileira
+   * nada dela (DOWNLOAD_ONLY_ENTITIES). Sempre vazia para master/básico.
    */
   vaccineAuthors: {
     table: VACCINE_AUTHOR_CONTRACT.table,
     columns: {
-      /** Só usada se VACCINE_AUTHOR_CONTRACT.joinColumn = 'vaccine_id' (senão o id da linha é o da vacina). */
-      vaccineId: col('vaccine_id'),
       createdByName: col(VACCINE_AUTHOR_CONTRACT.name),
       createdByEmail: col(VACCINE_AUTHOR_CONTRACT.email),
     },
@@ -181,13 +173,28 @@ export const SYNC_TABLES = {
 export const WRITABLE_ENTITIES = ['farms', 'vaccines', 'animalTypes', 'animals', 'herds', 'shipments', 'shipmentAnimals', 'vaccinations'] as const
 
 /**
- * Tabelas só de download (o servidor manda, o app só lê). Nenhuma op delas sobe para /powersync/upload, mesmo que
- * alguma escrita local escape (uploadTransaction as descarta).
+ * Tabelas SOMENTE LEITURA (o servidor manda, o app só lê; a API recusa escrita com 400 READ_ONLY_TABLE). Nada delas
+ * entra em fila nenhuma: repositório recusa escrever, upload/outbox/forcePush descartam, guarda/restauração ignoram
+ * (syncedTable → null), Pendências/conflitos não guardam.
  */
 export const DOWNLOAD_ONLY_ENTITIES = ['vaccineAuthors'] as const
 
+export function isDownloadOnlyEntity(entity: string): boolean {
+  return (DOWNLOAD_ONLY_ENTITIES as readonly string[]).includes(entity)
+}
+
 export function isDownloadOnlyTable(table: string): boolean {
-  return (DOWNLOAD_ONLY_ENTITIES as readonly string[]).includes(entityOfTable(table) ?? '')
+  return isDownloadOnlyEntity(entityOfTable(String(table ?? '')) ?? '')
+}
+
+/** Nomes (tabela do app) das somente leitura, para SQL de limpeza. */
+export function downloadOnlyTables(): string[] {
+  return DOWNLOAD_ONLY_ENTITIES.map((entity) => SYNC_TABLES[entity].table)
+}
+
+/** Escrita local numa tabela somente leitura é bug: falha alto em vez de gerar op que a API recusaria. */
+export function assertWritableEntity(entity: string): void {
+  if (isDownloadOnlyEntity(entity)) throw new Error(`Tabela somente leitura (download): ${entity}`)
 }
 
 /** Limite de operações por POST /powersync/upload. */
@@ -240,9 +247,7 @@ export const NEVER_UPLOAD_COLUMNS: Partial<Record<SyncEntity, string[]>> = {
   // created_by_name/created_by_email: autor (só download, admin). A API já ignora, mas o app também tira de PUT/PATCH,
   // da saída de reenvio e do envio forçado (todos passam por toUploadOp); o snapshot local guarda para a restauração.
   farms: [SYNC_TABLES.farms.columns.createdByName.name, SYNC_TABLES.farms.columns.createdByEmail.name],
-  vaccines: [SYNC_TABLES.vaccines.columns.createdByName.name, SYNC_TABLES.vaccines.columns.createdByEmail.name],
   vaccineAuthors: [
-    SYNC_TABLES.vaccineAuthors.columns.vaccineId.name,
     SYNC_TABLES.vaccineAuthors.columns.createdByName.name,
     SYNC_TABLES.vaccineAuthors.columns.createdByEmail.name,
   ],

@@ -14,7 +14,7 @@
  *
  * Puro (sem React Native): recebe o executor SQL, testável no Node com SQLite.
  */
-import { columnList, entityOfTable, ID_MAP_TABLE, OUTBOX_TABLE, SYNC_TABLES, type SyncEntity } from './mapping'
+import { columnList, downloadOnlyTables, entityOfTable, ID_MAP_TABLE, isDownloadOnlyEntity, isDownloadOnlyTable, OUTBOX_TABLE, SYNC_TABLES, type SyncEntity } from './mapping'
 import type { ParkedOp, UploadOp } from './upload'
 
 const O = OUTBOX_TABLE.table
@@ -53,10 +53,13 @@ export type ConflictRow = {
   createdAt: string
 }
 
-/** Tabela sincronizada (view do PowerSync) + colunas; null = não é tabela do app (protege o SQL). */
+/**
+ * Tabela sincronizada (view do PowerSync) + colunas; null = não é tabela do app (protege o SQL) OU é somente leitura
+ * (vaccine_authors): sem snapshot, sem guarda, sem restauração, sem devolver PUT à fila.
+ */
 export function syncedTable(tableName: string): { entity: SyncEntity; table: string; columns: string[] } | null {
   const entity = entityOfTable(tableName)
-  if (!entity || !(entity in SYNC_TABLES)) return null
+  if (!entity || !(entity in SYNC_TABLES) || isDownloadOnlyEntity(entity)) return null
   return { entity, table: SYNC_TABLES[entity].table, columns: columnList(entity).map(([name]) => name) }
 }
 
@@ -96,12 +99,25 @@ export async function snapshotOf(db: GuardExecutor, op: { table: string; id: str
 
 const nowIso = () => new Date().toISOString()
 
+/** Remove da saída/guarda qualquer entrada de tabela somente leitura (não deveria existir; defesa). Devolve quantas. */
+export async function purgeDownloadOnly(db: GuardExecutor): Promise<number> {
+  const tables = downloadOnlyTables()
+  const found = await db.getAll<{ id: string }>(
+    `SELECT id FROM ${O} WHERE ${OC.tableName.name} IN (${tables.map(() => '?').join(', ')})`,
+    tables,
+  )
+  if (found.length) await db.execute(`DELETE FROM ${O} WHERE ${OC.tableName.name} IN (${tables.map(() => '?').join(', ')})`, tables)
+  return found.length
+}
+
 /**
  * Guarda as ops recusadas por referência ausente/acesso como conflito. Mesma linha+op já em conflito: atualiza
  * (PATCH soma os campos; a ordem original é mantida). DELETE em conflito tira os PUT/PATCH antigos da mesma linha.
  */
 export async function parkOps(db: GuardExecutor, items: ParkedOp[], newId: () => string, now = nowIso, keepId?: string): Promise<void> {
   for (const { op, rejection } of items) {
+    // Somente leitura (vaccine_authors): nunca vira conflito guardado (a API recusaria de novo, sempre).
+    if (isDownloadOnlyTable(op.table)) continue
     const snapshot = await snapshotOf(db, op)
     const existing = keepId
       ? { id: keepId, opData: null as string | null }
@@ -206,6 +222,7 @@ export type GuardResult = { restored: number; confirmed: number; dropped: number
  */
 export async function guardLocalRows(db: GuardExecutor, lastSyncedAt: number | null, now = nowIso): Promise<GuardResult> {
   const result: GuardResult = { restored: 0, confirmed: 0, dropped: 0 }
+  result.dropped += await purgeDownloadOnly(db)
   const rows = await db.getAll<GuardRow>(
     `SELECT id, ${OC.tableName.name} AS tableName, ${OC.rowId.name} AS rowId, ${OC.op.name} AS op, ${OC.state.name} AS state,
        ${OC.snapshot.name} AS snapshot, ${OC.sentAt.name} AS sentAt

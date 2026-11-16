@@ -26,49 +26,34 @@ export const AUTHOR_CONTRACT: Record<AuthorTable, AuthorColumns> = {
   herds: { email: 'created_by_email', name: 'created_by_name' },
   vaccinations: { email: 'created_by_email', name: 'created_by_name' },
   shipments: { email: 'created_by_email', name: 'created_by_name' },
-  /** CONTRATO PENDENTE (ver VACCINE_AUTHOR_CONTRACT): nomes prováveis; sem dado chegando, a tela mostra "Autor não registrado". */
+  /** Catálogo: vem da tabela vaccine_authors (VACCINE_AUTHOR_CONTRACT), não de colunas de vaccines. */
   vaccines: { email: 'created_by_email', name: 'created_by_name' },
 }
 
-/** Tabelas cujo autor ainda depende do contrato da API (o diagnóstico mostra "aguardando" em vez de erro). */
-export const AUTHOR_PENDING_TABLES: readonly AuthorTable[] = ['vaccines']
+/** Tabelas cujo autor ainda depende do contrato da API (o diagnóstico mostra "aguardando" em vez de erro). Hoje: nenhuma. */
+export const AUTHOR_PENDING_TABLES: readonly AuthorTable[] = []
 
 /**
- * Autor do CATÁLOGO de vacinas (tabela vaccines) — CONTRATO PENDENTE (13/11/2026 17:07): a API vai mandar só para o admin.
- *
- * Problema: vaccines já chega a TODOS pelo stream `catalogs` (sem autor). No PowerSync, a mesma linha (tabela + id) vinda
- * de dois buckets fica uma cópia por bucket no ps_oplog, mas só UMA vai para ps_data__vaccines: a de MAIOR op_id, e o PUT
- * substitui o JSON INTEIRO (não há merge de colunas). Se `admin_all` também mandar vaccines com autor, o autor some/volta
- * conforme o bucket que recebeu a op mais recente (edição da vacina, compactação/defrag do bucket, reprocessamento).
- *
- * Formas suportadas (todas lidas pelas MESMAS consultas, ver vaccineAuthorSql em queries.ts):
- * - 'table'   (A, RECOMENDADA): tabela própria só do admin, ex. `SELECT vaccine_id AS id, vaccine_created_by_name AS
- *             created_by_name, vaccine_created_by_email AS created_by_email FROM vaccines AS vaccine_authors WHERE
- *             auth.parameter('role') = 'admin'` no stream admin_all. Linha com id próprio: sem conflito com `catalogs`.
- *             O app faz LEFT JOIN só na consulta do admin.
- * - 'columns' (B): created_by_* direto em vaccines (só é estável se o admin NÃO receber vaccines também por `catalogs`).
- * - 'auto'    (padrão enquanto pendente): lê as duas (COALESCE tabela → colunas), funciona com A ou B sem trocar nada.
- * Trocar a forma = mudar só `source` abaixo (e `joinColumn`/`table` se a API usar outros nomes).
+ * Autor do CATÁLOGO de vacinas — contrato FINAL (forma A), confirmado no código da API (commit d2a6df5, 13/11/2026 17:17):
+ * - `docker/powersync/sync-config.yaml`, stream admin_all: `SELECT vaccine_id AS id, vaccine_created_by_name AS
+ *   created_by_name, vaccine_created_by_email AS created_by_email FROM vaccines AS vaccine_authors WHERE
+ *   auth.parameter('role') = 'admin'`. Tabela própria do app, uma linha por vacina, id = vaccines.id. Antigas: null
+ *   (sem backfill → "Autor não registrado"). Vazia para master/básico. `catalogs`/vaccines sem mudança.
+ * - Por que tabela própria: a mesma linha de vaccines em dois buckets (catalogs sem autor, admin_all com autor) fica
+ *   só com a versão de maior op_id no aparelho, JSON inteiro (sem merge de colunas): o autor sumiria e voltaria.
+ * - SÓ LEITURA: a API recusa PUT/PATCH/DELETE nela com 400 READ_ONLY_TABLE (`SYNC_READ_ONLY_TABLES`). O app nunca escreve
+ *   nem enfileira nada dela (DOWNLOAD_ONLY_ENTITIES em mapping.ts).
+ * - Leitura (só admin): `vaccines v LEFT JOIN vaccine_authors va ON va.id = v.id` (vaccineAuthorSql em queries.ts).
+ * - REST GET /vaccines: `createdBy` e `?authorEmail` só admin (demais: 403 INSUFFICIENT_ROLE). O app só usa a lista REST
+ *   no conflito por nome (useConflicts), sem authorEmail.
  */
-export type VaccineAuthorSource = 'auto' | 'table' | 'columns'
-
-export const VACCINE_AUTHOR_CONTRACT: {
-  pending: boolean
-  source: VaccineAuthorSource
-  /** Forma A: nome da tabela no app. */
-  table: string
-  /** Forma A: coluna da tabela de autor que aponta para vaccines.id ('id' se a linha usa o próprio id da vacina). */
-  joinColumn: 'id' | 'vaccine_id'
-  name: string
-  email: string
-} = {
-  pending: true,
-  source: 'auto', // ← ÚNICA linha a trocar quando o contrato chegar ('table' ou 'columns').
+export const VACCINE_AUTHOR_CONTRACT = {
   table: 'vaccine_authors',
+  /** Coluna da tabela de autor que aponta para vaccines.id. */
   joinColumn: 'id',
   name: 'created_by_name',
   email: 'created_by_email',
-}
+} as const
 
 /**
  * REST de /vaccinations e /shipments (lista e detalhe), confirmado na API: só o ADMIN recebe

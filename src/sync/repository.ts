@@ -21,7 +21,7 @@ import {
   todayIsoInShipmentZone,
 } from '../api/shipmentsContract'
 import type { ApiError, UserRole } from '../api/types'
-import { colOf as col, PHOTO_QUEUE_TABLE, tableOf as t, toColumns, type SyncEntity } from './mapping'
+import { assertWritableEntity, colOf as col, PHOTO_QUEUE_TABLE, tableOf as t, toColumns, type SyncEntity } from './mapping'
 import {
   animalByIdQuery,
   animalCodeTakenQuery,
@@ -65,6 +65,7 @@ export function localError(status: number, code: string, field?: string): ApiErr
 }
 
 function insertSql(entity: SyncEntity, id: string, values: Record<string, unknown>) {
+  assertWritableEntity(entity)
   const columns = Object.keys(values)
   return {
     sql: `INSERT INTO ${t(entity)} (id${columns.map((name) => `, ${name}`).join('')}) VALUES (?${columns.map(() => ', ?').join('')})`,
@@ -73,6 +74,7 @@ function insertSql(entity: SyncEntity, id: string, values: Record<string, unknow
 }
 
 function updateSql(entity: SyncEntity, id: string, values: Record<string, unknown>) {
+  assertWritableEntity(entity)
   const columns = Object.keys(values)
   return {
     sql: `UPDATE ${t(entity)} SET ${columns.map((name) => `${name} = ?`).join(', ')} WHERE id = ?`,

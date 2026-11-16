@@ -25,7 +25,14 @@
       "predictiveBackGestureEnabled": false,
       "icon": "./assets/images/icon.png",
       "package": "com.fadoni.embarquelivre",
-      "label": "Embarque Livre"
+      "label": "Embarque Livre",
+      "blockedPermissions": [
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE",
+        "android.permission.SYSTEM_ALERT_WINDOW",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.VIBRATE"
+      ]
     },
     "web": {
       "output": "single",

@@ -45,3 +45,6 @@ example
 
 # tamagui
 .tamagui/
+
+# Google Play (eas submit): chave da conta de serviço, NUNCA no git
+secrets/

@@ -13,8 +13,8 @@
  *
  * Puro (sem React Native): recebe o executor SQL, testável no Node.
  */
-import { markSent, parkOps, syncedTable } from './localGuard'
-import { OUTBOX_TABLE, REJECTIONS_TABLE } from './mapping'
+import { markSent, parkOps, purgeDownloadOnly, syncedTable } from './localGuard'
+import { isDownloadOnlyTable, OUTBOX_TABLE, REJECTIONS_TABLE } from './mapping'
 import { isDefinitiveRejectionStatus, SessionEndedUploadError, uploadTransaction, type UploadDeps } from './upload'
 
 const O = OUTBOX_TABLE.table
@@ -135,7 +135,11 @@ export function requeueDeliveryFailures(db: OutboxExecutor, newId: () => string)
 }
 
 async function requeueOnce(db: OutboxExecutor, newId: () => string): Promise<number> {
-  const rows = await db.getAll<StoredRejection>(SELECT_REJECTIONS)
+  await purgeDownloadOnly(db)
+  const all = await db.getAll<StoredRejection>(SELECT_REJECTIONS)
+  // Somente leitura (vaccine_authors): nunca volta ao envio; a "recusa" (se existisse) só some.
+  for (const row of all) if (isDownloadOnlyTable(row.tableName)) await db.execute(`DELETE FROM ${R} WHERE id = ?`, [row.id])
+  const rows = all.filter((row) => !isDownloadOnlyTable(row.tableName))
   if (!rows.length) return 0
   const requeue = new Map<string, StoredRejection>()
   for (const row of rows) if (!isFixableRejection(row)) requeue.set(row.id, row)
@@ -201,6 +205,11 @@ function parseOpData(text: string | null): Record<string, unknown> | undefined {
  * aceita → sai da saída e fica guardada até o download confirmar; recusa real (400/409/422) → Pendência.
  */
 export async function sendOutboxEntry(db: OutboxExecutor, entry: OutboxRow, deps: OutboxDeps): Promise<'applied' | 'parked' | 'rejected'> {
+  if (isDownloadOnlyTable(entry.tableName)) {
+    // Somente leitura (vaccine_authors): não sobe (a API devolveria 400 READ_ONLY_TABLE); a entrada só sai da saída.
+    await db.execute(`DELETE FROM ${O} WHERE id = ?`, [entry.id])
+    return 'applied'
+  }
   const newId = deps.newId ?? (() => `${Date.now().toString(36)}${Math.random().toString(36).slice(2, 10)}`.toUpperCase())
   let outcome: 'applied' | 'parked' | 'rejected' = 'applied'
   await uploadTransaction(
