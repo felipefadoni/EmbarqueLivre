@@ -62,7 +62,8 @@
         }
       ],
       "expo-sharing",
-      "expo-background-task"
+      "expo-background-task",
+      "./plugins/withAndroidR8KeepRules"
     ],
     "experiments": {
       "typedRoutes": true,
