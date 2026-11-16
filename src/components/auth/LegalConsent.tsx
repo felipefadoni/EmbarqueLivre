@@ -18,7 +18,7 @@ type Props = {
   disabled?: boolean
 }
 
-async function openDocument(url: string) {
+export async function openDocument(url: string) {
   try {
     await WebBrowser.openBrowserAsync(url, { presentationStyle: WebBrowser.WebBrowserPresentationStyle.AUTOMATIC })
   } catch {

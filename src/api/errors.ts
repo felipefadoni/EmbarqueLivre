@@ -20,6 +20,7 @@ const DOMAIN_MESSAGES: Record<string, string> = {
   INVALID_REFRESH_TOKEN: 'Sua sessão expirou. Entre novamente.',
   REFRESH_TOKEN_REUSED: 'Por segurança, sua sessão foi encerrada. Entre novamente.',
   UNAUTHENTICATED: 'Sua sessão expirou. Entre novamente.',
+  ACCESS_TOKEN_STALE: 'Sua sessão expirou. Entre novamente.',
   INSUFFICIENT_ROLE: 'Você não tem permissão para executar esta ação',
   CSRF_TOKEN_INVALID: 'Não foi possível concluir. Recarregue a página.',
   ORIGIN_NOT_ALLOWED: 'Acesso não permitido a partir deste endereço.',
@@ -331,7 +332,7 @@ export function publicApiMessage(error: ApiError): string {
 }
 
 export function listErrorMessage(error: ApiError): string {
-  if (error.code === 'NETWORK_ERROR' || error.code === 'UNAUTHENTICATED' || error.code === 'RATE_LIMITED') {
+  if (error.code === 'NETWORK_ERROR' || error.code === 'UNAUTHENTICATED' || error.code === 'ACCESS_TOKEN_STALE' || error.code === 'RATE_LIMITED') {
     return userMessage(error)
   }
   if (APP_MESSAGE_FIRST.has(error.code) && DOMAIN_MESSAGES[error.code]) return DOMAIN_MESSAGES[error.code]

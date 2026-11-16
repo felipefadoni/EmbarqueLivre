@@ -2,7 +2,7 @@ import { Image } from 'expo-image'
 import { createContext, use, useCallback, useEffect, useMemo, useRef, useState, type PropsWithChildren } from 'react'
 
 import { accountApi } from '@/api/account'
-import { authApi, endSessionKeepData, forgetSession, setOnLoggedOut } from '@/api/client'
+import { authApi, endSessionKeepData, forgetSession, setOnLoggedOut, setOnSessionRefreshed } from '@/api/client'
 import type { AuthUser } from '@/api/types'
 import {
   DELETION_MESSAGES,
@@ -11,6 +11,7 @@ import {
   type DeletionScope,
 } from '@/features/account/accountDeletion'
 import { deleteAllLocalShipmentFiles } from '@/features/embarques/photoCapture'
+import { applyRefreshedUser, SESSION_EXPIRED_NOTICE } from '@/features/auth/sessionUser'
 import { connector, setSyncUser, syncLifecycle } from '@/sync'
 import { unregisterBackgroundSync } from '@/sync/backgroundSync'
 
@@ -49,13 +50,20 @@ export function AuthProvider({ children }: PropsWithChildren) {
   const deletingRef = useRef(false)
   const missedLogoutRef = useRef(false)
   const missedLogoutHandler = useRef<() => void>(() => {})
+  // Usuário atual para o callback do refresh (fora do ciclo de render).
+  const userRef = useRef<AuthUser | null>(null)
+  useEffect(() => {
+    userRef.current = user
+  }, [user])
 
   useEffect(() => {
     // Sessão expirada (refresh recusado): desconecta o sync mas MANTÉM os dados locais e a fila,
     // para não perder alterações offline. Se outro usuário entrar, o start() limpa tudo.
+    // Sem loop: o refresh recusado apaga o refresh token (clearSession), então nada tenta renovar de novo.
     const onSessionExpired = () => {
       setSyncUser(null)
       void syncLifecycle.stopKeepData().catch(() => undefined)
+      setNotice(SESSION_EXPIRED_NOTICE)
       setUser(null)
     }
     setOnLoggedOut(() => {
@@ -67,6 +75,15 @@ export function AuthProvider({ children }: PropsWithChildren) {
     })
     missedLogoutHandler.current = onSessionExpired
     connector.onSessionEnded = () => endSessionKeepData()
+    // 401 ACCESS_TOKEN_STALE → refresh → papel/conta relidos: atualiza o usuário em memória (permissões e sync).
+    setOnSessionRefreshed((fresh) => {
+      const current = userRef.current
+      const next = applyRefreshedUser(current, fresh)
+      if (!next || next === current) return
+      userRef.current = next
+      setSyncUser({ id: next.id, role: next.role, accountId: next.accountId })
+      setUser(next)
+    })
     authApi
       .restore()
       .then((restored) => {
@@ -77,6 +94,7 @@ export function AuthProvider({ children }: PropsWithChildren) {
 
     return () => {
       setOnLoggedOut(() => {})
+      setOnSessionRefreshed(() => {})
       connector.onSessionEnded = () => {}
     }
   }, [])

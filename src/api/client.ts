@@ -19,6 +19,12 @@ export const setOnLoggedOut = (fn: () => void) => {
   onLoggedOut = fn
 }
 
+/** Refresh OK: o servidor relê papel/conta (401 ACCESS_TOKEN_STALE com role_changed/account_changed). */
+let onSessionRefreshed: (user: AuthUser) => void = () => {}
+export const setOnSessionRefreshed = (fn: (user: AuthUser) => void) => {
+  onSessionRefreshed = fn
+}
+
 export const http = create({
   baseURL: `${API_URL}/api/v1`,
   timeout: 15_000,
@@ -75,6 +81,11 @@ async function refreshOnce(refreshToken: string): Promise<string | null> {
   // A sessão foi encerrada enquanto o refresh estava no ar (logout/exclusão): descarta os tokens novos.
   if (epoch !== sessionEpoch) return null
   await saveSession(data)
+  try {
+    onSessionRefreshed(data.user)
+  } catch {
+    // aviso para a UI; nunca derruba o refresh
+  }
   return data.accessToken
 }
 

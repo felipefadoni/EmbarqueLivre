@@ -50,6 +50,7 @@ const ENVELOPE_CODES = new Set([
   'NETWORK_ERROR',
   'TIMEOUT',
   'UNAUTHENTICATED',
+  'ACCESS_TOKEN_STALE',
 ])
 
 type RejectionLike = { statusCode: number | null; errorCode: string | null }

@@ -92,7 +92,7 @@ Observações:
 | `EXPO_PUBLIC_POWERSYNC_URL` | — | Serviço PowerSync. **Se definida, vence** o `powersyncUrl` do token; vazia = usa o do token |
 | `EXPO_PUBLIC_POWERSYNC_TOKEN_PATH` | `/powersync/token` | relativo a `/api/v1` |
 | `EXPO_PUBLIC_POWERSYNC_UPLOAD_PATH` | `/powersync/upload` | relativo a `/api/v1` |
-| `EXPO_PUBLIC_POWERSYNC_CHECKPOINT_MODE` | `legacy` | `requests` exige PowerSync Service ≥ 1.24 (o compose usa 1.28.1; o `.env` usa `requests`) |
+| `EXPO_PUBLIC_POWERSYNC_CHECKPOINT_MODE` | `legacy` | Padrão e valor do EAS production (não definido = `legacy`). `requests` é alpha (Service ≥ 1.24) e só para teste |
 
 ### localhost × IP da rede
 
@@ -497,3 +497,25 @@ cima do servidor só depois de o usuário confirmar.
   inteira. `VACCINE_NOT_FOUND` (vacina de outro ambiente): procura no servidor uma vacina com o mesmo nome e liga a ela;
   sem nenhuma, cria a do aparelho (PUT, master/admin). Tipo de animal fica com o servidor (pelo nome).
 - Logout conta conflitos como não enviados (`OUTBOX_UNSENT_COUNT_SQL`).
+
+## Android: "Sync stream connection timed out after 30000ms"
+
+Sintoma (16/11): no Android o `fetch()` do `POST /sync/stream` nunca resolvia; o SDK abortava aos 30 s (`connectTimeoutMs`)
+e o serviço registrava `Sync stream complete … close_reason: "client closing stream", stream_ms: ~30000` mesmo tendo
+enviado dados. O modo de checkpoint não importa (falha igual em `legacy` e `requests`).
+
+Causa (no OkHttp do Android, antes de a resposta chegar ao JS):
+
+1. **Build debuggable (dev client):** o `expo-dev-launcher` injeta `ExpoNetworkInspectOkHttpNetworkInterceptor` em todo
+   `OkHttpClient`. Ele lê até 1 MB do corpo antes de entregar a resposta, salvo para tipos de streaming
+   (`text/event-stream`…) ou `Transfer-Encoding: chunked`. O stream do PowerSync vem em HTTP/2 (sem Transfer-Encoding)
+   como `application/vnd.powersync.bson-stream`, então os cabeçalhos ficavam presos até 1 MB ou o fim do stream.
+2. **Também em release:** o `TransparentCompressionInterceptor` do `expo/fetch` pede `zstd, br, gzip` por padrão e o
+   caminho `br` segura o stream até o fim (expo/expo#50568).
+
+Correção (`src/sync/streamFetch.ts`, ligado em `database.ts` via `remote.fetchImplementation`): só no pedido de
+streaming, o `Accept` passa a começar com `text/event-stream;q=0.1` (o inspetor pula; o serviço negocia só entre
+ndjson/bson e continua em BSON) e o `Accept-Encoding` fica fixo em `gzip` (o serviço usa `Z_SYNC_FLUSH`; o
+`GzipSource` entrega leituras parciais). Conferir no log do serviço: `encoding: "gzip"`, `bson: true` e o stream
+seguindo aberto (sem `client closing stream` aos 30 s).
+
