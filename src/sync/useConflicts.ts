@@ -1,10 +1,12 @@
 import { animalTypesApi, vaccinesApi } from '@/api/catalog'
 import { listAllPages } from '@/api/contract'
-import { connector, db } from './index'
+import { vaccineAccess } from '../features/cadastros/vaccineAccess'
+import { connector, currentSyncUser, db } from './index'
 import { forcePushConflicts, type ForcePushResult } from './forcePush'
 import { newUlid } from './ids'
 import { applyIdMap, guardLocalRows, loadIdMap } from './localGuard'
 import { SYNC_TABLES } from './mapping'
+import { animalAccountQuery } from './queries'
 import { retryDueConflicts } from './outbox'
 import { uploadPump } from './useUploadPump'
 
@@ -62,15 +64,45 @@ export async function retryConflictsSoon(): Promise<number> {
 }
 
 async function fetchCatalog(table: 'animal_types' | 'vaccines') {
-  const items = await listAllPages(table === 'animal_types' ? animalTypesApi.list : vaccinesApi.list)
+  if (table === 'vaccines') {
+    // §25.3: master/básico recebem só a própria conta; admin, todas (cada item com accountId).
+    const items = await listAllPages(vaccinesApi.list)
+    return items.map((item) => ({ id: item.id, name: item.name, accountId: item.accountId ?? null }))
+  }
+  const items = await listAllPages(animalTypesApi.list)
   return items.map((item) => ({ id: item.id, name: item.name }))
+}
+
+/** Conta do catálogo de vacinas para o cadastro em conflito: a do animal da vacinação; sem animal, a do usuário. */
+async function catalogAccountFor(_table: 'animal_types' | 'vaccines', opData: Record<string, unknown>): Promise<string | null> {
+  const animalId = typeof opData.animal_id === 'string' ? opData.animal_id : ''
+  if (animalId) {
+    const query = animalAccountQuery(animalId)
+    const row = await db.getOptional<{ accountId: string | null }>(query.sql, query.params as unknown[]).catch(() => null)
+    if (row?.accountId) return row.accountId
+  }
+  return currentSyncUser()?.accountId ?? null
+}
+
+function canCreateCatalog(table: 'animal_types' | 'vaccines'): boolean {
+  // Tipos de animal: comportamento de antes (tenta; o servidor responde 403 se não for admin).
+  return table === 'vaccines' ? vaccineAccess(currentSyncUser()?.role).canCreate : true
+}
+
+function rememberCatalogLink(table: 'animal_types' | 'vaccines'): boolean {
+  // Admin lança em várias contas: cada uma tem a sua cópia da vacina, então nada de de-para global.
+  return !(table === 'vaccines' && currentSyncUser()?.role === 'admin')
 }
 
 /**
  * Envio forçado (local → API) dos conflitos escolhidos — SÓ depois da confirmação na tela. Ver forcePush.ts.
  */
 export async function forcePush(ids?: string[]): Promise<ForcePushResult[]> {
-  const results = await forcePushConflicts(db, { ...connector.uploadDeps(db), fetchCatalog, newId: newUlid }, ids)
+  const results = await forcePushConflicts(
+    db,
+    { ...connector.uploadDeps(db), fetchCatalog, catalogAccountFor, canCreateCatalog, rememberCatalogLink, newId: newUlid },
+    ids,
+  )
   void runLocalGuard()
   void uploadPump.tick().catch(() => undefined)
   return results

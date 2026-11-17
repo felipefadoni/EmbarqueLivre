@@ -34,6 +34,7 @@ import {
   shipmentByIdQuery,
   shipmentNameTakenQuery,
   vaccineByIdQuery,
+  vaccineNamesQuery,
   vaccinationByIdQuery,
   type AnimalRow,
   type FarmRow,
@@ -42,6 +43,8 @@ import {
   type VaccinationRow,
 } from './queries'
 import { computeWithdrawalUntil } from './withdrawal'
+import { isVaccineNameTaken } from '../features/cadastros/vaccineAccount'
+import { vaccineAccess } from '../features/cadastros/vaccineAccess'
 
 export interface SqlExecutor {
   getAll<T>(sql: string, params?: unknown[]): Promise<T[]>
@@ -57,7 +60,7 @@ export type RepositoryContext = {
   now: () => string
   /** YYYY-MM-DD local. */
   today: () => string
-  currentUser: () => { id: string; role: UserRole } | null
+  currentUser: () => { id: string; role: UserRole; accountId?: string | null } | null
 }
 
 export function localError(status: number, code: string, field?: string): ApiError {
@@ -120,11 +123,22 @@ export function createRepository(ctx: RepositoryContext) {
   const { db } = ctx
   const id = () => ctx.newId().toUpperCase()
 
-  function assertCanWrite(entity: 'farms' | 'herds' | 'vaccines' | 'animalTypes') {
+  function assertCanWrite(entity: 'farms' | 'herds' | 'vaccines' | 'animalTypes', action: 'create' | 'update' | 'delete' = 'update') {
     const role = ctx.currentUser()?.role
-    const allowed = entity === 'animalTypes' ? role === 'admin' : role === 'master' || role === 'admin'
+    // Vacinas por conta (§25.2): master/básico criam e editam; só master exclui; admin só lê.
+    const vaccine = vaccineAccess(role)
+    const allowed =
+      entity === 'vaccines'
+        ? action === 'create' ? vaccine.canCreate : action === 'delete' ? vaccine.canDelete : vaccine.canEdit
+        : entity === 'animalTypes' ? role === 'admin' : role === 'master' || role === 'admin'
     if (allowed) return
     throw { ...localError(403, 'INSUFFICIENT_ROLE'), message: 'Você não tem permissão para executar esta ação' }
+  }
+
+  /** Nome único POR CONTA, sem maiúsculas nem acentos (§25.1). O servidor confirma (409 vira Pendência). */
+  async function assertVaccineNameFree(name: string, accountId: string | null, excludeId?: string) {
+    const rows = await db.getAll<{ id: string; name: string; accountId: string | null }>(...spread(vaccineNamesQuery()))
+    if (isVaccineNameTaken(name, rows, accountId, excludeId)) throw localError(409, 'VACCINE_NAME_ALREADY_EXISTS', 'name')
   }
 
   /** Embarques: cadastrar/editar (nome, data, lista) = basic, master e admin; excluir = só master e admin. */
@@ -301,21 +315,25 @@ export function createRepository(ctx: RepositoryContext) {
 
     // ----- Vacinas -----
     async createVaccine(input: VaccineInput) {
-      assertCanWrite('vaccines')
+      assertCanWrite('vaccines', 'create')
       const name = input.name.trim()
-      if (await db.getOptional(...spread(nameTakenQuery('vaccines', name)))) throw localError(409, 'VACCINE_NAME_ALREADY_EXISTS', 'name')
+      const accountId = ctx.currentUser()?.accountId ?? null
+      await assertVaccineNameFree(name, accountId)
       const newId = id()
-      await run(insertSql('vaccines', newId, toColumns('vaccines', { name, withdrawalDays: input.withdrawalDays, createdAt: ctx.now(), updatedAt: ctx.now() })))
+      // account_id local = conta do token (a mesma que o servidor grava); não sobe no upload (NEVER_UPLOAD_COLUMNS).
+      await run(
+        insertSql('vaccines', newId, toColumns('vaccines', { accountId, name, withdrawalDays: input.withdrawalDays, createdAt: ctx.now(), updatedAt: ctx.now() })),
+      )
       return newId
     },
     async updateVaccine(vaccineId: string, input: VaccineInput) {
-      assertCanWrite('vaccines')
+      assertCanWrite('vaccines', 'update')
       const name = input.name.trim()
-      if (await db.getOptional(...spread(nameTakenQuery('vaccines', name, vaccineId)))) throw localError(409, 'VACCINE_NAME_ALREADY_EXISTS', 'name')
+      await assertVaccineNameFree(name, ctx.currentUser()?.accountId ?? null, vaccineId)
       await run(updateSql('vaccines', vaccineId, toColumns('vaccines', { name, withdrawalDays: input.withdrawalDays, updatedAt: ctx.now() })))
     },
     async deleteVaccine(vaccineId: string) {
-      assertCanWrite('vaccines')
+      assertCanWrite('vaccines', 'delete')
       if ((await count(db, countQuery('vaccinations', 'vaccineId', vaccineId))) > 0) throw localError(409, 'VACCINE_HAS_APPLICATIONS')
       await run({ sql: `DELETE FROM ${t('vaccines')} WHERE id = ?`, params: [vaccineId] })
     },

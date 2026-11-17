@@ -261,6 +261,9 @@ export function correctionTarget(rejection: Pick<Rejection, 'entity' | 'op'>, ro
 /** Códigos que sempre apontam um campo, quando o servidor não manda `details.field`. */
 const CODE_FIELD: Record<string, string> = {
   VACCINE_NAME_ALREADY_EXISTS: 'name',
+  // Vacinas por conta (§25.4/§25.5): o lançamento precisa de outra vacina (da conta do animal).
+  ANIMAL_ACCOUNT_MISMATCH: 'vaccineId',
+  VACCINE_REMAPPED_UNAVAILABLE: 'vaccineId',
   ANIMAL_TYPE_NAME_ALREADY_EXISTS: 'name',
   ANIMAL_CODE_ALREADY_EXISTS: 'code',
   INVALID_FARM_NAME: 'name',

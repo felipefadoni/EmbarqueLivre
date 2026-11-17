@@ -173,19 +173,29 @@ export function vaccineAuthorSql() {
 
 /** `withAuthor` (só admin): + nome e e-mail de quem cadastrou. Sem ele: o SELECT de antes (sem join). */
 function vaccineSelectOf(withAuthor = false) {
-  const base = `SELECT v.id AS id, v.${c('vaccines', 'name')} AS name, v.${c('vaccines', 'withdrawalDays')} AS withdrawalDays`
+  const base = `SELECT v.id AS id, v.${c('vaccines', 'name')} AS name, v.${c('vaccines', 'withdrawalDays')} AS withdrawalDays, v.${c('vaccines', 'accountId')} AS accountId`
   if (!withAuthor) return `${base} FROM ${V} v`
   const author = vaccineAuthorSql()
   return `${base}, ${author.name} AS createdByName, ${author.email} AS createdByEmail FROM ${V} v${author.join}`
 }
 
-/** Só admin: `withAuthor` traz o autor; `authorEmail` filtra pelo e-mail (contém, sem maiúsculas). */
-export type VaccineListFilters = { withAuthor?: boolean; authorEmail?: string }
+/**
+ * Só admin: `withAuthor` traz o autor; `authorEmail` filtra pelo e-mail (contém, sem maiúsculas); `accountId` filtra
+ * pela conta dona (§25, coluna local account_id).
+ */
+export type VaccineListFilters = { withAuthor?: boolean; authorEmail?: string; accountId?: string }
+
+function vaccineAccountWhere(accountId: string | undefined, where: string[], params: unknown[]) {
+  if (!accountId) return
+  where.push(`upper(v.${c('vaccines', 'accountId')}) = upper(?)`)
+  params.push(accountId)
+}
 
 export function vaccinesListQuery(limit?: number, filters: VaccineListFilters = {}): SqlQuery {
   const where: string[] = []
   const params: unknown[] = []
   if (filters.withAuthor) emailWhere(vaccineAuthorSql().email, filters.authorEmail, where, params)
+  vaccineAccountWhere(filters.accountId, where, params)
   params.push(limitClause(limit) + 1)
   return {
     sql: `${vaccineSelectOf(filters.withAuthor)} ${where.length ? `WHERE ${where.join(' AND ')} ` : ''}ORDER BY v.${c('vaccines', 'name')} COLLATE NOCASE, v.id LIMIT ?`,
@@ -198,6 +208,7 @@ export function vaccinesListSpec(filters: VaccineListFilters = {}): KeysetSpec {
   const where: string[] = []
   const params: unknown[] = []
   if (filters.withAuthor) emailWhere(vaccineAuthorSql().email, filters.authorEmail, where, params)
+  vaccineAccountWhere(filters.accountId, where, params)
   return {
     base: vaccineSelectOf(filters.withAuthor),
     baseParams: [],
@@ -211,17 +222,32 @@ export function vaccineByIdQuery(id: string, withAuthor = false): SqlQuery {
   return { sql: `${vaccineSelectOf(withAuthor)} WHERE v.id = ?`, params: [id] }
 }
 
+/** Nomes de vacinas para a checagem local de duplicado (filtrada por conta no JS, com nome sem acentos). */
+export function vaccineNamesQuery(): SqlQuery {
+  return { sql: `SELECT v.id AS id, v.${c('vaccines', 'name')} AS name, v.${c('vaccines', 'accountId')} AS accountId FROM ${V} v`, params: [] }
+}
+
+/** Conta do animal (pela fazenda; `owner_user_id` = alias antigo de account_id). */
+export function animalAccountQuery(animalId: string): SqlQuery {
+  return {
+    sql: `SELECT COALESCE(f.${c('farms', 'accountId')}, f.${c('farms', 'ownerUserId')}) AS accountId FROM ${A} a
+      LEFT JOIN ${F} f ON f.id = a.${c('animals', 'farmId')} WHERE upper(a.id) = upper(?)`,
+    params: [animalId],
+  }
+}
+
 export type VaccineRow = {
   id: string
   name: string
   withdrawalDays: number | null
+  accountId?: string | null
   /** Só nas consultas do admin (withAuthor). */
   createdByName?: string | null
   createdByEmail?: string | null
 }
 
 export function rowToVaccine(row: VaccineRow): Vaccine {
-  return { id: row.id, name: row.name ?? '', withdrawalDays: Number(row.withdrawalDays ?? 0), ...authorOf(row) }
+  return { id: row.id, name: row.name ?? '', withdrawalDays: Number(row.withdrawalDays ?? 0), accountId: row.accountId || null, ...authorOf(row) }
 }
 
 const typeSelect = `SELECT at.id AS id, at.${c('animalTypes', 'name')} AS name FROM ${T} at`

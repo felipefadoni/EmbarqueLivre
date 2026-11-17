@@ -2,6 +2,7 @@ import { router } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { Spinner, Text, YStack } from 'tamagui'
 
+import { vaccinesApi } from '@/api/catalog'
 import { fieldMessagesFromError, isApiError, publicApiMessage, userMessage } from '@/api/errors'
 import { AuthField } from '@/components/auth/AuthField'
 import { AuthorLines } from '@/components/cadastros/AuthorLines'
@@ -70,6 +71,23 @@ export function VaccineEditor({ vaccineId, pendenciaId }: VaccineEditorProps) {
       setLoading(false)
     }
   }
+
+  // Admin (todas as contas): nome da conta só vem no REST (o sync traz só account_id). Online; offline fica sem.
+  const [accountName, setAccountName] = useState<string | null>(null)
+  const showAccount = access.scope === 'all-accounts' && Boolean(vaccineId)
+  useEffect(() => {
+    if (!showAccount || !vaccineId) return
+    let active = true
+    vaccinesApi.get(vaccineId).then(
+      (vaccine) => {
+        if (active) setAccountName(vaccine.accountName ?? null)
+      },
+      () => undefined,
+    )
+    return () => {
+      active = false
+    }
+  }, [showAccount, vaccineId])
 
   useEffect(() => {
     void load()
@@ -168,6 +186,11 @@ export function VaccineEditor({ vaccineId, pendenciaId }: VaccineEditorProps) {
         onDelete={isEdit && !readOnly && access.canDelete ? () => setConfirmOpen(true) : undefined}
         deleteLabel="Excluir vacina">
         {showAuthor && author ? <AuthorLines author={author} /> : null}
+        {showAccount && accountName ? (
+          <Text fontSize={17} fontWeight="700" color="brandFg">
+            Conta: {accountName}
+          </Text>
+        ) : null}
         <AuthField
           editable={!readOnly}
           label="Nome"

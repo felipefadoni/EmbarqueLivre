@@ -18,6 +18,7 @@ import { applyIdMap, loadIdMap, purgeDownloadOnly, rawTableOf, saveIdMap, snapsh
 import { OUTBOX_TABLE } from './mapping'
 import { sendOutboxEntry } from './outbox'
 import { publicApiMessage } from '../api/errors'
+import { foldVaccineName } from '../features/cadastros/vaccineAccount'
 import { FORCE_PUSH_TABLE_ORDER, type PostBatch, type RejectionRecord, type UploadDeps } from './upload'
 
 const O = OUTBOX_TABLE.table
@@ -41,11 +42,21 @@ const tableRank = (table: string) => {
   return index < 0 ? FORCE_PUSH_TABLE_ORDER.length : index
 }
 
-export type CatalogItem = { id: string; name: string }
+/** `accountId`: conta dona da vacina (REST §25.3, sempre presente; tipos de animal são globais, sem conta). */
+export type CatalogItem = { id: string; name: string; accountId?: string | null }
 
 export type ForcePushDeps = Omit<UploadDeps, 'park' | 'markSent' | 'mapOp'> & {
   /** GET /animal-types ou /vaccines (todas as páginas). */
   fetchCatalog: (table: 'animal_types' | 'vaccines') => Promise<CatalogItem[]>
+  /**
+   * Vacinas por conta (§25.4): conta cujo catálogo vale para este cadastro (a do animal da vacinação; sem animal, a do
+   * usuário). null = desconhecida (não filtra; o servidor decide).
+   */
+  catalogAccountFor?: (table: 'animal_types' | 'vaccines', opData: Record<string, unknown>) => Promise<string | null>
+  /** Pode criar o item no catálogo do servidor? (vacina: master/básico; admin só lê, §25.2). Ausente = tenta. */
+  canCreateCatalog?: (table: 'animal_types' | 'vaccines') => boolean
+  /** Guardar o de-para local → servidor? Vacina do admin: não (cada conta tem a sua cópia). Ausente = guarda. */
+  rememberCatalogLink?: (table: 'animal_types' | 'vaccines') => boolean
   newId: () => string
   now?: () => string
 }
@@ -172,11 +183,23 @@ export async function forcePushConflicts(db: GuardExecutor, deps: ForcePushDeps,
         }
         break
       }
-      let match = (await catalog(ref.table)).find((item) => normalizeName(item.name) === normalizeName(local.name))
+      // Vacina: nome sem acentos/maiúsculas (unicidade do servidor) e SÓ no catálogo da conta do animal (§25.4).
+      const nameKey = ref.table === 'vaccines' ? foldVaccineName : normalizeName
+      const account = ref.table === 'vaccines' && deps.catalogAccountFor ? await deps.catalogAccountFor(ref.table, data) : null
+      const inAccount = (item: CatalogItem) => !account || !item.accountId || item.accountId.toUpperCase() === account.toUpperCase()
+      const findMatch = (items: CatalogItem[]) => items.find((item) => inAccount(item) && nameKey(item.name) === nameKey(local.name))
+      let match = findMatch(await catalog(ref.table))
+      if (!match && deps.canCreateCatalog && !deps.canCreateCatalog(ref.table)) {
+        final = {
+          id, tableName: entry.tableName, rowId: entry.rowId, outcome: 'conflict',
+          message: `A conta do animal não tem a ${ref.label} "${String(local.name)}" e o seu perfil não cria ${ref.label}s. Edite o lançamento e escolha uma ${ref.label} da conta do animal. O cadastro continua salvo neste aparelho.`,
+        }
+        break
+      }
       if (!match) {
         // Não há com esse nome no servidor: cria o do aparelho (mesmo id), só agora que o usuário confirmou.
         const created = await putCatalogItem(deps.post, ref.table, localRefId, local)
-        if (!created.ok && created.status === 409) match = (await catalog(ref.table, true)).find((item) => normalizeName(item.name) === normalizeName(local.name))
+        if (!created.ok && created.status === 409) match = findMatch(await catalog(ref.table, true))
         if (!created.ok && !match) {
           const who = created.status === 403 ? ` Só um administrador pode criar ${ref.label} no servidor.` : ''
           final = {
@@ -188,7 +211,9 @@ export async function forcePushConflicts(db: GuardExecutor, deps: ForcePushDeps,
         if (created.ok) linked = { label: ref.label, name: String(local.name), localId: localRefId, serverId: localRefId, created: true }
       }
       if (match) {
-        await saveIdMap(db, { tableName: ref.table, localId: localRefId, serverId: match.id, name: String(local.name) }, deps.newId, deps.now)
+        if (deps.rememberCatalogLink?.(ref.table) !== false) {
+          await saveIdMap(db, { tableName: ref.table, localId: localRefId, serverId: match.id, name: String(local.name) }, deps.newId, deps.now)
+        }
         await rebind(db, after, ref.field, match.id.toUpperCase())
         linked = { label: ref.label, name: String(local.name), localId: localRefId, serverId: match.id, created: false }
       }

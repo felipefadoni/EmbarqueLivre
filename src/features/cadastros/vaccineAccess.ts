@@ -7,16 +7,13 @@
  * DECISÃO NOVA (Felipe, 17/11/2026): vacinas POR CONTA. Master e básico cadastram/editam as vacinas da própria conta;
  * admin só visualiza (todas as contas). A API implementa primeiro (modelo, sync rules, upload offline).
  *
- * TODO(contrato vacinas por conta): só ligue VACCINES_PER_ACCOUNT junto com:
- *  - sync rules novas (vacinas da conta para master/básico; todas para o admin) e a coluna de conta em SYNC_TABLES;
- *  - repository.assertCanWrite('vaccines') aceitando master/básico e recusando admin;
- *  - nome único por conta no aparelho (nameTakenQuery) e o código de erro que a API devolver;
- *  - resposta do PO sobre o básico poder EXCLUIR (aqui: não, até confirmar).
- * Com a flag desligada o comportamento é exatamente o de hoje.
+ * LIGADO (contrato API_INTEGRATION.md §25.2, 17/11/2026; PO: "básico cria e edita, só o master exclui, admin só lê").
+ * Usado nas telas e no repository.assertCanWrite('vaccines'). Desligar volta ao catálogo global de antes (só faz
+ * sentido junto com o rollback da API, §25.9).
  */
 import type { UserRole } from '@/api/types'
 
-export const VACCINES_PER_ACCOUNT = false
+export const VACCINES_PER_ACCOUNT = true
 
 export type VaccineScope = 'none' | 'global' | 'own-account' | 'all-accounts'
 
@@ -42,7 +39,7 @@ export function vaccineAccess(role: UserRole | null | undefined, perAccount: boo
   }
   if (role === 'admin') return { canView: true, canCreate: false, canEdit: false, canDelete: false, readOnly: true, scope: 'all-accounts' }
   if (role === 'master') return { canView: true, canCreate: true, canEdit: true, canDelete: true, readOnly: false, scope: 'own-account' }
-  // Básico: cadastra e edita; excluir aguarda o PO (pergunta no relatório).
+  // Básico: cadastra e edita; excluir é só do master (PO, 17/11; API: upload DELETE → rejected 403).
   if (role === 'basic') return { canView: true, canCreate: true, canEdit: true, canDelete: false, readOnly: false, scope: 'own-account' }
   return NONE
 }

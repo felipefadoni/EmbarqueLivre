@@ -10,6 +10,7 @@ import { db, repo } from '@/sync'
 import { clearPendencia, clearRowRejections, draftString, editorErrorMessage, loadEditorSource, showRejection } from '@/sync/editor'
 import {
   ALL_ROWS,
+  animalAccountQuery,
   animalByIdQuery,
   querySpread,
   rowToAnimal,
@@ -29,6 +30,7 @@ import { useAuth } from '@/features/auth/AuthProvider'
 import { addDaysIso, formatDatePtBr, todayIso } from '@/features/cadastros/dates'
 import { AuthorLines } from '@/components/cadastros/AuthorLines'
 import { canSeeAuthor } from '@/features/cadastros/farmFilters'
+import { filterVaccinesForAccount, VACCINE_PICKER_MESSAGES, vaccinePickerAccountId } from '@/features/cadastros/vaccineAccount'
 
 type VaccinationEditorProps = {
   vaccinationId?: string
@@ -60,8 +62,18 @@ export function VaccinationEditor({ vaccinationId, pendenciaId }: VaccinationEdi
 
   // Vacinas: consulta local reativa (atualiza quando o sync traz o catálogo).
   const vaccinesQuery = vaccinesListQuery(ALL_ROWS)
-  const vaccineRows = useQuery<{ id: string; name: string; withdrawalDays: number | null }>(vaccinesQuery.sql, vaccinesQuery.params)
+  const vaccineRows = useQuery<{ id: string; name: string; withdrawalDays: number | null; accountId: string | null }>(vaccinesQuery.sql, vaccinesQuery.params)
   const vaccines: Vaccine[] = useMemo(() => vaccineRows.data.map(rowToVaccine), [vaccineRows.data])
+  // Vacinas por conta (§25.4): só as da conta do animal (fazenda); sem animal, master/básico veem a própria conta e o
+  // admin escolhe o animal primeiro. Reativo: muda quando o animal muda ou o sync traz o catálogo.
+  const animalAccount = animalAccountQuery(animal?.id ?? '')
+  const animalAccountRows = useQuery<{ accountId: string | null }>(animalAccount.sql, animalAccount.params as unknown[])
+  const pickerAccountId = vaccinePickerAccountId({
+    role: user?.role,
+    userAccountId: user?.accountId,
+    animalAccountId: animal?.id ? (animalAccountRows.data[0]?.accountId ?? null) : null,
+  })
+  const accountVaccines = useMemo(() => filterVaccinesForAccount(vaccines, pickerAccountId), [vaccines, pickerAccountId])
 
   useEffect(() => {
     let cancelled = false
@@ -119,11 +131,13 @@ export function VaccinationEditor({ vaccinationId, pendenciaId }: VaccinationEdi
     }
   }, [vaccinationId, pendenciaId, reloadKey, showAuthor])
 
-  const vaccineOptions = vaccines.map((vaccine) => ({
+  const vaccineOptions = accountVaccines.map((vaccine) => ({
     value: vaccine.id,
     label: `${vaccine.name} (${pluralDias(vaccine.withdrawalDays)})`,
   }))
-  if (original && original.vaccineId && !vaccines.some((vaccine) => vaccine.id === original.vaccineId)) {
+  // Registro salvo com o mesmo animal: mantém a vacina dele visível (ex.: id do catálogo antigo, que o servidor remapeia).
+  const keepsOriginal = Boolean(original && original.vaccineId && animal?.id && original.animalId === animal.id)
+  if (original && keepsOriginal && !accountVaccines.some((vaccine) => vaccine.id === original.vaccineId)) {
     vaccineOptions.unshift({
       value: original.vaccineId,
       label: `${original.vaccineName} (${pluralDias(original.withdrawalDays)})`,
@@ -145,6 +159,7 @@ export function VaccinationEditor({ vaccinationId, pendenciaId }: VaccinationEdi
     const next: Record<string, string> = {}
     if (!animal?.id) next.animalId = 'Selecione o animal.'
     if (!vaccineId) next.vaccineId = 'Selecione a vacina.'
+    else if (animal?.id && !vaccineOptions.some((option) => option.value === vaccineId)) next.vaccineId = VACCINE_PICKER_MESSAGES.wrongAccount
     if (!appliedAt) next.appliedAt = 'Informe a data de aplicação.'
     else if (appliedAt > todayIso()) next.appliedAt = 'A data de aplicação não pode ser no futuro.'
     setFieldErrors(next)
@@ -254,7 +269,13 @@ export function VaccinationEditor({ vaccinationId, pendenciaId }: VaccinationEdi
           label="Vacina"
           value={vaccineId}
           options={vaccineOptions}
-          placeholder={vaccineOptions.length ? 'Selecione a vacina' : 'Nenhuma vacina cadastrada'}
+          placeholder={
+            vaccineOptions.length
+              ? 'Selecione a vacina'
+              : pickerAccountId
+                ? VACCINE_PICKER_MESSAGES.noneInAccount
+                : VACCINE_PICKER_MESSAGES.chooseAnimalFirst
+          }
           error={fieldErrors.vaccineId}
           onChange={(value) => {
             setVaccineId(value)

@@ -51,6 +51,8 @@ export const SYNC_TABLES = {
   vaccines: {
     table: 'vaccines',
     columns: {
+      /** Conta dona (§25.1): vem do servidor (conta do token) e NUNCA sobe (NEVER_UPLOAD_COLUMNS). */
+      accountId: col('account_id'),
       name: col('name'),
       withdrawalDays: col('withdrawal_days', 'integer'),
       createdAt: col('created_at'),
@@ -247,6 +249,8 @@ export const NEVER_UPLOAD_COLUMNS: Partial<Record<SyncEntity, string[]>> = {
   // created_by_name/created_by_email: autor (só download, admin). A API já ignora, mas o app também tira de PUT/PATCH,
   // da saída de reenvio e do envio forçado (todos passam por toUploadOp); o snapshot local guarda para a restauração.
   farms: [SYNC_TABLES.farms.columns.createdByName.name, SYNC_TABLES.farms.columns.createdByEmail.name],
+  // §25.1: a conta da vacina é sempre a do token; o app grava localmente (seletor offline) mas não envia.
+  vaccines: [SYNC_TABLES.vaccines.columns.accountId.name],
   vaccineAuthors: [
     SYNC_TABLES.vaccineAuthors.columns.createdByName.name,
     SYNC_TABLES.vaccineAuthors.columns.createdByEmail.name,

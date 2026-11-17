@@ -4,7 +4,9 @@ import { useMemo, useState } from 'react'
 import { FlatList, useColorScheme } from 'react-native'
 import { Text, XStack, YStack } from 'tamagui'
 
+import type { Account } from '@/api/accounts'
 import type { Vaccine } from '@/api/catalog'
+import { AccountPicker } from '@/components/cadastros/AccountPicker'
 import { AuthorLines } from '@/components/cadastros/AuthorLines'
 import { animateFiltersToggle, CollapsibleFilters, FilterToggle } from '@/components/cadastros/CollapsibleFilters'
 import { ListLoadingFooter, ListStatus } from '@/components/cadastros/ListStatus'
@@ -37,13 +39,28 @@ function VacinasAdminList({ showAuthor, showAuthorEmail }: { showAuthor: boolean
   const access = vaccineAccess(user?.role)
   const chevron = isDark ? '#A8B8AF' : '#7A8B80'
   const [authorEmail, setAuthorEmail] = useState('')
+  // Vacinas por conta (§25): admin filtra pela conta. A escolha da conta é online (GET /accounts, o sync não traz o
+  // nome da conta); o filtro em si é local (coluna account_id), então continua valendo offline.
+  const allAccounts = access.scope === 'all-accounts'
+  const [account, setAccount] = useState<Account | null>(null)
   const [filtersOpen, setFiltersOpen] = useState(false)
-  const summary = useMemo(() => summarizeVaccineFilters({ authorEmail }), [authorEmail])
+  const summary = useMemo(() => {
+    const base = summarizeVaccineFilters({ authorEmail })
+    if (!account) return base
+    const text = base.activeCount ? `Conta: ${account.name} · ${base.text}` : `Conta: ${account.name}`
+    return { text, activeCount: base.activeCount + 1 }
+  }, [authorEmail, account])
+  const showFilters = showAuthorEmail || allAccounts
   // Scroll infinito com keyset (nome + id), offline; o autor só entra na consulta do admin.
   const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useKeysetList(
-    () => vaccinesListSpec({ withAuthor: showAuthor, authorEmail: showAuthorEmail ? authorEmail : undefined }),
+    () =>
+      vaccinesListSpec({
+        withAuthor: showAuthor,
+        authorEmail: showAuthorEmail ? authorEmail : undefined,
+        accountId: allAccounts ? account?.id : undefined,
+      }),
     rowToVaccine,
-    [showAuthor, showAuthorEmail, authorEmail],
+    [showAuthor, showAuthorEmail, authorEmail, allAccounts, account?.id],
   )
 
   function toggleFilters(next = !filtersOpen) {
@@ -76,22 +93,30 @@ function VacinasAdminList({ showAuthor, showAuthorEmail }: { showAuthor: boolean
               Somente consulta.
             </Text>
           )}
-          {showAuthorEmail ? <FilterToggle open={filtersOpen} activeCount={summary.activeCount} onPress={() => toggleFilters()} /> : null}
+          {showFilters ? <FilterToggle open={filtersOpen} activeCount={summary.activeCount} onPress={() => toggleFilters()} /> : null}
         </XStack>
-        {showAuthorEmail ? (
+        {showFilters ? (
           <CollapsibleFilters
             open={filtersOpen}
             summary={summary.text}
             onOpen={() => toggleFilters(true)}
-            onClear={() => setAuthorEmail('')}
+            onClear={() => {
+              setAuthorEmail('')
+              setAccount(null)
+            }}
             clearable={summary.activeCount > 0}>
-            <TextFilterField
-              label="E-mail de quem cadastrou"
-              value={authorEmail}
-              placeholder="Buscar pelo e-mail"
-              keyboardType="email-address"
-              onChange={setAuthorEmail}
-            />
+            {allAccounts ? (
+              <AccountPicker label="Conta" value={account?.id ?? ''} selected={account} placeholder="Todas as contas" onChange={setAccount} />
+            ) : null}
+            {showAuthorEmail ? (
+              <TextFilterField
+                label="E-mail de quem cadastrou"
+                value={authorEmail}
+                placeholder="Buscar pelo e-mail"
+                keyboardType="email-address"
+                onChange={setAuthorEmail}
+              />
+            ) : null}
           </CollapsibleFilters>
         ) : null}
       </YStack>

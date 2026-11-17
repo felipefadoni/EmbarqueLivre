@@ -128,6 +128,17 @@ export function isDefinitiveRejectionStatus(status: number): boolean {
   return status === 400 || status === 409 || status === 422
 }
 
+/**
+ * Recusa definitiva de uma op (vira Pendência, a transação conclui). Além de 400/409/422: 403 INSUFFICIENT_ROLE em
+ * `vaccines` (§25.6: admin escrevendo, básico excluindo). É regra de PERFIL, não referência que ainda vai chegar:
+ * reenviar nunca passa, então não fica guardada como conflito em retentativa. O dado recusado fica na Pendência
+ * (opData) e a linha volta ao que o servidor tem no próximo checkpoint (exclusão recusada: a vacina reaparece).
+ */
+export function isDefinitiveRejection(table: string, status: number, code: string | undefined | null): boolean {
+  if (isDefinitiveRejectionStatus(status)) return true
+  return status === 403 && code === 'INSUFFICIENT_ROLE' && entityOfTable(table) === 'vaccines'
+}
+
 /** Mensagem do indicador quando uma op fica parada por referência ausente/acesso (não é Pendência). */
 export function dependencyMessage(rejection: Pick<RejectionRecord, 'statusCode' | 'errorCode' | 'message'>): string {
   const base = rejection.message || `HTTP ${rejection.statusCode} ${rejection.errorCode}`
@@ -440,7 +451,7 @@ export async function uploadTransaction(transaction: TransactionLike, deps: Uplo
         appliedOps.push(op)
         continue
       }
-      if (!isDefinitiveRejectionStatus(status)) {
+      if (!isDefinitiveRejection(op.table, status, result.error?.error)) {
         // 403/404/405/410… numa op: referência que o servidor ainda não tem (fazenda/animal criados offline que não
         // chegaram, catálogo de outro ambiente) ou acesso. NÃO é dado inválido: concluir a transação deixaria a linha
         // só na Pendência e o próximo checkpoint do PowerSync a APAGARIA do aparelho. Fica na fila (retry com espera).

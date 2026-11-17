@@ -10,6 +10,7 @@ import { ListStatus } from '@/components/cadastros/ListStatus'
 import { AppCard } from '@/components/dashboard/AppCard'
 import { db } from '@/sync'
 import { isFixableRejection } from '@/sync/outbox'
+import { vaccineRejectionGuidance } from '@/sync/vaccineRejections'
 import { entityOfTable, tableOf, type SyncEntity } from '@/sync/mapping'
 import {
   correctionTarget,
@@ -116,7 +117,9 @@ export default function PendenciasScreen() {
         renderItem={({ item }) => {
           const { title, subtitle } = describeRejection(item.primary)
           // Corrigir só para recusa de dado (400/409/422). Outras recusas definitivas (ex.: permissão): só Descartar.
-          const fixable = isFixableRejection(item.primary)
+          // Vacinas por conta (§25): orientação própria por código (ex.: exclusão com lançamentos = só Descartar).
+          const guidance = vaccineRejectionGuidance(item.primary)
+          const fixable = guidance ? guidance.fixable && isFixableRejection(item.primary) : isFixableRejection(item.primary)
           return (
             <AppCard>
               <YStack gap={8}>
@@ -137,7 +140,11 @@ export default function PendenciasScreen() {
                     {item.dependentsLabel}
                   </Text>
                 ) : null}
-                {fixable ? null : (
+                {guidance ? (
+                  <Text fontSize={16} fontWeight="600" color="brandMuted">
+                    {guidance.hint}
+                  </Text>
+                ) : fixable ? null : (
                   <Text fontSize={15} fontWeight="600" color="brandMuted">
                     Não há o que corrigir no cadastro: descarte para voltar ao que está no servidor.
                   </Text>

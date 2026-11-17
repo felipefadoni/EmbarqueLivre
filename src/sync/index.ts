@@ -16,6 +16,11 @@ export function setSyncUser(user: { id: string; role: UserRole; accountId?: stri
   syncUser = user
 }
 
+/** Leitura do usuário atual do sync (papel e conta), para regras fora do repositório (ex.: envio forçado). */
+export function currentSyncUser() {
+  return syncUser
+}
+
 export const connector = new EmbarqueConnector()
 
 export const repo = createRepository({

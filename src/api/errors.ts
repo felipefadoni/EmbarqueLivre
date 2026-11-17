@@ -47,6 +47,8 @@ const DOMAIN_MESSAGES: Record<string, string> = {
   ANIMAL_TYPE_NOT_FOUND: 'Tipo de animal não encontrado.',
   ANIMAL_NOT_FOUND: 'Animal não encontrado.',
   VACCINE_NOT_FOUND: 'Vacina não encontrada.',
+  ANIMAL_ACCOUNT_MISMATCH: 'A vacina e o animal precisam ser da mesma conta.',
+  VACCINE_REMAPPED_UNAVAILABLE: 'Esta vacina era do catálogo antigo e não existe na conta do animal; escolha uma vacina da conta.',
   INVALID_ID: 'Identificador inválido.',
   FARM_OWNER_REQUIRED: 'Informe a conta dona da fazenda.',
   INVALID_FARM_OWNER: 'A conta da fazenda deve ser uma conta ativa.',

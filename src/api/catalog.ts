@@ -44,6 +44,10 @@ export type Vaccine = {
   id: string
   name: string
   withdrawalDays: number
+  /** Conta dona (§25.1). Local: coluna account_id (pode faltar em linha antiga). REST: sempre. */
+  accountId?: string | null
+  /** Só no REST (o sync não traz o nome da conta). */
+  accountName?: string | null
   /** Só admin (tabela vaccine_authors, ver VACCINE_AUTHOR_CONTRACT). Ausente para master/básico. */
   createdByName?: string | null
   createdByEmail?: string | null
@@ -127,6 +131,8 @@ export function parseVaccine(raw: unknown): Vaccine {
     id: asString(record.id),
     name: asString(record.name),
     withdrawalDays: asNumber(record.withdrawalDays),
+    accountId: asNullableString(record.accountId),
+    accountName: asNullableString(record.accountName),
   }
 }
 

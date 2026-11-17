@@ -308,6 +308,47 @@ export function applyIdMap(op: UploadOp, map: Map<string, string>): UploadOp {
 const REF_TABLE_OF_FIELD: Record<string, string> = { animal_type_id: 'animal_types', vaccine_id: 'vaccines' }
 
 /**
+ * Vacina do catálogo global antigo numa vacinação da fila (§25.5): o servidor gravou com a CÓPIA da conta do animal
+ * (`remapped.vaccine_id {from,to}`). A mesma vacina antiga tem uma cópia DIFERENTE em cada conta (§25.8), então:
+ * - NÃO grava o de-para global (sync_id_map): o admin lança em várias contas e mandaria a op de outra conta para a
+ *   cópia errada (422 ANIMAL_ACCOUNT_MISMATCH). Cada op pendente com o id antigo é resolvida pelo servidor no envio;
+ * - corrige no aparelho a própria linha e as outras vacinações com o id antigo de animais DA MESMA CONTA (escrita
+ *   direta na tabela física, sem gerar op). Sem conta conhecida, só a própria linha. O download confirma depois.
+ */
+async function remapVaccineRef(db: GuardExecutor, table: string, op: UploadOp, from: string, to: string): Promise<number> {
+  const V = SYNC_TABLES.vaccinations.columns
+  const A = SYNC_TABLES.animals
+  const F = SYNC_TABLES.farms
+  const raw = rawTableOf(table)
+  const animalId =
+    (typeof op.opData?.[V.animalId.name] === 'string' ? String(op.opData[V.animalId.name]) : '') ||
+    ((await db.getOptional<{ animalId: string | null }>(`SELECT json_extract(data, '$.${V.animalId.name}') AS animalId FROM ${raw} WHERE upper(id) = upper(?)`, [op.id]))?.animalId ?? '')
+  const accountOfAnimals = `SELECT a.id FROM ${A.table} a JOIN ${F.table} f ON f.id = a.${A.columns.farmId.name}
+    WHERE upper(COALESCE(f.${F.columns.accountId.name}, f.${F.columns.ownerUserId.name})) = upper(?)`
+  const account = animalId
+    ? (
+        await db.getOptional<{ accountId: string | null }>(
+          `SELECT COALESCE(f.${F.columns.accountId.name}, f.${F.columns.ownerUserId.name}) AS accountId FROM ${A.table} a
+           JOIN ${F.table} f ON f.id = a.${A.columns.farmId.name} WHERE upper(a.id) = upper(?)`,
+          [animalId],
+        )
+      )?.accountId
+    : null
+  const set = `UPDATE ${raw} SET data = json_set(data, '$.${V.vaccineId.name}', ?) WHERE upper(json_extract(data, '$.${V.vaccineId.name}')) = upper(?)`
+  if (account) {
+    await db.execute(`${set} AND (upper(id) = upper(?) OR upper(json_extract(data, '$.${V.animalId.name}')) IN (SELECT upper(id) FROM (${accountOfAnimals})))`, [
+      to,
+      from,
+      op.id,
+      account,
+    ])
+  } else {
+    await db.execute(`${set} AND upper(id) = upper(?)`, [to, from, op.id])
+  }
+  return 1
+}
+
+/**
  * A API aplicou trocando a referência (ex.: tipo de animal de outro ambiente resolvido pelo nome →
  * `remapped.animal_type_id = { from: idLocal, to: idServidor }`). Sem duplicar tipo e sem perder o cadastro:
  * - guarda o mapa (próximos envios já saem com o id do servidor);
@@ -326,6 +367,11 @@ export async function applyRemaps(
       const from = String(change?.from ?? '')
       const to = String(change?.to ?? '')
       if (!from || !to || from.toUpperCase() === to.toUpperCase() || !/^[a-z_]+$/.test(field)) continue
+      if (field === 'vaccine_id' && target) {
+        fixed += await remapVaccineRef(db, target.table, op, from, to)
+        console.log(`[sync] ${op.table}.${field}: ${from} → ${to} (vacina do catálogo antigo → cópia da conta do animal)`)
+        continue
+      }
       const refTable = REF_TABLE_OF_FIELD[field] ?? field
       const name = typeof op.opData?.animal_type_name === 'string' ? op.opData.animal_type_name : ''
       await saveIdMap(db, { tableName: refTable, localId: from, serverId: to, name }, newId, now)
