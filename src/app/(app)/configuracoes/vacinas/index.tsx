@@ -11,7 +11,8 @@ import { ListLoadingFooter, ListStatus } from '@/components/cadastros/ListStatus
 import { TextFilterField } from '@/components/cadastros/TextFilterField'
 import { AppCard } from '@/components/dashboard/AppCard'
 import { canFilterByAuthorEmail, canSeeAuthor, canUseAdminFilters, summarizeVaccineFilters, type AuthorValue } from '@/features/cadastros/farmFilters'
-import { canManageVaccines } from '@/features/cadastros/permissions'
+import { canViewVaccines } from '@/features/cadastros/permissions'
+import { vaccineAccess } from '@/features/cadastros/vaccineAccess'
 import { useAuth } from '@/features/auth/AuthProvider'
 import { useKeysetList } from '@/sync/hooks'
 import { vaccinesListSpec, rowToVaccine } from '@/sync/queries'
@@ -23,7 +24,7 @@ function carenciaLabel(days: number) {
 
 export default function VacinasListScreen() {
   const { user } = useAuth()
-  if (!canManageVaccines(user?.role)) return <Redirect href="/configuracoes" />
+  if (!canViewVaccines(user?.role)) return <Redirect href="/configuracoes" />
   // Admin: autor (AuthorLines) + filtro pelo e-mail de quem cadastrou. Master: a lista de antes (sem join, sem filtro).
   if (canUseAdminFilters(user?.role))
     return <VacinasAdminList showAuthor={canSeeAuthor(user?.role, 'vaccines')} showAuthorEmail={canFilterByAuthorEmail(user?.role, 'vaccines')} />
@@ -32,6 +33,8 @@ export default function VacinasListScreen() {
 
 function VacinasAdminList({ showAuthor, showAuthorEmail }: { showAuthor: boolean; showAuthorEmail: boolean }) {
   const isDark = useColorScheme() === 'dark'
+  const { user } = useAuth()
+  const access = vaccineAccess(user?.role)
   const chevron = isDark ? '#A8B8AF' : '#7A8B80'
   const [authorEmail, setAuthorEmail] = useState('')
   const [filtersOpen, setFiltersOpen] = useState(false)
@@ -52,21 +55,27 @@ function VacinasAdminList({ showAuthor, showAuthorEmail }: { showAuthor: boolean
     <YStack flex={1} bg="appBg">
       <YStack px={20} pt={12} pb={8} gap={12}>
         <XStack items="center" gap={12}>
-          <XStack
-            flex={1}
-            minH={TOQUE_MINIMO}
-            items="center"
-            justify="center"
-            rounded={16}
-            bg="brandPrimary"
-            opacity={{ press: 0.85 }}
-            onPress={() => router.push('/configuracoes/vacinas/nova')}
-            accessibilityRole="button"
-            accessibilityLabel="Nova vacina">
-            <Text fontSize={18} fontWeight="800" color="brandPrimaryFg">
-              Nova vacina
+          {access.canCreate ? (
+            <XStack
+              flex={1}
+              minH={TOQUE_MINIMO}
+              items="center"
+              justify="center"
+              rounded={16}
+              bg="brandPrimary"
+              opacity={{ press: 0.85 }}
+              onPress={() => router.push('/configuracoes/vacinas/nova')}
+              accessibilityRole="button"
+              accessibilityLabel="Nova vacina">
+              <Text fontSize={18} fontWeight="800" color="brandPrimaryFg">
+                Nova vacina
+              </Text>
+            </XStack>
+          ) : (
+            <Text flex={1} fontSize={16} fontWeight="600" color="brandMuted">
+              Somente consulta.
             </Text>
-          </XStack>
+          )}
           {showAuthorEmail ? <FilterToggle open={filtersOpen} activeCount={summary.activeCount} onPress={() => toggleFilters()} /> : null}
         </XStack>
         {showAuthorEmail ? (
@@ -104,7 +113,9 @@ function VacinasAdminList({ showAuthor, showAuthorEmail }: { showAuthor: boolean
             error={error}
             empty={!loading && !error}
             emptyTitle="Nenhuma vacina"
-            emptyMessage={summary.activeCount > 0 ? 'Nenhuma vacina com esse filtro.' : 'Cadastre a primeira vacina e os dias de carência.'}
+            emptyMessage={
+              summary.activeCount > 0 ? 'Nenhuma vacina com esse filtro.' : access.canCreate ? 'Cadastre a primeira vacina e os dias de carência.' : 'Ainda não há vacinas cadastradas.'
+            }
             onRetry={() => void reload()}
           />
         }
@@ -112,7 +123,8 @@ function VacinasAdminList({ showAuthor, showAuthorEmail }: { showAuthor: boolean
           <VaccineRow
             vaccine={item}
             chevron={chevron}
-            canManage
+            canOpen
+            canEdit={access.canEdit}
             author={showAuthor ? { name: item.createdByName, email: item.createdByEmail } : undefined}
           />
         )}
@@ -125,7 +137,8 @@ function VacinasList() {
   const isDark = useColorScheme() === 'dark'
   const chevron = isDark ? '#A8B8AF' : '#7A8B80'
   const { user } = useAuth()
-  const canManage = canManageVaccines(user?.role)
+  const access = vaccineAccess(user?.role)
+  const canManage = access.canCreate
   // Lista local reativa (PowerSync): funciona offline e atualiza sozinha quando o sync traz dados.
   const { items, loading, refreshing, loadingMore, error, hasMore, reload, refresh, loadMore } = useKeysetList(() => vaccinesListSpec(), rowToVaccine, [])
 
@@ -170,7 +183,7 @@ function VacinasList() {
             onRetry={() => void reload()}
           />
         }
-        renderItem={({ item }) => <VaccineRow vaccine={item} chevron={chevron} canManage={canManage} />}
+        renderItem={({ item }) => <VaccineRow vaccine={item} chevron={chevron} canOpen={access.canView} canEdit={access.canEdit} />}
       />
     </YStack>
   )
@@ -179,12 +192,15 @@ function VacinasList() {
 function VaccineRow({
   vaccine,
   chevron,
-  canManage,
+  canOpen,
+  canEdit,
   author,
 }: {
   vaccine: Vaccine
   chevron: string
-  canManage: boolean
+  /** Abre o cadastro (editar ou, sem permissão de alterar, só ver). */
+  canOpen: boolean
+  canEdit: boolean
   /** Só admin: autor da vacina (undefined = não mostrar). */
   author?: AuthorValue | null
 }) {
@@ -197,10 +213,10 @@ function VaccineRow({
         py={16}
         minH={TOQUE_MINIMO}
         gap={12}
-        opacity={canManage ? { press: 0.85 } : undefined}
-        onPress={canManage ? () => router.push(`/configuracoes/vacinas/${vaccine.id}`) : undefined}
-        accessibilityRole={canManage ? 'button' : undefined}
-        accessibilityLabel={canManage ? `Editar vacina ${vaccine.name}` : vaccine.name}>
+        opacity={canOpen ? { press: 0.85 } : undefined}
+        onPress={canOpen ? () => router.push(`/configuracoes/vacinas/${vaccine.id}`) : undefined}
+        accessibilityRole={canOpen ? 'button' : undefined}
+        accessibilityLabel={canOpen ? `${canEdit ? 'Editar' : 'Ver'} vacina ${vaccine.name}` : vaccine.name}>
         <YStack flex={1} gap={4}>
           <Text fontSize={18} fontWeight="800" color="brandFg">
             {vaccine.name}
@@ -210,7 +226,7 @@ function VaccineRow({
           </Text>
           {author !== undefined ? <AuthorLines author={author} /> : null}
         </YStack>
-        {canManage ? <Ionicons name="chevron-forward" size={22} color={chevron} /> : null}
+        {canOpen ? <Ionicons name="chevron-forward" size={22} color={chevron} /> : null}
       </XStack>
     </AppCard>
   )

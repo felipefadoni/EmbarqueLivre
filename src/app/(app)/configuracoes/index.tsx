@@ -11,7 +11,7 @@ import { AppCard } from '@/components/dashboard/AppCard'
 import { AuthorSyncDiagnostics } from '@/components/sync/AuthorSyncDiagnostics'
 import { SyncStatusIndicator } from '@/components/sync/SyncStatusIndicator'
 import { useAuth } from '@/features/auth/AuthProvider'
-import { canManageFarms, canManageHerds, canManageUsers, canManageVaccines, canViewAnimalTypes } from '@/features/cadastros/permissions'
+import { canManageFarms, canManageHerds, canManageUsers, canViewAnimalTypes, canViewVaccines } from '@/features/cadastros/permissions'
 import { db } from '@/sync'
 import { canDeleteOwnAccount } from '@/features/account/accountDeletion'
 import { canSeeAuthorDiagnostics } from '@/sync/authorDiagnostics'
@@ -140,7 +140,7 @@ export default function ConfiguracoesScreen() {
                 <YStack h={1} bg={isDark ? '#3A5247' : '#EEF6EF'} mx={20} />
               </>
             ) : null}
-            {canManageVaccines(user?.role) ? (
+            {canViewVaccines(user?.role) ? (
               <>
                 <MenuLink href="/configuracoes/vacinas" icon="medkit-outline" label="Vacinas" chevron={chevron} />
                 <YStack h={1} bg={isDark ? '#3A5247' : '#EEF6EF'} mx={20} />

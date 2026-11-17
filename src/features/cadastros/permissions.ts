@@ -1,5 +1,7 @@
 import type { UserRole } from '@/api/types'
 
+import { vaccineAccess } from './vaccineAccess'
+
 function isStaff(role: UserRole | null | undefined): boolean {
   return role === 'master' || role === 'admin'
 }
@@ -19,9 +21,17 @@ export function canManageFarms(role: UserRole | null | undefined): boolean {
   return isStaff(role)
 }
 
-/** Catálogo de vacinas (`/configuracoes/vacinas`): master e admin. A aba Vacinas (lançamentos) é de todos. */
+/**
+ * Catálogo de vacinas (`/configuracoes/vacinas`): regras em vaccineAccess.ts (hoje master e admin; com vacinas por
+ * conta: master/básico alteram, admin só vê). A aba Vacinas (lançamentos) é de todos.
+ */
 export function canManageVaccines(role: UserRole | null | undefined): boolean {
-  return isStaff(role)
+  return vaccineAccess(role).canEdit
+}
+
+/** Item "Vacinas" no Menu, lista e detalhe (somente leitura quando não pode alterar). */
+export function canViewVaccines(role: UserRole | null | undefined): boolean {
+  return vaccineAccess(role).canView
 }
 
 /** Rebanho: master e admin gerenciam. Basic não vê o item nem abre as rotas (só escolhe um rebanho existente no animal). */

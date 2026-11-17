@@ -16,7 +16,7 @@ import { WeekChart } from '@/components/dashboard/WeekChart'
 import { SyncStatusIndicator } from '@/components/sync/SyncStatusIndicator'
 import { useAuth } from '@/features/auth/AuthProvider'
 import { formatDatePtBr, formatDayMonthPtBr } from '@/features/cadastros/dates'
-import { canManageFarms, canManageVaccines } from '@/features/cadastros/permissions'
+import { canManageFarms, canViewVaccines } from '@/features/cadastros/permissions'
 import { aptosHints, iniciaisDoNome, primeiroNome, saudacaoAgora, textoLiberados } from '@/features/dashboard/format'
 import { animalsLink, vaccinationsLink } from '@/features/dashboard/links'
 import type { ChartPeriod } from '@/features/dashboard/period'
@@ -35,7 +35,7 @@ export default function DashboardScreen() {
   const isDark = useColorScheme() === 'dark'
   const { user } = useAuth()
   const canManageFarmsNow = canManageFarms(user?.role)
-  const canManageVaccinesNow = canManageVaccines(user?.role)
+  const canManageVaccinesNow = canViewVaccines(user?.role)
   const today = useToday()
   const farms = useLocalFarms()
   const sync = useSyncInfo()

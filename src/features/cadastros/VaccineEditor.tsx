@@ -2,7 +2,6 @@ import { router } from 'expo-router'
 import { useEffect, useState } from 'react'
 import { Spinner, Text, YStack } from 'tamagui'
 
-import type { VaccinePayload } from '@/api/catalog'
 import { fieldMessagesFromError, isApiError, publicApiMessage, userMessage } from '@/api/errors'
 import { AuthField } from '@/components/auth/AuthField'
 import { AuthorLines } from '@/components/cadastros/AuthorLines'
@@ -10,11 +9,16 @@ import { CadastroFormScreen } from '@/components/cadastros/CadastroFormScreen'
 import { ConfirmDialog } from '@/components/cadastros/ConfirmDialog'
 import { canSeeAuthor, type AuthorValue } from '@/features/cadastros/farmFilters'
 import { LIMITS } from '@/features/cadastros/limits'
-import { canManageVaccines } from '@/features/cadastros/permissions'
+import { vaccineAccess, vaccineReadOnlyMessage } from '@/features/cadastros/vaccineAccess'
+import { sanitizeWithdrawalDays, validateVaccineForm } from '@/features/cadastros/vaccineForm'
+import { createRepoVaccineStore } from '@/features/cadastros/vaccineStore'
 import { useAuth } from '@/features/auth/AuthProvider'
 import { repo } from '@/sync'
 import { clearPendencia, clearRowRejections, draftString, editorErrorMessage, loadEditorSource, showRejection } from '@/sync/editor'
 import { vaccineByIdQuery, rowToVaccine } from '@/sync/queries'
+
+// Gravação isolada atrás de um adaptador (troca para vacinas por conta sem mexer na tela; ver vaccineStore.ts).
+const vaccineStore = createRepoVaccineStore(repo)
 
 type VaccineEditorProps = {
   vaccineId?: string
@@ -25,8 +29,8 @@ type VaccineEditorProps = {
 export function VaccineEditor({ vaccineId, pendenciaId }: VaccineEditorProps) {
   const isEdit = Boolean(vaccineId)
   const { user } = useAuth()
-  const canManage = canManageVaccines(user?.role)
-  const readOnly = !canManage
+  const access = vaccineAccess(user?.role)
+  const readOnly = isEdit ? !access.canEdit : !access.canCreate
   // Autor do catálogo: só o admin (consulta com o LEFT JOIN/colunas do autor); master/básico: SELECT de antes.
   const showAuthor = canSeeAuthor(user?.role, 'vaccines')
   const [author, setAuthor] = useState<AuthorValue | null>(null)
@@ -72,35 +76,16 @@ export function VaccineEditor({ vaccineId, pendenciaId }: VaccineEditorProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [vaccineId, pendenciaId, showAuthor])
 
-  function validate(): boolean {
-    const next: Record<string, string> = {}
-    const nome = name.trim()
-    if (!nome) next.name = 'Informe o nome da vacina.'
-    else if (nome.length < LIMITS.vaccineName.min || nome.length > LIMITS.vaccineName.max) {
-      next.name = `O nome deve ter entre ${LIMITS.vaccineName.min} e ${LIMITS.vaccineName.max} caracteres.`
-    }
-    if (!withdrawalDays.trim()) next.withdrawalDays = 'Informe os dias de carência.'
-    else if (!/^\d+$/.test(withdrawalDays.trim())) {
-      next.withdrawalDays = 'Informe um número inteiro entre 0 e 3650.'
-    } else {
-      const days = Number(withdrawalDays)
-      if (days < LIMITS.withdrawalDays.min || days > LIMITS.withdrawalDays.max) {
-        next.withdrawalDays = 'Informe os dias de carência entre 0 e 3650.'
-      }
-    }
-    setFieldErrors(next)
-    return Object.keys(next).length === 0
-  }
-
   async function onSubmit() {
     if (saving || readOnly) return
     setFormError(null)
-    if (!validate()) return
-    const payload: VaccinePayload = { name: name.trim(), withdrawalDays: Number(withdrawalDays.trim()) }
+    const { errors, payload } = validateVaccineForm({ name, withdrawalDays })
+    setFieldErrors(errors as Record<string, string>)
+    if (!payload) return
     setSaving(true)
     try {
       // Grava no banco local; o PowerSync envia quando houver rede.
-      const savedId = isEdit && vaccineId ? (await repo.updateVaccine(vaccineId, payload), vaccineId) : await repo.createVaccine(payload)
+      const savedId = isEdit && vaccineId ? (await vaccineStore.update(vaccineId, payload), vaccineId) : await vaccineStore.create(payload)
       await clearRowRejections('vaccines', savedId)
       await clearPendencia(pendenciaId)
       router.back()
@@ -121,11 +106,11 @@ export function VaccineEditor({ vaccineId, pendenciaId }: VaccineEditorProps) {
   }
 
   async function onDelete() {
-    if (!vaccineId || deleting || readOnly) return
+    if (!vaccineId || deleting || readOnly || !access.canDelete) return
     setDeleting(true)
     setFormError(null)
     try {
-      await repo.deleteVaccine(vaccineId)
+      await vaccineStore.remove(vaccineId)
       await clearRowRejections('vaccines', vaccineId)
       setConfirmOpen(false)
       router.back()
@@ -175,11 +160,12 @@ export function VaccineEditor({ vaccineId, pendenciaId }: VaccineEditorProps) {
     <>
       <CadastroFormScreen
         readOnly={readOnly}
+        readOnlyMessage={vaccineReadOnlyMessage(access)}
         error={formError}
         submitLabel={isEdit ? 'Salvar alterações' : 'Cadastrar vacina'}
         submitting={saving}
         onSubmit={() => void onSubmit()}
-        onDelete={isEdit && !readOnly ? () => setConfirmOpen(true) : undefined}
+        onDelete={isEdit && !readOnly && access.canDelete ? () => setConfirmOpen(true) : undefined}
         deleteLabel="Excluir vacina">
         {showAuthor && author ? <AuthorLines author={author} /> : null}
         <AuthField
@@ -201,7 +187,7 @@ export function VaccineEditor({ vaccineId, pendenciaId }: VaccineEditorProps) {
           label="Dias de carência"
           value={withdrawalDays}
           onChangeText={(value) => {
-            setWithdrawalDays(value.replace(/[^\d]/g, ''))
+            setWithdrawalDays(sanitizeWithdrawalDays(value))
             setFieldErrors((current) => ({ ...current, withdrawalDays: '' }))
           }}
           error={fieldErrors.withdrawalDays}
