@@ -26,7 +26,7 @@ export function OfflineNotice({ message = 'Sem internet. Entrar e criar conta pr
       borderColor="brandBorder"
       accessibilityRole="alert"
       accessibilityLiveRegion="polite">
-      <Ionicons name="cloud-offline-outline" size={22} color={isDark ? '#F0C36B' : '#8A5A00'} />
+      <Ionicons name="cloud-offline-outline" size={20} color={isDark ? '#F0C36B' : '#8A5A00'} />
       <Text flex={1} fontSize={15} lineHeight="20px" fontWeight="700" color="brandFg">
         {message}
       </Text>

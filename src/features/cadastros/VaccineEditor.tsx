@@ -158,11 +158,11 @@ export function VaccineEditor({ vaccineId, pendenciaId }: VaccineEditorProps) {
   if (loadError) {
     return (
       <YStack flex={1} bg="appBg" items="center" justify="center" gap={16} px={24}>
-        <Text fontSize={18} fontWeight="800" color="brandFg" text="center">
+        <Text fontSize={16} fontWeight="800" color="brandFg" text="center">
           {loadError}
         </Text>
         <Text
-          fontSize={18}
+          fontSize={16}
           fontWeight="800"
           color="brandFg"
           textDecorationLine="underline"
@@ -187,7 +187,7 @@ export function VaccineEditor({ vaccineId, pendenciaId }: VaccineEditorProps) {
         deleteLabel="Excluir vacina">
         {showAuthor && author ? <AuthorLines author={author} /> : null}
         {showAccount && accountName ? (
-          <Text fontSize={17} fontWeight="700" color="brandFg">
+          <Text fontSize={16} fontWeight="700" color="brandFg">
             Conta: {accountName}
           </Text>
         ) : null}

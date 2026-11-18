@@ -23,8 +23,8 @@ const LABELS: Record<string, string> = {
 }
 
 function TabBarIcon({ icon, color }: { icon: TabIcon | undefined; color: string }) {
-  if (icon?.family === 'mci') return <MaterialCommunityIcons name={icon.name} size={24} color={color} />
-  return <Ionicons name={icon?.family === 'ion' ? icon.name : 'ellipse'} size={22} color={color} />
+  if (icon?.family === 'mci') return <MaterialCommunityIcons name={icon.name} size={22} color={color} />
+  return <Ionicons name={icon?.family === 'ion' ? icon.name : 'ellipse'} size={20} color={color} />
 }
 
 const ACTIVE_LIGHT = '#2B3D34'

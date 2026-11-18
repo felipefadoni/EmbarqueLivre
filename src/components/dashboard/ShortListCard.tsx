@@ -20,11 +20,11 @@ export function ShortListCard({ title, loading, empty, emptyText, children, foot
   return (
     <AppCard>
       <YStack gap={12}>
-        <Text fontSize={20} fontWeight="800" color="brandFg">
+        <Text fontSize={18} fontWeight="800" color="brandFg">
           {title}
         </Text>
         {loading ? (
-          <YStack minH={64} items="center" justify="center">
+          <YStack minH={56} items="center" justify="center">
             <Spinner color="brandPrimary" />
           </YStack>
         ) : empty ? (

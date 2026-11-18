@@ -103,8 +103,8 @@ export default function LancamentosScreen() {
     <YStack flex={1} bg="appBg">
       <YStack px={20} pt={insets.top + 8} pb={8} gap={12}>
         <XStack items="center" gap={12}>
-          <YStack flex={1} gap={4} minH={56} justify="center">
-            <Text fontSize={28} fontWeight="800" color="brandFg">
+          <YStack flex={1} gap={4} minH={48} justify="center">
+            <Text fontSize={24} fontWeight="800" color="brandFg">
               Vacinas
             </Text>
             <Text fontSize={16} fontWeight="600" color="brandMuted">
@@ -125,8 +125,8 @@ export default function LancamentosScreen() {
           onPress={() => router.push('/lancamentos/nova')}
           accessibilityRole="button"
           accessibilityLabel="Informar vacina">
-          <Ionicons name="add-circle-outline" size={24} color={isDark ? '#2B3D34' : '#FFFFFF'} />
-          <Text fontSize={18} fontWeight="800" color="brandPrimaryFg">
+          <Ionicons name="add-circle-outline" size={22} color={isDark ? '#2B3D34' : '#FFFFFF'} />
+          <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
             Informar Vacina
           </Text>
         </XStack>
@@ -165,11 +165,11 @@ export default function LancamentosScreen() {
             rounded={16}
             px="3"
             gap={8}>
-            <Ionicons name="search" size={20} color={iconColor} />
+            <Ionicons name="search" size={18} color={iconColor} />
             <Input
               flex={1}
               h="100%"
-              fontSize={18}
+              fontSize={16}
               fontWeight="600"
               color="brandFg"
               bg="transparent"
@@ -192,7 +192,7 @@ export default function LancamentosScreen() {
                 onPress={() => setCodeInput('')}
                 accessibilityRole="button"
                 accessibilityLabel="Limpar busca">
-                <Ionicons name="close-circle" size={22} color={iconColor} />
+                <Ionicons name="close-circle" size={20} color={iconColor} />
               </XStack>
             ) : null}
           </XStack>
@@ -271,7 +271,7 @@ function VaccinationRow({ entry, chevron, author }: { entry: VaccinationEntry; c
         accessibilityRole="button"
         accessibilityLabel={`Editar lançamento do animal ${entry.animalCode}, ${entry.vaccineName}`}>
         <YStack flex={1} gap={4}>
-          <Text fontSize={18} fontWeight="800" color="brandFg">
+          <Text fontSize={16} fontWeight="800" color="brandFg">
             {entry.animalCode || 'Animal sem código'}
           </Text>
           <Text fontSize={16} fontWeight="600" color="brandFg">
@@ -295,7 +295,7 @@ function VaccinationRow({ entry, chevron, author }: { entry: VaccinationEntry; c
             </XStack>
           ) : null}
         </YStack>
-        <Ionicons name="chevron-forward" size={22} color={chevron} />
+        <Ionicons name="chevron-forward" size={20} color={chevron} />
       </XStack>
     </AppCard>
   )

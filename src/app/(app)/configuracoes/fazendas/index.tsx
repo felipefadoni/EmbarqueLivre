@@ -70,7 +70,7 @@ function FazendasAdminList({ showAuthor, showAuthorEmail }: { showAuthor: boolea
             onPress={() => router.push('/configuracoes/fazendas/nova')}
             accessibilityRole="button"
             accessibilityLabel="Nova fazenda">
-            <Text fontSize={18} fontWeight="800" color="brandPrimaryFg">
+            <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
               Nova fazenda
             </Text>
           </XStack>
@@ -146,7 +146,7 @@ function FazendasList() {
           onPress={() => router.push('/configuracoes/fazendas/nova')}
           accessibilityRole="button"
           accessibilityLabel="Nova fazenda">
-          <Text fontSize={18} fontWeight="800" color="brandPrimaryFg">
+          <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
             Nova fazenda
           </Text>
         </XStack>
@@ -194,7 +194,7 @@ function FarmRow({ farm, chevron, canManage, author }: { farm: Farm; chevron: st
         accessibilityRole={canManage ? 'button' : undefined}
         accessibilityLabel={canManage ? `Editar fazenda ${farm.name}` : farm.name}>
         <YStack flex={1} gap={4}>
-          <Text fontSize={18} fontWeight="800" color="brandFg">
+          <Text fontSize={16} fontWeight="800" color="brandFg">
             {farm.name}
           </Text>
           <Text fontSize={16} fontWeight="500" color="brandMuted">
@@ -203,7 +203,7 @@ function FarmRow({ farm, chevron, canManage, author }: { farm: Farm; chevron: st
           {/* Só admin: e-mail de quem cadastrou, ou "Autor não registrado" (src/api/authorContract.ts). */}
           {author !== undefined ? <AuthorLines author={author} /> : null}
         </YStack>
-        {canManage ? <Ionicons name="chevron-forward" size={22} color={chevron} /> : null}
+        {canManage ? <Ionicons name="chevron-forward" size={20} color={chevron} /> : null}
       </XStack>
     </AppCard>
   )

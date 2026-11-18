@@ -105,10 +105,10 @@ export function LegalReacceptanceGate({ status, onAccepted, onReload }: Props) {
       borderColor="brandBorder"
       rounded={14}
       onPress={() => void openDocument(url)}
-      icon={<Ionicons name="document-text-outline" size={24} color={isDark ? '#E8F0EA' : '#1F3A2E'} />}
+      icon={<Ionicons name="document-text-outline" size={22} color={isDark ? '#E8F0EA' : '#1F3A2E'} />}
       accessibilityRole="link"
       accessibilityLabel={label}>
-      <Text fontSize={19} fontWeight="800" color="brandFg">
+      <Text fontSize={17} fontWeight="800" color="brandFg">
         {label}
       </Text>
     </Button>
@@ -117,11 +117,11 @@ export function LegalReacceptanceGate({ status, onAccepted, onReload }: Props) {
   return (
     <YStack style={StyleSheet.absoluteFill} z={1000} bg="appBg" accessibilityViewIsModal>
       <ScrollView contentContainerStyle={{ paddingTop: insets.top + 24, paddingBottom: insets.bottom + 24, paddingHorizontal: 20, gap: 20 }}>
-        <Ionicons name="shield-checkmark-outline" size={48} color={isDark ? '#7FD1A3' : '#1F7A4D'} />
-        <Text fontSize={28} lineHeight="36px" fontWeight="800" color="brandFg" accessibilityRole="header">
+        <Ionicons name="shield-checkmark-outline" size={42} color={isDark ? '#7FD1A3' : '#1F7A4D'} />
+        <Text fontSize={24} lineHeight="36px" fontWeight="800" color="brandFg" accessibilityRole="header">
           {copy.title}
         </Text>
-        <Text fontSize={20} lineHeight="30px" fontWeight="500" color="brandFg">
+        <Text fontSize={18} lineHeight="30px" fontWeight="500" color="brandFg">
           {copy.message}
         </Text>
         <YStack gap="3">
@@ -129,7 +129,7 @@ export function LegalReacceptanceGate({ status, onAccepted, onReload }: Props) {
           {copy.showTermsLink && status.termsUrl ? linkButton('Ler os Termos de Uso', status.termsUrl) : null}
         </YStack>
         {message ? (
-          <Text fontSize={18} lineHeight="26px" fontWeight="700" color="brandError" accessibilityRole="alert" accessibilityLiveRegion="polite">
+          <Text fontSize={16} lineHeight="26px" fontWeight="700" color="brandError" accessibilityRole="alert" accessibilityLiveRegion="polite">
             {message}
           </Text>
         ) : null}
@@ -145,7 +145,7 @@ export function LegalReacceptanceGate({ status, onAccepted, onReload }: Props) {
           accessibilityRole="button"
           accessibilityState={{ disabled: submitting || loggingOut, busy: submitting }}
           accessibilityLabel="Aceitar">
-          <Text fontSize={21} fontWeight="800" color="brandPrimaryFg">
+          <Text fontSize={18} fontWeight="800" color="brandPrimaryFg">
             {submitting ? 'Enviando…' : 'Aceitar'}
           </Text>
         </Button>
@@ -159,7 +159,7 @@ export function LegalReacceptanceGate({ status, onAccepted, onReload }: Props) {
           onPress={() => void onLogoutPress()}
           accessibilityRole="button"
           accessibilityLabel="Sair da conta">
-          <Text fontSize={19} fontWeight="700" color="brandFg">
+          <Text fontSize={17} fontWeight="700" color="brandFg">
             {loggingOut ? 'Saindo…' : 'Sair da conta'}
           </Text>
         </Button>

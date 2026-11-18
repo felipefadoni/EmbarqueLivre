@@ -13,7 +13,8 @@
  * - Carência no dia do embarque (só aplicações com applied_at <= shipped_on; livre se shippedOn >= freeAt; sem vacinação
  *   = livre) é só AVISO: não bloqueia vínculo nem mudança de data (SHIPMENT_ANIMAL_IN_WITHDRAWAL deixou de existir).
  * - Validação ao incluir um animal, nesta ordem: SHIPMENT_FINISHED → ANIMAL_NOT_FOUND → SHIPMENT_ANIMAL_FARM_MISMATCH
- *   → ANIMAL_ALREADY_SHIPPED → ANIMAL_ALREADY_IN_SHIPMENT → INVALID_SHIPMENT_ANIMAL_WEIGHT → SHIPMENT_ANIMAL_PHOTO_REQUIRED.
+ *   → ANIMAL_ALREADY_SHIPPED → ANIMAL_ALREADY_IN_SHIPMENT → INVALID_SHIPMENT_ANIMAL_WEIGHT. A foto é OPCIONAL (§26,
+ *   18/11): SHIPMENT_ANIMAL_PHOTO_REQUIRED foi removido; a foto pode entrar, ser trocada ou removida depois.
  * - `animalIds` SAIU de POST/PUT/PATCH: animais entram e saem por /shipments/:id/animals (ou linhas shipment_animals no sync).
  * - Permissões: admin/master/basic leem, criam, editam, incluem/removem animais (DELETE de linhas de vínculo), enviam
  *   foto, mudam peso e finalizam; DELETE do embarque só master/admin (basic → 403 INSUFFICIENT_ROLE, também como op
@@ -168,7 +169,11 @@ export const SHIPMENT_FLOW_CONTRACT = {
   /** Sync: PATCH shipments { status: "finished" }. REST: POST /shipments/:id/finish. */
   finishVia: 'patch-status' as const,
   finishPath: (shipmentId: string) => `/shipments/${shipmentId}/finish`,
-  /** Ordem obrigatória no upload: foto → vínculo (photo_id, weight_kg) → finalizar. */
+  /**
+   * Ordem obrigatória no upload: foto → vínculo (photo_id, weight_kg) → finalizar. A foto é opcional (§26): vínculo
+   * sem foto sobe com photo_id null. No sync, photo_id null num vínculo EXISTENTE mantém a foto; remover é só pelo
+   * REST DELETE …/animals/:shipmentAnimalId/photo (feito pelo upload antes do PATCH; ver src/sync/photoRemoval.ts).
+   */
   uploadOrder: ['photo', 'link', 'finish'] as const,
   routes: {
     list: '/embarques',
@@ -189,13 +194,14 @@ export const SHIPMENT_FLOW_CONTRACT = {
     downloadPath: (shipmentId: string, photoId: string) => `/shipments/${shipmentId}/photos/${photoId}`,
     animalsPath: (shipmentId: string) => `/shipments/${shipmentId}/animals`,
     animalPath: (shipmentId: string, shipmentAnimalId: string) => `/shipments/${shipmentId}/animals/${shipmentAnimalId}`,
+    /** DELETE remove a foto do vínculo (§24.2/§26). 404 SHIPMENT_PHOTO_NOT_FOUND = vínculo já sem foto. */
+    animalPhotoPath: (shipmentId: string, shipmentAnimalId: string) => `/shipments/${shipmentId}/animals/${shipmentAnimalId}/photo`,
   },
   weightKg: { min: 1, max: 2000, decimals: 1 },
   errors: {
     finished: 'SHIPMENT_FINISHED',
     empty: 'SHIPMENT_EMPTY',
     invalidWeight: 'INVALID_SHIPMENT_ANIMAL_WEIGHT',
-    photoRequired: 'SHIPMENT_ANIMAL_PHOTO_REQUIRED',
     animalAlreadyShipped: 'ANIMAL_ALREADY_SHIPPED',
     invalidPhoto: 'INVALID_SHIPMENT_PHOTO',
     photoNotFound: 'SHIPMENT_PHOTO_NOT_FOUND',

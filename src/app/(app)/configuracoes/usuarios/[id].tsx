@@ -126,7 +126,7 @@ function UsuarioDetail({ id, hint, currentUserId }: { id: string; hint?: string;
       <OfflineNotice message="Sem internet. Gerenciar usuários precisa de conexão." />
       <AppCard>
         <YStack gap={12}>
-          <Text fontSize={22} fontWeight="900" color="brandFg">
+          <Text fontSize={19} fontWeight="900" color="brandFg">
             {target.name || 'Sem nome'}
           </Text>
           <RoleBadge role={target.role} self={self} status={userStatusLabel(target)} />
@@ -289,7 +289,7 @@ function Info({ label, value }: { label: string; value: string }) {
       <Text fontSize={15} fontWeight="700" color="brandMuted">
         {label}
       </Text>
-      <Text fontSize={18} fontWeight="600" color="brandFg">
+      <Text fontSize={16} fontWeight="600" color="brandFg">
         {value}
       </Text>
     </YStack>
@@ -320,7 +320,7 @@ function ActionButton({
       accessibilityRole="button"
       accessibilityLabel={label}
       accessibilityState={{ disabled }}>
-      <Text fontSize={18} fontWeight="800" color={danger ? 'brandError' : 'brandFg'}>
+      <Text fontSize={16} fontWeight="800" color={danger ? 'brandError' : 'brandFg'}>
         {label}
       </Text>
     </XStack>

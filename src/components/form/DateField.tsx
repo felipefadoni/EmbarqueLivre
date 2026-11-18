@@ -64,7 +64,7 @@ export function DateField({
           accessibilityLabel={label}
           accessibilityHint={display}
           accessibilityState={{ disabled }}>
-          <Text fontSize={18} fontWeight="600" color={value ? 'brandFg' : 'brandMuted'} flex={1}>
+          <Text fontSize={16} fontWeight="600" color={value ? 'brandFg' : 'brandMuted'} flex={1}>
             {display}
           </Text>
         </XStack>
@@ -73,23 +73,23 @@ export function DateField({
             minH={TOQUE_MINIMO}
             items="center"
             justify="center"
-            style={{ width: 56, height: 56 }}
+            style={{ width: 48, height: 48 }}
             onPress={() => onChange(null)}
             accessibilityRole="button"
             accessibilityLabel="Limpar data">
-            <Ionicons name="close-circle" size={22} color={iconColor} />
+            <Ionicons name="close-circle" size={20} color={iconColor} />
           </XStack>
         ) : null}
         <XStack
           minH={TOQUE_MINIMO}
           items="center"
           justify="center"
-          style={{ width: 56, height: 56 }}
+          style={{ width: 48, height: 48 }}
           onPress={openPicker}
           accessibilityRole="button"
           accessibilityLabel="Abrir calendário"
           accessibilityState={{ disabled }}>
-          <Ionicons name="calendar-outline" size={22} color={iconColor} />
+          <Ionicons name="calendar-outline" size={20} color={iconColor} />
         </XStack>
       </XStack>
       {error ? (

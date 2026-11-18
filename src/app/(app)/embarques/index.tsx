@@ -127,7 +127,7 @@ function EmbarquesList({ showAuthor, showAuthorEmail }: { showAuthor: boolean; s
             onPress={() => router.push('/embarques/nova')}
             accessibilityRole="button"
             accessibilityLabel="Novo embarque">
-            <Text fontSize={18} fontWeight="800" color="brandPrimaryFg">
+            <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
               Novo embarque
             </Text>
           </XStack>
@@ -164,11 +164,11 @@ function EmbarquesList({ showAuthor, showAuthorEmail }: { showAuthor: boolean; s
             rounded={16}
             px="3"
             gap={8}>
-            <Ionicons name="search" size={20} color={iconColor} />
+            <Ionicons name="search" size={18} color={iconColor} />
             <Input
               flex={1}
               h="100%"
-              fontSize={18}
+              fontSize={16}
               fontWeight="600"
               color="brandFg"
               bg="transparent"
@@ -191,7 +191,7 @@ function EmbarquesList({ showAuthor, showAuthorEmail }: { showAuthor: boolean; s
                 onPress={() => setSearchInput('')}
                 accessibilityRole="button"
                 accessibilityLabel="Limpar busca">
-                <Ionicons name="close-circle" size={22} color={iconColor} />
+                <Ionicons name="close-circle" size={20} color={iconColor} />
               </XStack>
             ) : null}
           </XStack>
@@ -249,7 +249,7 @@ function EmbarquesList({ showAuthor, showAuthorEmail }: { showAuthor: boolean; s
                 accessibilityRole="button"
                 accessibilityLabel={`Abrir embarque ${item.name}`}>
                 <YStack flex={1} gap={4}>
-                  <Text fontSize={18} fontWeight="800" color="brandFg">
+                  <Text fontSize={16} fontWeight="800" color="brandFg">
                     {item.name}
                   </Text>
                   <ShipmentStatusBadge status={item.status ?? 'in_progress'} />
@@ -263,7 +263,7 @@ function EmbarquesList({ showAuthor, showAuthorEmail }: { showAuthor: boolean; s
                   {/* Só admin: quem cadastrou, ou "Autor não registrado" (src/api/authorContract.ts). */}
                   {showAuthor ? <AuthorLines author={{ name: item.createdByName, email: item.createdByEmail }} /> : null}
                 </YStack>
-                <Ionicons name="chevron-forward" size={22} color={chevron} />
+                <Ionicons name="chevron-forward" size={20} color={chevron} />
               </XStack>
             </AppCard>
           )

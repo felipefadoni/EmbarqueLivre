@@ -297,7 +297,6 @@ const CODE_FIELD: Record<string, string> = {
   SHIPMENT_FINISHED: 'animalIds',
   SHIPMENT_EMPTY: 'animalIds',
   INVALID_SHIPMENT_ANIMAL_WEIGHT: 'weightKg',
-  SHIPMENT_ANIMAL_PHOTO_REQUIRED: 'photoId',
   SHIPMENT_PHOTO_NOT_FOUND: 'photoId',
   SHIPMENT_PHOTO_IN_USE: 'photoId',
   INVALID_SHIPMENT_PHOTO: 'photoId',

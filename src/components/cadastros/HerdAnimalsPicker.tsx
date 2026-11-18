@@ -96,11 +96,11 @@ export function HerdAnimalsPicker({ open, farmId, herdId, herdName, initialSelec
             borderTopRightRadius: 24,
             paddingBottom: Math.max(insets.bottom, 16),
           }}>
-          <XStack items="center" justify="space-between" minH={56}>
-            <Text fontSize={22} fontWeight="800" color="brandFg" flex={1}>
+          <XStack items="center" justify="space-between" minH={48}>
+            <Text fontSize={19} fontWeight="800" color="brandFg" flex={1}>
               Adicionar animais
             </Text>
-            <XStack minH={56} px={12} items="center" onPress={onClose} accessibilityRole="button" accessibilityLabel="Fechar">
+            <XStack minH={48} px={12} items="center" onPress={onClose} accessibilityRole="button" accessibilityLabel="Fechar">
               <Text fontSize={16} fontWeight="800" color="brandFg">
                 Fechar
               </Text>
@@ -115,11 +115,11 @@ export function HerdAnimalsPicker({ open, farmId, herdId, herdName, initialSelec
             rounded={16}
             px="3"
             gap={8}>
-            <Ionicons name="search" size={20} color={iconColor} />
+            <Ionicons name="search" size={18} color={iconColor} />
             <Input
               flex={1}
               h="100%"
-              fontSize={18}
+              fontSize={16}
               fontWeight="600"
               color="brandFg"
               bg="transparent"
@@ -177,11 +177,11 @@ export function HerdAnimalsPicker({ open, farmId, herdId, herdName, initialSelec
                   accessibilityLabel={`Animal ${item.code}`}>
                   <Ionicons
                     name={checked ? 'checkbox' : 'square-outline'}
-                    size={26}
+                    size={22}
                     color={checked ? (isDark ? '#7DFFB3' : '#1B6B43') : iconColor}
                   />
                   <YStack flex={1} gap={2}>
-                    <Text fontSize={17} fontWeight="800" color="brandFg">
+                    <Text fontSize={16} fontWeight="800" color="brandFg">
                       {item.code}
                     </Text>
                     <Text fontSize={14} fontWeight="500" color="brandMuted">
@@ -208,7 +208,7 @@ export function HerdAnimalsPicker({ open, farmId, herdId, herdName, initialSelec
             accessibilityRole="button"
             accessibilityLabel="Confirmar animais"
             accessibilityState={{ disabled: selectedIds.length === 0 }}>
-            <Text fontSize={18} fontWeight="800" color="brandPrimaryFg">
+            <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
               {selectedIds.length === 0
                 ? 'Selecione animais'
                 : `Adicionar ${selectedIds.length} ${selectedIds.length === 1 ? 'animal' : 'animais'}`}

@@ -124,8 +124,8 @@ export default function PendenciasScreen() {
             <AppCard>
               <YStack gap={8}>
                 <XStack items="center" gap={8}>
-                  <Ionicons name="alert-circle" size={22} color={isDark ? '#FF8A80' : '#B3261E'} />
-                  <Text flex={1} fontSize={18} fontWeight="800" color="brandFg">
+                  <Ionicons name="alert-circle" size={20} color={isDark ? '#FF8A80' : '#B3261E'} />
+                  <Text flex={1} fontSize={16} fontWeight="800" color="brandFg">
                     {title}
                   </Text>
                 </XStack>
@@ -162,7 +162,7 @@ export default function PendenciasScreen() {
                       onPress={() => void onCorrect(item.primary)}
                       accessibilityRole="button"
                       accessibilityLabel={`Corrigir ${title}`}>
-                      <Text fontSize={17} fontWeight="800" color="brandPrimaryFg">
+                      <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
                         Corrigir
                       </Text>
                     </XStack>
@@ -179,7 +179,7 @@ export default function PendenciasScreen() {
                     onPress={() => setDiscarding(item)}
                     accessibilityRole="button"
                     accessibilityLabel={`Descartar ${title}`}>
-                    <Text fontSize={17} fontWeight="800" color="brandFg">
+                    <Text fontSize={16} fontWeight="800" color="brandFg">
                       Descartar
                     </Text>
                   </XStack>

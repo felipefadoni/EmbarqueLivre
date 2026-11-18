@@ -60,7 +60,7 @@ export function ShipmentPhotoViewer({ open, onClose, shipmentId, localUri, photo
         accessibilityViewIsModal
         accessibilityLabel="Fechar foto">
         <XStack px={16} pb={12} items="center" justify="space-between" gap={12}>
-          <Text flex={1} fontSize={18} fontWeight="800" color="brandAqua" numberOfLines={1}>
+          <Text flex={1} fontSize={16} fontWeight="800" color="brandAqua" numberOfLines={1}>
             {caption}
           </Text>
           <XStack
@@ -75,7 +75,7 @@ export function ShipmentPhotoViewer({ open, onClose, shipmentId, localUri, photo
             onPress={onClose}
             accessibilityRole="button"
             accessibilityLabel="Fechar">
-            <Ionicons name="close" size={22} color={INK} />
+            <Ionicons name="close" size={20} color={INK} />
             <Text fontSize={16} fontWeight="800" color="brandInk">
               Fechar
             </Text>
@@ -108,8 +108,8 @@ export function ShipmentPhotoViewer({ open, onClose, shipmentId, localUri, photo
               ) : null}
               {state === 'error' ? (
                 <YStack items="center" gap={12} px={24} maxW={360}>
-                  <Ionicons name="image-outline" size={48} color="#CEE3CD" />
-                  <Text fontSize={17} fontWeight="800" color="brandAqua" text="center">
+                  <Ionicons name="image-outline" size={42} color="#CEE3CD" />
+                  <Text fontSize={16} fontWeight="800" color="brandAqua" text="center">
                     Não foi possível carregar a foto
                   </Text>
                   <Text fontSize={15} fontWeight="600" color="brandSageLight" text="center">

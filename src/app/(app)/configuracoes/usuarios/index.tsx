@@ -96,7 +96,7 @@ function UsuariosAdminList({ currentUserId }: { currentUserId: string | null }) 
             onPress={() => router.push('/configuracoes/usuarios/nova')}
             accessibilityRole="button"
             accessibilityLabel="Novo usuário">
-            <Text fontSize={18} fontWeight="800" color="brandPrimaryFg">
+            <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
               Novo usuário
             </Text>
           </XStack>
@@ -200,7 +200,7 @@ function UsuariosList({ currentUserId, isAdmin }: { currentUserId: string | null
           onPress={() => router.push('/configuracoes/usuarios/nova')}
           accessibilityRole="button"
           accessibilityLabel="Novo usuário">
-          <Text fontSize={18} fontWeight="800" color="brandPrimaryFg">
+          <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
             Novo usuário
           </Text>
         </XStack>
@@ -236,11 +236,11 @@ function UsuariosList({ currentUserId, isAdmin }: { currentUserId: string | null
           rounded={16}
           px="3"
           gap={8}>
-          <Ionicons name="search" size={20} color={iconColor} />
+          <Ionicons name="search" size={18} color={iconColor} />
           <Input
             flex={1}
             h="100%"
-            fontSize={18}
+            fontSize={16}
             fontWeight="600"
             color="brandFg"
             bg="transparent"
@@ -263,7 +263,7 @@ function UsuariosList({ currentUserId, isAdmin }: { currentUserId: string | null
               onPress={() => setInput('')}
               accessibilityRole="button"
               accessibilityLabel="Limpar busca">
-              <Ionicons name="close-circle" size={22} color={iconColor} />
+              <Ionicons name="close-circle" size={20} color={iconColor} />
             </XStack>
           ) : null}
         </XStack>
@@ -311,7 +311,7 @@ function UserRow({ user, self, chevron, author }: { user: AccountUser; self: boo
         accessibilityRole="button"
         accessibilityLabel={`${user.name}${self ? ' (você)' : ''}, ${user.email}`}>
         <YStack flex={1} gap={4}>
-          <Text fontSize={18} fontWeight="800" color="brandFg">
+          <Text fontSize={16} fontWeight="800" color="brandFg">
             {user.name || 'Sem nome'}
           </Text>
           <Text fontSize={16} fontWeight="500" color="brandMuted">
@@ -322,7 +322,7 @@ function UserRow({ user, self, chevron, author }: { user: AccountUser; self: boo
             <RoleBadge role={user.role} self={self} status={userStatusLabel(user)} />
           </XStack>
         </YStack>
-        <Ionicons name="chevron-forward" size={22} color={chevron} />
+        <Ionicons name="chevron-forward" size={20} color={chevron} />
       </XStack>
     </AppCard>
   )

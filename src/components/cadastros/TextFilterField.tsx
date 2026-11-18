@@ -22,11 +22,11 @@ export function TextFilterField({ label, value, placeholder, onChange, keyboardT
         {label}
       </Text>
       <XStack minH={TOQUE_MINIMO} items="center" bg="brandSurface" borderColor="brandBorder" borderWidth={2} rounded={16} px="3" gap={8}>
-        <Ionicons name="search" size={20} color={iconColor} />
+        <Ionicons name="search" size={18} color={iconColor} />
         <Input
           flex={1}
           h="100%"
-          fontSize={18}
+          fontSize={16}
           fontWeight="600"
           color="brandFg"
           bg="transparent"
@@ -50,7 +50,7 @@ export function TextFilterField({ label, value, placeholder, onChange, keyboardT
             onPress={() => onChange('')}
             accessibilityRole="button"
             accessibilityLabel={`Limpar ${label.toLowerCase()}`}>
-            <Ionicons name="close-circle" size={22} color={iconColor} />
+            <Ionicons name="close-circle" size={20} color={iconColor} />
           </XStack>
         ) : null}
       </XStack>

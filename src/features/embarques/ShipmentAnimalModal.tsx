@@ -94,7 +94,7 @@ function ModalHeader({ title, subtitle, actionLabel, onAction }: { title: string
   return (
     <XStack px={20} pt={16} pb={8} items="center" gap={12}>
       <YStack flex={1} gap={2}>
-        <Text fontSize={22} fontWeight="800" color="brandFg">
+        <Text fontSize={19} fontWeight="800" color="brandFg">
           {title}
         </Text>
         {subtitle ? (
@@ -148,11 +148,11 @@ function PickStep({ shipment, onClose, onPick }: { shipment: ShipmentRef; onClos
       <YStack px={20} pb={8} gap={12}>
         <XStack items="center" gap={12}>
           <XStack flex={1} minH={TOQUE_MINIMO} items="center" bg="brandSurface" borderColor="brandBorder" borderWidth={2} rounded={16} px="3" gap={8}>
-            <Ionicons name="search" size={20} color={iconColor} />
+            <Ionicons name="search" size={18} color={iconColor} />
             <Input
               flex={1}
               h="100%"
-              fontSize={18}
+              fontSize={16}
               fontWeight="600"
               color="brandFg"
               bg="transparent"
@@ -222,7 +222,7 @@ function PickStep({ shipment, onClose, onPick }: { shipment: ShipmentRef; onClos
               accessibilityState={{ disabled: inOther }}
               accessibilityLabel={inOther ? `Animal ${item.code}, já no embarque ${item.otherShipmentName ?? ''}` : `Escolher animal ${item.code}`}>
               <YStack flex={1} gap={2}>
-                <Text fontSize={18} fontWeight="800" color="brandFg">
+                <Text fontSize={16} fontWeight="800" color="brandFg">
                   {item.code}
                 </Text>
                 <Text fontSize={14} fontWeight="500" color="brandMuted" numberOfLines={1}>
@@ -353,7 +353,7 @@ function CaptureStep({
                 accessibilityRole="checkbox"
                 accessibilityState={{ checked: confirmed }}
                 accessibilityLabel="Confirmo adicionar mesmo em carência">
-                <Ionicons name={confirmed ? 'checkbox' : 'square-outline'} size={26} color="white" />
+                <Ionicons name={confirmed ? 'checkbox' : 'square-outline'} size={22} color="white" />
                 <Text flex={1} fontSize={16} fontWeight="800" color="bloqueado-color">
                   Confirmo adicionar mesmo em carência
                 </Text>
@@ -364,7 +364,7 @@ function CaptureStep({
 
         {/* 1) Foto obrigatória */}
         <YStack gap={10}>
-          <Text fontSize={18} fontWeight="800" color="brandFg">
+          <Text fontSize={16} fontWeight="800" color="brandFg">
             1. Foto do animal (obrigatória)
           </Text>
           <XStack gap={12} items="center">
@@ -387,8 +387,8 @@ function CaptureStep({
                 onPress={busyPhoto ? undefined : () => void capture('camera')}
                 accessibilityRole="button"
                 accessibilityLabel={hasPhoto ? 'Tirar outra foto' : 'Tirar foto'}>
-                {busyPhoto ? <Spinner color="brandPrimaryFg" /> : <Ionicons name="camera" size={22} color={isDark ? '#2B3D34' : '#FFFFFF'} />}
-                <Text fontSize={17} fontWeight="800" color="brandPrimaryFg">
+                {busyPhoto ? <Spinner color="brandPrimaryFg" /> : <Ionicons name="camera" size={20} color={isDark ? '#2B3D34' : '#FFFFFF'} />}
+                <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
                   {hasPhoto ? 'Tirar outra foto' : 'Tirar foto'}
                 </Text>
               </XStack>
@@ -406,14 +406,14 @@ function CaptureStep({
               </Text>
               {photoProblem.kind === 'denied' ? (
                 <XStack minH={TOQUE_MINIMO} items="center" justify="center" rounded={14} borderWidth={2} borderColor="brandBorder" onPress={openAppSettings} accessibilityRole="button" accessibilityLabel="Abrir ajustes do aparelho">
-                  <Ionicons name="settings-outline" size={20} color={iconColor} />
+                  <Ionicons name="settings-outline" size={18} color={iconColor} />
                   <Text fontSize={16} fontWeight="800" color="brandFg" ml={8}>
                     Abrir Ajustes
                   </Text>
                 </XStack>
               ) : null}
               <XStack minH={TOQUE_MINIMO} items="center" justify="center" rounded={14} borderWidth={2} borderColor="brandBorder" onPress={() => void capture('library')} accessibilityRole="button" accessibilityLabel="Escolher foto da galeria">
-                <Ionicons name="images-outline" size={20} color={iconColor} />
+                <Ionicons name="images-outline" size={18} color={iconColor} />
                 <Text fontSize={16} fontWeight="800" color="brandFg" ml={8}>
                   Escolher da galeria
                 </Text>
@@ -424,7 +424,7 @@ function CaptureStep({
 
         {/* 2) Peso obrigatório */}
         <YStack gap={6}>
-          <Text fontSize={18} fontWeight="800" color="brandFg">
+          <Text fontSize={16} fontWeight="800" color="brandFg">
             2. Peso (kg)
           </Text>
           <AuthField
@@ -457,8 +457,8 @@ function CaptureStep({
           accessibilityRole="button"
           accessibilityState={{ disabled: !ready || saving, busy: saving }}
           accessibilityLabel={edit ? 'Salvar ajustes' : 'Adicionar ao embarque'}>
-          {saving ? <Spinner color="brandPrimaryFg" /> : <Ionicons name={edit ? 'checkmark' : 'add'} size={22} color={checkColor === '#7DFFB3' ? '#2B3D34' : '#FFFFFF'} />}
-          <Text fontSize={18} fontWeight="800" color="brandPrimaryFg">
+          {saving ? <Spinner color="brandPrimaryFg" /> : <Ionicons name={edit ? 'checkmark' : 'add'} size={20} color={checkColor === '#7DFFB3' ? '#2B3D34' : '#FFFFFF'} />}
+          <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
             {saving ? 'Salvando…' : edit ? 'Salvar ajustes' : 'Adicionar ao embarque'}
           </Text>
         </XStack>

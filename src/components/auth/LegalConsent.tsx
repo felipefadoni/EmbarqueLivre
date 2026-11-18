@@ -34,7 +34,7 @@ export function LegalConsent({ state, accepted, onChangeAccepted, onRetry, hint,
     return (
       <XStack gap="3" items="center" minH={TOQUE_PRINCIPAL} accessibilityRole="progressbar" accessibilityLabel="Carregando os Termos de Uso e a Política de Privacidade">
         <Spinner color="brandFg" />
-        <Text flex={1} fontSize={17} lineHeight="24px" fontWeight="600" color="brandFg">
+        <Text flex={1} fontSize={16} lineHeight="24px" fontWeight="600" color="brandFg">
           Carregando os Termos de Uso e a Política de Privacidade…
         </Text>
       </XStack>
@@ -45,8 +45,8 @@ export function LegalConsent({ state, accepted, onChangeAccepted, onRetry, hint,
     return (
       <YStack gap="3" p={14} rounded={14} bg="brandSurface" borderWidth={2} borderColor="brandBorder" accessibilityRole="alert" accessibilityLiveRegion="polite">
         <XStack gap={10} items="flex-start">
-          <Ionicons name="cloud-offline-outline" size={24} color={isDark ? '#F0C36B' : '#8A5A00'} />
-          <Text flex={1} fontSize={17} lineHeight="24px" fontWeight="700" color="brandFg">
+          <Ionicons name="cloud-offline-outline" size={22} color={isDark ? '#F0C36B' : '#8A5A00'} />
+          <Text flex={1} fontSize={16} lineHeight="24px" fontWeight="700" color="brandFg">
             {state.message}
           </Text>
         </XStack>
@@ -54,7 +54,7 @@ export function LegalConsent({ state, accepted, onChangeAccepted, onRetry, hint,
           h={TOQUE_MINIMO}
           bg="brandPrimary"
           color="brandPrimaryFg"
-          fontSize={17}
+          fontSize={16}
           fontWeight="800"
           rounded={14}
           borderWidth={0}
@@ -108,12 +108,12 @@ export function LegalConsent({ state, accepted, onChangeAccepted, onRetry, hint,
           bg={accepted ? 'brandPrimary' : 'brandBg'}
           items="center"
           justify="center">
-          {accepted ? <Ionicons name="checkmark" size={26} color={isDark ? '#2B3D34' : '#D1EFEF'} /> : null}
+          {accepted ? <Ionicons name="checkmark" size={22} color={isDark ? '#2B3D34' : '#D1EFEF'} /> : null}
         </YStack>
-        <Text flex={1} fontSize={18} lineHeight="26px" fontWeight="600" color="brandFg">
+        <Text flex={1} fontSize={16} lineHeight="26px" fontWeight="600" color="brandFg">
           Li e aceito os{' '}
           {termsUrl ? (
-            <Text {...linkProps} fontSize={18} onPress={() => void openDocument(termsUrl)}>
+            <Text {...linkProps} fontSize={16} onPress={() => void openDocument(termsUrl)}>
               Termos de Uso
             </Text>
           ) : (
@@ -121,7 +121,7 @@ export function LegalConsent({ state, accepted, onChangeAccepted, onRetry, hint,
           )}{' '}
           e a{' '}
           {privacyUrl ? (
-            <Text {...linkProps} fontSize={18} onPress={() => void openDocument(privacyUrl)}>
+            <Text {...linkProps} fontSize={16} onPress={() => void openDocument(privacyUrl)}>
               Política de Privacidade
             </Text>
           ) : (

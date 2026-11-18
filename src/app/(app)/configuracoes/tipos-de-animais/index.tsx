@@ -40,7 +40,7 @@ function TiposDeAnimaisList() {
           onPress={() => router.push('/configuracoes/tipos-de-animais/nova')}
           accessibilityRole="button"
           accessibilityLabel="Novo tipo de animal">
-          <Text fontSize={18} fontWeight="800" color="brandPrimaryFg">
+          <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
             Novo tipo
           </Text>
         </XStack>
@@ -87,10 +87,10 @@ function TypeRow({ item, chevron, canManage }: { item: AnimalType; chevron: stri
         onPress={canManage ? () => router.push(`/configuracoes/tipos-de-animais/${item.id}`) : undefined}
         accessibilityRole={canManage ? 'button' : undefined}
         accessibilityLabel={canManage ? `Editar tipo ${item.name}` : item.name}>
-        <Text fontSize={18} fontWeight="800" color="brandFg" flex={1}>
+        <Text fontSize={16} fontWeight="800" color="brandFg" flex={1}>
           {item.name}
         </Text>
-        {canManage ? <Ionicons name="chevron-forward" size={22} color={chevron} /> : null}
+        {canManage ? <Ionicons name="chevron-forward" size={20} color={chevron} /> : null}
       </XStack>
     </AppCard>
   )

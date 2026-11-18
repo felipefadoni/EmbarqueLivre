@@ -39,8 +39,8 @@ export function ConfirmDialog({
         onPress={busy ? undefined : onCancel}
         accessibilityViewIsModal>
         <Pressable onPress={(event) => event.stopPropagation()}>
-          <YStack bg="cardBg" rounded={24} p={24} gap={16}>
-            <Text fontSize={22} fontWeight="800" color="brandFg">
+          <YStack bg="cardBg" rounded={20} p={20} gap={14}>
+            <Text fontSize={19} fontWeight="800" color="brandFg">
               {title}
             </Text>
             <Text fontSize={16} lineHeight="24px" fontWeight="500" color="brandFg">
@@ -58,7 +58,7 @@ export function ConfirmDialog({
                 accessibilityRole="button"
                 accessibilityLabel={confirmLabel}
                 accessibilityState={{ disabled: busy, busy }}>
-                <Text fontSize={18} fontWeight="800" color={tone === 'primary' ? 'brandPrimaryFg' : 'white'}>
+                <Text fontSize={16} fontWeight="800" color={tone === 'primary' ? 'brandPrimaryFg' : 'white'}>
                   {busy ? busyLabel : confirmLabel}
                 </Text>
               </XStack>
@@ -73,7 +73,7 @@ export function ConfirmDialog({
                 accessibilityRole="button"
                 accessibilityLabel={cancelLabel}
                 accessibilityState={{ disabled: busy }}>
-                <Text fontSize={18} fontWeight="800" color="brandFg">
+                <Text fontSize={16} fontWeight="800" color="brandFg">
                   {cancelLabel}
                 </Text>
               </XStack>

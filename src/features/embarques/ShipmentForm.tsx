@@ -176,8 +176,8 @@ export function ShipmentForm({ pendenciaId }: { pendenciaId?: string }) {
           accessibilityRole="button"
           accessibilityLabel="Adicionar animal"
           accessibilityHint="Cadastra o embarque e abre a lista de animais da fazenda">
-          <Ionicons name="add-circle-outline" size={22} color={isDark ? '#A8B8AF' : '#3A5247'} />
-          <Text fontSize={17} fontWeight="800" color="brandFg">
+          <Ionicons name="add-circle-outline" size={20} color={isDark ? '#A8B8AF' : '#3A5247'} />
+          <Text fontSize={16} fontWeight="800" color="brandFg">
             Adicionar animal
           </Text>
         </XStack>

@@ -88,9 +88,9 @@ const DOMAIN_MESSAGES: Record<string, string> = {
   SHIPMENT_FINISHED: 'Este embarque já foi finalizado e não pode mais ser alterado',
   SHIPMENT_EMPTY: 'Inclua pelo menos um animal antes de finalizar o embarque',
   INVALID_SHIPMENT_ANIMAL_WEIGHT: 'Peso inválido: informe o peso em kg, entre 1 e 2000, com no máximo 1 casa decimal',
-  SHIPMENT_ANIMAL_PHOTO_REQUIRED: 'Envie a foto do animal para incluí-lo no embarque',
   ANIMAL_ALREADY_SHIPPED: 'Este animal já foi embarcado em um embarque finalizado',
-  INVALID_SHIPMENT_PHOTO: 'A foto deve ser uma imagem JPEG, PNG ou WEBP de até 10 MB',
+  // §26: também quando o envio da foto chega sem arquivo (antes era SHIPMENT_ANIMAL_PHOTO_REQUIRED, removido).
+  INVALID_SHIPMENT_PHOTO: 'Foto inválida ou não enviada. Use uma imagem JPEG, PNG ou WEBP de até 10 MB e tente de novo.',
   SHIPMENT_PHOTO_NOT_FOUND: 'Foto não encontrada',
   SHIPMENT_PHOTO_IN_USE: 'Esta foto já está vinculada a outro animal do embarque',
   INVALID_SHIPMENT_STATUS: 'Situação inválida: use in_progress ou finished',
@@ -316,7 +316,7 @@ export function isPortugueseUserMessage(message: string): boolean {
  * Códigos cuja message da API cita nomes técnicos (dateFrom/dateTo, AAAA-MM-DD):
  * a UI usa sempre o texto do app.
  */
-const APP_MESSAGE_FIRST = new Set(['INVALID_DATE_FILTER', 'INVALID_APPLIED_AT'])
+const APP_MESSAGE_FIRST = new Set(['INVALID_DATE_FILTER', 'INVALID_APPLIED_AT', 'INVALID_SHIPMENT_PHOTO'])
 
 /** Mensagem segura para a UI: prioriza message pt-BR do corpo; senão mapeia o código. */
 export function publicApiMessage(error: ApiError): string {

@@ -12,7 +12,7 @@ function ApplicationRow({ item }: { item: WithdrawalApplication }) {
   return (
     <YStack bg="brandSurface" borderColor="brandBorder" borderWidth={2} rounded={16} p={14} gap={6}>
       <XStack items="center" justify="space-between" gap={8}>
-        <Text fontSize={17} fontWeight="800" color="brandFg" flex={1}>
+        <Text fontSize={16} fontWeight="800" color="brandFg" flex={1}>
           {item.vaccineName || 'Vacina não informada'}
         </Text>
         <WithdrawalBadge active={item.active} activeLabel="Ativa" inactiveLabel="Encerrada" />
@@ -31,7 +31,7 @@ function ApplicationRow({ item }: { item: WithdrawalApplication }) {
 export function WithdrawalSection({ withdrawal }: { withdrawal: AnimalWithdrawal | null }) {
   return (
     <YStack gap={12} mt={8}>
-      <Text fontSize={22} fontWeight="800" color="brandFg">
+      <Text fontSize={19} fontWeight="800" color="brandFg">
         Carência
       </Text>
       {withdrawal == null ? (
@@ -46,10 +46,10 @@ export function WithdrawalSection({ withdrawal }: { withdrawal: AnimalWithdrawal
             gap={4}
             bg={withdrawal.inWithdrawal ? 'bloqueado' : 'liberado'}
             accessibilityLiveRegion="polite">
-            <Text fontSize={22} fontWeight="800" color={withdrawal.inWithdrawal ? 'bloqueado-color' : 'liberado-color'}>
+            <Text fontSize={19} fontWeight="800" color={withdrawal.inWithdrawal ? 'bloqueado-color' : 'liberado-color'}>
               {withdrawal.inWithdrawal ? 'Em carência' : 'Livre'}
             </Text>
-            <Text fontSize={17} fontWeight="700" color={withdrawal.inWithdrawal ? 'bloqueado-color' : 'liberado-color'}>
+            <Text fontSize={16} fontWeight="700" color={withdrawal.inWithdrawal ? 'bloqueado-color' : 'liberado-color'}>
               {withdrawal.freeAt
                 ? withdrawal.inWithdrawal
                   ? `Livre em ${formatDatePtBr(withdrawal.freeAt)}`

@@ -237,11 +237,11 @@ export function ShipmentDetail({
   if (loadError || !shipment) {
     return (
       <YStack flex={1} bg="appBg" items="center" justify="center" gap={16} px={24}>
-        <Text fontSize={18} fontWeight="800" color="brandFg" text="center">
+        <Text fontSize={16} fontWeight="800" color="brandFg" text="center">
           {loadError ?? 'Embarque não encontrado.'}
         </Text>
         <Text
-          fontSize={18}
+          fontSize={16}
           fontWeight="800"
           color="brandFg"
           textDecorationLine="underline"
@@ -276,8 +276,8 @@ export function ShipmentDetail({
           accessibilityRole="button"
           accessibilityLabel="Finalizar embarque"
           accessibilityHint="Depois de finalizado, o embarque não pode mais ser editado">
-          <Ionicons name="flag-outline" size={22} color={iconColor} />
-          <Text fontSize={18} fontWeight="800" color="brandFg">
+          <Ionicons name="flag-outline" size={20} color={iconColor} />
+          <Text fontSize={16} fontWeight="800" color="brandFg">
             Finalizar embarque
           </Text>
         </XStack>
@@ -328,8 +328,8 @@ export function ShipmentDetail({
               accessibilityLabel="Exportar Dados"
               accessibilityHint="Gera o relatório do embarque em PDF e abre as opções para salvar ou enviar"
               accessibilityState={{ busy: exporting, disabled: exporting }}>
-              {exporting ? <Spinner color="brandPrimaryFg" /> : <Ionicons name="document-text-outline" size={22} color={isDark ? '#2B3D34' : '#D1EFEF'} />}
-              <Text fontSize={18} fontWeight="800" color="brandPrimaryFg">
+              {exporting ? <Spinner color="brandPrimaryFg" /> : <Ionicons name="document-text-outline" size={20} color={isDark ? '#2B3D34' : '#D1EFEF'} />}
+              <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
                 {exporting ? 'Gerando PDF…' : 'Exportar Dados'}
               </Text>
             </XStack>
@@ -348,7 +348,7 @@ export function ShipmentDetail({
             onPress={() => setDialog({ kind: 'delete' })}
             accessibilityRole="button"
             accessibilityLabel="Excluir embarque">
-            <Text fontSize={18} fontWeight="800" color="brandError">
+            <Text fontSize={16} fontWeight="800" color="brandError">
               Excluir embarque
             </Text>
           </XStack>
@@ -390,10 +390,10 @@ export function ShipmentDetail({
           />
         ) : (
           <YStack gap={4}>
-            <Text fontSize={22} fontWeight="800" color="brandFg">
+            <Text fontSize={19} fontWeight="800" color="brandFg">
               {liveShipment?.name}
             </Text>
-            <Text fontSize={17} fontWeight="600" color="brandFg">
+            <Text fontSize={16} fontWeight="600" color="brandFg">
               Dia do embarque: {formatDatePtBr(savedDay)}
             </Text>
           </YStack>
@@ -415,7 +415,7 @@ export function ShipmentDetail({
           </YStack>
         ) : null}
 
-        <Text fontSize={20} fontWeight="800" color="brandFg" mt={8}>
+        <Text fontSize={18} fontWeight="800" color="brandFg" mt={8}>
           Animais ({animalsCountLabel(count)})
         </Text>
         {count ? (
@@ -440,8 +440,8 @@ export function ShipmentDetail({
             }}
             accessibilityRole="button"
             accessibilityLabel="Adicionar animal">
-            <Ionicons name="add-circle-outline" size={22} color={iconColor} />
-            <Text fontSize={17} fontWeight="800" color="brandFg">
+            <Ionicons name="add-circle-outline" size={20} color={iconColor} />
+            <Text fontSize={16} fontWeight="800" color="brandFg">
               Adicionar animal
             </Text>
           </XStack>
@@ -576,7 +576,7 @@ function LinkedAnimalRow({
       <XStack gap={12} items="center">
         <ShipmentPhotoThumb shipmentId={shipmentId} localUri={row.localPhotoUri} photoId={row.photoId} size={64} title={row.code} />
         <YStack flex={1} gap={2}>
-          <Text fontSize={18} fontWeight="800" color="brandFg" numberOfLines={1}>
+          <Text fontSize={16} fontWeight="800" color="brandFg" numberOfLines={1}>
             {row.code}
           </Text>
           <Text fontSize={15} fontWeight="700" color="brandFg">
@@ -615,7 +615,7 @@ function RowAction({ icon, label, color, onPress }: { icon: keyof typeof Ionicon
       onPress={onPress}
       accessibilityRole="button"
       accessibilityLabel={label}>
-      <Ionicons name={icon} size={18} color={color} />
+      <Ionicons name={icon} size={16} color={color} />
       <Text fontSize={15} fontWeight="800" color="brandFg">
         {label}
       </Text>

@@ -21,7 +21,7 @@ export function PasswordChecklist({ password }: PasswordChecklistProps) {
         const ok = password.length > 0 && item.check(password)
         return (
           <XStack key={item.key} gap="2" items="center">
-            <Text fontSize={18} fontWeight="800" color={ok ? 'brandSuccess' : 'brandMuted'} w={22}>
+            <Text fontSize={16} fontWeight="800" color={ok ? 'brandSuccess' : 'brandMuted'} w={22}>
               {ok ? '✓' : '○'}
             </Text>
             <Text fontSize={15} lineHeight="20px" fontWeight="600" color={ok ? 'brandSuccess' : 'brandMuted'} flex={1}>

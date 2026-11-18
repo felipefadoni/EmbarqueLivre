@@ -73,8 +73,8 @@ export default function ConfiguracoesScreen() {
           gap: 16,
         }}
         showsVerticalScrollIndicator={false}>
-        <YStack gap={4} minH={56} justify="center">
-          <Text fontSize={28} fontWeight="800" color="brandFg">
+        <YStack gap={4} minH={48} justify="center">
+          <Text fontSize={24} fontWeight="800" color="brandFg">
             Configurações
           </Text>
           <Text fontSize={16} fontWeight="600" color="brandMuted">
@@ -89,26 +89,26 @@ export default function ConfiguracoesScreen() {
                 <Text fontSize={14} fontWeight="700" color="brandMuted">
                   Conta
                 </Text>
-                <Text fontSize={18} fontWeight="800" color="brandFg">
+                <Text fontSize={16} fontWeight="800" color="brandFg">
                   {user?.name ?? 'Conta'}
                 </Text>
                 <Text fontSize={16} fontWeight="500" color="brandMuted">
                   {user?.email ?? ''}
                 </Text>
               </YStack>
-              <Ionicons name="person-circle-outline" size={36} color={chevron} />
+              <Ionicons name="person-circle-outline" size={32} color={chevron} />
             </XStack>
             <YStack h={1} bg={isDark ? '#3A5247' : '#EEF6EF'} mx={20} />
             <XStack items="center" justify="space-between" px={20} py={16} minH={TOQUE_MINIMO} gap={12}>
               <YStack flex={1} gap={4}>
-                <Text fontSize={18} fontWeight="800" color="brandFg">
+                <Text fontSize={16} fontWeight="800" color="brandFg">
                   Sobre
                 </Text>
                 <Text fontSize={16} fontWeight="500" color="brandMuted">
                   Embarque Livre · versão {VERSAO}
                 </Text>
               </YStack>
-              <Ionicons name="information-circle-outline" size={28} color={chevron} />
+              <Ionicons name="information-circle-outline" size={24} color={chevron} />
             </XStack>
           </YStack>
         </AppCard>
@@ -186,10 +186,10 @@ export default function ConfiguracoesScreen() {
             onPress={() => void onLogoutPress()}
             accessibilityRole="button"
             accessibilityLabel="Sair da conta">
-            <Text fontSize={18} fontWeight="800" color="brandError">
+            <Text fontSize={16} fontWeight="800" color="brandError">
               Sair
             </Text>
-            <Ionicons name="log-out-outline" size={26} color={isDark ? '#FF8A80' : '#8B1515'} />
+            <Ionicons name="log-out-outline" size={22} color={isDark ? '#FF8A80' : '#8B1515'} />
           </XStack>
         </AppCard>
 
@@ -210,10 +210,10 @@ export default function ConfiguracoesScreen() {
                 accessibilityRole="button"
                 accessibilityLabel="Excluir minha conta"
                 accessibilityHint="Abre a tela que explica o que será apagado e pede confirmação">
-                <Text fontSize={18} fontWeight="800" color="brandError">
+                <Text fontSize={16} fontWeight="800" color="brandError">
                   Excluir minha conta
                 </Text>
-                <Ionicons name="trash-outline" size={26} color={isDark ? '#FF8A80' : '#8B1515'} />
+                <Ionicons name="trash-outline" size={22} color={isDark ? '#FF8A80' : '#8B1515'} />
               </XStack>
             </AppCard>
           </YStack>
@@ -265,12 +265,12 @@ function MenuLink({
       accessibilityRole="button"
       accessibilityLabel={label}>
       <XStack items="center" gap={12} flex={1}>
-        <Ionicons name={icon} size={24} color={chevron} />
-        <Text fontSize={18} fontWeight="800" color="brandFg">
+        <Ionicons name={icon} size={22} color={chevron} />
+        <Text fontSize={16} fontWeight="800" color="brandFg">
           {label}
         </Text>
       </XStack>
-      <Ionicons name="chevron-forward" size={22} color={chevron} />
+      <Ionicons name="chevron-forward" size={20} color={chevron} />
     </XStack>
   )
 }

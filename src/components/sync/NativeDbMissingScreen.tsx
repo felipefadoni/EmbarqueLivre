@@ -42,10 +42,10 @@ export function NativeDbMissingScreen({ reason, detail }: { reason: Reason; deta
   return (
     <YStack flex={1} bg="appBg">
       <ScrollView contentContainerStyle={{ paddingTop: insets.top + 32, paddingBottom: insets.bottom + 32, paddingHorizontal: 24, gap: 16 }}>
-        <Text fontSize={26} fontWeight="800" color="brandFg" accessibilityRole="header">
+        <Text fontSize={22} fontWeight="800" color="brandFg" accessibilityRole="header">
           {TITLE[reason]}
         </Text>
-        <Text fontSize={18} lineHeight="26px" fontWeight="600" color="brandFg">
+        <Text fontSize={16} lineHeight="26px" fontWeight="600" color="brandFg">
           {MESSAGE[reason]}
         </Text>
         {reason === 'web' ? null : (

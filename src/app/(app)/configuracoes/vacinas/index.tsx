@@ -84,7 +84,7 @@ function VacinasAdminList({ showAuthor, showAuthorEmail }: { showAuthor: boolean
               onPress={() => router.push('/configuracoes/vacinas/nova')}
               accessibilityRole="button"
               accessibilityLabel="Nova vacina">
-              <Text fontSize={18} fontWeight="800" color="brandPrimaryFg">
+              <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
                 Nova vacina
               </Text>
             </XStack>
@@ -181,7 +181,7 @@ function VacinasList() {
           onPress={() => router.push('/configuracoes/vacinas/nova')}
           accessibilityRole="button"
           accessibilityLabel="Nova vacina">
-          <Text fontSize={18} fontWeight="800" color="brandPrimaryFg">
+          <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
             Nova vacina
           </Text>
         </XStack>
@@ -243,7 +243,7 @@ function VaccineRow({
         accessibilityRole={canOpen ? 'button' : undefined}
         accessibilityLabel={canOpen ? `${canEdit ? 'Editar' : 'Ver'} vacina ${vaccine.name}` : vaccine.name}>
         <YStack flex={1} gap={4}>
-          <Text fontSize={18} fontWeight="800" color="brandFg">
+          <Text fontSize={16} fontWeight="800" color="brandFg">
             {vaccine.name}
           </Text>
           <Text fontSize={16} fontWeight="500" color="brandMuted">
@@ -251,7 +251,7 @@ function VaccineRow({
           </Text>
           {author !== undefined ? <AuthorLines author={author} /> : null}
         </YStack>
-        {canOpen ? <Ionicons name="chevron-forward" size={22} color={chevron} /> : null}
+        {canOpen ? <Ionicons name="chevron-forward" size={20} color={chevron} /> : null}
       </XStack>
     </AppCard>
   )

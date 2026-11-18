@@ -206,11 +206,11 @@ export function AnimalEditor({ animalId, pendenciaId }: AnimalEditorProps) {
   if (loadError) {
     return (
       <YStack flex={1} bg="appBg" items="center" justify="center" gap={16} px={24}>
-        <Text fontSize={18} fontWeight="800" color="brandFg" text="center">
+        <Text fontSize={16} fontWeight="800" color="brandFg" text="center">
           {loadError}
         </Text>
         <Text
-          fontSize={18}
+          fontSize={16}
           fontWeight="800"
           color="brandFg"
           textDecorationLine="underline"

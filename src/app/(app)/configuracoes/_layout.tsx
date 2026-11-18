@@ -1,6 +1,15 @@
 import { Stack } from 'expo-router'
 import { useColorScheme } from 'react-native'
 
+/**
+ * Âncora da stack do Menu: telas abertas de outra aba (Dashboard, indicador de sync) com
+ * `withAnchor` (pushWithAnchor) ficam com o index embaixo, então o voltar (header ou botão
+ * físico do Android) leva ao index do Menu. Deep links também ganham o index embaixo.
+ */
+export const unstable_settings = {
+  anchor: 'index',
+}
+
 export default function ConfiguracoesLayout() {
   const isDark = useColorScheme() === 'dark'
   const backgroundColor = isDark ? '#152821' : '#EEF6EF'
@@ -13,7 +22,7 @@ export default function ConfiguracoesLayout() {
         headerShadowVisible: false,
         headerStyle: { backgroundColor },
         headerTintColor: color,
-        headerTitleStyle: { fontWeight: '800', fontSize: 20, color },
+        headerTitleStyle: { fontWeight: '800', fontSize: 18, color },
         headerBackTitle: 'Voltar',
         contentStyle: { backgroundColor },
         animation: 'slide_from_right',

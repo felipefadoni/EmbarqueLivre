@@ -70,7 +70,7 @@ export function AnimalPicker({
         <YStack flex={1} py={8} gap={2}>
           {selected ? (
             <>
-              <Text fontSize={18} fontWeight="800" color="brandFg">
+              <Text fontSize={16} fontWeight="800" color="brandFg">
                 {selected.code}
               </Text>
               {details ? (
@@ -80,12 +80,12 @@ export function AnimalPicker({
               ) : null}
             </>
           ) : (
-            <Text fontSize={18} fontWeight="600" color="brandMuted">
+            <Text fontSize={16} fontWeight="600" color="brandMuted">
               {placeholder}
             </Text>
           )}
         </YStack>
-        {disabled ? null : <Ionicons name="chevron-down" size={22} color={isDark ? '#A8B8AF' : '#3A5247'} />}
+        {disabled ? null : <Ionicons name="chevron-down" size={20} color={isDark ? '#A8B8AF' : '#3A5247'} />}
       </XStack>
       {error ? (
         <Text fontSize={15} lineHeight="20px" color="brandError" fontWeight="700" accessibilityLiveRegion="polite">
@@ -106,12 +106,12 @@ export function AnimalPicker({
               borderTopRightRadius: 24,
               paddingBottom: Math.max(insets.bottom, 16),
             }}>
-            <XStack items="center" justify="space-between" minH={56}>
-              <Text fontSize={22} fontWeight="800" color="brandFg" flex={1}>
+            <XStack items="center" justify="space-between" minH={48}>
+              <Text fontSize={19} fontWeight="800" color="brandFg" flex={1}>
                 {label}
               </Text>
               <XStack
-                minH={56}
+                minH={48}
                 px={12}
                 items="center"
                 onPress={() => setOpen(false)}
@@ -173,11 +173,11 @@ function AnimalPickerList({
         borderWidth={2}
         rounded={16}
         px="3">
-        <Ionicons name="search" size={20} color={isDark ? '#A8B8AF' : '#3A5247'} />
+        <Ionicons name="search" size={18} color={isDark ? '#A8B8AF' : '#3A5247'} />
         <Input
           flex={1}
           h="100%"
-          fontSize={18}
+          fontSize={16}
           fontWeight="600"
           color="brandFg"
           bg="transparent"
@@ -237,7 +237,7 @@ function AnimalPickerList({
               accessibilityState={{ selected: active }}
               accessibilityLabel={`${item.code}${details ? `, ${details}` : ''}`}>
               <YStack flex={1} gap={2}>
-                <Text fontSize={18} fontWeight={active ? '800' : '700'} color="brandFg">
+                <Text fontSize={16} fontWeight={active ? '800' : '700'} color="brandFg">
                   {item.code}
                 </Text>
                 {details ? (
@@ -246,7 +246,7 @@ function AnimalPickerList({
                   </Text>
                 ) : null}
               </YStack>
-              {active ? <Ionicons name="checkmark" size={22} color={isDark ? '#99C2AB' : '#2B3D34'} /> : null}
+              {active ? <Ionicons name="checkmark" size={20} color={isDark ? '#99C2AB' : '#2B3D34'} /> : null}
             </XStack>
           )
         }}

@@ -56,10 +56,10 @@ export function SelectField({
         accessibilityLabel={label}
         accessibilityHint={selected?.label ?? placeholder}
         accessibilityState={{ disabled }}>
-        <Text fontSize={18} fontWeight="600" color={selected ? 'brandFg' : 'brandMuted'} flex={1}>
+        <Text fontSize={16} fontWeight="600" color={selected ? 'brandFg' : 'brandMuted'} flex={1}>
           {selected?.label ?? placeholder}
         </Text>
-        <Ionicons name="chevron-down" size={22} color={isDark ? '#A8B8AF' : '#3A5247'} />
+        <Ionicons name="chevron-down" size={20} color={isDark ? '#A8B8AF' : '#3A5247'} />
       </XStack>
       {error ? (
         <Text fontSize={15} lineHeight="20px" color="brandError" fontWeight="700" accessibilityLiveRegion="polite">
@@ -75,15 +75,15 @@ export function SelectField({
             <YStack
               bg="cardBg"
               rounded={24}
-              p={20}
+              p={16}
               gap={12}
               style={{ borderBottomLeftRadius: 0, borderBottomRightRadius: 0, paddingBottom: Math.max(insets.bottom, 16) }}>
-              <XStack items="center" justify="space-between" minH={56}>
-                <Text fontSize={22} fontWeight="800" color="brandFg">
+              <XStack items="center" justify="space-between" minH={48}>
+                <Text fontSize={19} fontWeight="800" color="brandFg">
                   {label}
                 </Text>
                 <XStack
-                  minH={56}
+                  minH={48}
                   px={12}
                   items="center"
                   onPress={() => setOpen(false)}
@@ -113,10 +113,10 @@ export function SelectField({
                       accessibilityRole="button"
                       accessibilityState={{ selected: active }}
                       accessibilityLabel={option.label}>
-                      <Text fontSize={18} fontWeight={active ? '800' : '600'} color="brandFg" flex={1}>
+                      <Text fontSize={16} fontWeight={active ? '800' : '600'} color="brandFg" flex={1}>
                         {option.label}
                       </Text>
-                      {active ? <Ionicons name="checkmark" size={22} color={isDark ? '#99C2AB' : '#2B3D34'} /> : null}
+                      {active ? <Ionicons name="checkmark" size={20} color={isDark ? '#99C2AB' : '#2B3D34'} /> : null}
                     </XStack>
                   )
                 })}

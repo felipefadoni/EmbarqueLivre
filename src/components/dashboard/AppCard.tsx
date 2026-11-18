@@ -14,8 +14,8 @@ export function AppCard({ children, padded = true }: AppCardProps) {
   return (
     <YStack
       bg="cardBg"
-      rounded={24}
-      p={padded ? 20 : 0}
+      rounded={20}
+      p={padded ? 16 : 0}
       w="100%"
       style={{
         shadowColor: '#1C3C31',

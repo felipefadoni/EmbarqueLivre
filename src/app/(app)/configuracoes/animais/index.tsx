@@ -138,7 +138,7 @@ export default function AnimaisListScreen() {
             onPress={() => router.push('/configuracoes/animais/nova')}
             accessibilityRole="button"
             accessibilityLabel="Novo animal">
-            <Text fontSize={18} fontWeight="800" color="brandPrimaryFg">
+            <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
               Novo animal
             </Text>
           </XStack>
@@ -255,7 +255,7 @@ function AnimalRow({
         accessibilityRole="button"
         accessibilityLabel={`Editar animal ${animal.code}`}>
         <YStack flex={1} gap={4}>
-          <Text fontSize={18} fontWeight="800" color="brandFg">
+          <Text fontSize={16} fontWeight="800" color="brandFg">
             {animal.code}
           </Text>
           <Text fontSize={16} fontWeight="500" color="brandMuted">
@@ -276,7 +276,7 @@ function AnimalRow({
             </XStack>
           ) : null}
         </YStack>
-        <Ionicons name="chevron-forward" size={22} color={chevron} />
+        <Ionicons name="chevron-forward" size={20} color={chevron} />
       </XStack>
     </AppCard>
   )

@@ -45,7 +45,7 @@ export function FilterToggle({ open, activeCount, onPress }: FilterToggleProps) 
       accessibilityRole="button"
       accessibilityState={{ expanded: open }}
       accessibilityLabel={`${open ? 'Fechar' : 'Abrir'} filtros${activeCount > 0 ? `, ${activeCount} ${activeCount === 1 ? 'filtro ativo' : 'filtros ativos'}` : ''}`}>
-      <Ionicons name={open ? 'funnel' : 'funnel-outline'} size={22} color={color} />
+      <Ionicons name={open ? 'funnel' : 'funnel-outline'} size={20} color={color} />
       {showBadge ? (
         <YStack
           position="absolute"

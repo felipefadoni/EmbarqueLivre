@@ -1,9 +1,9 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
-import { router } from 'expo-router'
 import { useSyncExternalStore } from 'react'
 import { Alert, useColorScheme } from 'react-native'
 import { Spinner, Text, XStack, YStack } from 'tamagui'
 
+import { pushWithAnchor } from '@/components/navigation/pushWithAnchor'
 import { connector } from '@/sync'
 import { useSyncInfo, type SyncIndicatorState } from '@/sync/hooks'
 import { describeSdkUploadError, useUploadPump } from '@/sync/useUploadPump'
@@ -73,7 +73,7 @@ export function SyncStatusIndicator({ compact = false }: { compact?: boolean }) 
         {info.state === 'syncing' || info.state === 'connecting' || pump.running ? (
           <Spinner size="small" color="brandPrimary" />
         ) : (
-          <Ionicons name={icon} size={20} color={color} />
+          <Ionicons name={icon} size={18} color={color} />
         )}
         <Text fontSize={16} fontWeight="800" color="brandFg" flex={1}>
           {summary}
@@ -86,7 +86,7 @@ export function SyncStatusIndicator({ compact = false }: { compact?: boolean }) 
       )}
       {mismatchMessage ? (
         <XStack gap={6} items="flex-start" accessibilityLiveRegion="polite">
-          <Ionicons name="pause-circle-outline" size={18} color={isDark ? '#F0C36B' : '#8A5A00'} style={{ marginTop: 1 }} />
+          <Ionicons name="pause-circle-outline" size={16} color={isDark ? '#F0C36B' : '#8A5A00'} style={{ marginTop: 1 }} />
           <Text flex={1} fontSize={14} fontWeight="700" color="brandFg" numberOfLines={compact ? 3 : undefined}>
             {mismatchMessage}
           </Text>
@@ -94,7 +94,7 @@ export function SyncStatusIndicator({ compact = false }: { compact?: boolean }) 
       ) : null}
       {problem ? (
         <XStack gap={6} items="flex-start" accessibilityLiveRegion="polite">
-          <Ionicons name="warning-outline" size={18} color={isDark ? '#FF8A80' : '#B3261E'} style={{ marginTop: 1 }} />
+          <Ionicons name="warning-outline" size={16} color={isDark ? '#FF8A80' : '#B3261E'} style={{ marginTop: 1 }} />
           <Text flex={1} fontSize={14} fontWeight="700" color="brandError" numberOfLines={compact ? 2 : undefined}>
             Envio falhou: {problem.message}
           </Text>
@@ -126,7 +126,7 @@ export function SyncStatusIndicator({ compact = false }: { compact?: boolean }) 
           accessibilityRole="button"
           accessibilityState={{ busy: pump.running, disabled: pump.running }}
           accessibilityLabel="Enviar agora as alterações aguardando envio">
-          {pump.running ? <Spinner size="small" color="brandPrimary" /> : <Ionicons name="cloud-upload-outline" size={20} color={isDark ? '#E8F1EC' : '#1D2B24'} />}
+          {pump.running ? <Spinner size="small" color="brandPrimary" /> : <Ionicons name="cloud-upload-outline" size={18} color={isDark ? '#E8F1EC' : '#1D2B24'} />}
           <Text fontSize={16} fontWeight="800" color="brandFg">
             {pump.running ? 'Enviando…' : 'Enviar agora'}
           </Text>
@@ -142,10 +142,10 @@ export function SyncStatusIndicator({ compact = false }: { compact?: boolean }) 
           minH={44}
           items="center"
           gap={8}
-          onPress={() => router.push('/configuracoes/pendencias')}
+          onPress={() => pushWithAnchor('/configuracoes/pendencias')}
           accessibilityRole="button"
           accessibilityLabel={`${info.rejectionCount} pendências recusadas pelo servidor. Abrir pendências`}>
-          <Ionicons name="alert-circle" size={20} color={isDark ? '#FF8A80' : '#B3261E'} />
+          <Ionicons name="alert-circle" size={18} color={isDark ? '#FF8A80' : '#B3261E'} />
           <Text fontSize={15} fontWeight="800" color="brandError" textDecorationLine="underline">
             {info.rejectionCount === 1 ? '1 pendência para revisar' : `${info.rejectionCount} pendências para revisar`}
           </Text>
@@ -156,10 +156,10 @@ export function SyncStatusIndicator({ compact = false }: { compact?: boolean }) 
           minH={44}
           items="center"
           gap={8}
-          onPress={() => router.push('/configuracoes/conflitos')}
+          onPress={() => pushWithAnchor('/configuracoes/conflitos')}
           accessibilityRole="button"
           accessibilityLabel={`${info.conflictCount} cadastros salvos só neste aparelho. Abrir para enviar`}>
-          <Ionicons name="phone-portrait-outline" size={20} color={isDark ? '#99C2AB' : '#2B3D34'} />
+          <Ionicons name="phone-portrait-outline" size={18} color={isDark ? '#99C2AB' : '#2B3D34'} />
           <Text flex={1} fontSize={15} fontWeight="800" color="brandFg" textDecorationLine="underline">
             {info.conflictCount === 1
               ? '1 cadastro salvo só neste aparelho: toque para enviar'

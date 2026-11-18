@@ -152,7 +152,7 @@ function DatePickerBody({
 
   return (
     <>
-      <Text fontSize={22} fontWeight="800" color="brandFg">
+      <Text fontSize={19} fontWeight="800" color="brandFg">
         {title}
       </Text>
       <Text fontSize={16} fontWeight="600" color="brandMuted">
@@ -166,12 +166,12 @@ function DatePickerBody({
           justify="center"
           rounded={16}
           opacity={canGoPrev ? 1 : 0.35}
-          style={{ width: 56, height: 56 }}
+          style={{ width: 48, height: 48 }}
           onPress={canGoPrev ? () => goMonth(-1) : undefined}
           accessibilityRole="button"
           accessibilityState={{ disabled: !canGoPrev }}
           accessibilityLabel="Mês anterior">
-          <Ionicons name="chevron-back" size={24} color={mutedIcon} />
+          <Ionicons name="chevron-back" size={22} color={mutedIcon} />
         </XStack>
 
         <XStack flex={1} items="center" justify="center" gap={8}>
@@ -185,7 +185,7 @@ function DatePickerBody({
             onPress={() => setView((current) => (current === 'month' ? 'day' : 'month'))}
             accessibilityRole="button"
             accessibilityLabel="Escolher mês">
-            <Text fontSize={18} fontWeight="800" color="brandFg">
+            <Text fontSize={16} fontWeight="800" color="brandFg">
               {MONTH_NAMES_PT_BR[cursor.month - 1]}
             </Text>
           </XStack>
@@ -199,7 +199,7 @@ function DatePickerBody({
             onPress={() => setView((current) => (current === 'year' ? 'day' : 'year'))}
             accessibilityRole="button"
             accessibilityLabel="Escolher ano">
-            <Text fontSize={18} fontWeight="800" color="brandFg">
+            <Text fontSize={16} fontWeight="800" color="brandFg">
               {cursor.year}
             </Text>
           </XStack>
@@ -211,12 +211,12 @@ function DatePickerBody({
           justify="center"
           rounded={16}
           opacity={canGoNext ? 1 : 0.35}
-          style={{ width: 56, height: 56 }}
+          style={{ width: 48, height: 48 }}
           onPress={canGoNext ? () => goMonth(1) : undefined}
           accessibilityRole="button"
           accessibilityState={{ disabled: !canGoNext }}
           accessibilityLabel="Próximo mês">
-          <Ionicons name="chevron-forward" size={24} color={mutedIcon} />
+          <Ionicons name="chevron-forward" size={22} color={mutedIcon} />
         </XStack>
       </XStack>
 
@@ -240,7 +240,7 @@ function DatePickerBody({
           onPress={onCancel}
           accessibilityRole="button"
           accessibilityLabel="Cancelar">
-          <Text fontSize={18} fontWeight="800" color="brandFg">
+          <Text fontSize={16} fontWeight="800" color="brandFg">
             Cancelar
           </Text>
         </XStack>
@@ -255,7 +255,7 @@ function DatePickerBody({
           onPress={() => onConfirm(toIsoDateLocal(draft))}
           accessibilityRole="button"
           accessibilityLabel="Confirmar data">
-          <Text fontSize={18} fontWeight="800" color="brandPrimaryFg">
+          <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
             Confirmar
           </Text>
         </XStack>
@@ -391,7 +391,7 @@ function MonthPicker({
                 accessibilityRole="button"
                 accessibilityState={{ disabled, selected }}
                 accessibilityLabel={MONTH_NAMES_PT_BR[month - 1]}>
-                <Text fontSize={17} fontWeight={selected ? '800' : '700'} color="brandFg">
+                <Text fontSize={16} fontWeight={selected ? '800' : '700'} color="brandFg">
                   {MONTH_SHORT_PT_BR[month - 1]}
                 </Text>
               </XStack>
@@ -455,7 +455,7 @@ function YearPicker({
                   accessibilityRole="button"
                   accessibilityState={{ disabled, selected }}
                   accessibilityLabel={String(year)}>
-                  <Text fontSize={17} fontWeight={selected ? '800' : '700'} color="brandFg">
+                  <Text fontSize={16} fontWeight={selected ? '800' : '700'} color="brandFg">
                     {year}
                   </Text>
                 </XStack>

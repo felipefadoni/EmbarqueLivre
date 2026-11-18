@@ -26,7 +26,7 @@ export function ListStatus({ loading, error, empty, emptyTitle, emptyMessage, on
   if (error) {
     return (
       <YStack flex={1} items="center" justify="center" py={48} gap={16} px={12}>
-        <Text fontSize={18} fontWeight="800" color="brandFg" text="center">
+        <Text fontSize={16} fontWeight="800" color="brandFg" text="center">
           Não foi possível carregar
         </Text>
         <Text fontSize={16} lineHeight="24px" fontWeight="500" color="brandMuted" text="center">
@@ -43,7 +43,7 @@ export function ListStatus({ loading, error, empty, emptyTitle, emptyMessage, on
           onPress={onRetry}
           accessibilityRole="button"
           accessibilityLabel="Tentar novamente">
-          <Text fontSize={18} fontWeight="800" color="brandPrimaryFg">
+          <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
             Tentar novamente
           </Text>
         </XStack>
@@ -54,7 +54,7 @@ export function ListStatus({ loading, error, empty, emptyTitle, emptyMessage, on
   if (empty) {
     return (
       <YStack flex={1} items="center" justify="center" py={48} gap={8} px={12}>
-        <Text fontSize={20} fontWeight="800" color="brandFg" text="center">
+        <Text fontSize={18} fontWeight="800" color="brandFg" text="center">
           {emptyTitle}
         </Text>
         <Text fontSize={16} lineHeight="24px" fontWeight="500" color="brandMuted" text="center">
@@ -70,7 +70,7 @@ export function ListStatus({ loading, error, empty, emptyTitle, emptyMessage, on
 
 export function ListLoadingFooter() {
   return (
-    <YStack items="center" justify="center" py={16} minH={56}>
+    <YStack items="center" justify="center" py={16} minH={48}>
       <Spinner color="brandPrimary" />
     </YStack>
   )

@@ -14,7 +14,7 @@ export default function EmbarquesLayout() {
         headerShadowVisible: false,
         headerStyle: { backgroundColor },
         headerTintColor: color,
-        headerTitleStyle: { fontWeight: '800', fontSize: 20, color },
+        headerTitleStyle: { fontWeight: '800', fontSize: 18, color },
         headerBackTitle: 'Voltar',
         contentStyle: { backgroundColor },
         animation: 'slide_from_right',

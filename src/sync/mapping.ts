@@ -140,7 +140,10 @@ export const SYNC_TABLES = {
       animalId: col(SHIPMENTS_CONTRACT.linkColumns.animalId),
       /** Peso em kg (1–2000, 1 casa). Obrigatório em vínculo novo; null só em vínculo antigo. */
       weightKg: col(SHIPMENT_FLOW_CONTRACT.linkColumns.weightKg, 'real'),
-      /** Foto já enviada por POST /shipments/:id/photos (id gerado no app). Obrigatória em vínculo novo. */
+      /**
+       * Foto já enviada por POST /shipments/:id/photos (id gerado no app). Opcional (§26): null = sem foto. No sync,
+       * null num vínculo existente NÃO remove a foto no servidor (o upload faz o REST DELETE …/photo antes).
+       */
       photoId: col(SHIPMENT_FLOW_CONTRACT.linkColumns.photoId),
       /** Do servidor (copiados do registro da foto); nunca sobem. */
       photoContentType: col(SHIPMENT_FLOW_CONTRACT.linkColumns.photoContentType),

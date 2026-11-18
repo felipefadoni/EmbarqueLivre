@@ -120,7 +120,7 @@ export default function ExcluirContaScreen() {
         {state.phase === 'loading' ? (
           <XStack gap="3" items="center" minH={TOQUE_PRINCIPAL} accessibilityRole="progressbar" accessibilityLabel="Carregando o que será excluído">
             <Spinner color="brandFg" />
-            <Text flex={1} fontSize={18} lineHeight="26px" fontWeight="600" color="brandFg">
+            <Text flex={1} fontSize={16} lineHeight="26px" fontWeight="600" color="brandFg">
               Carregando o que será excluído…
             </Text>
           </XStack>
@@ -132,7 +132,7 @@ export default function ExcluirContaScreen() {
               h={TOQUE_PRINCIPAL}
               bg="brandPrimary"
               color="brandPrimaryFg"
-              fontSize={18}
+              fontSize={16}
               fontWeight="800"
               rounded={16}
               borderWidth={0}
@@ -158,7 +158,7 @@ export default function ExcluirContaScreen() {
               h={TOQUE_PRINCIPAL}
               bg="brandPrimary"
               color="brandPrimaryFg"
-              fontSize={18}
+              fontSize={16}
               fontWeight="800"
               rounded={16}
               borderWidth={0}
@@ -174,13 +174,13 @@ export default function ExcluirContaScreen() {
 
         {state.phase === 'deleted' ? (
           <YStack gap="3" items="center" py="6" accessibilityLiveRegion="assertive" accessibilityRole="alert">
-            <Ionicons name="checkmark-circle" size={64} color={isDark ? '#99C2AB' : '#2B3D34'} />
-            <Text fontSize={24} fontWeight="800" color="brandFg" text="center">
+            <Ionicons name="checkmark-circle" size={56} color={isDark ? '#99C2AB' : '#2B3D34'} />
+            <Text fontSize={21} fontWeight="800" color="brandFg" text="center">
               Conta excluída
             </Text>
             <XStack gap="3" items="center">
               <Spinner color="brandFg" />
-              <Text fontSize={18} lineHeight="26px" fontWeight="600" color="brandFg">
+              <Text fontSize={16} lineHeight="26px" fontWeight="600" color="brandFg">
                 Apagando os dados deste aparelho…
               </Text>
             </XStack>
@@ -241,7 +241,7 @@ export default function ExcluirContaScreen() {
               minH={TOQUE_PRINCIPAL}
               bg={red}
               color={onRed}
-              fontSize={19}
+              fontSize={17}
               fontWeight="800"
               rounded={16}
               borderWidth={0}
@@ -278,13 +278,13 @@ function WarningCard({ title, paragraphs, red }: { title: string; paragraphs: st
   return (
     <YStack gap="3" p={18} rounded={18} borderWidth={3} borderColor={red} bg="brandSurface" accessibilityRole="alert">
       <XStack gap="3" items="center">
-        <Ionicons name="warning" size={30} color={red} />
-        <Text flex={1} fontSize={22} lineHeight="28px" fontWeight="800" color={red}>
+        <Ionicons name="warning" size={26} color={red} />
+        <Text flex={1} fontSize={19} lineHeight="28px" fontWeight="800" color={red}>
           {title}
         </Text>
       </XStack>
       {paragraphs.map((text) => (
-        <Text key={text} fontSize={18} lineHeight="26px" fontWeight="600" color="brandFg">
+        <Text key={text} fontSize={16} lineHeight="26px" fontWeight="600" color="brandFg">
           {text}
         </Text>
       ))}
@@ -296,7 +296,7 @@ function UnsentCard({ unsent }: { unsent: UnsentSummary | null }) {
   const warning = unsent ? unsentChangesWarning(unsent) : null
   return (
     <YStack gap="3" p={16} rounded={16} bg="brandSurface" borderWidth={2} borderColor="brandBorder">
-      <Text fontSize={17} lineHeight="24px" fontWeight="700" color="brandFg">
+      <Text fontSize={16} lineHeight="24px" fontWeight="700" color="brandFg">
         {warning ?? 'Alterações deste aparelho que ainda não foram sincronizadas serão perdidas. Neste momento não há nenhuma pendente.'}
       </Text>
       {unsent && unsent.rejections > 0 ? (
@@ -304,7 +304,7 @@ function UnsentCard({ unsent }: { unsent: UnsentSummary | null }) {
           h={TOQUE_MINIMO}
           bg="brandBg"
           color="brandFg"
-          fontSize={17}
+          fontSize={16}
           fontWeight="800"
           rounded={14}
           borderWidth={2}
@@ -359,9 +359,9 @@ function ConfirmCheckbox({
         bg={checked ? color : 'brandBg'}
         items="center"
         justify="center">
-        {checked ? <Ionicons name="checkmark" size={30} color="#FFFFFF" /> : null}
+        {checked ? <Ionicons name="checkmark" size={26} color="#FFFFFF" /> : null}
       </YStack>
-      <Text flex={1} fontSize={19} lineHeight="26px" fontWeight="700" color="brandFg">
+      <Text flex={1} fontSize={17} lineHeight="26px" fontWeight="700" color="brandFg">
         {CONFIRM_LABEL}
       </Text>
     </XStack>
@@ -382,8 +382,8 @@ function MessageCard({
   return (
     <YStack gap="4" p={18} rounded={18} bg="brandSurface" borderWidth={2} borderColor="brandBorder" accessibilityRole="alert" accessibilityLiveRegion="polite">
       <XStack gap="3" items="flex-start">
-        <Ionicons name={icon} size={28} color={iconColor} />
-        <Text flex={1} fontSize={18} lineHeight="26px" fontWeight="700" color="brandFg">
+        <Ionicons name={icon} size={24} color={iconColor} />
+        <Text flex={1} fontSize={16} lineHeight="26px" fontWeight="700" color="brandFg">
           {message}
         </Text>
       </XStack>
@@ -398,7 +398,7 @@ function CancelButton({ onPress, label, disabled = false }: { onPress: () => voi
       h={TOQUE_PRINCIPAL}
       bg="transparent"
       color="brandFg"
-      fontSize={18}
+      fontSize={16}
       fontWeight="800"
       rounded={16}
       borderWidth={2}

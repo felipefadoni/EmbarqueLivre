@@ -86,9 +86,9 @@ const themes = Object.fromEntries(
   ]),
 ) as CurralThemes
 
-/** Alvo de toque mínimo para uso com luva: $14 = 56 px. Ações principais: $16 = 64 px. */
-export const TOQUE_MINIMO = '14' as const
-export const TOQUE_PRINCIPAL = '16' as const
+/** Alvo de toque mínimo (público 50+, uso com luva): $12 = 48 px. Ações principais: $14 = 56 px. */
+export const TOQUE_MINIMO = '12' as const
+export const TOQUE_PRINCIPAL = '14' as const
 
 export const tamaguiConfig = createTamagui({
   ...defaultConfig,

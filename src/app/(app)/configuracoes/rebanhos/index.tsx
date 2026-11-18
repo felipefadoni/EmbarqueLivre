@@ -100,7 +100,7 @@ function RebanhosList({ showAuthor, showAuthorEmail }: { showAuthor: boolean; sh
             onPress={() => router.push('/configuracoes/rebanhos/nova')}
             accessibilityRole="button"
             accessibilityLabel="Novo rebanho">
-            <Text fontSize={18} fontWeight="800" color="brandPrimaryFg">
+            <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
               Novo rebanho
             </Text>
           </XStack>
@@ -122,11 +122,11 @@ function RebanhosList({ showAuthor, showAuthorEmail }: { showAuthor: boolean; sh
             rounded={16}
             px="3"
             gap={8}>
-            <Ionicons name="search" size={20} color={iconColor} />
+            <Ionicons name="search" size={18} color={iconColor} />
             <Input
               flex={1}
               h="100%"
-              fontSize={18}
+              fontSize={16}
               fontWeight="600"
               color="brandFg"
               bg="transparent"
@@ -149,7 +149,7 @@ function RebanhosList({ showAuthor, showAuthorEmail }: { showAuthor: boolean; sh
                 onPress={() => setSearchInput('')}
                 accessibilityRole="button"
                 accessibilityLabel="Limpar busca">
-                <Ionicons name="close-circle" size={22} color={iconColor} />
+                <Ionicons name="close-circle" size={20} color={iconColor} />
               </XStack>
             ) : null}
           </XStack>
@@ -199,7 +199,7 @@ function RebanhosList({ showAuthor, showAuthorEmail }: { showAuthor: boolean; sh
               accessibilityRole="button"
               accessibilityLabel={`Editar rebanho ${item.name}`}>
               <YStack flex={1} gap={4}>
-                <Text fontSize={18} fontWeight="800" color="brandFg">
+                <Text fontSize={16} fontWeight="800" color="brandFg">
                   {item.name}
                 </Text>
                 <Text fontSize={16} fontWeight="500" color="brandMuted">
@@ -212,7 +212,7 @@ function RebanhosList({ showAuthor, showAuthorEmail }: { showAuthor: boolean; sh
                 ) : null}
                 {showAuthor ? <AuthorLines author={{ name: item.createdByName, email: item.createdByEmail }} /> : null}
               </YStack>
-              <Ionicons name="chevron-forward" size={22} color={chevron} />
+              <Ionicons name="chevron-forward" size={20} color={chevron} />
             </XStack>
           </AppCard>
         )}

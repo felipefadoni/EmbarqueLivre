@@ -37,7 +37,7 @@ export function AuthScaffold({ children, title, subtitle, logoSize = 120 }: Auth
             <YStack items="center" gap="3">
               <Logo size={logoSize} />
               <Text
-                fontSize={28}
+                fontSize={24}
                 fontWeight="800"
                 color="brandFg"
                 text="center"
@@ -46,7 +46,7 @@ export function AuthScaffold({ children, title, subtitle, logoSize = 120 }: Auth
                 {title}
               </Text>
               {subtitle ? (
-                <Text fontSize={17} lineHeight="24px" color="brandMuted" text="center" fontWeight="500">
+                <Text fontSize={16} lineHeight="24px" color="brandMuted" text="center" fontWeight="500">
                   {subtitle}
                 </Text>
               ) : null}

@@ -1,5 +1,4 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
-import { router } from 'expo-router'
 import { useState } from 'react'
 import { Pressable, ScrollView, useColorScheme } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
@@ -13,6 +12,7 @@ import { ProgressRing } from '@/components/dashboard/ProgressRing'
 import { ShortListCard, ShortListRow } from '@/components/dashboard/ShortListCard'
 import { StatusCard } from '@/components/dashboard/StatusCard'
 import { WeekChart } from '@/components/dashboard/WeekChart'
+import { pushWithAnchor } from '@/components/navigation/pushWithAnchor'
 import { SyncStatusIndicator } from '@/components/sync/SyncStatusIndicator'
 import { useAuth } from '@/features/auth/AuthProvider'
 import { formatDatePtBr, formatDayMonthPtBr } from '@/features/cadastros/dates'
@@ -67,9 +67,9 @@ export default function DashboardScreen() {
         contentContainerStyle={{ paddingTop: insets.top + 8, paddingHorizontal: 20, paddingBottom: 28, gap: 16 }}
         showsVerticalScrollIndicator={false}>
         {/* 1. Cabeçalho */}
-        <XStack items="center" gap={12} minH={56}>
-          <YStack w={56} h={56} rounded={28} bg="brandSage" items="center" justify="center" accessibilityLabel={`Avatar de ${user?.name ?? 'produtor'}`}>
-            <Text fontSize={18} fontWeight="800" color="brandInk">
+        <XStack items="center" gap={12} minH={48}>
+          <YStack w={48} h={48} rounded={24} bg="brandSage" items="center" justify="center" accessibilityLabel={`Avatar de ${user?.name ?? 'produtor'}`}>
+            <Text fontSize={16} fontWeight="800" color="brandInk">
               {iniciaisDoNome(user?.name)}
             </Text>
           </YStack>
@@ -77,7 +77,7 @@ export default function DashboardScreen() {
             <Text fontSize={15} fontWeight="600" color="brandMuted">
               {saudacaoAgora()},
             </Text>
-            <Text fontSize={26} fontWeight="800" color="brandFg" lineHeight="32px">
+            <Text fontSize={22} fontWeight="800" color="brandFg" lineHeight="32px">
               {primeiroNome(user?.name)}
             </Text>
           </YStack>
@@ -94,9 +94,9 @@ export default function DashboardScreen() {
 
         {firstSync ? (
           <AppCard>
-            <XStack items="center" gap={12} minH={64}>
+            <XStack items="center" gap={12} minH={56}>
               <Spinner color="brandPrimary" />
-              <Text fontSize={17} fontWeight="700" color="brandFg" flex={1}>
+              <Text fontSize={16} fontWeight="700" color="brandFg" flex={1}>
                 Baixando seus dados…
               </Text>
             </XStack>
@@ -107,14 +107,14 @@ export default function DashboardScreen() {
           <EmptyCta
             title="Comece cadastrando uma fazenda"
             message={canManageFarmsNow ? 'Depois cadastre os animais e lance as vacinas.' : 'Peça ao responsável da conta para cadastrar as fazendas.'}
-            action={canManageFarmsNow ? { label: 'Cadastrar fazenda', onPress: () => router.push('/configuracoes/fazendas/nova') } : undefined}
+            action={canManageFarmsNow ? { label: 'Cadastrar fazenda', onPress: () => pushWithAnchor('/configuracoes/fazendas/nova') } : undefined}
           />
         ) : null}
         {noAnimals ? (
           <EmptyCta
             title={farmName ? `Nenhum animal em ${farmName}` : 'Cadastre seus animais'}
             message="Com os animais cadastrados, o painel mostra quem está liberado para embarque."
-            action={{ label: 'Cadastrar animal', onPress: () => router.push('/configuracoes/animais/nova') }}
+            action={{ label: 'Cadastrar animal', onPress: () => pushWithAnchor('/configuracoes/animais/nova') }}
           />
         ) : null}
 
@@ -128,14 +128,14 @@ export default function DashboardScreen() {
                 gap={12}
                 flexWrap="wrap"
                 opacity={{ press: 0.85 }}
-                onPress={() => router.push(animalsLink({ situacao: 'liberado', farmId: farm }))}
+                onPress={() => pushWithAnchor(animalsLink({ situacao: 'liberado', farmId: farm }))}
                 accessibilityRole="button"
                 accessibilityLabel={`Aptos para embarque hoje: ${textoLiberados(situation.liberados, situation.total)}. Ver animais liberados`}>
                 <YStack flex={1} gap={8} minW={160}>
                   <Text fontSize={15} fontWeight="700" color="brandMuted">
                     Aptos para embarque hoje
                   </Text>
-                  <Text fontSize={22} fontWeight="800" color="brandFg">
+                  <Text fontSize={19} fontWeight="800" color="brandFg">
                     {textoLiberados(situation.liberados, situation.total)}
                   </Text>
                   {aptosHints(situation, Boolean(farmName)).map((hint) => (
@@ -151,7 +151,7 @@ export default function DashboardScreen() {
                   color={ringColor}
                   trackColor={ringTrack}>
                   <YStack items="center">
-                    <Text fontSize={28} fontWeight="800" color="brandFg">
+                    <Text fontSize={24} fontWeight="800" color="brandFg">
                       {situation.liberados}
                     </Text>
                     <Text fontSize={13} fontWeight="700" color="brandMuted">
@@ -164,9 +164,9 @@ export default function DashboardScreen() {
 
             {/* 3. Situação */}
             <XStack gap={10} w="100%">
-              <StatusCard label="Liberados" value={situation.liberados} tone="liberado" onPress={() => router.push(animalsLink({ situacao: 'liberado', farmId: farm }))} />
-              <StatusCard label="Em carência" value={situation.emCarencia} tone="bloqueado" onPress={() => router.push(animalsLink({ situacao: 'carencia', farmId: farm }))} />
-              <StatusCard label="Sem histórico" value={situation.semHistorico} tone="sem-historico" onPress={() => router.push(animalsLink({ situacao: 'sem_historico', farmId: farm }))} />
+              <StatusCard label="Liberados" value={situation.liberados} tone="liberado" onPress={() => pushWithAnchor(animalsLink({ situacao: 'liberado', farmId: farm }))} />
+              <StatusCard label="Em carência" value={situation.emCarencia} tone="bloqueado" onPress={() => pushWithAnchor(animalsLink({ situacao: 'carencia', farmId: farm }))} />
+              <StatusCard label="Sem histórico" value={situation.semHistorico} tone="sem-historico" onPress={() => pushWithAnchor(animalsLink({ situacao: 'sem_historico', farmId: farm }))} />
             </XStack>
 
             {/* 4. Ficam livres nos próximos 7 dias */}
@@ -176,11 +176,11 @@ export default function DashboardScreen() {
               empty={data.releasing.items.length === 0}
               emptyText="Nenhum animal sai da carência nos próximos 7 dias."
               footerLabel={`Ver todos (${situation.libera7})`}
-              onFooterPress={() => router.push(animalsLink({ situacao: 'libera7', farmId: farm }))}>
+              onFooterPress={() => pushWithAnchor(animalsLink({ situacao: 'libera7', farmId: farm }))}>
               {data.releasing.items.map((item) => (
-                <ShortListRow key={item.id} onPress={() => router.push(`/configuracoes/animais/${item.id}`)} label={`Animal ${item.code}, livre em ${formatDatePtBr(item.freeAt)}`}>
+                <ShortListRow key={item.id} onPress={() => pushWithAnchor(`/configuracoes/animais/${item.id}`)} label={`Animal ${item.code}, livre em ${formatDatePtBr(item.freeAt)}`}>
                   <YStack flex={1} gap={2}>
-                    <Text fontSize={17} fontWeight="800" color="brandFg">
+                    <Text fontSize={16} fontWeight="800" color="brandFg">
                       {item.code}
                     </Text>
                     <Text fontSize={14} fontWeight="600" color="brandMuted">
@@ -188,7 +188,7 @@ export default function DashboardScreen() {
                     </Text>
                   </YStack>
                   <WithdrawalBadge active activeLabel={`Livre em ${formatDayMonthPtBr(item.freeAt)}`} inactiveLabel="Livre" />
-                  <Ionicons name="chevron-forward" size={20} color={chevron} />
+                  <Ionicons name="chevron-forward" size={18} color={chevron} />
                 </ShortListRow>
               ))}
             </ShortListCard>
@@ -200,13 +200,13 @@ export default function DashboardScreen() {
             {/* 5. Vacinações aplicadas */}
             <AppCard>
               <YStack gap={14}>
-                <Text fontSize={20} fontWeight="800" color="brandFg">
+                <Text fontSize={18} fontWeight="800" color="brandFg">
                   Vacinações aplicadas
                 </Text>
                 <XStack gap={10}>
-                  <CountTile label="Hoje" value={data.counts.hoje} onPress={() => router.push(vaccinationsLink({ date: today, farmId: farm }))} />
-                  <CountTile label="Semana" value={data.counts.semana} onPress={() => router.push(vaccinationsLink({ farmId: farm }))} />
-                  <CountTile label="Mês" value={data.counts.mes} onPress={() => router.push(vaccinationsLink({ farmId: farm }))} />
+                  <CountTile label="Hoje" value={data.counts.hoje} onPress={() => pushWithAnchor(vaccinationsLink({ date: today, farmId: farm }))} />
+                  <CountTile label="Semana" value={data.counts.semana} onPress={() => pushWithAnchor(vaccinationsLink({ farmId: farm }))} />
+                  <CountTile label="Mês" value={data.counts.mes} onPress={() => pushWithAnchor(vaccinationsLink({ farmId: farm }))} />
                 </XStack>
                 <XStack bg={isDark ? '#1C3C31' : '#EEF6EF'} rounded={999} p={4} gap={4}>
                   {PERIODOS.map((item) => {
@@ -245,12 +245,12 @@ export default function DashboardScreen() {
             {/* 6. Rebanho */}
             <AppCard>
               <YStack gap={14}>
-                <Text fontSize={20} fontWeight="800" color="brandFg">
+                <Text fontSize={18} fontWeight="800" color="brandFg">
                   Rebanho
                 </Text>
                 <XStack gap={10}>
-                  <CountTile label="Fazendas" value={farm ? 1 : data.farms} onPress={canManageFarmsNow ? () => router.push('/configuracoes/fazendas') : undefined} />
-                  <CountTile label="Animais" value={situation.total} onPress={() => router.push(animalsLink({ farmId: farm }))} />
+                  <CountTile label="Fazendas" value={farm ? 1 : data.farms} onPress={canManageFarmsNow ? () => pushWithAnchor('/configuracoes/fazendas') : undefined} />
+                  <CountTile label="Animais" value={situation.total} onPress={() => pushWithAnchor(animalsLink({ farmId: farm }))} />
                 </XStack>
                 {data.byType.items.length > 0 ? (
                   <YStack gap={6}>
@@ -266,7 +266,7 @@ export default function DashboardScreen() {
                         value: Number(row.n),
                         hint: Number(row.emCarencia) > 0 ? `${row.emCarencia} em carência` : undefined,
                       }))}
-                      onPress={(item) => router.push(animalsLink({ animalTypeId: item.id || undefined, farmId: farm }))}
+                      onPress={(item) => pushWithAnchor(animalsLink({ animalTypeId: item.id || undefined, farmId: farm }))}
                     />
                   </YStack>
                 ) : null}
@@ -277,7 +277,7 @@ export default function DashboardScreen() {
             {!farm && data.byFarm.items.length > 1 ? (
               <AppCard>
                 <YStack gap={14}>
-                  <Text fontSize={20} fontWeight="800" color="brandFg">
+                  <Text fontSize={18} fontWeight="800" color="brandFg">
                     Por fazenda
                   </Text>
                   <BarList
@@ -300,27 +300,27 @@ export default function DashboardScreen() {
               <XStack
                 items="center"
                 gap={12}
-                minH={56}
+                minH={48}
                 opacity={canManageVaccinesNow ? { press: 0.85 } : undefined}
-                onPress={canManageVaccinesNow ? () => router.push('/configuracoes/vacinas') : undefined}
+                onPress={canManageVaccinesNow ? () => pushWithAnchor('/configuracoes/vacinas') : undefined}
                 accessibilityRole={canManageVaccinesNow ? 'button' : undefined}
                 accessibilityLabel={
                   data.topVaccine.item
                     ? `Vacina mais usada nos últimos 30 dias: ${data.topVaccine.item.name}, ${data.topVaccine.item.n} aplicações`
                     : 'Nenhuma vacina aplicada nos últimos 30 dias'
                 }>
-                <Ionicons name="medkit-outline" size={26} color={ringColor} />
+                <Ionicons name="medkit-outline" size={22} color={ringColor} />
                 <YStack flex={1} gap={2}>
                   <Text fontSize={15} fontWeight="700" color="brandMuted">
                     Vacina mais usada (30 dias)
                   </Text>
-                  <Text fontSize={18} fontWeight="800" color="brandFg">
+                  <Text fontSize={16} fontWeight="800" color="brandFg">
                     {data.topVaccine.item
                       ? `${data.topVaccine.item.name ?? 'Vacina'} · ${data.topVaccine.item.n} ${Number(data.topVaccine.item.n) === 1 ? 'aplicação' : 'aplicações'}`
                       : 'Nenhuma aplicação nos últimos 30 dias'}
                   </Text>
                 </YStack>
-                {canManageVaccinesNow ? <Ionicons name="chevron-forward" size={20} color={chevron} /> : null}
+                {canManageVaccinesNow ? <Ionicons name="chevron-forward" size={18} color={chevron} /> : null}
               </XStack>
             </AppCard>
           </>
@@ -337,7 +337,7 @@ function CountTile({ label, value, onPress }: { label: string; value: number; on
       rounded={16}
       bg="brandSurface"
       p={12}
-      minH={72}
+      minH={64}
       justify="space-between"
       opacity={onPress ? { press: 0.85 } : undefined}
       onPress={onPress}
@@ -346,7 +346,7 @@ function CountTile({ label, value, onPress }: { label: string; value: number; on
       <Text fontSize={14} fontWeight="800" color="brandMuted">
         {label}
       </Text>
-      <Text fontSize={24} fontWeight="800" color="brandFg">
+      <Text fontSize={21} fontWeight="800" color="brandFg">
         {value}
       </Text>
     </YStack>
@@ -357,7 +357,7 @@ function EmptyCta({ title, message, action }: { title: string; message: string; 
   return (
     <AppCard>
       <YStack gap={10}>
-        <Text fontSize={20} fontWeight="800" color="brandFg">
+        <Text fontSize={18} fontWeight="800" color="brandFg">
           {title}
         </Text>
         <Text fontSize={16} fontWeight="600" color="brandMuted">
@@ -365,7 +365,7 @@ function EmptyCta({ title, message, action }: { title: string; message: string; 
         </Text>
         {action ? (
           <XStack
-            minH={56}
+            minH={48}
             items="center"
             justify="center"
             rounded={16}
@@ -374,7 +374,7 @@ function EmptyCta({ title, message, action }: { title: string; message: string; 
             onPress={action.onPress}
             accessibilityRole="button"
             accessibilityLabel={action.label}>
-            <Text fontSize={18} fontWeight="800" color="brandPrimaryFg">
+            <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
               {action.label}
             </Text>
           </XStack>

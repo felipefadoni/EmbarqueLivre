@@ -251,11 +251,11 @@ export function HerdEditor({ herdId, pendenciaId }: HerdEditorProps) {
   if (loadError) {
     return (
       <YStack flex={1} bg="appBg" items="center" justify="center" gap={16} px={24}>
-        <Text fontSize={18} fontWeight="800" color="brandFg" text="center">
+        <Text fontSize={16} fontWeight="800" color="brandFg" text="center">
           {loadError}
         </Text>
         <Text
-          fontSize={18}
+          fontSize={16}
           fontWeight="800"
           color="brandFg"
           textDecorationLine="underline"
@@ -320,7 +320,7 @@ export function HerdEditor({ herdId, pendenciaId }: HerdEditorProps) {
               numberOfLines={4}
               textAlignVertical="top"
               minH={112}
-              fontSize={18}
+              fontSize={16}
               fontWeight="600"
               color="brandFg"
               bg="transparent"
@@ -421,7 +421,7 @@ function HerdMembers({
   return (
     <YStack gap={12} mt={8}>
       <XStack items="center" justify="space-between" gap={12}>
-        <Text fontSize={18} fontWeight="800" color="brandFg">
+        <Text fontSize={16} fontWeight="800" color="brandFg">
           Animais ({members.length})
         </Text>
       </XStack>
@@ -436,7 +436,7 @@ function HerdMembers({
         accessibilityRole="button"
         accessibilityState={{ disabled: Boolean(addDisabled) }}
         accessibilityLabel="Adicionar animais">
-        <Text fontSize={18} fontWeight="800" color="brandPrimaryFg">
+        <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
           Adicionar animais
         </Text>
       </XStack>
@@ -458,7 +458,7 @@ function HerdMembers({
               onPress={() => router.push(`/configuracoes/animais/${animal.id}`)}
               accessibilityRole="button"
               accessibilityLabel={`Abrir animal ${animal.code}`}>
-              <Text fontSize={17} fontWeight="800" color="brandFg">
+              <Text fontSize={16} fontWeight="800" color="brandFg">
                 {animal.code}
               </Text>
               <Text fontSize={14} fontWeight="500" color="brandMuted">
@@ -477,7 +477,7 @@ function HerdMembers({
               onPress={() => onRemove(animal.id)}
               accessibilityRole="button"
               accessibilityLabel={`Remover ${animal.code} do rebanho`}>
-              <Ionicons name="close-circle-outline" size={24} color="#8B1515" />
+              <Ionicons name="close-circle-outline" size={22} color="#8B1515" />
             </XStack>
           </XStack>
         ))

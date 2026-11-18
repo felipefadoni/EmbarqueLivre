@@ -49,7 +49,7 @@ export function CadastroFormScreen({
     // cobria o fim do formulário; o inset automático do ScrollView usa a posição real na tela.
     <YStack flex={1} bg="appBg">
         <KeyboardAwareScrollView
-          contentContainerStyle={{ padding: 20, paddingBottom: Math.max(insets.bottom, 16) + 20, gap: 16 }}
+          contentContainerStyle={{ padding: 16, paddingBottom: Math.max(insets.bottom, 16) + 16, gap: 14 }}
           showsVerticalScrollIndicator={false}
           scrollEventThrottle={onEndReached ? 200 : undefined}
           onScroll={
@@ -76,7 +76,7 @@ export function CadastroFormScreen({
             accessibilityLabel={submitLabel}
             accessibilityState={{ disabled: blocked, busy: submitting }}>
             {submitting ? <Spinner color="brandPrimaryFg" /> : null}
-            <Text fontSize={18} fontWeight="800" color="brandPrimaryFg" ml={submitting ? 8 : 0}>
+            <Text fontSize={16} fontWeight="800" color="brandPrimaryFg" ml={submitting ? 8 : 0}>
               {submitting ? 'Salvando…' : submitLabel}
             </Text>
           </XStack>
@@ -91,7 +91,7 @@ export function CadastroFormScreen({
               accessibilityRole="button"
               accessibilityLabel={deleteLabel}
               accessibilityState={{ disabled: submitting }}>
-              <Text fontSize={18} fontWeight="800" color="brandError">
+              <Text fontSize={16} fontWeight="800" color="brandError">
                 {deleteLabel}
               </Text>
             </XStack>

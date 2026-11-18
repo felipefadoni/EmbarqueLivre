@@ -129,8 +129,8 @@ export default function ConflitosScreen() {
             <AppCard>
               <YStack gap={8}>
                 <XStack items="center" gap={8}>
-                  <Ionicons name="phone-portrait-outline" size={22} color={isDark ? '#99C2AB' : '#2B3D34'} />
-                  <Text flex={1} fontSize={18} fontWeight="800" color="brandFg">
+                  <Ionicons name="phone-portrait-outline" size={20} color={isDark ? '#99C2AB' : '#2B3D34'} />
+                  <Text flex={1} fontSize={16} fontWeight="800" color="brandFg">
                     {title}
                   </Text>
                 </XStack>

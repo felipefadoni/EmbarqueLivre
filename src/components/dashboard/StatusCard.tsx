@@ -19,7 +19,7 @@ export function StatusCard({ label, value, tone, onPress }: { label: string; val
       <Text fontSize={14} fontWeight="800" color={`${tone}-color`} lineHeight="18px">
         {label}
       </Text>
-      <Text fontSize={28} fontWeight="800" color={`${tone}-color`}>
+      <Text fontSize={24} fontWeight="800" color={`${tone}-color`}>
         {value}
       </Text>
     </YStack>

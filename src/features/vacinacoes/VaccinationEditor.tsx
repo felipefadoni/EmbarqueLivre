@@ -226,11 +226,11 @@ export function VaccinationEditor({ vaccinationId, pendenciaId }: VaccinationEdi
   if (loadError) {
     return (
       <YStack flex={1} bg="appBg" items="center" justify="center" gap={16} px={24}>
-        <Text fontSize={18} fontWeight="800" color="brandFg" text="center">
+        <Text fontSize={16} fontWeight="800" color="brandFg" text="center">
           {loadError}
         </Text>
         <Text
-          fontSize={18}
+          fontSize={16}
           fontWeight="800"
           color="brandFg"
           textDecorationLine="underline"
@@ -306,7 +306,7 @@ export function VaccinationEditor({ vaccinationId, pendenciaId }: VaccinationEdi
             Prévia da carência
           </Text>
           {previewDays != null && previewUntil ? (
-            <Text fontSize={18} fontWeight="800" color="brandFg">
+            <Text fontSize={16} fontWeight="800" color="brandFg">
               Carência: {pluralDias(previewDays)}, livre em {formatDatePtBr(previewUntil)}
             </Text>
           ) : (

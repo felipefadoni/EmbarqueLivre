@@ -275,7 +275,7 @@ export default function CadastroScreen() {
           h={TOQUE_PRINCIPAL}
           bg="brandPrimary"
           color="brandPrimaryFg"
-          fontSize={18}
+          fontSize={16}
           fontWeight="800"
           rounded={16}
           borderWidth={0}
