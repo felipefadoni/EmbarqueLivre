@@ -2875,8 +2875,8 @@ var themes2 = Object.fromEntries(
     }
   ])
 );
-var TOQUE_MINIMO = "14";
-var TOQUE_PRINCIPAL = "16";
+var TOQUE_MINIMO = "12";
+var TOQUE_PRINCIPAL = "14";
 var tamaguiConfig = createTamagui({
   ...defaultConfig,
   themes: themes2
