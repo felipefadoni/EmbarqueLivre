@@ -163,7 +163,7 @@ export default function DashboardScreen() {
             </AppCard>
 
             {/* 3. Situação */}
-            <XStack gap={10} w="100%">
+            <XStack gap={10} w="100%" flexWrap="wrap">
               <StatusCard label="Liberados" value={situation.liberados} tone="liberado" onPress={() => pushWithAnchor(animalsLink({ situacao: 'liberado', farmId: farm }))} />
               <StatusCard label="Em carência" value={situation.emCarencia} tone="bloqueado" onPress={() => pushWithAnchor(animalsLink({ situacao: 'carencia', farmId: farm }))} />
               <StatusCard label="Sem histórico" value={situation.semHistorico} tone="sem-historico" onPress={() => pushWithAnchor(animalsLink({ situacao: 'sem_historico', farmId: farm }))} />

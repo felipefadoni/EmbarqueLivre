@@ -1,6 +1,6 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { useRef, useState } from 'react'
-import { Modal, Pressable, ScrollView, useColorScheme } from 'react-native'
+import { Modal, Pressable, ScrollView, useColorScheme, useWindowDimensions } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Text, XStack, YStack } from 'tamagui'
 
@@ -51,6 +51,8 @@ export function DatePickerModal({
 }: DatePickerModalProps) {
   const isDark = useColorScheme() === 'dark'
   const insets = useSafeAreaInsets()
+  const { height: windowHeight } = useWindowDimensions()
+  const bodyMaxHeight = Math.max(240, windowHeight - insets.top - 80)
   const min = minimumDate ? dateToParts(minimumDate) : { year: 1900, month: 1, day: 1 }
   const max = maximumDate ? dateToParts(maximumDate) : todayParts()
 
@@ -77,6 +79,7 @@ export function DatePickerModal({
               min={min}
               max={max}
               isDark={isDark}
+              bodyMaxHeight={bodyMaxHeight}
               onCancel={onCancel}
               onConfirm={onConfirm}
             />
@@ -97,6 +100,7 @@ function DatePickerBody({
   min,
   max,
   isDark,
+  bodyMaxHeight,
   onCancel,
   onConfirm,
 }: {
@@ -105,6 +109,7 @@ function DatePickerBody({
   min: DateParts
   max: DateParts
   isDark: boolean
+  bodyMaxHeight: number
   onCancel: () => void
   onConfirm: (iso: string) => void
 }) {
@@ -155,6 +160,8 @@ function DatePickerBody({
       <Text fontSize={19} fontWeight="800" color="brandFg">
         {title}
       </Text>
+      <ScrollView style={{ maxHeight: bodyMaxHeight }} keyboardShouldPersistTaps="handled">
+      <YStack gap={12}>
       <Text fontSize={16} fontWeight="600" color="brandMuted">
         {formatPartsPtBr(draft)}
       </Text>
@@ -260,6 +267,8 @@ function DatePickerBody({
           </Text>
         </XStack>
       </XStack>
+      </YStack>
+      </ScrollView>
     </>
   )
 }

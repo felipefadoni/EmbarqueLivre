@@ -1,6 +1,5 @@
 import { StatusBar } from 'expo-status-bar'
 import type { ReactNode } from 'react'
-import { KeyboardAvoidingView, Platform } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Text, YStack, useThemeName } from 'tamagui'
 
@@ -22,39 +21,40 @@ export function AuthScaffold({ children, title, subtitle, logoSize = 120 }: Auth
   return (
     <YStack flex={1} bg="brandBg">
       <StatusBar style={isDark ? 'light' : 'dark'} />
-      {/* iOS: sem KeyboardAvoidingView. O inset do ScrollView acompanha o teclado sem refazer o layout (o padding
-          + LayoutAnimation recentralizava o formulário e o placeholder só se ajustava no fim). Android: como antes. */}
-      <KeyboardAvoidingView style={{ flex: 1 }} behavior="height" enabled={Platform.OS === 'android'}>
-        <KeyboardAwareScrollView
-          contentContainerStyle={{
-            flexGrow: 1,
-            paddingTop: Math.max(insets.top, 16) + 8,
-            paddingBottom: Math.max(insets.bottom, 16) + 24,
-            paddingHorizontal: 24,
-            alignItems: 'center',
-          }}>
-          <YStack w="100%" maxW={440} gap="4" flex={1} justify="center">
-            <YStack items="center" gap="3">
-              <Logo size={logoSize} />
-              <Text
-                fontSize={24}
-                fontWeight="800"
-                color="brandFg"
-                text="center"
-                letterSpacing={-0.4}
-                accessibilityRole="header">
-                {title}
+      {/* Sem KeyboardAvoidingView nas duas plataformas. iOS: o inset do ScrollView acompanha o teclado sem refazer o
+          layout (o padding + LayoutAnimation recentralizava o formulário e o placeholder só se ajustava no fim).
+          Android: a janela já redimensiona, então behavior=height dobrava a faixa vazia. */}
+      <KeyboardAwareScrollView
+        contentContainerStyle={{
+          flexGrow: 1,
+          paddingTop: Math.max(insets.top, 16) + 8,
+          paddingBottom: Math.max(insets.bottom, 16) + 24,
+          paddingHorizontal: 24,
+          alignItems: 'center',
+        }}>
+        {/* Sem flex=1/justify=center: em "Criar conta" o bloco é mais alto que a tela e a centralização
+            empurrava logo/título para fora do scroll. flexGrow no container já centraliza quando cabe. */}
+        <YStack w="100%" maxW={440} gap="4">
+          <YStack items="center" gap="3">
+            <Logo size={logoSize} />
+            <Text
+              fontSize={24}
+              fontWeight="800"
+              color="brandFg"
+              text="center"
+              letterSpacing={-0.4}
+              accessibilityRole="header">
+              {title}
+            </Text>
+            {subtitle ? (
+              <Text fontSize={16} lineHeight="24px" color="brandMuted" text="center" fontWeight="500">
+                {subtitle}
               </Text>
-              {subtitle ? (
-                <Text fontSize={16} lineHeight="24px" color="brandMuted" text="center" fontWeight="500">
-                  {subtitle}
-                </Text>
-              ) : null}
-            </YStack>
-            {children}
+            ) : null}
           </YStack>
-        </KeyboardAwareScrollView>
-      </KeyboardAvoidingView>
+          {children}
+        </YStack>
+      </KeyboardAwareScrollView>
     </YStack>
   )
 }

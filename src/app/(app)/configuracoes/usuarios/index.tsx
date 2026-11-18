@@ -82,42 +82,44 @@ function UsuariosAdminList({ currentUserId }: { currentUserId: string | null }) 
 
   return (
     <YStack flex={1} bg="appBg">
-      <YStack px={20} pt={12} pb={8} gap={12}>
-        <OfflineNotice message="Sem internet. Usuários precisam de conexão para listar, criar e excluir." />
-        <XStack items="center" gap={12}>
-          <XStack
-            flex={1}
-            minH={TOQUE_MINIMO}
-            items="center"
-            justify="center"
-            rounded={16}
-            bg="brandPrimary"
-            opacity={{ press: 0.85 }}
-            onPress={() => router.push('/configuracoes/usuarios/nova')}
-            accessibilityRole="button"
-            accessibilityLabel="Novo usuário">
-            <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
-              Novo usuário
-            </Text>
-          </XStack>
-          <FilterToggle open={filtersOpen} activeCount={summary.activeCount} onPress={() => toggleFilters()} />
-        </XStack>
-        <CollapsibleFilters
-          open={filtersOpen}
-          summary={summary.text}
-          onOpen={() => toggleFilters(true)}
-          onClear={clearFilters}
-          clearable={summary.activeCount > 0}>
-          <AccountPicker label="Conta" value={account?.id ?? ''} selected={account} placeholder="Todas as contas" onChange={setAccount} />
-          <TextFilterField label="Nome" value={name} placeholder="Buscar pelo nome" onChange={setName} />
-          <TextFilterField label="E-mail" value={emailInput} placeholder="Buscar pelo e-mail" keyboardType="email-address" onChange={setEmailInput} />
-        </CollapsibleFilters>
-      </YStack>
       <FlatList
         data={visible}
         keyExtractor={(item) => item.id || item.email}
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 28, flexGrow: 1, gap: 12 }}
+        ListHeaderComponent={
+          <YStack pt={12} pb={8} gap={12}>
+            <OfflineNotice message="Sem internet. Usuários precisam de conexão para listar, criar e excluir." />
+            <XStack items="center" gap={12}>
+              <XStack
+                flex={1}
+                minH={TOQUE_MINIMO}
+                items="center"
+                justify="center"
+                rounded={16}
+                bg="brandPrimary"
+                opacity={{ press: 0.85 }}
+                onPress={() => router.push('/configuracoes/usuarios/nova')}
+                accessibilityRole="button"
+                accessibilityLabel="Novo usuário">
+                <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
+                  Novo usuário
+                </Text>
+              </XStack>
+              <FilterToggle open={filtersOpen} activeCount={summary.activeCount} onPress={() => toggleFilters()} />
+            </XStack>
+            <CollapsibleFilters
+              open={filtersOpen}
+              summary={summary.text}
+              onOpen={() => toggleFilters(true)}
+              onClear={clearFilters}
+              clearable={summary.activeCount > 0}>
+              <AccountPicker label="Conta" value={account?.id ?? ''} selected={account} placeholder="Todas as contas" onChange={setAccount} />
+              <TextFilterField label="Nome" value={name} placeholder="Buscar pelo nome" onChange={setName} />
+              <TextFilterField label="E-mail" value={emailInput} placeholder="Buscar pelo e-mail" keyboardType="email-address" onChange={setEmailInput} />
+            </CollapsibleFilters>
+          </YStack>
+        }
         refreshing={refreshing}
         onRefresh={() => void refresh()}
         onEndReached={() => {

@@ -101,123 +101,125 @@ export default function LancamentosScreen() {
 
   return (
     <YStack flex={1} bg="appBg">
-      <YStack px={20} pt={insets.top + 8} pb={8} gap={12}>
-        <XStack items="center" gap={12}>
-          <YStack flex={1} gap={4} minH={48} justify="center">
-            <Text fontSize={24} fontWeight="800" color="brandFg">
-              Vacinas
-            </Text>
-            <Text fontSize={16} fontWeight="600" color="brandMuted">
-              Lançamentos de vacina e carência dos animais.
-            </Text>
-          </YStack>
-          <FilterToggle open={filtersOpen} activeCount={filterSummary.activeCount} onPress={() => toggleFilters()} />
-        </XStack>
-        <SyncStatusIndicator compact />
-        <XStack
-          minH={TOQUE_PRINCIPAL}
-          items="center"
-          justify="center"
-          gap={8}
-          rounded={16}
-          bg="brandPrimary"
-          opacity={{ press: 0.85 }}
-          onPress={() => router.push('/lancamentos/nova')}
-          accessibilityRole="button"
-          accessibilityLabel="Informar vacina">
-          <Ionicons name="add-circle-outline" size={22} color={isDark ? '#2B3D34' : '#FFFFFF'} />
-          <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
-            Informar Vacina
-          </Text>
-        </XStack>
-        <CollapsibleFilters open={filtersOpen} summary={filterSummary.text} onOpen={() => toggleFilters(true)} onClear={clearFilters} clearable={filterSummary.activeCount > 0}>
-          <DateField
-            label={isToday ? 'Data do lançamento (hoje)' : 'Data do lançamento'}
-            value={date}
-            onChange={(value) => setDate(value ?? todayIso())}
-            maximumDate={new Date()}
-            optional={false}
-          />
-          {isToday ? null : (
-            <Text
-              fontSize={16}
-              fontWeight="800"
-              color="brandFg"
-              textDecorationLine="underline"
-              onPress={() => setDate(todayIso())}
-              accessibilityRole="button"
-              accessibilityLabel="Voltar para hoje">
-              Voltar para hoje
-            </Text>
-          )}
-          <SelectField
-            label="Fazenda"
-            value={farmId}
-            options={[{ value: '', label: 'Todas' }, ...farms.map((farm) => ({ value: farm.id, label: farm.name }))]}
-            onChange={setFarmId}
-          />
-          <XStack
-            minH={TOQUE_MINIMO}
-            items="center"
-            bg="brandSurface"
-            borderColor="brandBorder"
-            borderWidth={2}
-            rounded={16}
-            px="3"
-            gap={8}>
-            <Ionicons name="search" size={18} color={iconColor} />
-            <Input
-              flex={1}
-              h="100%"
-              fontSize={16}
-              fontWeight="600"
-              color="brandFg"
-              bg="transparent"
-              borderWidth={0}
-              placeholder="Buscar pelo código do brinco"
-              placeholderTextColor="brandMuted"
-              value={codeInput}
-              onChangeText={setCodeInput}
-              autoCapitalize="characters"
-              autoCorrect={false}
-              returnKeyType="search"
-              accessibilityLabel="Buscar pelo código do brinco"
-            />
-            {codeInput ? (
-              <XStack
-                minH={TOQUE_MINIMO}
-                items="center"
-                justify="center"
-                style={{ width: 44 }}
-                onPress={() => setCodeInput('')}
-                accessibilityRole="button"
-                accessibilityLabel="Limpar busca">
-                <Ionicons name="close-circle" size={20} color={iconColor} />
-              </XStack>
-            ) : null}
-          </XStack>
-          {showAuthorEmail ? (
-            <TextFilterField
-              label="E-mail de quem cadastrou"
-              value={authorEmail}
-              placeholder="Buscar pelo e-mail"
-              keyboardType="email-address"
-              onChange={setAuthorEmail}
-            />
-          ) : null}
-        </CollapsibleFilters>
-      </YStack>
       <FlatList
         data={items}
         keyExtractor={(item) => item.id}
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{
           paddingHorizontal: 20,
-          paddingTop: 4,
+          paddingTop: insets.top + 8,
           paddingBottom: 28,
           flexGrow: 1,
           gap: 12,
         }}
+        ListHeaderComponent={
+          <YStack pb={8} gap={12}>
+            <XStack items="center" gap={12}>
+              <YStack flex={1} gap={4} minH={48} justify="center">
+                <Text fontSize={24} fontWeight="800" color="brandFg">
+                  Vacinas
+                </Text>
+                <Text fontSize={16} fontWeight="600" color="brandMuted">
+                  Lançamentos de vacina e carência dos animais.
+                </Text>
+              </YStack>
+              <FilterToggle open={filtersOpen} activeCount={filterSummary.activeCount} onPress={() => toggleFilters()} />
+            </XStack>
+            <SyncStatusIndicator compact />
+            <XStack
+              minH={TOQUE_PRINCIPAL}
+              items="center"
+              justify="center"
+              gap={8}
+              rounded={16}
+              bg="brandPrimary"
+              opacity={{ press: 0.85 }}
+              onPress={() => router.push('/lancamentos/nova')}
+              accessibilityRole="button"
+              accessibilityLabel="Informar vacina">
+              <Ionicons name="add-circle-outline" size={22} color={isDark ? '#2B3D34' : '#FFFFFF'} />
+              <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
+                Informar Vacina
+              </Text>
+            </XStack>
+            <CollapsibleFilters open={filtersOpen} summary={filterSummary.text} onOpen={() => toggleFilters(true)} onClear={clearFilters} clearable={filterSummary.activeCount > 0}>
+              <DateField
+                label={isToday ? 'Data do lançamento (hoje)' : 'Data do lançamento'}
+                value={date}
+                onChange={(value) => setDate(value ?? todayIso())}
+                maximumDate={new Date()}
+                optional={false}
+              />
+              {isToday ? null : (
+                <Text
+                  fontSize={16}
+                  fontWeight="800"
+                  color="brandFg"
+                  textDecorationLine="underline"
+                  onPress={() => setDate(todayIso())}
+                  accessibilityRole="button"
+                  accessibilityLabel="Voltar para hoje">
+                  Voltar para hoje
+                </Text>
+              )}
+              <SelectField
+                label="Fazenda"
+                value={farmId}
+                options={[{ value: '', label: 'Todas' }, ...farms.map((farm) => ({ value: farm.id, label: farm.name }))]}
+                onChange={setFarmId}
+              />
+              <XStack
+                minH={TOQUE_MINIMO}
+                items="center"
+                bg="brandSurface"
+                borderColor="brandBorder"
+                borderWidth={2}
+                rounded={16}
+                px="3"
+                gap={8}>
+                <Ionicons name="search" size={18} color={iconColor} />
+                <Input
+                  flex={1}
+                  h="100%"
+                  fontSize={16}
+                  fontWeight="600"
+                  color="brandFg"
+                  bg="transparent"
+                  borderWidth={0}
+                  placeholder="Buscar pelo código do brinco"
+                  placeholderTextColor="brandMuted"
+                  value={codeInput}
+                  onChangeText={setCodeInput}
+                  autoCapitalize="characters"
+                  autoCorrect={false}
+                  returnKeyType="search"
+                  accessibilityLabel="Buscar pelo código do brinco"
+                />
+                {codeInput ? (
+                  <XStack
+                    minH={TOQUE_MINIMO}
+                    items="center"
+                    justify="center"
+                    style={{ width: 44 }}
+                    onPress={() => setCodeInput('')}
+                    accessibilityRole="button"
+                    accessibilityLabel="Limpar busca">
+                    <Ionicons name="close-circle" size={20} color={iconColor} />
+                  </XStack>
+                ) : null}
+              </XStack>
+              {showAuthorEmail ? (
+                <TextFilterField
+                  label="E-mail de quem cadastrou"
+                  value={authorEmail}
+                  placeholder="Buscar pelo e-mail"
+                  keyboardType="email-address"
+                  onChange={setAuthorEmail}
+                />
+              ) : null}
+            </CollapsibleFilters>
+          </YStack>
+        }
         refreshing={refreshing}
         onRefresh={() => void refresh()}
         onEndReached={() => {

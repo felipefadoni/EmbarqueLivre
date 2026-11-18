@@ -1,7 +1,8 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { Image } from 'expo-image'
+import { StatusBar } from 'expo-status-bar'
 import { useState } from 'react'
-import { Modal, Pressable, StatusBar, useWindowDimensions } from 'react-native'
+import { Modal, Pressable, useWindowDimensions } from 'react-native'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Spinner, Text, XStack, YStack } from 'tamagui'
 
@@ -53,7 +54,8 @@ export function ShipmentPhotoViewer({ open, onClose, shipmentId, localUri, photo
 
   return (
     <Modal visible={open} transparent animationType="fade" onRequestClose={onClose} statusBarTranslucent supportedOrientations={['portrait']}>
-      <StatusBar barStyle="light-content" />
+      {/* Desmonta com o Modal: o expo-status-bar restaura o estilo da tela de baixo. O StatusBar do RN vazava light-content. */}
+      <StatusBar style="light" />
       <Pressable
         style={{ flex: 1, backgroundColor: 'rgba(43, 61, 52, 0.96)', paddingTop: top, paddingBottom: bottom }}
         onPress={onClose}

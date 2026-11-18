@@ -57,48 +57,50 @@ function FazendasAdminList({ showAuthor, showAuthorEmail }: { showAuthor: boolea
 
   return (
     <YStack flex={1} bg="appBg">
-      <YStack px={20} pt={12} pb={8} gap={12}>
-        <XStack items="center" gap={12}>
-          <XStack
-            flex={1}
-            minH={TOQUE_MINIMO}
-            items="center"
-            justify="center"
-            rounded={16}
-            bg="brandPrimary"
-            opacity={{ press: 0.85 }}
-            onPress={() => router.push('/configuracoes/fazendas/nova')}
-            accessibilityRole="button"
-            accessibilityLabel="Nova fazenda">
-            <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
-              Nova fazenda
-            </Text>
-          </XStack>
-          <FilterToggle open={filtersOpen} activeCount={summary.activeCount} onPress={() => toggleFilters()} />
-        </XStack>
-        <CollapsibleFilters
-          open={filtersOpen}
-          summary={summary.text}
-          onOpen={() => toggleFilters(true)}
-          onClear={clearFilters}
-          clearable={summary.activeCount > 0}>
-          <TextFilterField label="Nome da fazenda" value={farmName} placeholder="Buscar pelo nome" onChange={setFarmName} />
-          {showAuthorEmail ? (
-            <TextFilterField
-              label="E-mail de quem cadastrou"
-              value={authorEmail}
-              placeholder="Buscar pelo e-mail"
-              keyboardType="email-address"
-              onChange={setAuthorEmail}
-            />
-          ) : null}
-        </CollapsibleFilters>
-      </YStack>
       <FlatList
         data={items}
         keyExtractor={(item) => item.id || item.name}
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 28, flexGrow: 1, gap: 12 }}
+        ListHeaderComponent={
+          <YStack pt={12} pb={8} gap={12}>
+            <XStack items="center" gap={12}>
+              <XStack
+                flex={1}
+                minH={TOQUE_MINIMO}
+                items="center"
+                justify="center"
+                rounded={16}
+                bg="brandPrimary"
+                opacity={{ press: 0.85 }}
+                onPress={() => router.push('/configuracoes/fazendas/nova')}
+                accessibilityRole="button"
+                accessibilityLabel="Nova fazenda">
+                <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
+                  Nova fazenda
+                </Text>
+              </XStack>
+              <FilterToggle open={filtersOpen} activeCount={summary.activeCount} onPress={() => toggleFilters()} />
+            </XStack>
+            <CollapsibleFilters
+              open={filtersOpen}
+              summary={summary.text}
+              onOpen={() => toggleFilters(true)}
+              onClear={clearFilters}
+              clearable={summary.activeCount > 0}>
+              <TextFilterField label="Nome da fazenda" value={farmName} placeholder="Buscar pelo nome" onChange={setFarmName} />
+              {showAuthorEmail ? (
+                <TextFilterField
+                  label="E-mail de quem cadastrou"
+                  value={authorEmail}
+                  placeholder="Buscar pelo e-mail"
+                  keyboardType="email-address"
+                  onChange={setAuthorEmail}
+                />
+              ) : null}
+            </CollapsibleFilters>
+          </YStack>
+        }
         refreshing={refreshing}
         onRefresh={() => void refresh()}
         onEndReached={() => {

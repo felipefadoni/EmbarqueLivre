@@ -23,6 +23,11 @@ type CadastroFormScreenProps = {
   footer?: ReactNode
   /** Rolou perto do fim (scroll infinito de uma lista dentro do formulário). Quem chama protege com hasMore/loadingMore. */
   onEndReached?: () => void
+  /**
+   * A tela fica acima da tab bar (padrão). Quando true, a safe area inferior já é da tab —
+   * não soma insets.bottom. false só se o formulário aparecer sem tab.
+   */
+  reserveTabBar?: boolean
 }
 
 /** Distância do fim (px) que dispara onEndReached. */
@@ -41,15 +46,17 @@ export function CadastroFormScreen({
   submitDisabled = false,
   footer,
   onEndReached,
+  reserveTabBar = true,
 }: CadastroFormScreenProps) {
   const blocked = submitting || submitDisabled
   const insets = useSafeAreaInsets()
+  const paddingBottom = reserveTabBar ? 24 : Math.max(insets.bottom, 16) + 16
   return (
     // Sem KeyboardAvoidingView: abaixo do header nativo ele calculava o recuo sem a altura do header (offset 0) e
     // cobria o fim do formulário; o inset automático do ScrollView usa a posição real na tela.
     <YStack flex={1} bg="appBg">
         <KeyboardAwareScrollView
-          contentContainerStyle={{ padding: 16, paddingBottom: Math.max(insets.bottom, 16) + 16, gap: 14 }}
+          contentContainerStyle={{ padding: 16, paddingBottom, gap: 14 }}
           showsVerticalScrollIndicator={false}
           scrollEventThrottle={onEndReached ? 200 : undefined}
           onScroll={

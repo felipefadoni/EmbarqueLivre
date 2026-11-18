@@ -7,6 +7,8 @@ export function StatusCard({ label, value, tone, onPress }: { label: string; val
   return (
     <YStack
       flex={1}
+      flexBasis="30%"
+      minW={96}
       rounded={20}
       bg={tone}
       p={14}
@@ -16,7 +18,7 @@ export function StatusCard({ label, value, tone, onPress }: { label: string; val
       onPress={onPress}
       accessibilityRole={onPress ? 'button' : undefined}
       accessibilityLabel={`${label}: ${value}${onPress ? '. Ver animais' : ''}`}>
-      <Text fontSize={14} fontWeight="800" color={`${tone}-color`} lineHeight="18px">
+      <Text fontSize={14} fontWeight="800" color={`${tone}-color`} lineHeight="18px" numberOfLines={2}>
         {label}
       </Text>
       <Text fontSize={24} fontWeight="800" color={`${tone}-color`}>

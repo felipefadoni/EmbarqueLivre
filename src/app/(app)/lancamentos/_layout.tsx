@@ -14,7 +14,7 @@ export default function LancamentosLayout() {
         headerStyle: { backgroundColor },
         headerTintColor: color,
         headerTitleStyle: { fontWeight: '800', fontSize: 18, color },
-        headerBackTitle: 'Voltar',
+        headerBackButtonDisplayMode: 'minimal',
         contentStyle: { backgroundColor },
         animation: 'slide_from_right',
       }}>

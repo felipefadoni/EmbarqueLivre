@@ -70,61 +70,63 @@ function VacinasAdminList({ showAuthor, showAuthorEmail }: { showAuthor: boolean
 
   return (
     <YStack flex={1} bg="appBg">
-      <YStack px={20} pt={12} pb={8} gap={12}>
-        <XStack items="center" gap={12}>
-          {access.canCreate ? (
-            <XStack
-              flex={1}
-              minH={TOQUE_MINIMO}
-              items="center"
-              justify="center"
-              rounded={16}
-              bg="brandPrimary"
-              opacity={{ press: 0.85 }}
-              onPress={() => router.push('/configuracoes/vacinas/nova')}
-              accessibilityRole="button"
-              accessibilityLabel="Nova vacina">
-              <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
-                Nova vacina
-              </Text>
-            </XStack>
-          ) : (
-            <Text flex={1} fontSize={16} fontWeight="600" color="brandMuted">
-              Somente consulta.
-            </Text>
-          )}
-          {showFilters ? <FilterToggle open={filtersOpen} activeCount={summary.activeCount} onPress={() => toggleFilters()} /> : null}
-        </XStack>
-        {showFilters ? (
-          <CollapsibleFilters
-            open={filtersOpen}
-            summary={summary.text}
-            onOpen={() => toggleFilters(true)}
-            onClear={() => {
-              setAuthorEmail('')
-              setAccount(null)
-            }}
-            clearable={summary.activeCount > 0}>
-            {allAccounts ? (
-              <AccountPicker label="Conta" value={account?.id ?? ''} selected={account} placeholder="Todas as contas" onChange={setAccount} />
-            ) : null}
-            {showAuthorEmail ? (
-              <TextFilterField
-                label="E-mail de quem cadastrou"
-                value={authorEmail}
-                placeholder="Buscar pelo e-mail"
-                keyboardType="email-address"
-                onChange={setAuthorEmail}
-              />
-            ) : null}
-          </CollapsibleFilters>
-        ) : null}
-      </YStack>
       <FlatList
         data={items}
         keyExtractor={(item) => item.id || item.name}
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 28, flexGrow: 1, gap: 12 }}
+        ListHeaderComponent={
+          <YStack pt={12} pb={8} gap={12}>
+            <XStack items="center" gap={12}>
+              {access.canCreate ? (
+                <XStack
+                  flex={1}
+                  minH={TOQUE_MINIMO}
+                  items="center"
+                  justify="center"
+                  rounded={16}
+                  bg="brandPrimary"
+                  opacity={{ press: 0.85 }}
+                  onPress={() => router.push('/configuracoes/vacinas/nova')}
+                  accessibilityRole="button"
+                  accessibilityLabel="Nova vacina">
+                  <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
+                    Nova vacina
+                  </Text>
+                </XStack>
+              ) : (
+                <Text flex={1} fontSize={16} fontWeight="600" color="brandMuted">
+                  Somente consulta.
+                </Text>
+              )}
+              {showFilters ? <FilterToggle open={filtersOpen} activeCount={summary.activeCount} onPress={() => toggleFilters()} /> : null}
+            </XStack>
+            {showFilters ? (
+              <CollapsibleFilters
+                open={filtersOpen}
+                summary={summary.text}
+                onOpen={() => toggleFilters(true)}
+                onClear={() => {
+                  setAuthorEmail('')
+                  setAccount(null)
+                }}
+                clearable={summary.activeCount > 0}>
+                {allAccounts ? (
+                  <AccountPicker label="Conta" value={account?.id ?? ''} selected={account} placeholder="Todas as contas" onChange={setAccount} />
+                ) : null}
+                {showAuthorEmail ? (
+                  <TextFilterField
+                    label="E-mail de quem cadastrou"
+                    value={authorEmail}
+                    placeholder="Buscar pelo e-mail"
+                    keyboardType="email-address"
+                    onChange={setAuthorEmail}
+                  />
+                ) : null}
+              </CollapsibleFilters>
+            ) : null}
+          </YStack>
+        }
         refreshing={refreshing}
         onRefresh={() => void refresh()}
         onEndReached={() => {

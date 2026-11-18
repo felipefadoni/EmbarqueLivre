@@ -125,77 +125,79 @@ export default function AnimaisListScreen() {
 
   return (
     <YStack flex={1} bg="appBg">
-      <YStack px={20} pt={12} pb={8} gap={12}>
-        <XStack items="center" gap={12}>
-          <XStack
-            flex={1}
-            minH={TOQUE_MINIMO}
-            items="center"
-            justify="center"
-            rounded={16}
-            bg="brandPrimary"
-            opacity={{ press: 0.85 }}
-            onPress={() => router.push('/configuracoes/animais/nova')}
-            accessibilityRole="button"
-            accessibilityLabel="Novo animal">
-            <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
-              Novo animal
-            </Text>
-          </XStack>
-          <FilterToggle open={filtersOpen} activeCount={filterSummary.activeCount} onPress={() => toggleFilters()} />
-        </XStack>
-        <CollapsibleFilters
-          open={filtersOpen}
-          summary={filterSummary.text}
-          onOpen={() => toggleFilters(true)}
-          onClear={clearFilters}
-          clearable={filterSummary.activeCount > 0}>
-          <SelectField
-            label="Filtrar por fazenda"
-            value={farmId}
-            options={[{ value: '', label: 'Todas as fazendas' }, ...farms.map((farm) => ({ value: farm.id, label: farm.name }))]}
-            onChange={(value) => {
-              setFarmId(value)
-              setHerdId('')
-            }}
-          />
-          {adminFilters ? (
-            <TextFilterField label="Nome da fazenda" value={farmSearch} placeholder="Buscar pelo nome da fazenda" onChange={setFarmSearch} />
-          ) : null}
-          {showAuthorEmail ? (
-            <TextFilterField
-              label="E-mail de quem cadastrou"
-              value={authorEmail}
-              placeholder="Buscar pelo e-mail"
-              keyboardType="email-address"
-              onChange={setAuthorEmail}
-            />
-          ) : null}
-          <SelectField
-            label="Filtrar por tipo"
-            value={typeId}
-            options={[{ value: '', label: 'Todos os tipos' }, ...types.map((item) => ({ value: item.id, label: item.name }))]}
-            onChange={setTypeId}
-          />
-          <SelectField
-            label="Filtrar por rebanho"
-            value={herdId}
-            options={[{ value: '', label: 'Todos os rebanhos' }, ...herds.map((herd) => ({ value: herd.id, label: farmId ? herd.name : `${herd.name} · ${herd.farmName ?? 'Fazenda'}` }))]}
-            onChange={setHerdId}
-          />
-          <SelectField
-            label="Situação"
-            value={situacao}
-            options={SITUATION_OPTIONS}
-            onChange={(value) => setSituacao(isAnimalSituation(value) ? value : '')}
-          />
-        </CollapsibleFilters>
-      </YStack>
       <FlatList
         data={items}
         keyExtractor={(item) => item.id || item.code}
         keyboardShouldPersistTaps="handled"
         contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 28, flexGrow: 1, gap: 12 }}
+        ListHeaderComponent={
+          <YStack pt={12} pb={8} gap={12}>
+            <XStack items="center" gap={12}>
+              <XStack
+                flex={1}
+                minH={TOQUE_MINIMO}
+                items="center"
+                justify="center"
+                rounded={16}
+                bg="brandPrimary"
+                opacity={{ press: 0.85 }}
+                onPress={() => router.push('/configuracoes/animais/nova')}
+                accessibilityRole="button"
+                accessibilityLabel="Novo animal">
+                <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
+                  Novo animal
+                </Text>
+              </XStack>
+              <FilterToggle open={filtersOpen} activeCount={filterSummary.activeCount} onPress={() => toggleFilters()} />
+            </XStack>
+            <CollapsibleFilters
+              open={filtersOpen}
+              summary={filterSummary.text}
+              onOpen={() => toggleFilters(true)}
+              onClear={clearFilters}
+              clearable={filterSummary.activeCount > 0}>
+              <SelectField
+                label="Filtrar por fazenda"
+                value={farmId}
+                options={[{ value: '', label: 'Todas as fazendas' }, ...farms.map((farm) => ({ value: farm.id, label: farm.name }))]}
+                onChange={(value) => {
+                  setFarmId(value)
+                  setHerdId('')
+                }}
+              />
+              {adminFilters ? (
+                <TextFilterField label="Nome da fazenda" value={farmSearch} placeholder="Buscar pelo nome da fazenda" onChange={setFarmSearch} />
+              ) : null}
+              {showAuthorEmail ? (
+                <TextFilterField
+                  label="E-mail de quem cadastrou"
+                  value={authorEmail}
+                  placeholder="Buscar pelo e-mail"
+                  keyboardType="email-address"
+                  onChange={setAuthorEmail}
+                />
+              ) : null}
+              <SelectField
+                label="Filtrar por tipo"
+                value={typeId}
+                options={[{ value: '', label: 'Todos os tipos' }, ...types.map((item) => ({ value: item.id, label: item.name }))]}
+                onChange={setTypeId}
+              />
+              <SelectField
+                label="Filtrar por rebanho"
+                value={herdId}
+                options={[{ value: '', label: 'Todos os rebanhos' }, ...herds.map((herd) => ({ value: herd.id, label: farmId ? herd.name : `${herd.name} · ${herd.farmName ?? 'Fazenda'}` }))]}
+                onChange={setHerdId}
+              />
+              <SelectField
+                label="Situação"
+                value={situacao}
+                options={SITUATION_OPTIONS}
+                onChange={(value) => setSituacao(isAnimalSituation(value) ? value : '')}
+              />
+            </CollapsibleFilters>
+          </YStack>
+        }
         refreshing={refreshing}
         onRefresh={() => void refresh()}
         onEndReached={() => {

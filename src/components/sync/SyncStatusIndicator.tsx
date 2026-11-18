@@ -75,7 +75,7 @@ export function SyncStatusIndicator({ compact = false }: { compact?: boolean }) 
         ) : (
           <Ionicons name={icon} size={18} color={color} />
         )}
-        <Text fontSize={16} fontWeight="800" color="brandFg" flex={1}>
+        <Text fontSize={16} fontWeight="800" color="brandFg" flex={1} numberOfLines={compact ? 2 : undefined}>
           {summary}
         </Text>
       </XStack>

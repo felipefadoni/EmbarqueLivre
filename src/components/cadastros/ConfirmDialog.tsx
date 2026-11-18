@@ -1,4 +1,4 @@
-import { Modal, Pressable, useColorScheme } from 'react-native'
+import { Modal, Pressable, ScrollView, useColorScheme, useWindowDimensions } from 'react-native'
 import { Text, XStack, YStack } from 'tamagui'
 
 import { TOQUE_MINIMO } from '../../../tamagui.config'
@@ -31,6 +31,7 @@ export function ConfirmDialog({
   busyLabel = 'Excluindo…',
 }: ConfirmDialogProps) {
   const isDark = useColorScheme() === 'dark'
+  const { height: windowHeight } = useWindowDimensions()
 
   return (
     <Modal visible={open} transparent animationType="fade" onRequestClose={onCancel}>
@@ -40,13 +41,17 @@ export function ConfirmDialog({
         accessibilityViewIsModal>
         <Pressable onPress={(event) => event.stopPropagation()}>
           <YStack bg="cardBg" rounded={20} p={20} gap={14}>
-            <Text fontSize={19} fontWeight="800" color="brandFg">
-              {title}
-            </Text>
-            <Text fontSize={16} lineHeight="24px" fontWeight="500" color="brandFg">
-              {message}
-            </Text>
-            <YStack gap={10} mt={8}>
+            <ScrollView style={{ maxHeight: windowHeight * 0.5 }} keyboardShouldPersistTaps="handled">
+              <YStack gap={14}>
+                <Text fontSize={19} fontWeight="800" color="brandFg">
+                  {title}
+                </Text>
+                <Text fontSize={16} lineHeight="24px" fontWeight="500" color="brandFg">
+                  {message}
+                </Text>
+              </YStack>
+            </ScrollView>
+            <YStack gap={10}>
               <XStack
                 minH={TOQUE_MINIMO}
                 items="center"

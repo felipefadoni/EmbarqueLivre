@@ -15,7 +15,7 @@ export default function EmbarquesLayout() {
         headerStyle: { backgroundColor },
         headerTintColor: color,
         headerTitleStyle: { fontWeight: '800', fontSize: 18, color },
-        headerBackTitle: 'Voltar',
+        headerBackButtonDisplayMode: 'minimal',
         contentStyle: { backgroundColor },
         animation: 'slide_from_right',
       }}>

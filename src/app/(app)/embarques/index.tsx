@@ -89,127 +89,130 @@ function EmbarquesList({ showAuthor, showAuthorEmail }: { showAuthor: boolean; s
 
   return (
     <YStack flex={1} bg="appBg">
-      <YStack px={20} pt={12} pb={8} gap={12}>
-        <SyncStatusIndicator compact />
-        <XStack bg="brandSurface" rounded={18} p={4} gap={4} accessibilityRole="tablist">
-          {SHIPMENT_TABS.map((tab) => {
-            const selected = tab.value === status
-            return (
+      <FlatList
+        data={items}
+        keyExtractor={(item) => item.id}
+        keyboardShouldPersistTaps="handled"
+        contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 28, flexGrow: 1, gap: 12 }}
+        ListHeaderComponent={
+          <YStack pt={12} pb={8} gap={12}>
+            <SyncStatusIndicator compact />
+            <XStack bg="brandSurface" rounded={18} p={4} gap={4} accessibilityRole="tablist">
+              {SHIPMENT_TABS.map((tab) => {
+                const selected = tab.value === status
+                return (
+                  <XStack
+                    key={tab.value}
+                    flex={1}
+                    minH={TOQUE_MINIMO}
+                    items="center"
+                    justify="center"
+                    rounded={14}
+                    bg={selected ? 'cardBg' : 'transparent'}
+                    opacity={{ press: 0.85 }}
+                    onPress={() => setStatus(tab.value)}
+                    accessibilityRole="tab"
+                    accessibilityState={{ selected }}
+                    accessibilityLabel={`Embarques ${tab.label}`}>
+                    <Text fontSize={16} fontWeight={selected ? '800' : '600'} color={selected ? 'brandFg' : 'brandMuted'} numberOfLines={1}>
+                      {tab.label}
+                    </Text>
+                  </XStack>
+                )
+              })}
+            </XStack>
+            <XStack items="center" gap={12}>
               <XStack
-                key={tab.value}
                 flex={1}
                 minH={TOQUE_MINIMO}
                 items="center"
                 justify="center"
-                rounded={14}
-                bg={selected ? 'cardBg' : 'transparent'}
+                rounded={16}
+                bg="brandPrimary"
                 opacity={{ press: 0.85 }}
-                onPress={() => setStatus(tab.value)}
-                accessibilityRole="tab"
-                accessibilityState={{ selected }}
-                accessibilityLabel={`Embarques ${tab.label}`}>
-                <Text fontSize={16} fontWeight={selected ? '800' : '600'} color={selected ? 'brandFg' : 'brandMuted'} numberOfLines={1}>
-                  {tab.label}
+                onPress={() => router.push('/embarques/nova')}
+                accessibilityRole="button"
+                accessibilityLabel="Novo embarque">
+                <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
+                  Novo embarque
                 </Text>
               </XStack>
-            )
-          })}
-        </XStack>
-        <XStack items="center" gap={12}>
-          <XStack
-            flex={1}
-            minH={TOQUE_MINIMO}
-            items="center"
-            justify="center"
-            rounded={16}
-            bg="brandPrimary"
-            opacity={{ press: 0.85 }}
-            onPress={() => router.push('/embarques/nova')}
-            accessibilityRole="button"
-            accessibilityLabel="Novo embarque">
-            <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
-              Novo embarque
-            </Text>
-          </XStack>
-          <FilterToggle open={filtersOpen} activeCount={filterSummary.activeCount} onPress={() => toggleFilters()} />
-        </XStack>
-        <CollapsibleFilters
-          open={filtersOpen}
-          summary={filterSummary.text}
-          onOpen={() => toggleFilters(true)}
-          onClear={clearFilters}
-          clearable={hasFilters}>
-          <SelectField
-            label="Fazenda"
-            value={farmId}
-            options={[{ value: '', label: 'Todas as fazendas' }, ...farms.map((farm) => ({ value: farm.id, label: farm.name }))]}
-            onChange={setFarmId}
-          />
-          <SelectField
-            label="Período"
-            value={when}
-            options={[
-              { value: '', label: 'Todos' },
-              { value: 'proximos', label: SHIPMENT_WHEN_LABEL.proximos },
-              { value: 'realizados', label: SHIPMENT_WHEN_LABEL.realizados },
-            ]}
-            onChange={(value) => setWhen(isShipmentWhen(value) ? value : '')}
-          />
-          <XStack
-            minH={TOQUE_MINIMO}
-            items="center"
-            bg="brandSurface"
-            borderColor="brandBorder"
-            borderWidth={2}
-            rounded={16}
-            px="3"
-            gap={8}>
-            <Ionicons name="search" size={18} color={iconColor} />
-            <Input
-              flex={1}
-              h="100%"
-              fontSize={16}
-              fontWeight="600"
-              color="brandFg"
-              bg="transparent"
-              borderWidth={0}
-              placeholder="Buscar pelo nome"
-              placeholderTextColor="brandMuted"
-              value={searchInput}
-              onChangeText={setSearchInput}
-              autoCapitalize="sentences"
-              autoCorrect={false}
-              returnKeyType="search"
-              accessibilityLabel="Buscar embarque pelo nome"
-            />
-            {searchInput ? (
+              <FilterToggle open={filtersOpen} activeCount={filterSummary.activeCount} onPress={() => toggleFilters()} />
+            </XStack>
+            <CollapsibleFilters
+              open={filtersOpen}
+              summary={filterSummary.text}
+              onOpen={() => toggleFilters(true)}
+              onClear={clearFilters}
+              clearable={hasFilters}>
+              <SelectField
+                label="Fazenda"
+                value={farmId}
+                options={[{ value: '', label: 'Todas as fazendas' }, ...farms.map((farm) => ({ value: farm.id, label: farm.name }))]}
+                onChange={setFarmId}
+              />
+              <SelectField
+                label="Período"
+                value={when}
+                options={[
+                  { value: '', label: 'Todos' },
+                  { value: 'proximos', label: SHIPMENT_WHEN_LABEL.proximos },
+                  { value: 'realizados', label: SHIPMENT_WHEN_LABEL.realizados },
+                ]}
+                onChange={(value) => setWhen(isShipmentWhen(value) ? value : '')}
+              />
               <XStack
                 minH={TOQUE_MINIMO}
                 items="center"
-                justify="center"
-                style={{ width: 44 }}
-                onPress={() => setSearchInput('')}
-                accessibilityRole="button"
-                accessibilityLabel="Limpar busca">
-                <Ionicons name="close-circle" size={20} color={iconColor} />
+                bg="brandSurface"
+                borderColor="brandBorder"
+                borderWidth={2}
+                rounded={16}
+                px="3"
+                gap={8}>
+                <Ionicons name="search" size={18} color={iconColor} />
+                <Input
+                  flex={1}
+                  h="100%"
+                  fontSize={16}
+                  fontWeight="600"
+                  color="brandFg"
+                  bg="transparent"
+                  borderWidth={0}
+                  placeholder="Buscar pelo nome"
+                  placeholderTextColor="brandMuted"
+                  value={searchInput}
+                  onChangeText={setSearchInput}
+                  autoCapitalize="sentences"
+                  autoCorrect={false}
+                  returnKeyType="search"
+                  accessibilityLabel="Buscar embarque pelo nome"
+                />
+                {searchInput ? (
+                  <XStack
+                    minH={TOQUE_MINIMO}
+                    items="center"
+                    justify="center"
+                    style={{ width: 44 }}
+                    onPress={() => setSearchInput('')}
+                    accessibilityRole="button"
+                    accessibilityLabel="Limpar busca">
+                    <Ionicons name="close-circle" size={20} color={iconColor} />
+                  </XStack>
+                ) : null}
               </XStack>
-            ) : null}
-          </XStack>
-          {showAuthorEmail ? (
-            <TextFilterField
-              label="E-mail de quem cadastrou"
-              value={authorEmail}
-              placeholder="Buscar pelo e-mail"
-              keyboardType="email-address"
-              onChange={setAuthorEmail}
-            />
-          ) : null}
-        </CollapsibleFilters>
-      </YStack>
-      <FlatList
-        data={items}
-        keyExtractor={(item) => item.id}
-        contentContainerStyle={{ paddingHorizontal: 20, paddingBottom: 28, flexGrow: 1, gap: 12 }}
+              {showAuthorEmail ? (
+                <TextFilterField
+                  label="E-mail de quem cadastrou"
+                  value={authorEmail}
+                  placeholder="Buscar pelo e-mail"
+                  keyboardType="email-address"
+                  onChange={setAuthorEmail}
+                />
+              ) : null}
+            </CollapsibleFilters>
+          </YStack>
+        }
         refreshing={refreshing}
         onRefresh={() => void refresh()}
         onEndReached={() => {

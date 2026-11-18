@@ -1,6 +1,6 @@
 import Ionicons from '@expo/vector-icons/Ionicons'
 import type { ReactNode } from 'react'
-import { LayoutAnimation, Platform, ScrollView, UIManager, useColorScheme } from 'react-native'
+import { LayoutAnimation, Platform, ScrollView, UIManager, useColorScheme, useWindowDimensions, View } from 'react-native'
 import { Text, XStack, YStack } from 'tamagui'
 
 import { KEYBOARD_SCROLL_PROPS } from '@/components/form/KeyboardAwareScrollView'
@@ -30,42 +30,46 @@ export function FilterToggle({ open, activeCount, onPress }: FilterToggleProps) 
   const isDark = useColorScheme() === 'dark'
   const color = open ? (isDark ? '#2B3D34' : '#D1EFEF') : isDark ? '#D1EFEF' : '#2B3D34'
   const showBadge = !open && activeCount > 0
+  // No Android o ancestral com overflow hidden corta o selo absolute. O padding do wrapper
+  // reserva o espaço sem alterar o alvo de toque (TOQUE_MINIMO).
   return (
-    <XStack
-      position="relative"
-      items="center"
-      justify="center"
-      rounded={16}
-      borderWidth={2}
-      borderColor={open ? 'brandPrimary' : 'brandBorder'}
-      bg={open ? 'brandPrimary' : 'brandSurface'}
-      opacity={{ press: 0.85 }}
-      style={{ width: TOQUE_MINIMO, height: TOQUE_MINIMO }}
-      onPress={onPress}
-      accessibilityRole="button"
-      accessibilityState={{ expanded: open }}
-      accessibilityLabel={`${open ? 'Fechar' : 'Abrir'} filtros${activeCount > 0 ? `, ${activeCount} ${activeCount === 1 ? 'filtro ativo' : 'filtros ativos'}` : ''}`}>
-      <Ionicons name={open ? 'funnel' : 'funnel-outline'} size={20} color={color} />
-      {showBadge ? (
-        <YStack
-          position="absolute"
-          t={-6}
-          r={-6}
-          minW={22}
-          h={22}
-          px={5}
-          rounded={11}
-          items="center"
-          justify="center"
-          bg="brandPrimary"
-          borderWidth={2}
-          borderColor="appBg">
-          <Text fontSize={12} fontWeight="800" color="brandPrimaryFg">
-            {activeCount}
-          </Text>
-        </YStack>
-      ) : null}
-    </XStack>
+    <View style={{ overflow: 'visible', padding: 8 }}>
+      <XStack
+        position="relative"
+        items="center"
+        justify="center"
+        rounded={16}
+        borderWidth={2}
+        borderColor={open ? 'brandPrimary' : 'brandBorder'}
+        bg={open ? 'brandPrimary' : 'brandSurface'}
+        opacity={{ press: 0.85 }}
+        style={{ width: TOQUE_MINIMO, height: TOQUE_MINIMO, overflow: 'visible' }}
+        onPress={onPress}
+        accessibilityRole="button"
+        accessibilityState={{ expanded: open }}
+        accessibilityLabel={`${open ? 'Fechar' : 'Abrir'} filtros${activeCount > 0 ? `, ${activeCount} ${activeCount === 1 ? 'filtro ativo' : 'filtros ativos'}` : ''}`}>
+        <Ionicons name={open ? 'funnel' : 'funnel-outline'} size={20} color={color} />
+        {showBadge ? (
+          <YStack
+            position="absolute"
+            t={-6}
+            r={-6}
+            minW={22}
+            h={22}
+            px={5}
+            rounded={11}
+            items="center"
+            justify="center"
+            bg="brandPrimary"
+            borderWidth={2}
+            borderColor="appBg">
+            <Text fontSize={12} fontWeight="800" color="brandPrimaryFg">
+              {activeCount}
+            </Text>
+          </YStack>
+        ) : null}
+      </XStack>
+    </View>
   )
 }
 
@@ -82,13 +86,14 @@ type CollapsibleFiltersProps = {
 
 /** Painel de filtros recolhível. Fechar NÃO limpa os filtros: eles continuam aplicados. */
 export function CollapsibleFilters({ open, summary, onOpen, onClear, clearable = false, children }: CollapsibleFiltersProps) {
+  const { height: windowHeight } = useWindowDimensions()
   if (open) {
-    // ScrollView do tamanho do conteúdo (flexGrow 0): sem teclado nada muda; com o teclado, um campo do painel que
-    // ficaria atrás dele é rolado para cima dentro do próprio painel (inset automático no iOS).
+    // Altura máxima de 45% da janela: o painel não engole a lista. O scroll interno continua
+    // (nestedScrollEnabled + KEYBOARD_SCROLL_PROPS) para campos que ficariam atrás do teclado.
     return (
       <ScrollView
         {...KEYBOARD_SCROLL_PROPS}
-        style={{ flexGrow: 0 }}
+        style={{ flexGrow: 0, maxHeight: windowHeight * 0.45 }}
         contentContainerStyle={{ gap: 12 }}
         alwaysBounceVertical={false}
         showsVerticalScrollIndicator={false}

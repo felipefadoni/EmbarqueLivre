@@ -11,6 +11,9 @@ export type SelectOption = {
   label: string
 }
 
+/** `modal` abre uma folha; `inline` lista as opções abaixo do campo (sem segundo Modal). */
+export type SelectPresentation = 'modal' | 'inline'
+
 type SelectFieldProps = {
   label: string
   value: string
@@ -19,6 +22,7 @@ type SelectFieldProps = {
   error?: string
   onChange: (value: string) => void
   disabled?: boolean
+  presentation?: SelectPresentation
 }
 
 export function SelectField({
@@ -29,6 +33,7 @@ export function SelectField({
   error,
   onChange,
   disabled = false,
+  presentation = 'modal',
 }: SelectFieldProps) {
   const [open, setOpen] = useState(false)
   const isDark = useColorScheme() === 'dark'
@@ -51,7 +56,7 @@ export function SelectField({
         px="3"
         w="100%"
         opacity={{ default: disabled ? 0.7 : 1, press: 0.9 }}
-        onPress={disabled ? undefined : () => setOpen(true)}
+        onPress={disabled ? undefined : () => setOpen((current) => (presentation === 'inline' ? !current : true))}
         accessibilityRole="button"
         accessibilityLabel={label}
         accessibilityHint={selected?.label ?? placeholder}
@@ -67,7 +72,42 @@ export function SelectField({
         </Text>
       ) : null}
 
-      <Modal visible={open} transparent animationType="slide" onRequestClose={() => setOpen(false)}>
+      {presentation === 'inline' && open ? (
+        <ScrollView
+          style={{ maxHeight: 220 }}
+          keyboardShouldPersistTaps="handled"
+          nestedScrollEnabled>
+          <YStack bg="cardBg" rounded={16} borderWidth={2} borderColor="brandBorder" py={4}>
+            {options.map((option) => {
+              const active = option.value === value
+              return (
+                <XStack
+                  key={option.value}
+                  minH={TOQUE_MINIMO}
+                  items="center"
+                  justify="space-between"
+                  px={12}
+                  rounded={16}
+                  bg={active ? (isDark ? '#1C3C31' : '#EEF6EF') : 'transparent'}
+                  onPress={() => {
+                    onChange(option.value)
+                    setOpen(false)
+                  }}
+                  accessibilityRole="button"
+                  accessibilityState={{ selected: active }}
+                  accessibilityLabel={option.label}>
+                  <Text fontSize={16} fontWeight={active ? '800' : '600'} color="brandFg" flex={1}>
+                    {option.label}
+                  </Text>
+                  {active ? <Ionicons name="checkmark" size={20} color={isDark ? '#99C2AB' : '#2B3D34'} /> : null}
+                </XStack>
+              )
+            })}
+          </YStack>
+        </ScrollView>
+      ) : null}
+
+      <Modal visible={presentation === 'modal' && open} transparent animationType="slide" onRequestClose={() => setOpen(false)}>
         <Pressable
           style={{ flex: 1, backgroundColor: 'rgba(15, 28, 24, 0.55)', justifyContent: 'flex-end' }}
           onPress={() => setOpen(false)}>

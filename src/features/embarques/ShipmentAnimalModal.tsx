@@ -306,6 +306,7 @@ function PickStep({
 						label="Situação"
 						value={situacao}
 						options={SITUATION_OPTIONS}
+						presentation="inline"
 						onChange={(value) =>
 							setSituacao(isAnimalSituation(value) ? value : "")
 						}
@@ -573,7 +574,7 @@ function CaptureStep({
 								<Ionicons
 									name={confirmed ? "checkbox" : "square-outline"}
 									size={22}
-									color="white"
+									color="#FFFFFF"
 								/>
 								<Text
 									flex={1}

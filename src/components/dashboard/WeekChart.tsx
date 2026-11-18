@@ -73,9 +73,17 @@ export function WeekChart({ values, color, gridColor, labelColor, fillColor, lab
       ) : (
         <View style={{ height }} />
       )}
-      <XStack justify="space-between" px={padX}>
-        {labels.map((label) => (
-          <Text key={label} fontSize={13} fontWeight="700" style={{ color: labelColor }}>
+      <XStack px={padX}>
+        {labels.map((label, index) => (
+          <Text
+            key={`${index}-${label}`}
+            flex={1}
+            fontSize={11}
+            fontWeight="700"
+            numberOfLines={1}
+            adjustsFontSizeToFit
+            minimumFontScale={0.7}
+            style={{ color: labelColor, textAlign: 'center' }}>
             {label}
           </Text>
         ))}
