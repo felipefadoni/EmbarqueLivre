@@ -29,6 +29,8 @@ export default function AppLayout() {
 						borderTopWidth: 0,
 						elevation: 0,
 						shadowOpacity: 0,
+						borderTopLeftRadius: 0,
+						borderTopRightRadius: 0,
 					},
 				}}
 			>
