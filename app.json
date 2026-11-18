@@ -70,7 +70,8 @@
       ],
       "expo-sharing",
       "expo-background-task",
-      "./plugins/withAndroidR8KeepRules"
+      "./plugins/withAndroidR8KeepRules",
+      "./plugins/withOptionalAndroidFeatures"
     ],
     "experiments": {
       "typedRoutes": true,
