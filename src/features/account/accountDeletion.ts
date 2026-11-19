@@ -13,6 +13,8 @@ export type DeletionCounts = {
   herds: number
   animals: number
   vaccinations: number
+  /** Pesagens dos animais da conta. A API antiga pode não mandar: conta como 0. */
+  weighings: number
   shipments: number
   photos: number
   /** Usuários vivos da conta, o próprio incluído. */
@@ -45,7 +47,7 @@ export function canDeleteOwnAccount(role: string | null | undefined): boolean {
   return role === 'master' || role === 'basic'
 }
 
-const COUNT_KEYS = ['farms', 'herds', 'animals', 'vaccinations', 'shipments', 'photos', 'users'] as const
+const COUNT_KEYS = ['farms', 'herds', 'animals', 'vaccinations', 'weighings', 'shipments', 'photos', 'users'] as const
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
@@ -122,6 +124,7 @@ const COUNT_LABELS: Record<Exclude<(typeof COUNT_KEYS)[number], 'users'>, [strin
   herds: ['rebanho', 'rebanhos'],
   animals: ['animal', 'animais'],
   vaccinations: ['registro de aplicação', 'registros de aplicação'],
+  weighings: ['pesagem registrada', 'pesagens registradas'],
   shipments: ['embarque', 'embarques'],
   photos: ['foto', 'fotos'],
 }

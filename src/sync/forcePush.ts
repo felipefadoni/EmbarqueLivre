@@ -127,7 +127,7 @@ export async function forcePushConflicts(db: GuardExecutor, deps: ForcePushDeps,
   const all = await db.getAll<{ id: string; tableName: string }>(
     `SELECT id, ${OC.tableName.name} AS tableName FROM ${O} WHERE ${OC.state.name} = 'conflict' ORDER BY ${OC.createdAt.name}, id`,
   )
-  // Ordem do contrato: farms → vaccines → herds → animals → animal_vaccinations → shipments → shipment_animals
+  // Ordem do contrato: farms → vaccines → herds → animals → animal_vaccinations → animal_weighings → shipments → shipment_animals
   // (estável: dentro da mesma tabela, a ordem em que aconteceu).
   const selected = (ids?.length ? all.filter((row) => ids.includes(row.id)) : all)
     .map((row, index) => ({ ...row, index }))

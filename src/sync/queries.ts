@@ -25,6 +25,7 @@ const VA = t('vaccineAuthors')
 const T = t('animalTypes')
 const A = t('animals')
 const AV = t('vaccinations')
+const AW = t('weighings')
 const H = t('herds')
 const S = t('shipments')
 const SA = t('shipmentAnimals')
@@ -591,6 +592,143 @@ export type VaccinationRow = {
   createdByEmail?: string | null
 }
 
+// ---------- Pesagens (animal_weighings) ----------
+
+/** `withAuthor` (só admin): + nome e e-mail de quem lançou. Sem ele: o SELECT de antes. */
+function weighingSelect(withAuthor = false) {
+  const author = withAuthor
+    ? ` w.${c('weighings', 'createdByName')} AS createdByName, w.${c('weighings', 'createdByEmail')} AS createdByEmail,`
+    : ''
+  return `SELECT w.id AS id,${author} w.${c('weighings', 'animalId')} AS animalId, a.${c('animals', 'code')} AS animalCode,
+  COALESCE(a.${c('animals', 'farmId')}, w.${c('weighings', 'farmId')}) AS farmId, f.${c('farms', 'name')} AS farmName,
+  a.${c('animals', 'herdId')} AS herdId, h.${c('herds', 'name')} AS herdName,
+  w.${c('weighings', 'weightKg')} AS weightKg, w.${c('weighings', 'weighedAt')} AS weighedAt,
+  w.${c('weighings', 'createdByUserId')} AS createdByUserId,
+  w.${c('weighings', 'createdAt')} AS createdAt, w.${c('weighings', 'updatedAt')} AS updatedAt
+  FROM ${AW} w
+  LEFT JOIN ${A} a ON a.id = w.${c('weighings', 'animalId')}
+  LEFT JOIN ${F} f ON f.id = COALESCE(a.${c('animals', 'farmId')}, w.${c('weighings', 'farmId')})
+  LEFT JOIN ${H} h ON h.id = a.${c('animals', 'herdId')}`
+}
+
+export type WeighingFiltersLocal = {
+  farmId?: string
+  /** Brinco contém (sem diferenciar maiúsculas). */
+  code?: string
+  animalId?: string
+  /** Só admin: traz nome e e-mail de quem lançou e permite filtrar pelo e-mail (`authorEmail`). */
+  withAuthor?: boolean
+  authorEmail?: string
+  /**
+   * Inclui pesagens de animal que saiu em embarque finalizado. Padrão: não (a lista de trabalho esconde);
+   * o histórico no cadastro do animal passa true.
+   */
+  includeShipped?: boolean
+}
+
+/** Data e hora locais de um ISO (timestamptz) para a tela: "14/08/2026 às 09:41". Vazio se não for data. */
+export function formatWeighedAt(iso: string | null | undefined): string {
+  if (!iso) return ''
+  const date = new Date(iso)
+  if (Number.isNaN(date.getTime())) return ''
+  const pad = (n: number) => String(n).padStart(2, '0')
+  return `${pad(date.getDate())}/${pad(date.getMonth() + 1)}/${date.getFullYear()} às ${pad(date.getHours())}:${pad(date.getMinutes())}`
+}
+
+function weighingsWhere(filters: WeighingFiltersLocal) {
+  const where: string[] = []
+  const params: unknown[] = []
+  if (!filters.includeShipped) where.push(`NOT ${animalShippedExpr('a')}`)
+  if (filters.farmId) {
+    where.push(`COALESCE(a.${c('animals', 'farmId')}, w.${c('weighings', 'farmId')}) = ?`)
+    params.push(filters.farmId)
+  }
+  if (filters.animalId) {
+    where.push(`w.${c('weighings', 'animalId')} = ?`)
+    params.push(filters.animalId)
+  }
+  const code = filters.code?.trim()
+  if (code) {
+    where.push(`instr(lower(a.${c('animals', 'code')}), lower(?)) > 0`)
+    params.push(code)
+  }
+  if (filters.withAuthor) emailWhere(`w.${c('weighings', 'createdByEmail')}`, filters.authorEmail, where, params)
+  return { where, params }
+}
+
+/** Pesagens com keyset (a mais recente primeiro, depois id desc). */
+export function weighingsListSpec(filters: WeighingFiltersLocal): KeysetSpec {
+  const { where, params } = weighingsWhere(filters)
+  return {
+    base: weighingSelect(filters.withAuthor),
+    baseParams: [],
+    where,
+    params,
+    keys: [
+      { expr: `w.${c('weighings', 'weighedAt')}`, field: 'weighedAt', desc: true },
+      { expr: 'w.id', field: 'id', desc: true },
+    ],
+  }
+}
+
+export function weighingByIdQuery(id: string, withAuthor = false): SqlQuery {
+  return { sql: `${weighingSelect(withAuthor)} WHERE w.id = ?`, params: [id] }
+}
+
+export type WeighingRow = {
+  id: string
+  animalId: string
+  animalCode: string | null
+  farmId: string | null
+  farmName: string | null
+  herdId: string | null
+  herdName: string | null
+  weightKg: number | null
+  weighedAt: string | null
+  createdByUserId: string | null
+  createdAt: string | null
+  updatedAt: string | null
+  /** Só nas consultas do admin (withAuthor). */
+  createdByName?: string | null
+  createdByEmail?: string | null
+}
+
+export type WeighingEntry = {
+  id: string
+  animalId: string
+  animalCode: string
+  farmId: string
+  farmName: string
+  herdId: string | null
+  herdName: string
+  weightKg: number
+  /** ISO: o momento em que o peso foi salvo. */
+  weighedAt: string
+  createdByUserId: string | null
+  createdAt: string | null
+  updatedAt: string | null
+  createdByName?: string | null
+  createdByEmail?: string | null
+}
+
+export function rowToWeighing(row: WeighingRow): WeighingEntry {
+  return {
+    ...authorOf(row),
+    id: row.id,
+    animalId: row.animalId ?? '',
+    animalCode: row.animalCode ?? '',
+    farmId: row.farmId ?? '',
+    farmName: row.farmName ?? '',
+    herdId: row.herdId ?? null,
+    herdName: row.herdName ?? '',
+    weightKg: Number(row.weightKg ?? 0),
+    weighedAt: row.weighedAt ? String(row.weighedAt) : '',
+    createdByUserId: row.createdByUserId ?? null,
+    createdAt: row.createdAt ?? null,
+    updatedAt: row.updatedAt ?? null,
+  }
+}
+
 export function rowToVaccination(row: VaccinationRow): VaccinationEntry {
   return {
     ...authorOf(row),
@@ -1083,7 +1221,7 @@ export type ShipmentReportAnimalRow = {
 
 // ---------- Regras locais (equivalentes baratos dos 409) ----------
 
-export function countQuery(entity: 'animals' | 'vaccinations' | 'herds' | 'shipments', field: string, value: string): SqlQuery {
+export function countQuery(entity: 'animals' | 'vaccinations' | 'weighings' | 'herds' | 'shipments', field: string, value: string): SqlQuery {
   const columns: Record<string, string> = {
     'animals.farmId': `${A}.${c('animals', 'farmId')}`,
     'animals.animalTypeId': `${A}.${c('animals', 'animalTypeId')}`,
@@ -1092,6 +1230,7 @@ export function countQuery(entity: 'animals' | 'vaccinations' | 'herds' | 'shipm
     'shipments.farmId': `${S}.${c('shipments', 'farmId')}`,
     'vaccinations.vaccineId': `${AV}.${c('vaccinations', 'vaccineId')}`,
     'vaccinations.animalId': `${AV}.${c('vaccinations', 'animalId')}`,
+    'weighings.animalId': `${AW}.${c('weighings', 'animalId')}`,
   }
   const column = columns[`${entity}.${field}`]
   if (!column) throw new Error(`countQuery: campo não suportado ${entity}.${field}`)

@@ -202,6 +202,7 @@ const ENTITY_LABEL: Record<string, string> = {
   animalTypes: 'Tipo de animal',
   animals: 'Animal',
   vaccinations: 'Lançamento de medicamento',
+  weighings: 'Pesagem',
   herds: 'Rebanho',
   shipments: 'Embarque',
   shipmentAnimals: 'Animal no embarque',
@@ -213,7 +214,8 @@ const OP_LABEL: Record<string, string> = { PUT: 'Cadastro', PATCH: 'Alteração'
 export function describeRejection(rejection: Pick<Rejection, 'entity' | 'op' | 'opData'>): { title: string; subtitle: string } {
   const data = parseOpData(rejection)
   const entity = ENTITY_LABEL[rejection.entity] ?? 'Registro'
-  const name = data.name ?? data.code ?? (data.applied_at ? `aplicada em ${String(data.applied_at).slice(8, 10)}/${String(data.applied_at).slice(5, 7)}/${String(data.applied_at).slice(0, 4)}` : '')
+  const weight = data.weight_kg != null && data.weight_kg !== '' ? `${String(data.weight_kg).replace('.', ',')} kg` : ''
+  const name = data.name ?? data.code ?? weight ?? (data.applied_at ? `aplicada em ${String(data.applied_at).slice(8, 10)}/${String(data.applied_at).slice(5, 7)}/${String(data.applied_at).slice(0, 4)}` : '')
   return {
     title: `${entity}${name ? ` ${String(name)}` : ''}`,
     subtitle: OP_LABEL[rejection.op] ?? rejection.op,
@@ -227,6 +229,7 @@ export const ENTITY_ROUTES = {
   animalTypes: { list: '/configuracoes/tipos-de-animais', edit: '/configuracoes/tipos-de-animais/[id]', create: '/configuracoes/tipos-de-animais/nova' },
   animals: { list: '/configuracoes/animais', edit: '/configuracoes/animais/[id]', create: '/configuracoes/animais/nova' },
   vaccinations: { list: '/lancamentos', edit: '/lancamentos/[id]', create: '/lancamentos/nova' },
+  weighings: { list: '/pesos', edit: '/pesos/[id]', create: '/pesos/nova' },
   herds: { list: '/configuracoes/rebanhos', edit: '/configuracoes/rebanhos/[id]', create: '/configuracoes/rebanhos/nova' },
   // Embarques: área própria na tab bar (SHIPMENT_FLOW_CONTRACT.routes).
   shipments: { list: '/embarques', edit: '/embarques/[id]', create: '/embarques/nova' },
@@ -277,6 +280,7 @@ const CODE_FIELD: Record<string, string> = {
   INVALID_ANIMAL_BREED: 'breed',
   INVALID_BIRTH_DATE: 'birthDate',
   INVALID_APPLIED_AT: 'appliedAt',
+  INVALID_WEIGHED_AT: 'weightKg',
   FARM_OWNER_REQUIRED: 'accountId',
   INVALID_FARM_OWNER: 'accountId',
   FARM_OWNER_FORBIDDEN: 'accountId',

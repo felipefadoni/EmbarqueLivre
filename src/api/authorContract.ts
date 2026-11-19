@@ -16,8 +16,12 @@
  * `catalogs` sem autor) e `sync-columns.ts` (created_by_* readOnly no upload).
  * Backfill (`20261113160000_backfill_record_authors`): farms/herds/animals/shipments sem autor recebem o master mais
  * antigo da conta; vacinações já tinham autor obrigatório. Linhas sem master na conta continuam null.
+ *
+ * Pesagens (`animal_weighings`, migration `20260814120000`): `created_by_name` / `created_by_email` SÓ no stream
+ * `admin_all`; o stream `account` (master/básico) não seleciona as colunas. O momento (`weighed_at`) é o relógio do
+ * aparelho no lançamento e o servidor guarda o primeiro valor (um PATCH posterior não o move).
  */
-export type AuthorTable = 'farms' | 'animals' | 'herds' | 'vaccinations' | 'shipments' | 'vaccines'
+export type AuthorTable = 'farms' | 'animals' | 'herds' | 'vaccinations' | 'shipments' | 'vaccines' | 'weighings'
 export type AuthorColumns = { email: string | null; name: string | null }
 
 export const AUTHOR_CONTRACT: Record<AuthorTable, AuthorColumns> = {
@@ -28,6 +32,8 @@ export const AUTHOR_CONTRACT: Record<AuthorTable, AuthorColumns> = {
   shipments: { email: 'created_by_email', name: 'created_by_name' },
   /** Catálogo: vem da tabela vaccine_authors (VACCINE_AUTHOR_CONTRACT), não de colunas de vaccines. */
   vaccines: { email: 'created_by_email', name: 'created_by_name' },
+  /** Pesagens (animal_weighings): só o admin recebe (stream admin_all). */
+  weighings: { email: 'created_by_email', name: 'created_by_name' },
 }
 
 /** Tabelas cujo autor ainda depende do contrato da API (o diagnóstico mostra "aguardando" em vez de erro). Hoje: nenhuma. */
@@ -56,7 +62,7 @@ export const VACCINE_AUTHOR_CONTRACT = {
 } as const
 
 /**
- * REST de /vaccinations e /shipments (lista e detalhe), confirmado na API: só o ADMIN recebe
+ * REST de /vaccinations, /shipments e /weighings (lista e detalhe), confirmado na API: só o ADMIN recebe
  * `createdBy: { id, name, email } | null` (master/básico: a chave nem vem) e só o admin pode mandar `?authorEmail=`
  * (contém, sem diferenciar maiúsculas; compatível com page/limit e com pagination=cursor). Master/básico com
  * authorEmail preenchido → 403 INSUFFICIENT_ROLE. Hoje NENHUMA tela usa esses GETs (as listas leem o SQLite local);

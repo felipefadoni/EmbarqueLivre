@@ -14,8 +14,11 @@ import { ConfirmDialog } from '@/components/cadastros/ConfirmDialog'
 import { DateField } from '@/components/form/DateField'
 import { SelectField } from '@/components/cadastros/SelectField'
 import { WithdrawalSection } from '@/features/vacinacoes/WithdrawalSection'
+import { WeightHistory } from '@/features/pesos/WeightHistory'
 import type { AnimalWithdrawal } from '@/api/contract'
 import { todayIso } from '@/components/form/date'
+import { useAuth } from '@/features/auth/AuthProvider'
+import { canSeeAuthor } from '@/features/cadastros/farmFilters'
 import { repo } from '@/sync'
 import { clearPendencia, clearRowRejections, draftString, editorErrorMessage, loadEditorSource, showRejection } from '@/sync/editor'
 import {
@@ -49,6 +52,9 @@ type AnimalEditorProps = {
 
 export function AnimalEditor({ animalId, pendenciaId }: AnimalEditorProps) {
   const isEdit = Boolean(animalId)
+  // Só admin: o histórico de peso mostra quem lançou.
+  const { user } = useAuth()
+  const showWeightAuthor = canSeeAuthor(user?.role, 'weighings')
   const [code, setCode] = useState('')
   const [farmId, setFarmId] = useState('')
   const [animalTypeId, setAnimalTypeId] = useState('')
@@ -182,7 +188,7 @@ export function AnimalEditor({ animalId, pendenciaId }: AnimalEditorProps) {
       router.back()
     } catch (error) {
       setConfirmOpen(false)
-      if (isApiError(error) && error.code === 'ANIMAL_HAS_VACCINATIONS') {
+      if (isApiError(error) && (error.code === 'ANIMAL_HAS_VACCINATIONS' || error.code === 'ANIMAL_HAS_WEIGHINGS')) {
         setFormError(userMessage(error))
       } else {
         setFormError(isApiError(error) ? publicApiMessage(error) : 'Não foi possível excluir o animal.')
@@ -231,7 +237,14 @@ export function AnimalEditor({ animalId, pendenciaId }: AnimalEditorProps) {
         onSubmit={() => void onSubmit()}
         onDelete={isEdit ? () => setConfirmOpen(true) : undefined}
         deleteLabel="Excluir animal"
-        footer={isEdit ? <WithdrawalSection withdrawal={withdrawal} /> : undefined}>
+        footer={
+          isEdit && animalId ? (
+            <>
+              <WeightHistory animalId={animalId} showAuthor={showWeightAuthor} />
+              <WithdrawalSection withdrawal={withdrawal} />
+            </>
+          ) : undefined
+        }>
         <AuthField
           label="Código"
           value={code}
@@ -322,7 +335,7 @@ export function AnimalEditor({ animalId, pendenciaId }: AnimalEditorProps) {
         message={
           withdrawal && withdrawal.applications.length > 0
             ? 'Este animal possui medicamentos lançados. Exclua os lançamentos antes de excluir o animal.'
-            : 'Esta ação não pode ser desfeita.'
+            : 'Se houver pesagens registradas, o animal não pode ser excluído: exclua os registros de peso antes. Esta ação não pode ser desfeita.'
         }
         onCancel={() => setConfirmOpen(false)}
         onConfirm={() => void onDelete()}

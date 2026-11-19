@@ -55,7 +55,7 @@ export type RemappedOp = { op: UploadOp; remapped: Record<string, { from: string
 export const ANIMAL_TYPE_NAME_HINT = 'animal_type_name'
 
 /** Ordem do envio forçado (contrato da API): pais antes dos filhos. */
-export const FORCE_PUSH_TABLE_ORDER = ['farms', 'vaccines', 'herds', 'animals', 'animal_vaccinations', 'shipments', 'shipment_animals'] as const
+export const FORCE_PUSH_TABLE_ORDER = ['farms', 'vaccines', 'herds', 'animals', 'animal_vaccinations', 'animal_weighings', 'shipments', 'shipment_animals'] as const
 
 /** Acrescenta `animal_type_name` (do tipo local) ao PUT/PATCH de animal com `animal_type_id`. */
 export async function withAnimalTypeName(op: UploadOp, typeNameOf: (typeId: string) => Promise<string | null>): Promise<UploadOp> {

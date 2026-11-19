@@ -17,6 +17,10 @@ const ICONS: Record<string, { active: TabIcon; inactive: TabIcon }> = {
 		active: { family: "mci", name: "needle" },
 		inactive: { family: "mci", name: "needle" },
 	},
+	pesos: {
+		active: { family: "mci", name: "scale" },
+		inactive: { family: "mci", name: "scale" },
+	},
 	embarques: {
 		active: { family: "mci", name: "truck-delivery" },
 		inactive: { family: "mci", name: "truck-delivery-outline" },
@@ -30,6 +34,7 @@ const ICONS: Record<string, { active: TabIcon; inactive: TabIcon }> = {
 const LABELS: Record<string, string> = {
 	index: "Dashboard",
 	lancamentos: "Medicamentos",
+	pesos: "Peso",
 	embarques: "Embarques",
 	configuracoes: "Menu",
 };

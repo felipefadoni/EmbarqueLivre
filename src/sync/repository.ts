@@ -53,6 +53,8 @@ import {
 	shipmentNameTakenQuery,
 	type VaccinationRow,
 	vaccinationByIdQuery,
+	type WeighingRow,
+	weighingByIdQuery,
 	vaccineByIdQuery,
 	vaccineNamesQuery,
 } from "./queries";
@@ -139,6 +141,7 @@ export type FarmInput = {
 };
 export type VaccineInput = { name: string; withdrawalDays: number };
 export type AnimalTypeInput = { name: string };
+export type WeighingInput = { animalId: string; weightKg: number | string };
 export type AnimalInput = {
 	code: string;
 	farmId: string;
@@ -723,6 +726,9 @@ export function createRepository(ctx: RepositoryContext) {
 				(await count(db, countQuery("vaccinations", "animalId", animalId))) > 0
 			)
 				throw localError(409, "ANIMAL_HAS_VACCINATIONS");
+			// A API recusa (409 ANIMAL_HAS_WEIGHINGS, ON DELETE RESTRICT): o histórico fica. Exclua as pesagens antes.
+			if ((await count(db, countQuery("weighings", "animalId", animalId))) > 0)
+				throw localError(409, "ANIMAL_HAS_WEIGHINGS");
 			// CASCADE no servidor (não bloqueado para embarcado; sai até de embarque finalizado): o vínculo sai na mesma
 			// transação, para não deixar shipment_animals órfão no SQLite.
 			await withWrite(async (exec) => {
@@ -1193,6 +1199,74 @@ export function createRepository(ctx: RepositoryContext) {
 			await run({
 				sql: `DELETE FROM ${t("vaccinations")} WHERE id = ?`,
 				params: [vaccinationId],
+			});
+		},
+
+		// ----- Pesagens (animal_weighings) -----
+		/**
+		 * Lança um peso. `weighedAt` é o relógio do aparelho no momento de salvar (o servidor guarda esse primeiro
+		 * valor e ignora qualquer correção posterior do momento). `farm_id` é gravado para filtrar offline e o
+		 * servidor recalcula (readOnly no upload).
+		 */
+		async createWeighing(input: WeighingInput) {
+			const weightKg = parseWeightKg(input.weightKg);
+			if (weightKg == null)
+				throw localError(
+					400,
+					SHIPMENT_FLOW_CONTRACT.errors.invalidWeight,
+					"weightKg",
+				);
+			const animal = await db.getOptional<AnimalRow>(
+				...spread(animalByIdQuery(input.animalId, ctx.today())),
+			);
+			if (!animal) throw localError(404, "ANIMAL_NOT_FOUND", "animalId");
+			if (animal.shipped)
+				throw localError(422, SHIPMENT_FLOW_CONTRACT.errors.animalAlreadyShipped, "animalId");
+			const newId = id();
+			const now = ctx.now();
+			await run(
+				insertSql(
+					"weighings",
+					newId,
+					toColumns("weighings", {
+						animalId: input.animalId,
+						farmId: animal.farmId,
+						weightKg,
+						weighedAt: now,
+						createdByUserId: ctx.currentUser()?.id ?? null,
+						createdAt: now,
+						updatedAt: now,
+					}),
+				),
+			);
+			return newId;
+		},
+		/** Corrigir: só o peso. O animal, o momento e quem lançou ficam. */
+		async updateWeighing(weighingId: string, input: { weightKg: number | string }) {
+			const weightKg = parseWeightKg(input.weightKg);
+			if (weightKg == null)
+				throw localError(
+					400,
+					SHIPMENT_FLOW_CONTRACT.errors.invalidWeight,
+					"weightKg",
+				);
+			const current = await db.getOptional<WeighingRow>(
+				...spread(weighingByIdQuery(weighingId)),
+			);
+			if (!current) throw localError(404, "WEIGHING_NOT_FOUND");
+			if (Number(current.weightKg) === weightKg) return;
+			await run(
+				updateSql(
+					"weighings",
+					weighingId,
+					toColumns("weighings", { weightKg, updatedAt: ctx.now() }),
+				),
+			);
+		},
+		async deleteWeighing(weighingId: string) {
+			await run({
+				sql: `DELETE FROM ${t("weighings")} WHERE id = ?`,
+				params: [weighingId],
 			});
 		},
 	};

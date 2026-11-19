@@ -6,7 +6,7 @@
  * prefill de pendências e upload usam este módulo.
  *
  * Contrato final do backend (API_INTEGRATION.md §19, 10/11/2026): tabelas farms, vaccines,
- * animal_types, animals, animal_vaccinations (NÃO há tabela de usuários); colunas snake_case sem
+ * animal_types, animals, animal_vaccinations, animal_weighings (NÃO há tabela de usuários); colunas snake_case sem
  * prefixo, com `id`; o opData do upload usa os mesmos nomes. IDs são ULID em MAIÚSCULAS.
  * Streams (auto_subscribe): catalogs (todos), account (master/basic), admin_all (admin).
  * - `id` é sempre a coluna `id` (texto, ULID) criada pelo PowerSync.
@@ -172,10 +172,32 @@ export const SYNC_TABLES = {
       updatedAt: col('updated_at'),
     },
   },
+  /**
+   * Pesagem de UM animal (contrato da API, migration 20260814120000): uma linha por lançamento. `weight_kg` (1–2000,
+   * 1 casa) e `weighed_at` (relógio do aparelho no momento de salvar) sobem no PUT; `farm_id` e o autor são do servidor.
+   * Corrigir manda só o peso (o servidor guarda o primeiro `weighed_at`).
+   */
+  weighings: {
+    table: 'animal_weighings',
+    columns: {
+      animalId: col('animal_id'),
+      /** Snapshot da fazenda do animal. O servidor mantém (readOnly); o app grava a fazenda do animal para filtrar offline. */
+      farmId: col('farm_id'),
+      weightKg: col('weight_kg', 'real'),
+      /** Momento em que o peso foi salvo (ISO). Obrigatório no PUT; o servidor ignora em PATCH. */
+      weighedAt: col('weighed_at'),
+      createdByUserId: col('created_by_user_id'),
+      /** Só download, só admin (stream admin_all): nome/e-mail de quem lançou. Nunca sobem (NEVER_UPLOAD_COLUMNS). */
+      createdByName: col(AUTHOR_CONTRACT.weighings.name ?? 'created_by_name'),
+      createdByEmail: col(AUTHOR_CONTRACT.weighings.email ?? 'created_by_email'),
+      createdAt: col('created_at'),
+      updatedAt: col('updated_at'),
+    },
+  },
 } as const
 
 /** Entidades que o app escreve localmente. */
-export const WRITABLE_ENTITIES = ['farms', 'vaccines', 'animalTypes', 'animals', 'herds', 'shipments', 'shipmentAnimals', 'vaccinations'] as const
+export const WRITABLE_ENTITIES = ['farms', 'vaccines', 'animalTypes', 'animals', 'herds', 'shipments', 'shipmentAnimals', 'vaccinations', 'weighings'] as const
 
 /**
  * Tabelas SOMENTE LEITURA (o servidor manda, o app só lê; a API recusa escrita com 400 READ_ONLY_TABLE). Nada delas
@@ -238,6 +260,8 @@ export const SERVER_DERIVED_COLUMNS: Partial<Record<SyncEntity, string[]>> = {
     SYNC_TABLES.vaccinations.columns.withdrawalUntil.name,
     SYNC_TABLES.vaccinations.columns.createdByUserId.name,
   ],
+  // farm_id e o autor são do servidor; weighed_at SOBE no PUT (relógio do aparelho) e o servidor guarda o primeiro.
+  weighings: [SYNC_TABLES.weighings.columns.farmId.name, SYNC_TABLES.weighings.columns.createdByUserId.name],
   shipments: [SYNC_TABLES.shipments.columns.createdByUserId.name, SYNC_TABLES.shipments.columns.finishedAt.name],
   animals: [SYNC_TABLES.animals.columns.shippedAt.name],
   shipmentAnimals: [SYNC_TABLES.shipmentAnimals.columns.photoContentType.name, SYNC_TABLES.shipmentAnimals.columns.photoSizeBytes.name],
@@ -265,6 +289,7 @@ export const NEVER_UPLOAD_COLUMNS: Partial<Record<SyncEntity, string[]>> = {
     SYNC_TABLES.shipments.columns.createdByEmail.name,
   ],
   vaccinations: [SYNC_TABLES.vaccinations.columns.createdByName.name, SYNC_TABLES.vaccinations.columns.createdByEmail.name],
+  weighings: [SYNC_TABLES.weighings.columns.createdByName.name, SYNC_TABLES.weighings.columns.createdByEmail.name],
   animals: [
     SYNC_TABLES.animals.columns.shippedAt.name,
     SYNC_TABLES.animals.columns.createdByName.name,
@@ -453,5 +478,10 @@ export const LOCAL_INDEXES: Partial<Record<SyncEntity, Record<string, string[]>>
     applied: [SYNC_TABLES.vaccinations.columns.appliedAt.name],
     farm_applied: [SYNC_TABLES.vaccinations.columns.farmId.name, SYNC_TABLES.vaccinations.columns.appliedAt.name],
     vaccine: [SYNC_TABLES.vaccinations.columns.vaccineId.name],
+  },
+  weighings: {
+    animal: [SYNC_TABLES.weighings.columns.animalId.name],
+    weighed: [SYNC_TABLES.weighings.columns.weighedAt.name],
+    farm_weighed: [SYNC_TABLES.weighings.columns.farmId.name, SYNC_TABLES.weighings.columns.weighedAt.name],
   },
 }

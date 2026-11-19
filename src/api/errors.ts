@@ -66,6 +66,9 @@ const DOMAIN_MESSAGES: Record<string, string> = {
   VACCINE_HAS_APPLICATIONS: 'Este medicamento possui lançamentos e não pode ser excluído.',
   VACCINATION_NOT_FOUND: 'Lançamento de medicamento não encontrado. Ele pode ter sido excluído.',
   ANIMAL_HAS_VACCINATIONS: 'Este animal possui medicamentos lançados e não pode ser excluído.',
+  WEIGHING_NOT_FOUND: 'Registro de peso não encontrado. Ele pode ter sido excluído.',
+  ANIMAL_HAS_WEIGHINGS: 'Não é possível excluir o animal: existem pesagens registradas para ele. Exclua os registros de peso antes.',
+  INVALID_WEIGHED_AT: 'Data da pesagem inválida.',
   // Rebanho (contrato final: HERDS_CONTRACT, §17.10 / §19)
   HERD_NAME_ALREADY_EXISTS: 'Já existe um rebanho com esse nome nesta fazenda',
   HERD_FARM_MISMATCH: 'O rebanho precisa ser da mesma fazenda do animal',
@@ -176,6 +179,9 @@ const VALIDATION_MESSAGE_MAP: [string, string][] = [
   ['appliedAt should not be empty', 'Informe a data de aplicação.'],
   ['appliedAt must be', 'Informe uma data de aplicação válida.'],
   ['appliedAt deve estar no formato', 'Informe uma data de aplicação válida.'],
+  ['animalId é obrigatório', 'Selecione o animal.'],
+  ['Informe o peso do animal', 'Informe o peso do animal, em kg.'],
+  ['Informe o momento da pesagem', 'Não foi possível registrar o momento da pesagem. Tente de novo.'],
 ]
 
 export function isApiError(error: unknown): error is ApiError {

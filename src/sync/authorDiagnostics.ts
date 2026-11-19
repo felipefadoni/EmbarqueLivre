@@ -25,6 +25,7 @@ const DIAG_ENTITIES: { table: AuthorTable; entity: SyncEntity; label: string }[]
   { table: 'herds', entity: 'herds', label: 'Rebanhos' },
   { table: 'vaccinations', entity: 'vaccinations', label: 'Aplicações' },
   { table: 'shipments', entity: 'shipments', label: 'Embarques' },
+  { table: 'weighings', entity: 'weighings', label: 'Pesagens' },
 ]
 
 export type AuthorDiagnosticRow = {
