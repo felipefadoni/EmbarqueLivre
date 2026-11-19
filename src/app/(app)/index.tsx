@@ -106,7 +106,7 @@ export default function DashboardScreen() {
         {noFarms ? (
           <EmptyCta
             title="Comece cadastrando uma fazenda"
-            message={canManageFarmsNow ? 'Depois cadastre os animais e lance as vacinas.' : 'Peça ao responsável da conta para cadastrar as fazendas.'}
+            message={canManageFarmsNow ? 'Depois cadastre os animais e lance os medicamentos.' : 'Peça ao responsável da conta para cadastrar as fazendas.'}
             action={canManageFarmsNow ? { label: 'Cadastrar fazenda', onPress: () => pushWithAnchor('/configuracoes/fazendas/nova') } : undefined}
           />
         ) : null}
@@ -201,7 +201,7 @@ export default function DashboardScreen() {
             <AppCard>
               <YStack gap={14}>
                 <Text fontSize={18} fontWeight="800" color="brandFg">
-                  Vacinações aplicadas
+                  Aplicações registradas
                 </Text>
                 <XStack gap={10}>
                   <CountTile label="Hoje" value={data.counts.hoje} onPress={() => pushWithAnchor(vaccinationsLink({ date: today, farmId: farm }))} />
@@ -236,7 +236,7 @@ export default function DashboardScreen() {
                 <WeekChart values={data.series.values} labels={data.series.labels} color={ringColor} gridColor={grid} labelColor={muted} fillColor={fill} />
                 {data.counts.mes === 0 && !data.counts.loading ? (
                   <Text fontSize={15} fontWeight="600" color="brandMuted">
-                    Nenhuma vacina lançada este mês.
+                    Nenhum medicamento lançado este mês.
                   </Text>
                 ) : null}
               </YStack>
@@ -306,17 +306,17 @@ export default function DashboardScreen() {
                 accessibilityRole={canManageVaccinesNow ? 'button' : undefined}
                 accessibilityLabel={
                   data.topVaccine.item
-                    ? `Vacina mais usada nos últimos 30 dias: ${data.topVaccine.item.name}, ${data.topVaccine.item.n} aplicações`
-                    : 'Nenhuma vacina aplicada nos últimos 30 dias'
+                    ? `Medicamento mais usado nos últimos 30 dias: ${data.topVaccine.item.name}, ${data.topVaccine.item.n} aplicações`
+                    : 'Nenhum medicamento aplicado nos últimos 30 dias'
                 }>
                 <Ionicons name="medkit-outline" size={22} color={ringColor} />
                 <YStack flex={1} gap={2}>
                   <Text fontSize={15} fontWeight="700" color="brandMuted">
-                    Vacina mais usada (30 dias)
+                    Medicamento mais usado (30 dias)
                   </Text>
                   <Text fontSize={16} fontWeight="800" color="brandFg">
                     {data.topVaccine.item
-                      ? `${data.topVaccine.item.name ?? 'Vacina'} · ${data.topVaccine.item.n} ${Number(data.topVaccine.item.n) === 1 ? 'aplicação' : 'aplicações'}`
+                      ? `${data.topVaccine.item.name ?? 'Medicamento'} · ${data.topVaccine.item.n} ${Number(data.topVaccine.item.n) === 1 ? 'aplicação' : 'aplicações'}`
                       : 'Nenhuma aplicação nos últimos 30 dias'}
                   </Text>
                 </YStack>

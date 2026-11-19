@@ -31,9 +31,9 @@ export default function ConfiguracoesLayout() {
       <Stack.Screen name="fazendas/index" options={{ title: 'Fazendas' }} />
       <Stack.Screen name="fazendas/nova" options={{ title: 'Nova fazenda' }} />
       <Stack.Screen name="fazendas/[id]" options={{ title: 'Editar fazenda' }} />
-      <Stack.Screen name="vacinas/index" options={{ title: 'Vacinas' }} />
-      <Stack.Screen name="vacinas/nova" options={{ title: 'Nova vacina' }} />
-      <Stack.Screen name="vacinas/[id]" options={{ title: 'Editar vacina' }} />
+      <Stack.Screen name="vacinas/index" options={{ title: 'Medicamentos' }} />
+      <Stack.Screen name="vacinas/nova" options={{ title: 'Novo medicamento' }} />
+      <Stack.Screen name="vacinas/[id]" options={{ title: 'Editar medicamento' }} />
       <Stack.Screen name="tipos-de-animais/index" options={{ title: 'Tipos de animais' }} />
       <Stack.Screen name="tipos-de-animais/nova" options={{ title: 'Novo tipo' }} />
       <Stack.Screen name="tipos-de-animais/[id]" options={{ title: 'Editar tipo' }} />

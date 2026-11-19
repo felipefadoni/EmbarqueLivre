@@ -18,8 +18,8 @@ export default function LancamentosLayout() {
         contentStyle: { backgroundColor },
         animation: 'slide_from_right',
       }}>
-      <Stack.Screen name="index" options={{ headerShown: false, title: 'Vacinas' }} />
-      <Stack.Screen name="nova" options={{ title: 'Informar vacina' }} />
+      <Stack.Screen name="index" options={{ headerShown: false, title: 'Medicamentos' }} />
+      <Stack.Screen name="nova" options={{ title: 'Informar medicamento' }} />
       <Stack.Screen name="[id]" options={{ title: 'Editar lançamento' }} />
     </Stack>
   )

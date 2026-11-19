@@ -61,7 +61,7 @@ export function filterVaccinesForAccount<T extends { accountId?: string | null }
 }
 
 export const VACCINE_PICKER_MESSAGES = {
-  chooseAnimalFirst: 'Escolha o animal primeiro: a lista mostra as vacinas da conta dele.',
-  wrongAccount: 'Escolha uma vacina da conta do animal.',
-  noneInAccount: 'Esta conta ainda não tem vacinas cadastradas.',
+  chooseAnimalFirst: 'Escolha o animal primeiro: a lista mostra os medicamentos da conta dele.',
+  wrongAccount: 'Escolha um medicamento da conta do animal.',
+  noneInAccount: 'Esta conta ainda não tem medicamentos cadastrados.',
 } as const

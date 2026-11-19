@@ -47,6 +47,6 @@ export function vaccineAccess(role: UserRole | null | undefined, perAccount: boo
 /** Texto do banner quando a vacina abre só para leitura. */
 export function vaccineReadOnlyMessage(access: VaccineAccess): string {
   return access.scope === 'all-accounts'
-    ? 'Somente leitura. Cada conta cadastra as próprias vacinas; o administrador apenas consulta.'
-    : 'Somente leitura. Você não pode alterar esta vacina.'
+    ? 'Somente leitura. Cada conta cadastra os próprios medicamentos; o administrador apenas consulta.'
+    : 'Somente leitura. Você não pode alterar este medicamento.'
 }

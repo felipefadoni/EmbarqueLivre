@@ -198,7 +198,7 @@ function NovoUsuarioForm({ isAdmin }: { isAdmin: boolean }) {
       <Text fontSize={15} fontWeight="600" color="brandMuted">
         {role === 'master'
           ? 'Usuário Master entra na mesma conta, com as mesmas fazendas, e pode gerenciar cadastros e usuários.'
-          : 'Usuário Basic lança vacinas e cadastra animais, mas não gerencia fazendas, catálogos nem usuários.'}
+          : 'Usuário Basic lança medicamentos e cadastra animais, mas não gerencia fazendas, catálogos nem usuários.'}
       </Text>
       {isAdmin ? (
         <AccountPicker

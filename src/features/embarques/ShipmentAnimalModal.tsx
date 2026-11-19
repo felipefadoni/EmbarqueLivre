@@ -50,7 +50,7 @@ const SITUATION_OPTIONS: { value: "" | AnimalSituation; label: string }[] = [
 	{ value: "liberado", label: "Liberados no dia do embarque" },
 	{ value: "carencia", label: "Em carência no dia do embarque" },
 	{ value: "libera7", label: "Ficam livres até 7 dias depois" },
-	{ value: "sem_historico", label: "Sem histórico de vacina" },
+	{ value: "sem_historico", label: "Sem histórico de medicamento" },
 ];
 
 export type ShipmentAnimalModalTarget =
@@ -404,7 +404,7 @@ function PickStep({
 								<WithdrawalBadge
 									active={false}
 									activeLabel=""
-									inactiveLabel={freeAt ? "Livre" : "Sem vacina"}
+									inactiveLabel={freeAt ? "Livre" : "Sem medicamento"}
 								/>
 							)}
 						</XStack>

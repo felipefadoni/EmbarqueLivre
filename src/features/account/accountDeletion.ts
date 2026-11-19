@@ -121,7 +121,7 @@ const COUNT_LABELS: Record<Exclude<(typeof COUNT_KEYS)[number], 'users'>, [strin
   farms: ['fazenda', 'fazendas'],
   herds: ['rebanho', 'rebanhos'],
   animals: ['animal', 'animais'],
-  vaccinations: ['registro de vacinação', 'registros de vacinação'],
+  vaccinations: ['registro de aplicação', 'registros de aplicação'],
   shipments: ['embarque', 'embarques'],
   photos: ['foto', 'fotos'],
 }

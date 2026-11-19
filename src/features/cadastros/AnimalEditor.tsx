@@ -321,7 +321,7 @@ export function AnimalEditor({ animalId, pendenciaId }: AnimalEditorProps) {
         title="Excluir animal?"
         message={
           withdrawal && withdrawal.applications.length > 0
-            ? 'Este animal possui vacinas lançadas. Exclua os lançamentos antes de excluir o animal.'
+            ? 'Este animal possui medicamentos lançados. Exclua os lançamentos antes de excluir o animal.'
             : 'Esta ação não pode ser desfeita.'
         }
         onCancel={() => setConfirmOpen(false)}

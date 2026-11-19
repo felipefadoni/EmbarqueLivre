@@ -142,7 +142,7 @@ export default function ConfiguracoesScreen() {
             ) : null}
             {canViewVaccines(user?.role) ? (
               <>
-                <MenuLink href="/configuracoes/vacinas" icon="medkit-outline" label="Vacinas" chevron={chevron} />
+                <MenuLink href="/configuracoes/vacinas" icon="medkit-outline" label="Medicamentos" chevron={chevron} />
                 <YStack h={1} bg={isDark ? '#3A5247' : '#EEF6EF'} mx={20} />
               </>
             ) : null}

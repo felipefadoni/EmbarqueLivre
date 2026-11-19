@@ -117,10 +117,10 @@ export default function LancamentosScreen() {
             <XStack items="center" gap={12}>
               <YStack flex={1} gap={4} minH={48} justify="center">
                 <Text fontSize={24} fontWeight="800" color="brandFg">
-                  Vacinas
+                  Medicamentos
                 </Text>
                 <Text fontSize={16} fontWeight="600" color="brandMuted">
-                  Lançamentos de vacina e carência dos animais.
+                  Lançamentos de medicamento e carência dos animais.
                 </Text>
               </YStack>
               <FilterToggle open={filtersOpen} activeCount={filterSummary.activeCount} onPress={() => toggleFilters()} />
@@ -136,10 +136,10 @@ export default function LancamentosScreen() {
               opacity={{ press: 0.85 }}
               onPress={() => router.push('/lancamentos/nova')}
               accessibilityRole="button"
-              accessibilityLabel="Informar vacina">
+              accessibilityLabel="Informar medicamento">
               <Ionicons name="add-circle-outline" size={22} color={isDark ? '#2B3D34' : '#FFFFFF'} />
               <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
-                Informar Vacina
+                Informar medicamento
               </Text>
             </XStack>
             <CollapsibleFilters open={filtersOpen} summary={filterSummary.text} onOpen={() => toggleFilters(true)} onClear={clearFilters} clearable={filterSummary.activeCount > 0}>
@@ -235,8 +235,8 @@ export default function LancamentosScreen() {
             emptyTitle="Nenhum lançamento"
             emptyMessage={
               code || farmId || authorFilter?.trim()
-                ? 'Nenhuma vacina encontrada com esses filtros.'
-                : `Nenhuma vacina lançada em ${formatDatePtBr(date)}. Toque em "Informar Vacina" para lançar.`
+                ? 'Nenhum medicamento encontrado com esses filtros.'
+                : `Nenhum medicamento lançado em ${formatDatePtBr(date)}. Toque em "Informar medicamento" para lançar.`
             }
             onRetry={() => void reload()}
           />
@@ -277,7 +277,7 @@ function VaccinationRow({ entry, chevron, author }: { entry: VaccinationEntry; c
             {entry.animalCode || 'Animal sem código'}
           </Text>
           <Text fontSize={16} fontWeight="600" color="brandFg">
-            {entry.vaccineName || 'Vacina não informada'}
+            {entry.vaccineName || 'Medicamento não informado'}
           </Text>
           <Text fontSize={15} fontWeight="500" color="brandMuted">
             {entry.farmName || 'Fazenda não informada'}

@@ -153,7 +153,7 @@ export default function ConflitosScreen() {
       <ConfirmDialog
         open={confirming != null}
         title="Enviar o que está no aparelho?"
-        message={`Isso vai sobrescrever no servidor o que estiver diferente com os dados deste aparelho (${confirming?.label ?? ''}). Se o tipo de animal ou a vacina tiver outro código no servidor, o cadastro passa a usar o do servidor com o mesmo nome.`}
+        message={`Isso vai sobrescrever no servidor o que estiver diferente com os dados deste aparelho (${confirming?.label ?? ''}). Se o tipo de animal ou o medicamento tiver outro código no servidor, o cadastro passa a usar o do servidor com o mesmo nome.`}
         confirmLabel="Enviar e sobrescrever"
         busyLabel="Enviando…"
         tone="primary"

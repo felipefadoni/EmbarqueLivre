@@ -57,7 +57,7 @@ export function VaccineEditor({ vaccineId, pendenciaId }: VaccineEditorProps) {
       const source = await loadEditorSource('vaccines', vaccineId ? vaccineByIdQuery(vaccineId, showAuthor) : null, rowToVaccine, pendenciaId)
       const item = source.record
       if (vaccineId && !item) {
-        setLoadError('Vacina não encontrada neste aparelho. Ela pode ter sido excluída ou ainda não sincronizou.')
+        setLoadError('Medicamento não encontrado neste aparelho. Ele pode ter sido excluído ou ainda não sincronizou.')
         return
       }
       setAuthor(showAuthor && item ? { name: item.createdByName, email: item.createdByEmail } : null)
@@ -66,7 +66,7 @@ export function VaccineEditor({ vaccineId, pendenciaId }: VaccineEditorProps) {
       setWithdrawalDays(draftString(draft, 'withdrawalDays') ?? (item ? String(item.withdrawalDays) : ''))
       showRejection(source.rejection, setFieldErrors, setFormError, ['name', 'withdrawalDays'])
     } catch (error) {
-      setLoadError(editorErrorMessage(error, 'Não foi possível carregar a vacina.'))
+      setLoadError(editorErrorMessage(error, 'Não foi possível carregar o medicamento.'))
     } finally {
       setLoading(false)
     }
@@ -137,7 +137,7 @@ export function VaccineEditor({ vaccineId, pendenciaId }: VaccineEditorProps) {
       if (isApiError(error) && error.code === 'VACCINE_HAS_APPLICATIONS') {
         setFormError(userMessage(error))
       } else {
-        setFormError(isApiError(error) ? publicApiMessage(error) : 'Não foi possível excluir a vacina.')
+        setFormError(isApiError(error) ? publicApiMessage(error) : 'Não foi possível excluir o medicamento.')
       }
     } finally {
       setDeleting(false)
@@ -180,11 +180,11 @@ export function VaccineEditor({ vaccineId, pendenciaId }: VaccineEditorProps) {
         readOnly={readOnly}
         readOnlyMessage={vaccineReadOnlyMessage(access)}
         error={formError}
-        submitLabel={isEdit ? 'Salvar alterações' : 'Cadastrar vacina'}
+        submitLabel={isEdit ? 'Salvar alterações' : 'Cadastrar medicamento'}
         submitting={saving}
         onSubmit={() => void onSubmit()}
         onDelete={isEdit && !readOnly && access.canDelete ? () => setConfirmOpen(true) : undefined}
-        deleteLabel="Excluir vacina">
+        deleteLabel="Excluir medicamento">
         {showAuthor && author ? <AuthorLines author={author} /> : null}
         {showAccount && accountName ? (
           <Text fontSize={16} fontWeight="700" color="brandFg">
@@ -200,7 +200,7 @@ export function VaccineEditor({ vaccineId, pendenciaId }: VaccineEditorProps) {
             setFieldErrors((current) => ({ ...current, name: '' }))
           }}
           error={fieldErrors.name}
-          placeholder="Nome da vacina"
+          placeholder="Nome do medicamento"
           maxLength={LIMITS.vaccineName.max}
           autoCapitalize="sentences"
           returnKeyType="next"
@@ -221,7 +221,7 @@ export function VaccineEditor({ vaccineId, pendenciaId }: VaccineEditorProps) {
       </CadastroFormScreen>
       <ConfirmDialog
         open={confirmOpen}
-        title="Excluir vacina?"
+        title="Excluir medicamento?"
         message="Esta ação não pode ser desfeita."
         onCancel={() => setConfirmOpen(false)}
         onConfirm={() => void onDelete()}

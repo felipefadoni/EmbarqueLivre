@@ -89,9 +89,9 @@ function VacinasAdminList({ showAuthor, showAuthorEmail }: { showAuthor: boolean
                   opacity={{ press: 0.85 }}
                   onPress={() => router.push('/configuracoes/vacinas/nova')}
                   accessibilityRole="button"
-                  accessibilityLabel="Nova vacina">
+                  accessibilityLabel="Novo medicamento">
                   <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
-                    Nova vacina
+                    Novo medicamento
                   </Text>
                 </XStack>
               ) : (
@@ -139,9 +139,9 @@ function VacinasAdminList({ showAuthor, showAuthorEmail }: { showAuthor: boolean
             loading={loading}
             error={error}
             empty={!loading && !error}
-            emptyTitle="Nenhuma vacina"
+            emptyTitle="Nenhum medicamento"
             emptyMessage={
-              summary.activeCount > 0 ? 'Nenhuma vacina com esse filtro.' : access.canCreate ? 'Cadastre a primeira vacina e os dias de carência.' : 'Ainda não há vacinas cadastradas.'
+              summary.activeCount > 0 ? 'Nenhum medicamento com esse filtro.' : access.canCreate ? 'Cadastre o primeiro medicamento e os dias de carência.' : 'Ainda não há medicamentos cadastrados.'
             }
             onRetry={() => void reload()}
           />
@@ -182,9 +182,9 @@ function VacinasList() {
           opacity={{ press: 0.85 }}
           onPress={() => router.push('/configuracoes/vacinas/nova')}
           accessibilityRole="button"
-          accessibilityLabel="Nova vacina">
+          accessibilityLabel="Novo medicamento">
           <Text fontSize={16} fontWeight="800" color="brandPrimaryFg">
-            Nova vacina
+            Novo medicamento
           </Text>
         </XStack>
       </YStack>
@@ -205,8 +205,8 @@ function VacinasList() {
             loading={loading}
             error={error}
             empty={!loading && !error}
-            emptyTitle="Nenhuma vacina"
-            emptyMessage={canManage ? 'Cadastre a primeira vacina e os dias de carência.' : 'Ainda não há vacinas cadastradas.'}
+            emptyTitle="Nenhum medicamento"
+            emptyMessage={canManage ? 'Cadastre o primeiro medicamento e os dias de carência.' : 'Ainda não há medicamentos cadastrados.'}
             onRetry={() => void reload()}
           />
         }
@@ -243,7 +243,7 @@ function VaccineRow({
         opacity={canOpen ? { press: 0.85 } : undefined}
         onPress={canOpen ? () => router.push(`/configuracoes/vacinas/${vaccine.id}`) : undefined}
         accessibilityRole={canOpen ? 'button' : undefined}
-        accessibilityLabel={canOpen ? `${canEdit ? 'Editar' : 'Ver'} vacina ${vaccine.name}` : vaccine.name}>
+        accessibilityLabel={canOpen ? `${canEdit ? 'Editar' : 'Ver'} medicamento ${vaccine.name}` : vaccine.name}>
         <YStack flex={1} gap={4}>
           <Text fontSize={16} fontWeight="800" color="brandFg">
             {vaccine.name}

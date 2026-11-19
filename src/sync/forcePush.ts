@@ -28,7 +28,7 @@ const OC = OUTBOX_TABLE.columns
 export const CATALOG_REFS: Record<string, { table: 'animal_types' | 'vaccines'; field: string; label: string }> = {
   // Tipo de animal: o servidor resolve pelo `animal_type_name` (contrato 11/11) e devolve `remapped`; aqui só vacina,
   // que ainda não tem nome no contrato (follow-up da API: `vaccine_name`).
-  VACCINE_NOT_FOUND: { table: 'vaccines', field: 'vaccine_id', label: 'vacina' },
+  VACCINE_NOT_FOUND: { table: 'vaccines', field: 'vaccine_id', label: 'medicamento' },
 }
 
 /** Mensagem quando nem o nome do tipo resolve: o servidor não tem e o usuário não é admin. */

@@ -13,7 +13,7 @@ function ApplicationRow({ item }: { item: WithdrawalApplication }) {
     <YStack bg="brandSurface" borderColor="brandBorder" borderWidth={2} rounded={16} p={14} gap={6}>
       <XStack items="center" justify="space-between" gap={8}>
         <Text fontSize={16} fontWeight="800" color="brandFg" flex={1}>
-          {item.vaccineName || 'Vacina não informada'}
+          {item.vaccineName || 'Medicamento não informado'}
         </Text>
         <WithdrawalBadge active={item.active} activeLabel="Ativa" inactiveLabel="Encerrada" />
       </XStack>
@@ -54,20 +54,20 @@ export function WithdrawalSection({ withdrawal }: { withdrawal: AnimalWithdrawal
                 ? withdrawal.inWithdrawal
                   ? `Livre em ${formatDatePtBr(withdrawal.freeAt)}`
                   : `Livre desde ${formatDatePtBr(withdrawal.freeAt)}`
-                : 'Nenhuma vacina aplicada'}
+                : 'Nenhum medicamento aplicado'}
             </Text>
             <Text fontSize={15} fontWeight="600" color={withdrawal.inWithdrawal ? 'bloqueado-color' : 'liberado-color'}>
-              Soma das carências (todas as vacinas): {pluralDias(withdrawal.totalWithdrawalDays)}
+              Soma das carências (todos os medicamentos): {pluralDias(withdrawal.totalWithdrawalDays)}
             </Text>
           </YStack>
           {withdrawal.applications.length === 0 ? (
             <Text fontSize={16} fontWeight="500" color="brandMuted">
-              Nenhuma vacina aplicada neste animal.
+              Nenhum medicamento aplicado neste animal.
             </Text>
           ) : (
             <YStack gap={10}>
               <Text fontSize={16} fontWeight="700" color="brandFg">
-                Vacinas aplicadas ({withdrawal.applications.length})
+                Medicamentos aplicados ({withdrawal.applications.length})
               </Text>
               {withdrawal.applications.map((item, index) => (
                 <ApplicationRow key={item.id || `${item.vaccineName}-${item.appliedAt}-${index}`} item={item} />

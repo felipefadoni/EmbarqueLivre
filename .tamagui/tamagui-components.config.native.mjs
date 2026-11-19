@@ -50,9 +50,9 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 ));
 var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/AssetRegistry/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/AssetRegistry/index.cjs
 var require_AssetRegistry = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/AssetRegistry/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/AssetRegistry/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -91,9 +91,9 @@ var require_AssetRegistry = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/forwardedProps/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/forwardedProps/index.cjs
 var require_forwardedProps = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/forwardedProps/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/forwardedProps/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -257,9 +257,9 @@ var require_forwardedProps = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/mergeRefs/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/mergeRefs/index.cjs
 var require_mergeRefs = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/mergeRefs/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/mergeRefs/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -305,9 +305,9 @@ var require_mergeRefs = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/canUseDOM.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/canUseDOM.cjs
 var require_canUseDOM = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/canUseDOM.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/canUseDOM.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -335,9 +335,9 @@ var require_canUseDOM = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/createEventHandle/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/createEventHandle/index.cjs
 var require_createEventHandle = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/createEventHandle/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/createEventHandle/index.cjs"(exports, module) {
     "use strict";
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -430,9 +430,9 @@ var require_createEventHandle = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/modality/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/modality/index.cjs
 var require_modality = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/modality/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/modality/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -655,9 +655,9 @@ var require_modality = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useLocale/isLocaleRTL.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useLocale/isLocaleRTL.cjs
 var require_isLocaleRTL = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useLocale/isLocaleRTL.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useLocale/isLocaleRTL.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -739,9 +739,9 @@ var require_isLocaleRTL = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useLocale/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useLocale/index.cjs
 var require_useLocale = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useLocale/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useLocale/index.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -775,14 +775,14 @@ var require_useLocale = __commonJS({
       useLocaleContext: /* @__PURE__ */ __name(() => useLocaleContext, "useLocaleContext")
     });
     module.exports = __toCommonJS2(useLocale_exports);
-    var import_react62 = __toESM2(__require("react"), 1);
+    var import_react63 = __toESM2(__require("react"), 1);
     var import_isLocaleRTL = require_isLocaleRTL();
     var import_jsx_runtime91 = __require("react/jsx-runtime");
     var defaultLocale = {
       direction: "ltr",
       locale: "en-US"
     };
-    var LocaleContext = import_react62.default.createContext(defaultLocale);
+    var LocaleContext = import_react63.default.createContext(defaultLocale);
     function getLocaleDirection(locale) {
       return (0, import_isLocaleRTL.isLocaleRTL)(locale) ? "rtl" : "ltr";
     }
@@ -800,9 +800,44 @@ var require_useLocale = __commonJS({
     }
     __name(LocaleProvider, "LocaleProvider");
     function useLocaleContext() {
-      return import_react62.default.useContext(LocaleContext);
+      return import_react63.default.useContext(LocaleContext);
     }
     __name(useLocaleContext, "useLocaleContext");
+  }
+});
+
+// node_modules/.pnpm/@tamagui+constants@3.3.1_react@19.3.0/node_modules/@tamagui/constants/dist/esm/constants.native.js
+import { useLayoutEffect } from "react";
+var useIsomorphicLayoutEffect, isNativeDesktop, isAndroid, isIos, supportsDynamicColorIOS, isTV, currentPlatform;
+var init_constants_native = __esm({
+  "node_modules/.pnpm/@tamagui+constants@3.3.1_react@19.3.0/node_modules/@tamagui/constants/dist/esm/constants.native.js"() {
+    init_react_native();
+    useIsomorphicLayoutEffect = useLayoutEffect;
+    isNativeDesktop = (react_native_exports.Platform === null || react_native_exports.Platform === void 0 ? void 0 : react_native_exports.Platform.OS) === "macos" || (react_native_exports.Platform === null || react_native_exports.Platform === void 0 ? void 0 : react_native_exports.Platform.OS) === "windows";
+    isAndroid = (react_native_exports.Platform === null || react_native_exports.Platform === void 0 ? void 0 : react_native_exports.Platform.OS) === "android" || process.env.TEST_NATIVE_PLATFORM === "android" || process.env.TEST_NATIVE_PLATFORM === "androidtv";
+    isIos = (react_native_exports.Platform === null || react_native_exports.Platform === void 0 ? void 0 : react_native_exports.Platform.OS) === "ios" || process.env.TEST_NATIVE_PLATFORM === "ios" || process.env.TEST_NATIVE_PLATFORM === "tvos";
+    supportsDynamicColorIOS = isIos || process.env.TAMAGUI_DYNAMIC_COLOR_IOS === "1";
+    isTV = (react_native_exports.Platform === null || react_native_exports.Platform === void 0 ? void 0 : react_native_exports.Platform.isTV) || process.env.TEST_NATIVE_PLATFORM === "androidtv" || process.env.TEST_NATIVE_PLATFORM === "tvos";
+    currentPlatform = ((react_native_exports.Platform === null || react_native_exports.Platform === void 0 ? void 0 : react_native_exports.Platform.OS) ? {
+      ios: "ios",
+      android: "android",
+      macos: "macos",
+      windows: "windows"
+    }[react_native_exports.Platform.OS] : void 0) || "native";
+  }
+});
+
+// node_modules/.pnpm/@tamagui+constants@3.3.1_react@19.3.0/node_modules/@tamagui/constants/dist/esm/platformDriver.native.js
+var init_platformDriver_native = __esm({
+  "node_modules/.pnpm/@tamagui+constants@3.3.1_react@19.3.0/node_modules/@tamagui/constants/dist/esm/platformDriver.native.js"() {
+  }
+});
+
+// node_modules/.pnpm/@tamagui+constants@3.3.1_react@19.3.0/node_modules/@tamagui/constants/dist/esm/index.native.js
+var init_index_native = __esm({
+  "node_modules/.pnpm/@tamagui+constants@3.3.1_react@19.3.0/node_modules/@tamagui/constants/dist/esm/index.native.js"() {
+    init_constants_native();
+    init_platformDriver_native();
   }
 });
 
@@ -922,9 +957,9 @@ function ensureWebElement(x) {
   return x instanceof HTMLElement ? x : void 0;
 }
 var LayoutHandlers, LayoutDisableKey, Nodes, NodeRectCache, PrevHostNode, usePretransformDimensions, isDebugLayout, DisableLayoutContextValues, DisableLayoutContextKey, ENABLE, LayoutMeasurementController, strategy, resumeLayoutLoop, measureOnNextFrame, avoidUpdates, queuedUpdates, BoundingRects, rectFetchObserver, rectFetchResolve, rectFetchStartTime, lastCallbackDelay, rAF, userSkipVal, BASE_SKIP_FRAMES, MAX_SKIP_FRAMES, FRAME_MS, skipFrames, frameScheduled, waitTimer, measureSoon, getElementLayoutEvent, getPreTransformDimensions, getRelativeDimensions, getBoundingClientRectAsync, measureNode, measure, createMeasure, measureInWindow, createMeasureInWindow, measureLayout2, createMeasureLayout;
-var init_index_native = __esm({
+var init_index_native2 = __esm({
   "node_modules/.pnpm/@tamagui+use-element-layout@3.3.1_react@19.3.0/node_modules/@tamagui/use-element-layout/dist/esm/index.native.js"() {
-    init_index_native5();
+    init_index_native();
     LayoutHandlers = /* @__PURE__ */ new WeakMap();
     LayoutDisableKey = /* @__PURE__ */ new WeakMap();
     Nodes = /* @__PURE__ */ new Set();
@@ -1188,9 +1223,9 @@ var init_index_native = __esm({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useStable/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useStable/index.cjs
 var require_useStable = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useStable/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useStable/index.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -1233,9 +1268,9 @@ var require_useStable = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/usePlatformMethods/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/usePlatformMethods/index.cjs
 var require_usePlatformMethods = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/usePlatformMethods/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/usePlatformMethods/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -1259,7 +1294,7 @@ var require_usePlatformMethods = __commonJS({
     var usePlatformMethods_exports = {};
     __export2(usePlatformMethods_exports, { usePlatformMethods: /* @__PURE__ */ __name(() => usePlatformMethods, "usePlatformMethods") });
     module.exports = __toCommonJS2(usePlatformMethods_exports);
-    var import_use_element_layout = (init_index_native(), __toCommonJS(index_native_exports));
+    var import_use_element_layout = (init_index_native2(), __toCommonJS(index_native_exports));
     var import_useStable = require_useStable();
     function usePlatformMethods({ pointerEvents, style: style2 }) {
       const ref = (0, import_useStable.useStable)(() => (hostNode) => {
@@ -1275,9 +1310,9 @@ var require_usePlatformMethods = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/TextAncestorContext.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/TextAncestorContext.cjs
 var require_TextAncestorContext = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/TextAncestorContext.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/TextAncestorContext.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -1301,8 +1336,8 @@ var require_TextAncestorContext = __commonJS({
     var TextAncestorContext_exports = {};
     __export2(TextAncestorContext_exports, { TextAncestorContext: /* @__PURE__ */ __name(() => TextAncestorContext, "TextAncestorContext") });
     module.exports = __toCommonJS2(TextAncestorContext_exports);
-    var import_react62 = __require("react");
-    var TextAncestorContext = (0, import_react62.createContext)(false);
+    var import_react63 = __require("react");
+    var TextAncestorContext = (0, import_react63.createContext)(false);
   }
 });
 
@@ -1801,7 +1836,7 @@ function usePressEvents(_3, config) {
   React2.useDebugValue(config);
   return pressResponder.getEventHandlers();
 }
-var init_index_native2 = __esm({
+var init_index_native3 = __esm({
   "node_modules/.pnpm/@tamagui+react-native-use-pressable@3.3.1_react@19.3.0/node_modules/@tamagui/react-native-use-pressable/dist/esm/index.native.js"() {
     init_PressResponder_native();
     __name(usePressEvents, "usePressEvents");
@@ -2739,15 +2774,15 @@ __export(index_native_exports3, {
   setResponderId: () => setResponderId,
   useResponderEvents: () => useResponderEvents
 });
-var init_index_native3 = __esm({
+var init_index_native4 = __esm({
   "node_modules/.pnpm/@tamagui+react-native-use-responder-events@3.3.1_react@19.3.0/node_modules/@tamagui/react-native-use-responder-events/dist/esm/index.native.js"() {
     init_useResponderEvents_native();
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/colorProps.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/colorProps.cjs
 var require_colorProps = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/colorProps.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/colorProps.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -2786,9 +2821,9 @@ var require_colorProps = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/AccessibilityUtil/isDisabled.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/AccessibilityUtil/isDisabled.cjs
 var require_isDisabled = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/AccessibilityUtil/isDisabled.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/AccessibilityUtil/isDisabled.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -2816,9 +2851,9 @@ var require_isDisabled = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/AccessibilityUtil/propsToAriaRole.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/AccessibilityUtil/propsToAriaRole.cjs
 var require_propsToAriaRole = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/AccessibilityUtil/propsToAriaRole.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/AccessibilityUtil/propsToAriaRole.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -2867,9 +2902,9 @@ var require_propsToAriaRole = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/AccessibilityUtil/propsToAccessibilityComponent.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/AccessibilityUtil/propsToAccessibilityComponent.cjs
 var require_propsToAccessibilityComponent = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/AccessibilityUtil/propsToAccessibilityComponent.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/AccessibilityUtil/propsToAccessibilityComponent.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -2933,9 +2968,9 @@ var require_propsToAccessibilityComponent = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/AccessibilityUtil/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/AccessibilityUtil/index.cjs
 var require_AccessibilityUtil = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/AccessibilityUtil/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/AccessibilityUtil/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -2970,9 +3005,9 @@ var require_AccessibilityUtil = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/createDOMProps/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/createDOMProps/index.cjs
 var require_createDOMProps = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/createDOMProps/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/createDOMProps/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -3292,9 +3327,9 @@ var require_createDOMProps = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/unitlessNumbers/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/unitlessNumbers/index.cjs
 var require_unitlessNumbers = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/unitlessNumbers/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/unitlessNumbers/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -3380,9 +3415,9 @@ var require_unitlessNumbers = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/isWebColor/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/isWebColor/index.cjs
 var require_isWebColor = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/isWebColor/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/isWebColor/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -3979,7 +4014,7 @@ function isKnownColorName(color) {
   return /^[a-z]+$/i.test(color) && normalizeCSSColor(color) != null;
 }
 var normalizeColor, norm, normalizeCSSColor, index_native_default;
-var init_index_native4 = __esm({
+var init_index_native5 = __esm({
   "node_modules/.pnpm/@tamagui+normalize-css-color@3.3.1/node_modules/@tamagui/normalize-css-color/dist/esm/index.native.js"() {
     normalizeColor = __toESM(require_normalize_color(), 1);
     init_rgba_native();
@@ -3990,9 +4025,9 @@ var init_index_native4 = __esm({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/processColor/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/processColor/index.cjs
 var require_processColor = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/processColor/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/processColor/index.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -4022,7 +4057,7 @@ var require_processColor = __commonJS({
     var processColor_exports = {};
     __export2(processColor_exports, { processColor: /* @__PURE__ */ __name(() => processColor, "processColor") });
     module.exports = __toCommonJS2(processColor_exports);
-    var import_normalize_css_color = __toESM2((init_index_native4(), __toCommonJS(index_native_exports4)), 1);
+    var import_normalize_css_color = __toESM2((init_index_native5(), __toCommonJS(index_native_exports4)), 1);
     var processColor = /* @__PURE__ */ __name((color) => {
       if (color === void 0 || color === null) {
         return color;
@@ -4037,9 +4072,9 @@ var require_processColor = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/compiler/normalizeColor.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/compiler/normalizeColor.cjs
 var require_normalizeColor = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/compiler/normalizeColor.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/compiler/normalizeColor.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -4075,9 +4110,9 @@ var require_normalizeColor = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/compiler/normalizeValueWithProperty.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/compiler/normalizeValueWithProperty.cjs
 var require_normalizeValueWithProperty = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/compiler/normalizeValueWithProperty.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/compiler/normalizeValueWithProperty.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -4128,9 +4163,9 @@ var require_normalizeValueWithProperty = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/compiler/createReactDOMStyle.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/compiler/createReactDOMStyle.cjs
 var require_createReactDOMStyle = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/compiler/createReactDOMStyle.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/compiler/createReactDOMStyle.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -4308,9 +4343,9 @@ var require_createReactDOMStyle = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/UIManager/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/UIManager/index.cjs
 var require_UIManager = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/UIManager/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/UIManager/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -4334,7 +4369,7 @@ var require_UIManager = __commonJS({
     var UIManager_exports = {};
     __export2(UIManager_exports, { UIManager: /* @__PURE__ */ __name(() => UIManager, "UIManager") });
     module.exports = __toCommonJS2(UIManager_exports);
-    var import_use_element_layout = (init_index_native(), __toCommonJS(index_native_exports));
+    var import_use_element_layout = (init_index_native2(), __toCommonJS(index_native_exports));
     var focusableElements = {
       A: true,
       INPUT: true,
@@ -4376,9 +4411,9 @@ var require_UIManager = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/TextInputState/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/TextInputState/index.cjs
 var require_TextInputState = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/TextInputState/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/TextInputState/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -4448,9 +4483,9 @@ var require_TextInputState = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/dismissKeyboard/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/dismissKeyboard/index.cjs
 var require_dismissKeyboard = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/dismissKeyboard/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/dismissKeyboard/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -4481,9 +4516,9 @@ var require_dismissKeyboard = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/getBoundingClientRect/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/getBoundingClientRect/index.cjs
 var require_getBoundingClientRect = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/getBoundingClientRect/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/getBoundingClientRect/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -4518,9 +4553,9 @@ var require_getBoundingClientRect = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/ImageLoader/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/ImageLoader/index.cjs
 var require_ImageLoader = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/ImageLoader/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/ImageLoader/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -4679,9 +4714,9 @@ var require_ImageLoader = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/isSelectionValid/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/isSelectionValid/index.cjs
 var require_isSelectionValid = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/isSelectionValid/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/isSelectionValid/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -4718,9 +4753,9 @@ var require_isSelectionValid = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/multiplyStyleLengthValue/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/multiplyStyleLengthValue/index.cjs
 var require_multiplyStyleLengthValue = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/multiplyStyleLengthValue/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/multiplyStyleLengthValue/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -4761,9 +4796,9 @@ var require_multiplyStyleLengthValue = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/normalizeColor/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/normalizeColor/index.cjs
 var require_normalizeColor2 = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/normalizeColor/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/normalizeColor/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -4807,9 +4842,9 @@ var require_normalizeColor2 = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/pick/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/pick/index.cjs
 var require_pick = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/pick/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/pick/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -4846,9 +4881,9 @@ var require_pick = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/Platform/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/Platform/index.cjs
 var require_Platform = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/Platform/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/Platform/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -4870,9 +4905,9 @@ var require_Platform = __commonJS({
     }, "__copyProps");
     var __toCommonJS2 = /* @__PURE__ */ __name((mod) => __copyProps2(__defProp2({}, "__esModule", { value: true }), mod), "__toCommonJS");
     var Platform_exports = {};
-    __export2(Platform_exports, { Platform: /* @__PURE__ */ __name(() => Platform5, "Platform") });
+    __export2(Platform_exports, { Platform: /* @__PURE__ */ __name(() => Platform6, "Platform") });
     module.exports = __toCommonJS2(Platform_exports);
-    var Platform5 = {
+    var Platform6 = {
       OS: "web",
       select: /* @__PURE__ */ __name((obj) => "web" in obj ? obj.web : obj.default, "select"),
       isTesting: process.env.NODE_ENV === "test"
@@ -4880,9 +4915,9 @@ var require_Platform = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/preprocess.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/preprocess.cjs
 var require_preprocess = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/preprocess.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/preprocess.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -4979,9 +5014,9 @@ var require_preprocess = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/index.cjs
 var require_StyleSheet = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -5053,9 +5088,9 @@ var require_StyleSheet = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/dom/createCSSStyleSheet.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/dom/createCSSStyleSheet.cjs
 var require_createCSSStyleSheet = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/dom/createCSSStyleSheet.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/dom/createCSSStyleSheet.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -5108,9 +5143,9 @@ var require_createCSSStyleSheet = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/dom/createOrderedCSSStyleSheet.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/dom/createOrderedCSSStyleSheet.cjs
 var require_createOrderedCSSStyleSheet = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/dom/createOrderedCSSStyleSheet.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/dom/createOrderedCSSStyleSheet.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -5252,9 +5287,9 @@ var require_createOrderedCSSStyleSheet = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/dom/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/dom/index.cjs
 var require_dom = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/dom/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/StyleSheet/dom/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -5346,9 +5381,9 @@ var require_dom = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/requestIdleCallback/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/requestIdleCallback/index.cjs
 var require_requestIdleCallback = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/requestIdleCallback/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/requestIdleCallback/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -5396,9 +5431,9 @@ var require_requestIdleCallback = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/setValueForStyles/dangerousStyleValue.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/setValueForStyles/dangerousStyleValue.cjs
 var require_dangerousStyleValue = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/setValueForStyles/dangerousStyleValue.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/setValueForStyles/dangerousStyleValue.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -5454,9 +5489,9 @@ var require_dangerousStyleValue = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/setValueForStyles/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/setValueForStyles/index.cjs
 var require_setValueForStyles = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/setValueForStyles/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/setValueForStyles/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -5500,9 +5535,9 @@ var require_setValueForStyles = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useElementLayout/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useElementLayout/index.cjs
 var require_useElementLayout = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useElementLayout/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useElementLayout/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -5526,15 +5561,15 @@ var require_useElementLayout = __commonJS({
     var useElementLayout_exports = {};
     __export2(useElementLayout_exports, { useElementLayout: /* @__PURE__ */ __name(() => useElementLayout2, "useElementLayout") });
     module.exports = __toCommonJS2(useElementLayout_exports);
-    var import_use_element_layout = (init_index_native(), __toCommonJS(index_native_exports));
-    var import_react62 = __require("react");
+    var import_use_element_layout = (init_index_native2(), __toCommonJS(index_native_exports));
+    var import_react63 = __require("react");
     function useElementLayout2(ref, onLayout) {
-      const wrappedRef = (0, import_react62.useMemo)(() => {
+      const wrappedRef = (0, import_react63.useMemo)(() => {
         return { current: { get host() {
           return ref.current;
         } } };
       }, [ref]);
-      (0, import_react62.useEffect)(() => {
+      (0, import_react63.useEffect)(() => {
         (0, import_use_element_layout.enable)();
       }, []);
       return (0, import_use_element_layout.useElementLayout)(wrappedRef, onLayout);
@@ -5543,9 +5578,9 @@ var require_useElementLayout = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useLayoutEffect/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useLayoutEffect/index.cjs
 var require_useLayoutEffect = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useLayoutEffect/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useLayoutEffect/index.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -5575,15 +5610,15 @@ var require_useLayoutEffect = __commonJS({
     var useLayoutEffect_exports = {};
     __export2(useLayoutEffect_exports, { useLayoutEffectImpl: /* @__PURE__ */ __name(() => useLayoutEffectImpl, "useLayoutEffectImpl") });
     module.exports = __toCommonJS2(useLayoutEffect_exports);
-    var import_react62 = __toESM2(__require("react"), 1);
+    var import_react63 = __toESM2(__require("react"), 1);
     var import_canUseDOM = require_canUseDOM();
-    var useLayoutEffectImpl = import_canUseDOM.canUseDOM ? import_react62.default.useLayoutEffect : import_react62.default.useEffect;
+    var useLayoutEffectImpl = import_canUseDOM.canUseDOM ? import_react63.default.useLayoutEffect : import_react63.default.useEffect;
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useEvent/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useEvent/index.cjs
 var require_useEvent = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useEvent/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useEvent/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -5641,9 +5676,9 @@ var require_useEvent = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useHover/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useHover/index.cjs
 var require_useHover = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useHover/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useHover/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -5784,9 +5819,9 @@ var require_useHover = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/invariant.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/invariant.cjs
 var require_invariant = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/invariant.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/invariant.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -5832,9 +5867,9 @@ var require_invariant = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/InteractionManager.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/InteractionManager.cjs
 var require_InteractionManager = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/InteractionManager.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/InteractionManager.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -6078,9 +6113,9 @@ var require_InteractionManager = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useMergeRefs/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useMergeRefs/index.cjs
 var require_useMergeRefs = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useMergeRefs/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/modules/useMergeRefs/index.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -6119,9 +6154,9 @@ var require_useMergeRefs = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/index.cjs
 var require_cjs = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3._6a48b27d7863817fcc96f15eda4a989a/node_modules/@tamagui/react-native-web-internals/dist/cjs/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-internals@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3._13d1d35479ab82a0f0b4637127242856/node_modules/@tamagui/react-native-web-internals/dist/cjs/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -6189,8 +6224,8 @@ var require_cjs = __commonJS({
     __reExport2(index_exports, require_useLocale(), module.exports);
     var import_usePlatformMethods = require_usePlatformMethods();
     var import_TextAncestorContext = require_TextAncestorContext();
-    __reExport2(index_exports, (init_index_native2(), __toCommonJS(index_native_exports2)), module.exports);
-    __reExport2(index_exports, (init_index_native3(), __toCommonJS(index_native_exports3)), module.exports);
+    __reExport2(index_exports, (init_index_native3(), __toCommonJS(index_native_exports2)), module.exports);
+    __reExport2(index_exports, (init_index_native4(), __toCommonJS(index_native_exports3)), module.exports);
     var import_colorProps = require_colorProps();
     var import_AccessibilityUtil = require_AccessibilityUtil();
     var import_canUseDOM = require_canUseDOM();
@@ -6228,9 +6263,9 @@ var require_cjs = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/createElement/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/createElement/index.cjs
 var require_createElement = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/createElement/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/createElement/index.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -6265,15 +6300,15 @@ var require_createElement = __commonJS({
     module.exports = __toCommonJS2(createElement_exports);
     var import_react_native_web_internals = require_cjs();
     var import_web36 = __require("@tamagui/core/native");
-    var import_react62 = __toESM2(__require("react"), 1);
+    var import_react63 = __toESM2(__require("react"), 1);
     var import_jsx_runtime91 = __require("react/jsx-runtime");
     var useCreateElement = /* @__PURE__ */ __name((component, props, options) => {
       const { element, styles } = createElementAndStyles(component, props, options);
       const isHydrated = (0, import_web36.useDidFinishSSR)();
-      const styleTags = (0, import_react62.useMemo)(() => {
+      const styleTags = (0, import_react63.useMemo)(() => {
         return isHydrated || !styles ? null : (0, import_web36.getStyleTags)(styles);
       }, []);
-      (0, import_react62.useInsertionEffect)(() => {
+      (0, import_react63.useInsertionEffect)(() => {
         if (!styles) return;
         const styleObj = {};
         for (const style2 of styles) {
@@ -6295,7 +6330,7 @@ var require_createElement = __commonJS({
       const Component = accessibilityComponent || component;
       const domProps = (0, import_react_native_web_internals.createDOMProps)(Component, props, options);
       const styles = import_react_native_web_internals.stylesFromProps.get(domProps);
-      let element = import_react62.default.createElement(Component, domProps);
+      let element = import_react63.default.createElement(Component, domProps);
       const elementWithLocaleProvider = domProps.dir ? /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(import_react_native_web_internals.LocaleProvider, {
         direction: domProps.dir,
         locale: domProps.lang,
@@ -6309,9 +6344,9 @@ var require_createElement = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/NativeModules/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/NativeModules/index.cjs
 var require_NativeModules = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/NativeModules/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/NativeModules/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -6340,9 +6375,9 @@ var require_NativeModules = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/render/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/render/index.cjs
 var require_render = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/render/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/render/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -6386,9 +6421,9 @@ var require_render = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/codegenNativeCommands.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/codegenNativeCommands.cjs
 var require_codegenNativeCommands = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/codegenNativeCommands.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/codegenNativeCommands.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -6424,9 +6459,9 @@ var require_codegenNativeCommands = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/codegenNativeComponent.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/codegenNativeComponent.cjs
 var require_codegenNativeComponent = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/codegenNativeComponent.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/codegenNativeComponent.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -6462,9 +6497,9 @@ var require_codegenNativeComponent = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/TurboModule/TurboModuleRegistry.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/TurboModule/TurboModuleRegistry.cjs
 var require_TurboModuleRegistry = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/TurboModule/TurboModuleRegistry.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/TurboModule/TurboModuleRegistry.cjs"(exports, module) {
     "use strict";
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -6506,9 +6541,9 @@ var require_TurboModuleRegistry = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/NativeAnimatedModule.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/NativeAnimatedModule.cjs
 var require_NativeAnimatedModule = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/NativeAnimatedModule.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/NativeAnimatedModule.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -6609,9 +6644,9 @@ var require_NativeAnimatedModule = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/NativeAnimatedTurboModule.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/NativeAnimatedTurboModule.cjs
 var require_NativeAnimatedTurboModule = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/NativeAnimatedTurboModule.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/NativeAnimatedTurboModule.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -6708,9 +6743,9 @@ var require_NativeAnimatedTurboModule = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/emitter/_EventSubscription.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/emitter/_EventSubscription.cjs
 var require_EventSubscription = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/emitter/_EventSubscription.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/emitter/_EventSubscription.cjs"(exports, module) {
     "use strict";
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -6760,9 +6795,9 @@ var require_EventSubscription = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/emitter/_EmitterSubscription.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/emitter/_EmitterSubscription.cjs
 var require_EmitterSubscription = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/emitter/_EmitterSubscription.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/emitter/_EmitterSubscription.cjs"(exports, module) {
     "use strict";
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -6825,9 +6860,9 @@ var require_EmitterSubscription = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/emitter/_EventSubscriptionVendor.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/emitter/_EventSubscriptionVendor.cjs
 var require_EventSubscriptionVendor = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/emitter/_EventSubscriptionVendor.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/emitter/_EventSubscriptionVendor.cjs"(exports, module) {
     "use strict";
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -6927,9 +6962,9 @@ var require_EventSubscriptionVendor = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/emitter/_EventEmitter.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/emitter/_EventEmitter.cjs
 var require_EventEmitter = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/emitter/_EventEmitter.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/emitter/_EventEmitter.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -7066,9 +7101,9 @@ var require_EventEmitter = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/emitter/EventEmitter.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/emitter/EventEmitter.cjs
 var require_EventEmitter2 = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/emitter/EventEmitter.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/emitter/EventEmitter.cjs"(exports, module) {
     "use strict";
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -7101,9 +7136,9 @@ var require_EventEmitter2 = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/EventEmitter/RCTDeviceEventEmitter.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/EventEmitter/RCTDeviceEventEmitter.cjs
 var require_RCTDeviceEventEmitter = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/EventEmitter/RCTDeviceEventEmitter.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/EventEmitter/RCTDeviceEventEmitter.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -7136,9 +7171,9 @@ var require_RCTDeviceEventEmitter = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/EventEmitter/NativeEventEmitter.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/EventEmitter/NativeEventEmitter.cjs
 var require_NativeEventEmitter = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/EventEmitter/NativeEventEmitter.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/EventEmitter/NativeEventEmitter.cjs"(exports, module) {
     "use strict";
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -7213,9 +7248,9 @@ var require_NativeEventEmitter = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Utilities/Platform.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Utilities/Platform.cjs
 var require_Platform2 = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Utilities/Platform.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Utilities/Platform.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -7247,9 +7282,9 @@ var require_Platform2 = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/ReactNative/ReactNativeFeatureFlags.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/ReactNative/ReactNativeFeatureFlags.cjs
 var require_ReactNativeFeatureFlags = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/ReactNative/ReactNativeFeatureFlags.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/ReactNative/ReactNativeFeatureFlags.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -7287,9 +7322,9 @@ var require_ReactNativeFeatureFlags = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/NativeAnimatedHelper.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/NativeAnimatedHelper.cjs
 var require_NativeAnimatedHelper = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/NativeAnimatedHelper.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/NativeAnimatedHelper.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -7684,9 +7719,9 @@ var require_NativeAnimatedHelper = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedNode.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedNode.cjs
 var require_AnimatedNode = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedNode.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedNode.cjs"(exports, module) {
     "use strict";
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -7865,9 +7900,9 @@ var require_AnimatedNode = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedWithChildren.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedWithChildren.cjs
 var require_AnimatedWithChildren = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedWithChildren.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedWithChildren.cjs"(exports, module) {
     "use strict";
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -7958,9 +7993,9 @@ var require_AnimatedWithChildren = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedInterpolation.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedInterpolation.cjs
 var require_AnimatedInterpolation = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedInterpolation.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedInterpolation.cjs"(exports, module) {
     "use strict";
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -8198,9 +8233,9 @@ var require_AnimatedInterpolation = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedValue.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedValue.cjs
 var require_AnimatedValue = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedValue.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedValue.cjs"(exports, module) {
     "use strict";
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -8443,9 +8478,9 @@ var require_AnimatedValue = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/AnimatedEvent.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/AnimatedEvent.cjs
 var require_AnimatedEvent = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/AnimatedEvent.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/AnimatedEvent.cjs"(exports, module) {
     "use strict";
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -8611,9 +8646,9 @@ var require_AnimatedEvent = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/animations/Animation.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/animations/Animation.cjs
 var require_Animation = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/animations/Animation.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/animations/Animation.cjs"(exports, module) {
     "use strict";
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -8687,9 +8722,9 @@ var require_Animation = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/animations/DecayAnimation.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/animations/DecayAnimation.cjs
 var require_DecayAnimation = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/animations/DecayAnimation.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/animations/DecayAnimation.cjs"(exports, module) {
     "use strict";
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -8784,9 +8819,9 @@ var require_DecayAnimation = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/SpringConfig.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/SpringConfig.cjs
 var require_SpringConfig = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/SpringConfig.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/SpringConfig.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -8886,9 +8921,9 @@ var require_SpringConfig = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/animations/SpringAnimation.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/animations/SpringAnimation.cjs
 var require_SpringAnimation = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/animations/SpringAnimation.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/animations/SpringAnimation.cjs"(exports, module) {
     "use strict";
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -9121,9 +9156,9 @@ var require_SpringAnimation = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/bezier.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/bezier.cjs
 var require_bezier = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/bezier.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/bezier.cjs"(exports, module) {
     "use strict";
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -9253,9 +9288,9 @@ var require_bezier = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/Easing.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/Easing.cjs
 var require_Easing = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/Easing.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/Easing.cjs"(exports, module) {
     "use strict";
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -9458,9 +9493,9 @@ var require_Easing = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/animations/TimingAnimation.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/animations/TimingAnimation.cjs
 var require_TimingAnimation = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/animations/TimingAnimation.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/animations/TimingAnimation.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -9592,9 +9627,9 @@ var require_TimingAnimation = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedAddition.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedAddition.cjs
 var require_AnimatedAddition = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedAddition.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedAddition.cjs"(exports, module) {
     "use strict";
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -9667,9 +9702,9 @@ var require_AnimatedAddition = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedDiffClamp.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedDiffClamp.cjs
 var require_AnimatedDiffClamp = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedDiffClamp.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedDiffClamp.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -9748,9 +9783,9 @@ var require_AnimatedDiffClamp = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedDivision.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedDivision.cjs
 var require_AnimatedDivision = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedDivision.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedDivision.cjs"(exports, module) {
     "use strict";
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -9838,9 +9873,9 @@ var require_AnimatedDivision = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedModulo.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedModulo.cjs
 var require_AnimatedModulo = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedModulo.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedModulo.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -9909,9 +9944,9 @@ var require_AnimatedModulo = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedMultiplication.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedMultiplication.cjs
 var require_AnimatedMultiplication = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedMultiplication.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedMultiplication.cjs"(exports, module) {
     "use strict";
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -9984,9 +10019,9 @@ var require_AnimatedMultiplication = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedSubtraction.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedSubtraction.cjs
 var require_AnimatedSubtraction = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedSubtraction.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedSubtraction.cjs"(exports, module) {
     "use strict";
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -10059,9 +10094,9 @@ var require_AnimatedSubtraction = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedTracking.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedTracking.cjs
 var require_AnimatedTracking = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedTracking.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedTracking.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -10155,9 +10190,9 @@ var require_AnimatedTracking = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedValueXY.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedValueXY.cjs
 var require_AnimatedValueXY = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedValueXY.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedValueXY.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -10275,9 +10310,9 @@ var require_AnimatedValueXY = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedTransform.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedTransform.cjs
 var require_AnimatedTransform = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedTransform.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedTransform.cjs"(exports, module) {
     "use strict";
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -10408,9 +10443,9 @@ var require_AnimatedTransform = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedStyle.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedStyle.cjs
 var require_AnimatedStyle = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedStyle.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedStyle.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -10550,9 +10585,9 @@ var require_AnimatedStyle = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedProps.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedProps.cjs
 var require_AnimatedProps = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedProps.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedProps.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -10708,9 +10743,9 @@ var require_AnimatedProps = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Utilities/useRefEffect.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Utilities/useRefEffect.cjs
 var require_useRefEffect = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Utilities/useRefEffect.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Utilities/useRefEffect.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -10737,10 +10772,10 @@ var require_useRefEffect = __commonJS({
       useRefEffect: /* @__PURE__ */ __name(() => useRefEffect, "useRefEffect")
     });
     module.exports = __toCommonJS2(useRefEffect_exports);
-    var import_react62 = __require("react");
+    var import_react63 = __require("react");
     function useRefEffect(effect) {
-      const cleanupRef = (0, import_react62.useRef)(void 0);
-      return (0, import_react62.useCallback)((instance) => {
+      const cleanupRef = (0, import_react63.useRef)(void 0);
+      return (0, import_react63.useCallback)((instance) => {
         if (cleanupRef.current) {
           cleanupRef.current();
           cleanupRef.current = void 0;
@@ -10755,9 +10790,9 @@ var require_useRefEffect = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/useAnimatedProps.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/useAnimatedProps.cjs
 var require_useAnimatedProps = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/useAnimatedProps.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/useAnimatedProps.cjs"(exports, module) {
     "use strict";
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -10789,14 +10824,14 @@ var require_useAnimatedProps = __commonJS({
     var import_AnimatedEvent = require_AnimatedEvent();
     var import_useRefEffect = require_useRefEffect();
     var import_NativeAnimatedHelper = require_NativeAnimatedHelper();
-    var import_react62 = __require("react");
+    var import_react63 = __require("react");
     var import_react_native_web_internals = require_cjs();
     function useAnimatedProps(props) {
-      const [, scheduleUpdate] = (0, import_react62.useReducer)((count) => count + 1, 0);
-      const onUpdateRef = (0, import_react62.useRef)(null);
-      const node = (0, import_react62.useMemo)(() => new import_AnimatedProps.AnimatedProps(props, () => onUpdateRef.current?.()), [props]);
+      const [, scheduleUpdate] = (0, import_react63.useReducer)((count) => count + 1, 0);
+      const onUpdateRef = (0, import_react63.useRef)(null);
+      const node = (0, import_react63.useMemo)(() => new import_AnimatedProps.AnimatedProps(props, () => onUpdateRef.current?.()), [props]);
       useAnimatedPropsLifecycle(node);
-      const refEffect = (0, import_react62.useCallback)((instance) => {
+      const refEffect = (0, import_react63.useCallback)((instance) => {
         node.setNativeView(instance);
         onUpdateRef.current = () => {
           scheduleUpdate();
@@ -10829,9 +10864,9 @@ var require_useAnimatedProps = __commonJS({
     }
     __name(reduceAnimatedProps, "reduceAnimatedProps");
     function useAnimatedPropsLifecycle(node) {
-      const prevNodeRef = (0, import_react62.useRef)(null);
-      const isUnmountingRef = (0, import_react62.useRef)(false);
-      (0, import_react62.useEffect)(() => {
+      const prevNodeRef = (0, import_react63.useRef)(null);
+      const isUnmountingRef = (0, import_react63.useRef)(false);
+      (0, import_react63.useEffect)(() => {
         import_NativeAnimatedHelper.NativeAnimatedHelper.API.flushQueue();
       });
       (0, import_react_native_web_internals.useLayoutEffect)(() => {
@@ -10866,9 +10901,9 @@ var require_useAnimatedProps = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Utilities/useMergeRefs.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Utilities/useMergeRefs.cjs
 var require_useMergeRefs2 = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Utilities/useMergeRefs.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Utilities/useMergeRefs.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -10895,9 +10930,9 @@ var require_useMergeRefs2 = __commonJS({
       useMergeRefs: /* @__PURE__ */ __name(() => useMergeRefs, "useMergeRefs")
     });
     module.exports = __toCommonJS2(useMergeRefs_exports);
-    var import_react62 = __require("react");
+    var import_react63 = __require("react");
     function useMergeRefs(...refs) {
-      return (0, import_react62.useCallback)((current) => {
+      return (0, import_react63.useCallback)((current) => {
         for (const ref of refs) {
           if (ref != null) {
             if (typeof ref === "function") {
@@ -10914,9 +10949,9 @@ var require_useMergeRefs2 = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/createAnimatedComponent.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/createAnimatedComponent.cjs
 var require_createAnimatedComponent = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/createAnimatedComponent.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/createAnimatedComponent.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -10973,9 +11008,9 @@ var require_createAnimatedComponent = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedColor.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedColor.cjs
 var require_AnimatedColor = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedColor.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/nodes/AnimatedColor.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -11255,9 +11290,9 @@ var require_AnimatedColor = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/AnimatedImplementation.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/AnimatedImplementation.cjs
 var require_AnimatedImplementation = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/AnimatedImplementation.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/AnimatedImplementation.cjs"(exports, module) {
     "use strict";
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -11815,9 +11850,9 @@ var require_AnimatedImplementation = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/AnimatedMock.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/AnimatedMock.cjs
 var require_AnimatedMock = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/AnimatedMock.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/AnimatedMock.cjs"(exports, module) {
     "use strict";
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -12026,9 +12061,9 @@ var init_memoize_one_esm = __esm({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/deepDiffer/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/deepDiffer/index.cjs
 var require_deepDiffer = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/deepDiffer/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/deepDiffer/index.cjs"(exports, module) {
     "use strict";
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -12103,9 +12138,9 @@ var require_deepDiffer = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/View/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/View/index.cjs
 var require_View = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/View/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/View/index.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -12220,9 +12255,9 @@ var require_View = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/ScrollView/WebScrollView.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/ScrollView/WebScrollView.cjs
 var require_WebScrollView = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/ScrollView/WebScrollView.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/ScrollView/WebScrollView.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -12502,9 +12537,9 @@ var require_WebScrollView = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/ScrollView/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/ScrollView/index.cjs
 var require_ScrollView = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/ScrollView/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/ScrollView/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -12532,9 +12567,9 @@ var require_ScrollView = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/RefreshControl/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/RefreshControl/index.cjs
 var require_RefreshControl = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/RefreshControl/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/RefreshControl/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -12572,9 +12607,9 @@ var require_RefreshControl = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Batchinator/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Batchinator/index.cjs
 var require_Batchinator = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Batchinator/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Batchinator/index.cjs"(exports, module) {
     "use strict";
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -12640,9 +12675,9 @@ var require_Batchinator = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/VirtualizedList/ChildListCollection.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/VirtualizedList/ChildListCollection.cjs
 var require_ChildListCollection = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/VirtualizedList/ChildListCollection.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/VirtualizedList/ChildListCollection.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -12724,9 +12759,9 @@ var require_ChildListCollection = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/FillRateHelper/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/FillRateHelper/index.cjs
 var require_FillRateHelper = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/FillRateHelper/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/FillRateHelper/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -12916,9 +12951,9 @@ var require_FillRateHelper = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/VirtualizedList/StateSafePureComponent.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/VirtualizedList/StateSafePureComponent.cjs
 var require_StateSafePureComponent = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/VirtualizedList/StateSafePureComponent.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/VirtualizedList/StateSafePureComponent.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -13007,9 +13042,9 @@ var require_StateSafePureComponent = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/ViewabilityHelper.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/ViewabilityHelper.cjs
 var require_ViewabilityHelper = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/ViewabilityHelper.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/ViewabilityHelper.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -13184,9 +13219,9 @@ var require_ViewabilityHelper = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/VirtualizedList/VirtualizedListContext.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/VirtualizedList/VirtualizedListContext.cjs
 var require_VirtualizedListContext = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/VirtualizedList/VirtualizedListContext.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/VirtualizedList/VirtualizedListContext.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -13223,7 +13258,7 @@ var require_VirtualizedListContext = __commonJS({
     module.exports = __toCommonJS2(VirtualizedListContext_exports);
     var import_VirtualizedList = require_VirtualizedList();
     var React85 = __toESM2(__require("react"), 1);
-    var import_react62 = __require("react");
+    var import_react63 = __require("react");
     var import_jsx_runtime91 = __require("react/jsx-runtime");
     var __DEV__ = process.env.NODE_ENV !== "production";
     var VirtualizedListContext = React85.createContext(null);
@@ -13238,7 +13273,7 @@ var require_VirtualizedListContext = __commonJS({
     }
     __name(VirtualizedListContextResetter, "VirtualizedListContextResetter");
     function VirtualizedListContextProvider({ children, value }) {
-      const context2 = (0, import_react62.useMemo)(() => ({
+      const context2 = (0, import_react63.useMemo)(() => ({
         cellKey: null,
         getScrollMetrics: value.getScrollMetrics,
         horizontal: value.horizontal,
@@ -13259,8 +13294,8 @@ var require_VirtualizedListContext = __commonJS({
     }
     __name(VirtualizedListContextProvider, "VirtualizedListContextProvider");
     function VirtualizedListCellContextProvider({ cellKey, children }) {
-      const currContext = (0, import_react62.useContext)(VirtualizedListContext);
-      const context2 = (0, import_react62.useMemo)(() => currContext == null ? null : {
+      const currContext = (0, import_react63.useContext)(VirtualizedListContext);
+      const context2 = (0, import_react63.useMemo)(() => currContext == null ? null : {
         ...currContext,
         cellKey
       }, [currContext, cellKey]);
@@ -13273,9 +13308,9 @@ var require_VirtualizedListContext = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/VirtualizedList/VirtualizedListCellRenderer.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/VirtualizedList/VirtualizedListCellRenderer.cjs
 var require_VirtualizedListCellRenderer = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/VirtualizedList/VirtualizedListCellRenderer.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/VirtualizedList/VirtualizedListCellRenderer.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -13407,9 +13442,9 @@ var require_VirtualizedListCellRenderer = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/VirtualizedList/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/VirtualizedList/index.cjs
 var require_VirtualizedList = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/VirtualizedList/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/VirtualizedList/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -13436,7 +13471,7 @@ var require_VirtualizedList = __commonJS({
       default: /* @__PURE__ */ __name(() => VirtualizedList_default, "default")
     });
     module.exports = __toCommonJS2(VirtualizedList_exports);
-    var import_react62 = __require("react");
+    var import_react63 = __require("react");
     var import_react_native_web_internals = require_cjs();
     var import_ScrollView = require_ScrollView();
     var import_RefreshControl = require_RefreshControl();
@@ -13615,7 +13650,7 @@ var require_VirtualizedList = __commonJS({
         const itemCount = getItemCount(data);
         if (itemCount === 0) {
           if (!ListEmptyComponent) return null;
-          return (0, import_react62.isValidElement)(ListEmptyComponent) ? ListEmptyComponent : /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(ListEmptyComponent, {});
+          return (0, import_react63.isValidElement)(ListEmptyComponent) ? ListEmptyComponent : /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(ListEmptyComponent, {});
         }
         return /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(import_ScrollView.ScrollView, {
           ...restProps,
@@ -13670,9 +13705,9 @@ var require_VirtualizedList = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/VirtualizeUtils/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/VirtualizeUtils/index.cjs
 var require_VirtualizeUtils = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/VirtualizeUtils/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/VirtualizeUtils/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -13822,9 +13857,9 @@ var require_VirtualizeUtils = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/FlatList.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/FlatList.cjs
 var require_FlatList = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/FlatList.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/FlatList.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -13859,7 +13894,7 @@ var require_FlatList = __commonJS({
     module.exports = __toCommonJS2(FlatList_exports);
     var import_react_native_web_internals = require_cjs();
     var import_memoize_one = __toESM2((init_memoize_one_esm(), __toCommonJS(memoize_one_esm_exports)), 1);
-    var import_react62 = __toESM2(__require("react"), 1);
+    var import_react63 = __toESM2(__require("react"), 1);
     var import_deepDiffer = require_deepDiffer();
     var import_VirtualizedList = require_VirtualizedList();
     var import_VirtualizeUtils = require_VirtualizeUtils();
@@ -13877,7 +13912,7 @@ var require_FlatList = __commonJS({
       return typeof Object(data).length === "number";
     }
     __name(isArrayLike, "isArrayLike");
-    var FlatList = class extends import_react62.default.PureComponent {
+    var FlatList = class extends import_react63.default.PureComponent {
       static {
         __name(this, "FlatList");
       }
@@ -14010,7 +14045,7 @@ var require_FlatList = __commonJS({
                   index: index * cols + kk,
                   separators: info.separators
                 });
-                return element != null ? /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(import_react62.default.Fragment, { children: element }, kk) : null;
+                return element != null ? /* @__PURE__ */ (0, import_jsx_runtime91.jsx)(import_react63.default.Fragment, { children: element }, kk) : null;
               })
             });
           } else {
@@ -14040,9 +14075,9 @@ var require_FlatList = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/components/AnimatedFlatList.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/components/AnimatedFlatList.cjs
 var require_AnimatedFlatList = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/components/AnimatedFlatList.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/components/AnimatedFlatList.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -14089,9 +14124,9 @@ var require_AnimatedFlatList = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/Dimensions/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/Dimensions/index.cjs
 var require_Dimensions = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/Dimensions/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/Dimensions/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -14208,9 +14243,9 @@ var require_Dimensions = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/PixelRatio/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/PixelRatio/index.cjs
 var require_PixelRatio = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/PixelRatio/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/PixelRatio/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -14272,9 +14307,9 @@ var require_PixelRatio = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/Image/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/Image/index.cjs
 var require_Image = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/Image/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/Image/index.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -14608,9 +14643,9 @@ var require_Image = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/components/AnimatedImage.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/components/AnimatedImage.cjs
 var require_AnimatedImage = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/components/AnimatedImage.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/components/AnimatedImage.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -14651,9 +14686,9 @@ var require_AnimatedImage = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/components/AnimatedScrollView.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/components/AnimatedScrollView.cjs
 var require_AnimatedScrollView = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/components/AnimatedScrollView.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/components/AnimatedScrollView.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -14700,9 +14735,9 @@ var require_AnimatedScrollView = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/VirtualizedSectionList/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/VirtualizedSectionList/index.cjs
 var require_VirtualizedSectionList = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/VirtualizedSectionList/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/VirtualizedSectionList/index.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -14853,9 +14888,9 @@ var require_VirtualizedSectionList = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/SectionList/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/SectionList/index.cjs
 var require_SectionList = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/SectionList/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/SectionList/index.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -14974,9 +15009,9 @@ var require_SectionList = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/SectionList.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/SectionList.cjs
 var require_SectionList2 = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/SectionList.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/SectionList.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -15014,9 +15049,9 @@ var require_SectionList2 = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/components/AnimatedSectionList.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/components/AnimatedSectionList.cjs
 var require_AnimatedSectionList = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/components/AnimatedSectionList.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/components/AnimatedSectionList.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -15063,9 +15098,9 @@ var require_AnimatedSectionList = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/Text/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/Text/index.cjs
 var require_Text = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/Text/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/Text/index.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -15227,9 +15262,9 @@ var require_Text = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/components/AnimatedText.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/components/AnimatedText.cjs
 var require_AnimatedText = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/components/AnimatedText.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/components/AnimatedText.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -15263,9 +15298,9 @@ var require_AnimatedText = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/components/AnimatedView.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/components/AnimatedView.cjs
 var require_AnimatedView = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/components/AnimatedView.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/components/AnimatedView.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -15299,9 +15334,9 @@ var require_AnimatedView = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/Animated.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/Animated.cjs
 var require_Animated = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/Animated.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/Animated/Animated.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -15351,9 +15386,9 @@ var require_Animated = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/AccessibilityInfo/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/AccessibilityInfo/index.cjs
 var require_AccessibilityInfo = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/AccessibilityInfo/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/AccessibilityInfo/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -15466,9 +15501,9 @@ var require_AccessibilityInfo = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/Alert/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/Alert/index.cjs
 var require_Alert = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/Alert/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/Alert/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -15502,9 +15537,9 @@ var require_Alert = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/Appearance/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/Appearance/index.cjs
 var require_Appearance = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/Appearance/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/Appearance/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -15564,9 +15599,9 @@ var require_Appearance = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/AppRegistry/AppContainer.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/AppRegistry/AppContainer.cjs
 var require_AppContainer = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/AppRegistry/AppContainer.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/AppRegistry/AppContainer.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -15629,9 +15664,9 @@ var require_AppContainer = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/AppRegistry/renderApplication.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/AppRegistry/renderApplication.cjs
 var require_renderApplication = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/AppRegistry/renderApplication.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/AppRegistry/renderApplication.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -15699,9 +15734,9 @@ var require_renderApplication = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/AppRegistry/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/AppRegistry/index.cjs
 var require_AppRegistry = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/AppRegistry/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/AppRegistry/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -15794,9 +15829,9 @@ Performance optimizations: ${isDevelopment ? "OFF" : "ON"}.`);
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/AppState/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/AppState/index.cjs
 var require_AppState = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/AppState/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/AppState/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -15885,9 +15920,9 @@ var require_AppState = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/BackHandler/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/BackHandler/index.cjs
 var require_BackHandler = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/BackHandler/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/BackHandler/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -15924,9 +15959,9 @@ var require_BackHandler = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/Clipboard/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/Clipboard/index.cjs
 var require_Clipboard = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/Clipboard/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/Clipboard/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -15994,9 +16029,9 @@ var require_Clipboard = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/DeviceEmitter.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/DeviceEmitter.cjs
 var require_DeviceEmitter = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/DeviceEmitter.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/DeviceEmitter.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -16025,9 +16060,9 @@ var require_DeviceEmitter = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/DeviceInfo/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/DeviceInfo/index.cjs
 var require_DeviceInfo = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/DeviceInfo/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/DeviceInfo/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -16093,9 +16128,9 @@ var require_DeviceInfo = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/I18nManager/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/I18nManager/index.cjs
 var require_I18nManager = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/I18nManager/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/I18nManager/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -16133,9 +16168,9 @@ var require_I18nManager = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/Keyboard/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/Keyboard/index.cjs
 var require_Keyboard = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/Keyboard/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/Keyboard/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -16176,9 +16211,9 @@ var require_Keyboard = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/Linking/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/Linking/index.cjs
 var require_Linking = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/Linking/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/Linking/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -16284,9 +16319,9 @@ var require_Linking = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/TouchHistoryMath/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/TouchHistoryMath/index.cjs
 var require_TouchHistoryMath = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/TouchHistoryMath/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/TouchHistoryMath/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -16385,9 +16420,9 @@ var require_TouchHistoryMath = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/PanResponder/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/PanResponder/index.cjs
 var require_PanResponder = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/PanResponder/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/vendor/react-native/PanResponder/index.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -16594,9 +16629,9 @@ var require_PanResponder = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/PanResponder/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/PanResponder/index.cjs
 var require_PanResponder2 = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/PanResponder/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/PanResponder/index.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -16630,9 +16665,9 @@ var require_PanResponder2 = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/Share/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/Share/index.cjs
 var require_Share = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/Share/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/Share/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -16693,9 +16728,9 @@ var require_Share = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/Vibration/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/Vibration/index.cjs
 var require_Vibration = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/Vibration/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/Vibration/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -16735,9 +16770,9 @@ var require_Vibration = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/VirtualizedList.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/VirtualizedList.cjs
 var require_VirtualizedList2 = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/VirtualizedList.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/VirtualizedList.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -16775,9 +16810,9 @@ var require_VirtualizedList2 = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/UnimplementedView.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/UnimplementedView.cjs
 var require_UnimplementedView = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/UnimplementedView.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/UnimplementedView.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -16807,10 +16842,10 @@ var require_UnimplementedView = __commonJS({
     var UnimplementedView_exports = {};
     __export2(UnimplementedView_exports, { UnimplementedView: /* @__PURE__ */ __name(() => UnimplementedView, "UnimplementedView") });
     module.exports = __toCommonJS2(UnimplementedView_exports);
-    var import_react62 = __toESM2(__require("react"), 1);
+    var import_react63 = __toESM2(__require("react"), 1);
     var import_View = require_View();
     var import_jsx_runtime91 = __require("react/jsx-runtime");
-    var UnimplementedView = class extends import_react62.default.Component {
+    var UnimplementedView = class extends import_react63.default.Component {
       static {
         __name(this, "UnimplementedView");
       }
@@ -16826,9 +16861,9 @@ var require_UnimplementedView = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/TouchableNativeFeedback.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/TouchableNativeFeedback.cjs
 var require_TouchableNativeFeedback = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/TouchableNativeFeedback.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/TouchableNativeFeedback.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -16856,9 +16891,9 @@ var require_TouchableNativeFeedback = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/TouchableOpacity.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/TouchableOpacity.cjs
 var require_TouchableOpacity = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/TouchableOpacity.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/TouchableOpacity.cjs"(exports, module) {
     "use strict";
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
@@ -16890,27 +16925,27 @@ var require_TouchableOpacity = __commonJS({
     __export2(TouchableOpacity_exports, { TouchableOpacity: /* @__PURE__ */ __name(() => TouchableOpacity, "TouchableOpacity") });
     module.exports = __toCommonJS2(TouchableOpacity_exports);
     var React85 = __toESM2(__require("react"), 1);
-    var import_react62 = __require("react");
+    var import_react63 = __require("react");
     var import_react_native_web_internals = require_cjs();
     var import_View = require_View();
     var import_jsx_runtime91 = __require("react/jsx-runtime");
     function TouchableOpacityImpl(props, forwardedRef) {
       const { activeOpacity, delayPressIn, delayPressOut, delayLongPress, disabled, focusable, onLongPress, onPress, onPressIn, onPressOut, rejectResponderTermination, style: style2, ...rest } = props;
-      const hostRef = (0, import_react62.useRef)(null);
+      const hostRef = (0, import_react63.useRef)(null);
       const setRef2 = (0, import_react_native_web_internals.useMergeRefs)(forwardedRef, hostRef);
-      const [duration, setDuration] = (0, import_react62.useState)("0s");
-      const [opacityOverride, setOpacityOverride] = (0, import_react62.useState)(null);
-      const setOpacityTo = (0, import_react62.useCallback)((value, duration2) => {
+      const [duration, setDuration] = (0, import_react63.useState)("0s");
+      const [opacityOverride, setOpacityOverride] = (0, import_react63.useState)(null);
+      const setOpacityTo = (0, import_react63.useCallback)((value, duration2) => {
         setOpacityOverride(value);
         setDuration(duration2 ? `${duration2 / 1e3}s` : "0s");
       }, [setOpacityOverride, setDuration]);
-      const setOpacityActive = (0, import_react62.useCallback)((duration2) => {
+      const setOpacityActive = (0, import_react63.useCallback)((duration2) => {
         setOpacityTo(activeOpacity ?? 0.2, duration2);
       }, [activeOpacity, setOpacityTo]);
-      const setOpacityInactive = (0, import_react62.useCallback)((duration2) => {
+      const setOpacityInactive = (0, import_react63.useCallback)((duration2) => {
         setOpacityTo(null, duration2);
       }, [setOpacityTo]);
-      const pressConfig = (0, import_react62.useMemo)(() => ({
+      const pressConfig = (0, import_react63.useMemo)(() => ({
         cancelable: !rejectResponderTermination,
         disabled,
         delayLongPress,
@@ -16978,9 +17013,9 @@ var require_TouchableOpacity = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/TouchableWithoutFeedback.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/TouchableWithoutFeedback.cjs
 var require_TouchableWithoutFeedback = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/TouchableWithoutFeedback.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/TouchableWithoutFeedback.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -17011,7 +17046,7 @@ var require_TouchableWithoutFeedback = __commonJS({
     __export2(TouchableWithoutFeedback_exports, { TouchableWithoutFeedback: /* @__PURE__ */ __name(() => TouchableWithoutFeedback, "TouchableWithoutFeedback") });
     module.exports = __toCommonJS2(TouchableWithoutFeedback_exports);
     var React85 = __toESM2(__require("react"), 1);
-    var import_react62 = __require("react");
+    var import_react63 = __require("react");
     var import_react_native_web_internals = require_cjs();
     var forwardPropsList = {
       accessibilityDisabled: true,
@@ -17032,8 +17067,8 @@ var require_TouchableWithoutFeedback = __commonJS({
     var pickProps = /* @__PURE__ */ __name((props) => (0, import_react_native_web_internals.pick)(props, forwardPropsList), "pickProps");
     function TouchableWithoutFeedbackImpl(props, forwardedRef) {
       const { delayPressIn, delayPressOut, delayLongPress, disabled, focusable, onLongPress, onPress, onPressIn, onPressOut, rejectResponderTermination } = props;
-      const hostRef = (0, import_react62.useRef)(null);
-      const pressConfig = (0, import_react62.useMemo)(() => ({
+      const hostRef = (0, import_react63.useRef)(null);
+      const pressConfig = (0, import_react63.useMemo)(() => ({
         cancelable: !rejectResponderTermination,
         disabled,
         delayLongPress,
@@ -17070,9 +17105,9 @@ var require_TouchableWithoutFeedback = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/ActivityIndicator/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/ActivityIndicator/index.cjs
 var require_ActivityIndicator = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/ActivityIndicator/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/ActivityIndicator/index.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -17185,9 +17220,9 @@ var require_ActivityIndicator = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/ImageBackground/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/ImageBackground/index.cjs
 var require_ImageBackground = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/ImageBackground/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/ImageBackground/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -17214,13 +17249,13 @@ var require_ImageBackground = __commonJS({
       default: /* @__PURE__ */ __name(() => ImageBackground_default, "default")
     });
     module.exports = __toCommonJS2(ImageBackground_exports);
-    var import_react62 = __require("react");
+    var import_react63 = __require("react");
     var import_react_native_web_internals = require_cjs();
     var import_Image = require_Image();
     var import_View = require_View();
     var import_jsx_runtime91 = __require("react/jsx-runtime");
     var emptyObject4 = {};
-    var ImageBackground = (0, import_react62.forwardRef)((props, forwardedRef) => {
+    var ImageBackground = (0, import_react63.forwardRef)((props, forwardedRef) => {
       const { children, style: style2 = emptyObject4, imageStyle, imageRef, ...rest } = props;
       const { height, width } = import_react_native_web_internals.StyleSheet.flatten(style2);
       return /* @__PURE__ */ (0, import_jsx_runtime91.jsxs)(import_View.View, {
@@ -17246,9 +17281,9 @@ var require_ImageBackground = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/KeyboardAvoidingView/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/KeyboardAvoidingView/index.cjs
 var require_KeyboardAvoidingView = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/KeyboardAvoidingView/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/KeyboardAvoidingView/index.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -17314,9 +17349,9 @@ var require_KeyboardAvoidingView = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/LogBox/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/LogBox/index.cjs
 var require_LogBox = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/LogBox/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/LogBox/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -17357,9 +17392,9 @@ var require_LogBox = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/Modal/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/Modal/index.cjs
 var require_Modal = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/Modal/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/Modal/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -17387,9 +17422,9 @@ var require_Modal = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/Pressable/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/Pressable/index.cjs
 var require_Pressable = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/Pressable/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/Pressable/index.cjs"(exports, module) {
     "use strict";
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
@@ -17423,9 +17458,9 @@ var require_Pressable = __commonJS({
       default: /* @__PURE__ */ __name(() => Pressable_default, "default")
     });
     module.exports = __toCommonJS2(Pressable_exports);
-    var import_react_native_use_pressable = (init_index_native2(), __toCommonJS(index_native_exports2));
+    var import_react_native_use_pressable = (init_index_native3(), __toCommonJS(index_native_exports2));
     var React85 = __toESM2(__require("react"), 1);
-    var import_react62 = __require("react");
+    var import_react63 = __require("react");
     var import_react_native_web_internals = require_cjs();
     var import_react_native_web_internals2 = require_cjs();
     var import_View = require_View();
@@ -17435,9 +17470,9 @@ var require_Pressable = __commonJS({
       const [hovered, setHovered] = useForceableState(testOnly_hovered === true);
       const [focused, setFocused] = useForceableState(false);
       const [pressed, setPressed] = useForceableState(testOnly_pressed === true);
-      const hostRef = (0, import_react62.useRef)(null);
+      const hostRef = (0, import_react63.useRef)(null);
       const setRef2 = (0, import_react_native_web_internals2.useMergeRefs)(forwardedRef, hostRef);
-      const pressConfig = (0, import_react62.useMemo)(() => ({
+      const pressConfig = (0, import_react63.useMemo)(() => ({
         delayLongPress,
         delayPressStart: delayPressIn,
         delayPressEnd: delayPressOut,
@@ -17539,7 +17574,7 @@ var require_Pressable = __commonJS({
     }
     __name(Pressable, "Pressable");
     function useForceableState(forced) {
-      const [bool, setBool] = (0, import_react62.useState)(false);
+      const [bool, setBool] = (0, import_react63.useState)(false);
       return [bool || forced, setBool];
     }
     __name(useForceableState, "useForceableState");
@@ -17547,15 +17582,15 @@ var require_Pressable = __commonJS({
       cursor: "pointer",
       touchAction: "manipulation"
     } });
-    var PressableComponent = (0, import_react62.memo)((0, import_react62.forwardRef)(Pressable));
+    var PressableComponent = (0, import_react63.memo)((0, import_react63.forwardRef)(Pressable));
     PressableComponent.displayName = "Pressable";
     var Pressable_default = PressableComponent;
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/SafeAreaView/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/SafeAreaView/index.cjs
 var require_SafeAreaView = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/SafeAreaView/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/SafeAreaView/index.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -17617,9 +17652,9 @@ var require_SafeAreaView = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/StatusBar/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/StatusBar/index.cjs
 var require_StatusBar = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/StatusBar/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/StatusBar/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -17661,9 +17696,9 @@ var require_StatusBar = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/TextInput/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/TextInput/index.cjs
 var require_TextInput = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/TextInput/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/TextInput/index.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -17735,7 +17770,7 @@ var require_TextInput = __commonJS({
       type: true
     });
     var pickProps = /* @__PURE__ */ __name((props) => (0, import_react_native_web_internals2.pick)(props, forwardPropsList), "pickProps");
-    var useIsomorphicLayoutEffect5 = typeof window === "undefined" ? React85.useEffect : React85.useLayoutEffect;
+    var useIsomorphicLayoutEffect6 = typeof window === "undefined" ? React85.useEffect : React85.useLayoutEffect;
     function isEventComposing(nativeEvent) {
       return nativeEvent.isComposing || nativeEvent.keyCode === 229;
     }
@@ -17901,7 +17936,7 @@ var require_TextInput = __commonJS({
         }
       }
       __name(handleSelectionChange, "handleSelectionChange");
-      useIsomorphicLayoutEffect5(() => {
+      useIsomorphicLayoutEffect6(() => {
         const node = hostRef.current;
         if (node != null && selection != null) {
           setSelection(node, selection);
@@ -17994,9 +18029,9 @@ var require_TextInput = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/useColorScheme/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/useColorScheme/index.cjs
 var require_useColorScheme = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/useColorScheme/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/useColorScheme/index.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -18044,9 +18079,9 @@ var require_useColorScheme = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/useLocaleContext/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/useLocaleContext/index.cjs
 var require_useLocaleContext = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/useLocaleContext/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/useLocaleContext/index.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -18074,9 +18109,9 @@ var require_useLocaleContext = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/useWindowDimensions/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/useWindowDimensions/index.cjs
 var require_useWindowDimensions = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/useWindowDimensions/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/useWindowDimensions/index.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -18106,11 +18141,11 @@ var require_useWindowDimensions = __commonJS({
     var useWindowDimensions_exports = {};
     __export2(useWindowDimensions_exports, { useWindowDimensions: /* @__PURE__ */ __name(() => useWindowDimensions3, "useWindowDimensions") });
     module.exports = __toCommonJS2(useWindowDimensions_exports);
-    var import_react62 = __toESM2(__require("react"), 1);
+    var import_react63 = __toESM2(__require("react"), 1);
     var import_Dimensions = require_Dimensions();
     function useWindowDimensions3() {
-      const [dims, setDims] = import_react62.default.useState(() => import_Dimensions.Dimensions.get("window"));
-      import_react62.default.useEffect(() => {
+      const [dims, setDims] = import_react63.default.useState(() => import_Dimensions.Dimensions.get("window"));
+      import_react63.default.useEffect(() => {
         function handleChange({ window: window2 }) {
           if (window2 != null) {
             setDims(window2);
@@ -18129,9 +18164,9 @@ var require_useWindowDimensions = __commonJS({
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/index.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/index.cjs
 var require_cjs2 = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/index.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/index.cjs"(exports, module) {
     var __create2 = Object.create;
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
@@ -18243,7 +18278,7 @@ var require_cjs2 = __commonJS({
       useWindowDimensions: /* @__PURE__ */ __name(() => import_useWindowDimensions.useWindowDimensions, "useWindowDimensions")
     });
     module.exports = __toCommonJS2(index_exports);
-    var import_react62 = __require("react");
+    var import_react63 = __require("react");
     var import_react_native_web_internals = require_cjs();
     var import_createElement = require_createElement();
     var import_NativeModules = require_NativeModules();
@@ -18305,13 +18340,13 @@ var require_cjs2 = __commonJS({
     var findNodeHandle = /* @__PURE__ */ __name((component) => {
       throw new Error("not supported - use ref instead");
     }, "findNodeHandle");
-    var RootTagContext = (0, import_react62.createContext)(null);
+    var RootTagContext = (0, import_react63.createContext)(null);
   }
 });
 
-// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/nativeColors.cjs
+// node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/nativeColors.cjs
 var require_nativeColors = __commonJS({
-  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__re_17bce2f06953fd44ffe95b02ec5da2db/node_modules/@tamagui/react-native-web-lite/dist/cjs/nativeColors.cjs"(exports, module) {
+  "node_modules/.pnpm/@tamagui+react-native-web-lite@3.3.1_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__re_ed7547e7f60636327cfd38dc794f280c/node_modules/@tamagui/react-native-web-lite/dist/cjs/nativeColors.cjs"(exports, module) {
     var __defProp2 = Object.defineProperty;
     var __getOwnPropDesc2 = Object.getOwnPropertyDescriptor;
     var __getOwnPropNames2 = Object.getOwnPropertyNames;
@@ -18379,45 +18414,7 @@ var init_react_native = __esm({
   }
 });
 
-// node_modules/.pnpm/@tamagui+constants@3.3.1_react@19.3.0/node_modules/@tamagui/constants/dist/esm/constants.native.js
-import { useLayoutEffect } from "react";
-var isWeb, isServer, useIsomorphicLayoutEffect, isNativeDesktop, isTouchable, isAndroid, isIos, supportsDynamicColorIOS, isTV, currentPlatform;
-var init_constants_native = __esm({
-  "node_modules/.pnpm/@tamagui+constants@3.3.1_react@19.3.0/node_modules/@tamagui/constants/dist/esm/constants.native.js"() {
-    init_react_native();
-    isWeb = false;
-    isServer = false;
-    useIsomorphicLayoutEffect = useLayoutEffect;
-    isNativeDesktop = (react_native_exports.Platform === null || react_native_exports.Platform === void 0 ? void 0 : react_native_exports.Platform.OS) === "macos" || (react_native_exports.Platform === null || react_native_exports.Platform === void 0 ? void 0 : react_native_exports.Platform.OS) === "windows";
-    isTouchable = !isNativeDesktop;
-    isAndroid = (react_native_exports.Platform === null || react_native_exports.Platform === void 0 ? void 0 : react_native_exports.Platform.OS) === "android" || process.env.TEST_NATIVE_PLATFORM === "android" || process.env.TEST_NATIVE_PLATFORM === "androidtv";
-    isIos = (react_native_exports.Platform === null || react_native_exports.Platform === void 0 ? void 0 : react_native_exports.Platform.OS) === "ios" || process.env.TEST_NATIVE_PLATFORM === "ios" || process.env.TEST_NATIVE_PLATFORM === "tvos";
-    supportsDynamicColorIOS = isIos || process.env.TAMAGUI_DYNAMIC_COLOR_IOS === "1";
-    isTV = (react_native_exports.Platform === null || react_native_exports.Platform === void 0 ? void 0 : react_native_exports.Platform.isTV) || process.env.TEST_NATIVE_PLATFORM === "androidtv" || process.env.TEST_NATIVE_PLATFORM === "tvos";
-    currentPlatform = ((react_native_exports.Platform === null || react_native_exports.Platform === void 0 ? void 0 : react_native_exports.Platform.OS) ? {
-      ios: "ios",
-      android: "android",
-      macos: "macos",
-      windows: "windows"
-    }[react_native_exports.Platform.OS] : void 0) || "native";
-  }
-});
-
-// node_modules/.pnpm/@tamagui+constants@3.3.1_react@19.3.0/node_modules/@tamagui/constants/dist/esm/platformDriver.native.js
-var init_platformDriver_native = __esm({
-  "node_modules/.pnpm/@tamagui+constants@3.3.1_react@19.3.0/node_modules/@tamagui/constants/dist/esm/platformDriver.native.js"() {
-  }
-});
-
-// node_modules/.pnpm/@tamagui+constants@3.3.1_react@19.3.0/node_modules/@tamagui/constants/dist/esm/index.native.js
-var init_index_native5 = __esm({
-  "node_modules/.pnpm/@tamagui+constants@3.3.1_react@19.3.0/node_modules/@tamagui/constants/dist/esm/index.native.js"() {
-    init_constants_native();
-    init_platformDriver_native();
-  }
-});
-
-// node_modules/.pnpm/@tamagui+native@3.3.1_@expo+ui@58.0.27_react-native-gesture-handler@3.3.0_react-native@_0a0381e6cecfc47f0af206f41ecef9c2/node_modules/@tamagui/native/dist/esm/globalState.native.js
+// node_modules/.pnpm/@tamagui+native@3.3.3_@expo+ui@58.0.29_react-native-gesture-handler@3.3.0_react-native@_7116acbb4f0ed1200551c1a76d931b19/node_modules/@tamagui/native/dist/esm/globalState.native.js
 function createGlobalState(key, defaultValue3) {
   var GLOBAL_KEY = `__tamagui_${key}__`;
   function getGlobalState() {
@@ -18439,12 +18436,12 @@ function createGlobalState(key, defaultValue3) {
   };
 }
 var init_globalState_native = __esm({
-  "node_modules/.pnpm/@tamagui+native@3.3.1_@expo+ui@58.0.27_react-native-gesture-handler@3.3.0_react-native@_0a0381e6cecfc47f0af206f41ecef9c2/node_modules/@tamagui/native/dist/esm/globalState.native.js"() {
+  "node_modules/.pnpm/@tamagui+native@3.3.3_@expo+ui@58.0.29_react-native-gesture-handler@3.3.0_react-native@_7116acbb4f0ed1200551c1a76d931b19/node_modules/@tamagui/native/dist/esm/globalState.native.js"() {
     __name(createGlobalState, "createGlobalState");
   }
 });
 
-// node_modules/.pnpm/@tamagui+native@3.3.1_@expo+ui@58.0.27_react-native-gesture-handler@3.3.0_react-native@_0a0381e6cecfc47f0af206f41ecef9c2/node_modules/@tamagui/native/dist/esm/portalState.native.js
+// node_modules/.pnpm/@tamagui+native@3.3.3_@expo+ui@58.0.29_react-native-gesture-handler@3.3.0_react-native@_7116acbb4f0ed1200551c1a76d931b19/node_modules/@tamagui/native/dist/esm/portalState.native.js
 function getPortal() {
   return {
     get isEnabled() {
@@ -18460,7 +18457,7 @@ function getPortal() {
 }
 var state;
 var init_portalState_native = __esm({
-  "node_modules/.pnpm/@tamagui+native@3.3.1_@expo+ui@58.0.27_react-native-gesture-handler@3.3.0_react-native@_0a0381e6cecfc47f0af206f41ecef9c2/node_modules/@tamagui/native/dist/esm/portalState.native.js"() {
+  "node_modules/.pnpm/@tamagui+native@3.3.3_@expo+ui@58.0.29_react-native-gesture-handler@3.3.0_react-native@_7116acbb4f0ed1200551c1a76d931b19/node_modules/@tamagui/native/dist/esm/portalState.native.js"() {
     init_globalState_native();
     state = createGlobalState(`portal`, {
       enabled: false,
@@ -18470,7 +18467,7 @@ var init_portalState_native = __esm({
   }
 });
 
-// node_modules/.pnpm/@tamagui+native@3.3.1_@expo+ui@58.0.27_react-native-gesture-handler@3.3.0_react-native@_0a0381e6cecfc47f0af206f41ecef9c2/node_modules/@tamagui/native/dist/esm/gestureState.native.js
+// node_modules/.pnpm/@tamagui+native@3.3.3_@expo+ui@58.0.29_react-native-gesture-handler@3.3.0_react-native@_7116acbb4f0ed1200551c1a76d931b19/node_modules/@tamagui/native/dist/esm/gestureState.native.js
 function getGestureEnabledFreezeState() {
   var g2 = globalThis;
   if (!g2[GESTURE_ENABLED_FREEZE_KEY]) {
@@ -18679,7 +18676,7 @@ function getGestureHandler() {
 }
 var _globalThis2, _PRESS_STATE_KEY, _, state2, GESTURE_ENABLED_FREEZE_KEY, pressGestureDebugId, externalPressDebugId, PRESS_MOVE_CANCEL_DISTANCE, PRESS_MOVE_CANCEL_DISTANCE_SQ, PRESS_STATE_KEY, pressState;
 var init_gestureState_native = __esm({
-  "node_modules/.pnpm/@tamagui+native@3.3.1_@expo+ui@58.0.27_react-native-gesture-handler@3.3.0_react-native@_0a0381e6cecfc47f0af206f41ecef9c2/node_modules/@tamagui/native/dist/esm/gestureState.native.js"() {
+  "node_modules/.pnpm/@tamagui+native@3.3.3_@expo+ui@58.0.29_react-native-gesture-handler@3.3.0_react-native@_7116acbb4f0ed1200551c1a76d931b19/node_modules/@tamagui/native/dist/esm/gestureState.native.js"() {
     init_globalState_native();
     state2 = createGlobalState(`gesture`, {
       enabled: false,
@@ -18714,7 +18711,7 @@ var init_gestureState_native = __esm({
   }
 });
 
-// node_modules/.pnpm/@tamagui+native@3.3.1_@expo+ui@58.0.27_react-native-gesture-handler@3.3.0_react-native@_0a0381e6cecfc47f0af206f41ecef9c2/node_modules/@tamagui/native/dist/esm/workletsState.native.js
+// node_modules/.pnpm/@tamagui+native@3.3.3_@expo+ui@58.0.29_react-native-gesture-handler@3.3.0_react-native@_7116acbb4f0ed1200551c1a76d931b19/node_modules/@tamagui/native/dist/esm/workletsState.native.js
 function getWorklets() {
   return {
     get isEnabled() {
@@ -18730,7 +18727,7 @@ function getWorklets() {
 }
 var state3;
 var init_workletsState_native = __esm({
-  "node_modules/.pnpm/@tamagui+native@3.3.1_@expo+ui@58.0.27_react-native-gesture-handler@3.3.0_react-native@_0a0381e6cecfc47f0af206f41ecef9c2/node_modules/@tamagui/native/dist/esm/workletsState.native.js"() {
+  "node_modules/.pnpm/@tamagui+native@3.3.3_@expo+ui@58.0.29_react-native-gesture-handler@3.3.0_react-native@_7116acbb4f0ed1200551c1a76d931b19/node_modules/@tamagui/native/dist/esm/workletsState.native.js"() {
     init_globalState_native();
     state3 = createGlobalState(`worklets`, {
       enabled: false,
@@ -18743,7 +18740,7 @@ var init_workletsState_native = __esm({
   }
 });
 
-// node_modules/.pnpm/@tamagui+native@3.3.1_@expo+ui@58.0.27_react-native-gesture-handler@3.3.0_react-native@_0a0381e6cecfc47f0af206f41ecef9c2/node_modules/@tamagui/native/dist/esm/safeAreaState.native.js
+// node_modules/.pnpm/@tamagui+native@3.3.3_@expo+ui@58.0.29_react-native-gesture-handler@3.3.0_react-native@_7116acbb4f0ed1200551c1a76d931b19/node_modules/@tamagui/native/dist/esm/safeAreaState.native.js
 function getSafeArea() {
   return safeArea;
 }
@@ -18752,7 +18749,7 @@ function hasSafeAreaSetup() {
 }
 var state4, subscriptions, defaultInsets, defaultFrame, safeArea;
 var init_safeAreaState_native = __esm({
-  "node_modules/.pnpm/@tamagui+native@3.3.1_@expo+ui@58.0.27_react-native-gesture-handler@3.3.0_react-native@_0a0381e6cecfc47f0af206f41ecef9c2/node_modules/@tamagui/native/dist/esm/safeAreaState.native.js"() {
+  "node_modules/.pnpm/@tamagui+native@3.3.3_@expo+ui@58.0.29_react-native-gesture-handler@3.3.0_react-native@_7116acbb4f0ed1200551c1a76d931b19/node_modules/@tamagui/native/dist/esm/safeAreaState.native.js"() {
     init_globalState_native();
     state4 = createGlobalState(`safe_area`, {
       didSetup: false,
@@ -18824,7 +18821,7 @@ var init_safeAreaState_native = __esm({
   }
 });
 
-// node_modules/.pnpm/@tamagui+native@3.3.1_@expo+ui@58.0.27_react-native-gesture-handler@3.3.0_react-native@_0a0381e6cecfc47f0af206f41ecef9c2/node_modules/@tamagui/native/dist/esm/keyboardControllerState.native.js
+// node_modules/.pnpm/@tamagui+native@3.3.3_@expo+ui@58.0.29_react-native-gesture-handler@3.3.0_react-native@_7116acbb4f0ed1200551c1a76d931b19/node_modules/@tamagui/native/dist/esm/keyboardControllerState.native.js
 function isKeyboardControllerEnabled() {
   return state5.get().enabled;
 }
@@ -18836,7 +18833,7 @@ function setKeyboardControllerState(updates) {
 }
 var state5;
 var init_keyboardControllerState_native = __esm({
-  "node_modules/.pnpm/@tamagui+native@3.3.1_@expo+ui@58.0.27_react-native-gesture-handler@3.3.0_react-native@_0a0381e6cecfc47f0af206f41ecef9c2/node_modules/@tamagui/native/dist/esm/keyboardControllerState.native.js"() {
+  "node_modules/.pnpm/@tamagui+native@3.3.3_@expo+ui@58.0.29_react-native-gesture-handler@3.3.0_react-native@_7116acbb4f0ed1200551c1a76d931b19/node_modules/@tamagui/native/dist/esm/keyboardControllerState.native.js"() {
     init_globalState_native();
     state5 = createGlobalState(`keyboard_controller`, {
       enabled: false,
@@ -18854,7 +18851,7 @@ var init_keyboardControllerState_native = __esm({
   }
 });
 
-// node_modules/.pnpm/@tamagui+native@3.3.1_@expo+ui@58.0.27_react-native-gesture-handler@3.3.0_react-native@_0a0381e6cecfc47f0af206f41ecef9c2/node_modules/@tamagui/native/dist/esm/nativeMenuState.native.js
+// node_modules/.pnpm/@tamagui+native@3.3.3_@expo+ui@58.0.29_react-native-gesture-handler@3.3.0_react-native@_7116acbb4f0ed1200551c1a76d931b19/node_modules/@tamagui/native/dist/esm/nativeMenuState.native.js
 function registerNativeMenuAdapter(adapter) {
   var current = state6.get().adapter;
   if (current && current.name !== adapter.name) {
@@ -18870,7 +18867,7 @@ function getNativeMenuAdapter() {
 }
 var state6;
 var init_nativeMenuState_native = __esm({
-  "node_modules/.pnpm/@tamagui+native@3.3.1_@expo+ui@58.0.27_react-native-gesture-handler@3.3.0_react-native@_0a0381e6cecfc47f0af206f41ecef9c2/node_modules/@tamagui/native/dist/esm/nativeMenuState.native.js"() {
+  "node_modules/.pnpm/@tamagui+native@3.3.3_@expo+ui@58.0.29_react-native-gesture-handler@3.3.0_react-native@_7116acbb4f0ed1200551c1a76d931b19/node_modules/@tamagui/native/dist/esm/nativeMenuState.native.js"() {
     init_globalState_native();
     state6 = createGlobalState("native-menu-adapter", {
       enabled: false,
@@ -18881,7 +18878,7 @@ var init_nativeMenuState_native = __esm({
   }
 });
 
-// node_modules/.pnpm/@tamagui+native@3.3.1_@expo+ui@58.0.27_react-native-gesture-handler@3.3.0_react-native@_0a0381e6cecfc47f0af206f41ecef9c2/node_modules/@tamagui/native/dist/esm/expoUIMenuAdapter.native.js
+// node_modules/.pnpm/@tamagui+native@3.3.3_@expo+ui@58.0.29_react-native-gesture-handler@3.3.0_react-native@_7116acbb4f0ed1200551c1a76d931b19/node_modules/@tamagui/native/dist/esm/expoUIMenuAdapter.native.js
 import { jsx as jsx9 } from "react/jsx-runtime";
 import React14 from "react";
 function marker(name) {
@@ -19171,7 +19168,7 @@ function createExpoUIMenuAdapter(param) {
 }
 var warnedUnsupported;
 var init_expoUIMenuAdapter_native = __esm({
-  "node_modules/.pnpm/@tamagui+native@3.3.1_@expo+ui@58.0.27_react-native-gesture-handler@3.3.0_react-native@_0a0381e6cecfc47f0af206f41ecef9c2/node_modules/@tamagui/native/dist/esm/expoUIMenuAdapter.native.js"() {
+  "node_modules/.pnpm/@tamagui+native@3.3.3_@expo+ui@58.0.29_react-native-gesture-handler@3.3.0_react-native@_7116acbb4f0ed1200551c1a76d931b19/node_modules/@tamagui/native/dist/esm/expoUIMenuAdapter.native.js"() {
     __name(marker, "marker");
     __name(isMarkerType, "isMarkerType");
     __name(elementOfType, "elementOfType");
@@ -19182,18 +19179,18 @@ var init_expoUIMenuAdapter_native = __esm({
   }
 });
 
-// node_modules/.pnpm/@tamagui+native@3.3.1_@expo+ui@58.0.27_react-native-gesture-handler@3.3.0_react-native@_0a0381e6cecfc47f0af206f41ecef9c2/node_modules/@tamagui/native/dist/esm/nativeMenuContext.native.js
+// node_modules/.pnpm/@tamagui+native@3.3.3_@expo+ui@58.0.29_react-native-gesture-handler@3.3.0_react-native@_7116acbb4f0ed1200551c1a76d931b19/node_modules/@tamagui/native/dist/esm/nativeMenuContext.native.js
 import { createContext as createContext6 } from "react";
 var _g, _KEY, _2, KEY, g, NativeMenuContext;
 var init_nativeMenuContext_native = __esm({
-  "node_modules/.pnpm/@tamagui+native@3.3.1_@expo+ui@58.0.27_react-native-gesture-handler@3.3.0_react-native@_0a0381e6cecfc47f0af206f41ecef9c2/node_modules/@tamagui/native/dist/esm/nativeMenuContext.native.js"() {
+  "node_modules/.pnpm/@tamagui+native@3.3.3_@expo+ui@58.0.29_react-native-gesture-handler@3.3.0_react-native@_7116acbb4f0ed1200551c1a76d931b19/node_modules/@tamagui/native/dist/esm/nativeMenuContext.native.js"() {
     KEY = "__tamagui_native_menu_context__";
     g = globalThis;
     NativeMenuContext = (_2 = (_g = g)[_KEY = KEY]) !== null && _2 !== void 0 ? _2 : _g[_KEY] = createContext6(false);
   }
 });
 
-// node_modules/.pnpm/@tamagui+native@3.3.1_@expo+ui@58.0.27_react-native-gesture-handler@3.3.0_react-native@_0a0381e6cecfc47f0af206f41ecef9c2/node_modules/@tamagui/native/dist/esm/burntState.native.js
+// node_modules/.pnpm/@tamagui+native@3.3.3_@expo+ui@58.0.29_react-native-gesture-handler@3.3.0_react-native@_7116acbb4f0ed1200551c1a76d931b19/node_modules/@tamagui/native/dist/esm/burntState.native.js
 function getBurnt() {
   return {
     get isEnabled() {
@@ -19209,7 +19206,7 @@ function getBurnt() {
 }
 var state7;
 var init_burntState_native = __esm({
-  "node_modules/.pnpm/@tamagui+native@3.3.1_@expo+ui@58.0.27_react-native-gesture-handler@3.3.0_react-native@_0a0381e6cecfc47f0af206f41ecef9c2/node_modules/@tamagui/native/dist/esm/burntState.native.js"() {
+  "node_modules/.pnpm/@tamagui+native@3.3.3_@expo+ui@58.0.29_react-native-gesture-handler@3.3.0_react-native@_7116acbb4f0ed1200551c1a76d931b19/node_modules/@tamagui/native/dist/esm/burntState.native.js"() {
     init_globalState_native();
     state7 = createGlobalState(`burnt`, {
       enabled: false,
@@ -19220,7 +19217,7 @@ var init_burntState_native = __esm({
   }
 });
 
-// node_modules/.pnpm/@tamagui+native@3.3.1_@expo+ui@58.0.27_react-native-gesture-handler@3.3.0_react-native@_0a0381e6cecfc47f0af206f41ecef9c2/node_modules/@tamagui/native/dist/esm/components.native.js
+// node_modules/.pnpm/@tamagui+native@3.3.3_@expo+ui@58.0.29_react-native-gesture-handler@3.3.0_react-native@_7116acbb4f0ed1200551c1a76d931b19/node_modules/@tamagui/native/dist/esm/components.native.js
 import { Fragment as Fragment2, jsx as jsx10 } from "react/jsx-runtime";
 function NativePortal(param) {
   var { hostName = "root", children } = param;
@@ -19251,7 +19248,7 @@ function NativePortalProvider(param) {
   return /* @__PURE__ */ jsx10(PortalProvider2, { children });
 }
 var init_components_native = __esm({
-  "node_modules/.pnpm/@tamagui+native@3.3.1_@expo+ui@58.0.27_react-native-gesture-handler@3.3.0_react-native@_0a0381e6cecfc47f0af206f41ecef9c2/node_modules/@tamagui/native/dist/esm/components.native.js"() {
+  "node_modules/.pnpm/@tamagui+native@3.3.3_@expo+ui@58.0.29_react-native-gesture-handler@3.3.0_react-native@_7116acbb4f0ed1200551c1a76d931b19/node_modules/@tamagui/native/dist/esm/components.native.js"() {
     init_portalState_native();
     __name(NativePortal, "NativePortal");
     __name(NativePortalHost, "NativePortalHost");
@@ -19259,7 +19256,7 @@ var init_components_native = __esm({
   }
 });
 
-// node_modules/.pnpm/@tamagui+native@3.3.1_@expo+ui@58.0.27_react-native-gesture-handler@3.3.0_react-native@_0a0381e6cecfc47f0af206f41ecef9c2/node_modules/@tamagui/native/dist/esm/index.native.js
+// node_modules/.pnpm/@tamagui+native@3.3.3_@expo+ui@58.0.29_react-native-gesture-handler@3.3.0_react-native@_7116acbb4f0ed1200551c1a76d931b19/node_modules/@tamagui/native/dist/esm/index.native.js
 var index_native_exports5 = {};
 __export(index_native_exports5, {
   NativeMenuContext: () => NativeMenuContext,
@@ -19283,7 +19280,7 @@ __export(index_native_exports5, {
   unstable_releaseExternalPressOwnership: () => releaseExternalPressOwnership
 });
 var init_index_native6 = __esm({
-  "node_modules/.pnpm/@tamagui+native@3.3.1_@expo+ui@58.0.27_react-native-gesture-handler@3.3.0_react-native@_0a0381e6cecfc47f0af206f41ecef9c2/node_modules/@tamagui/native/dist/esm/index.native.js"() {
+  "node_modules/.pnpm/@tamagui+native@3.3.3_@expo+ui@58.0.29_react-native-gesture-handler@3.3.0_react-native@_7116acbb4f0ed1200551c1a76d931b19/node_modules/@tamagui/native/dist/esm/index.native.js"() {
     init_portalState_native();
     init_gestureState_native();
     init_workletsState_native();
@@ -19304,7 +19301,7 @@ var require_react_native_safe_area_context = __commonJS({
   }
 });
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/setup.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/setup.native.js
 import * as React from "react";
 var _globalThis;
 var _React;
@@ -19313,13 +19310,13 @@ if (typeof requestAnimationFrame === "undefined") {
   globalThis["requestAnimationFrame"] = typeof setImmediate === "undefined" ? setTimeout : setImmediate;
 }
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/Button.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/Button.native.js
 import { jsx as jsx4 } from "react/jsx-runtime";
 
-// node_modules/.pnpm/@tamagui+button@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_0a18c219ed3c78eedd880723b799e6e2/node_modules/@tamagui/button/dist/esm/Button.native.js
+// node_modules/.pnpm/@tamagui+button@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_ee5656626c445af87a7a9d23e22ba12d/node_modules/@tamagui/button/dist/esm/Button.native.js
 import { jsx as jsx3, jsxs } from "react/jsx-runtime";
 
-// node_modules/.pnpm/@tamagui+simple-hash@3.3.1/node_modules/@tamagui/simple-hash/dist/esm/index.native.js
+// node_modules/.pnpm/@tamagui+simple-hash@3.3.3/node_modules/@tamagui/simple-hash/dist/esm/index.native.js
 var cache = /* @__PURE__ */ new Map();
 var cacheSize = 0;
 var simpleHash = /* @__PURE__ */ __name(function simpleHash2(strIn) {
@@ -19368,14 +19365,14 @@ function isValidCSSCharCode(code) {
 }
 __name(isValidCSSCharCode, "isValidCSSCharCode");
 
-// node_modules/.pnpm/@tamagui+helpers@3.3.1_react@19.3.0/node_modules/@tamagui/helpers/dist/esm/clamp.native.js
+// node_modules/.pnpm/@tamagui+helpers@3.3.3_react@19.3.0/node_modules/@tamagui/helpers/dist/esm/clamp.native.js
 function clamp(value, param) {
   var [min2, max2] = param;
   return Math.min(max2, Math.max(min2, value));
 }
 __name(clamp, "clamp");
 
-// node_modules/.pnpm/@tamagui+helpers@3.3.1_react@19.3.0/node_modules/@tamagui/helpers/dist/esm/reservedThemeProps.native.js
+// node_modules/.pnpm/@tamagui+helpers@3.3.3_react@19.3.0/node_modules/@tamagui/helpers/dist/esm/reservedThemeProps.native.js
 var reservedThemeProps = {
   _isRoot: true,
   children: true,
@@ -19394,7 +19391,7 @@ var reservedThemeProps = {
   shallow: true
 };
 
-// node_modules/.pnpm/@tamagui+helpers@3.3.1_react@19.3.0/node_modules/@tamagui/helpers/dist/esm/themeClassNames.native.js
+// node_modules/.pnpm/@tamagui+helpers@3.3.3_react@19.3.0/node_modules/@tamagui/helpers/dist/esm/themeClassNames.native.js
 var schemePrefix = /^(light|dark)(?=_|$)/;
 function getThemeScheme(name) {
   var _schemePrefix_exec;
@@ -19434,7 +19431,7 @@ function getThemeClassNames(name, isRoot, schemeAuthored) {
 }
 __name(getThemeClassNames, "getThemeClassNames");
 
-// node_modules/.pnpm/@tamagui+helpers@3.3.1_react@19.3.0/node_modules/@tamagui/helpers/dist/esm/composeEventHandlers.native.js
+// node_modules/.pnpm/@tamagui+helpers@3.3.3_react@19.3.0/node_modules/@tamagui/helpers/dist/esm/composeEventHandlers.native.js
 function composeEventHandlers(og, next) {
   var { checkDefaultPrevented = true } = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : {};
   if (!og || !next) {
@@ -19450,15 +19447,33 @@ function composeEventHandlers(og, next) {
 }
 __name(composeEventHandlers, "composeEventHandlers");
 
-// node_modules/.pnpm/@tamagui+helpers@3.3.1_react@19.3.0/node_modules/@tamagui/helpers/dist/esm/types.native.js
+// node_modules/.pnpm/@tamagui+helpers@3.3.3_react@19.3.0/node_modules/@tamagui/helpers/dist/esm/types.native.js
 var StyleObjectProperty = 0;
 var StyleObjectValue = 1;
 var StyleObjectIdentifier = 2;
 var StyleObjectPseudo = 3;
 var StyleObjectRules = 4;
 
-// node_modules/.pnpm/@tamagui+helpers@3.3.1_react@19.3.0/node_modules/@tamagui/helpers/dist/esm/shouldRenderNativePlatform.native.js
-init_index_native5();
+// node_modules/.pnpm/@tamagui+constants@3.3.3_react@19.3.0/node_modules/@tamagui/constants/dist/esm/constants.native.js
+init_react_native();
+import { useLayoutEffect as useLayoutEffect2 } from "react";
+var isWeb = false;
+var isServer = false;
+var useIsomorphicLayoutEffect2 = useLayoutEffect2;
+var isNativeDesktop2 = (react_native_exports.Platform === null || react_native_exports.Platform === void 0 ? void 0 : react_native_exports.Platform.OS) === "macos" || (react_native_exports.Platform === null || react_native_exports.Platform === void 0 ? void 0 : react_native_exports.Platform.OS) === "windows";
+var isTouchable = !isNativeDesktop2;
+var isAndroid2 = (react_native_exports.Platform === null || react_native_exports.Platform === void 0 ? void 0 : react_native_exports.Platform.OS) === "android" || process.env.TEST_NATIVE_PLATFORM === "android" || process.env.TEST_NATIVE_PLATFORM === "androidtv";
+var isIos2 = (react_native_exports.Platform === null || react_native_exports.Platform === void 0 ? void 0 : react_native_exports.Platform.OS) === "ios" || process.env.TEST_NATIVE_PLATFORM === "ios" || process.env.TEST_NATIVE_PLATFORM === "tvos";
+var supportsDynamicColorIOS2 = isIos2 || process.env.TAMAGUI_DYNAMIC_COLOR_IOS === "1";
+var isTV2 = (react_native_exports.Platform === null || react_native_exports.Platform === void 0 ? void 0 : react_native_exports.Platform.isTV) || process.env.TEST_NATIVE_PLATFORM === "androidtv" || process.env.TEST_NATIVE_PLATFORM === "tvos";
+var currentPlatform2 = ((react_native_exports.Platform === null || react_native_exports.Platform === void 0 ? void 0 : react_native_exports.Platform.OS) ? {
+  ios: "ios",
+  android: "android",
+  macos: "macos",
+  windows: "windows"
+}[react_native_exports.Platform.OS] : void 0) || "native";
+
+// node_modules/.pnpm/@tamagui+helpers@3.3.3_react@19.3.0/node_modules/@tamagui/helpers/dist/esm/shouldRenderNativePlatform.native.js
 var ALL_PLATFORMS = [
   "web",
   "android",
@@ -19473,7 +19488,7 @@ function shouldRenderNativePlatform(nativeProp) {
   try {
     for (var _iterator = ALL_PLATFORMS[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
       var platform2 = _step.value;
-      if (platform2 === currentPlatform && userRequestedPlatforms.has(platform2)) {
+      if (platform2 === currentPlatform2 && userRequestedPlatforms.has(platform2)) {
         return platform2;
       }
     }
@@ -19506,7 +19521,7 @@ function resolvePlatformNames(nativeProp) {
 }
 __name(resolvePlatformNames, "resolvePlatformNames");
 
-// node_modules/.pnpm/@tamagui+style-grammar@3.3.1/node_modules/@tamagui/style-grammar/dist/esm/runtime/tokenCategories.mjs
+// node_modules/.pnpm/@tamagui+style-grammar@3.3.3/node_modules/@tamagui/style-grammar/dist/esm/runtime/tokenCategories.mjs
 var tokenCategoryNames = [
   "",
   "space",
@@ -19655,7 +19670,7 @@ function getTokenCategoryName(code) {
 }
 __name(getTokenCategoryName, "getTokenCategoryName");
 
-// node_modules/.pnpm/@tamagui+helpers@3.3.1_react@19.3.0/node_modules/@tamagui/helpers/dist/esm/tokenCategories.native.js
+// node_modules/.pnpm/@tamagui+helpers@3.3.3_react@19.3.0/node_modules/@tamagui/helpers/dist/esm/tokenCategories.native.js
 var _loop = /* @__PURE__ */ __name(function(_i2, _iter2) {
   var category = _iter2[_i2];
   var view = void 0;
@@ -19682,10 +19697,7 @@ for (_i = 0, _iter = [
 var _i;
 var _iter;
 
-// node_modules/.pnpm/@tamagui+helpers@3.3.1_react@19.3.0/node_modules/@tamagui/helpers/dist/esm/validStyleProps.native.js
-init_index_native5();
-
-// node_modules/.pnpm/@tamagui+helpers@3.3.1_react@19.3.0/node_modules/@tamagui/helpers/dist/esm/cssStyleProps.native.js
+// node_modules/.pnpm/@tamagui+helpers@3.3.3_react@19.3.0/node_modules/@tamagui/helpers/dist/esm/cssStyleProps.native.js
 var cssStyleProps = {
   accentColor: true,
   alignmentBaseline: true,
@@ -20020,7 +20032,7 @@ var cssStyleProps = {
   writingMode: true
 };
 
-// node_modules/.pnpm/@tamagui+helpers@3.3.1_react@19.3.0/node_modules/@tamagui/helpers/dist/esm/toStylePropsObject.native.js
+// node_modules/.pnpm/@tamagui+helpers@3.3.3_react@19.3.0/node_modules/@tamagui/helpers/dist/esm/toStylePropsObject.native.js
 var toStylePropsObject = /* @__PURE__ */ __name(function toStylePropsObject2() {
   for (var _len = arguments.length, sources = new Array(_len), _key = 0; _key < _len; _key++) {
     sources[_key] = arguments[_key];
@@ -20069,13 +20081,13 @@ var toStylePropsObject = /* @__PURE__ */ __name(function toStylePropsObject2() {
   return out;
 }, "toStylePropsObject2");
 
-// node_modules/.pnpm/@tamagui+helpers@3.3.1_react@19.3.0/node_modules/@tamagui/helpers/dist/esm/webOnlyStyleProps.native.js
+// node_modules/.pnpm/@tamagui+helpers@3.3.3_react@19.3.0/node_modules/@tamagui/helpers/dist/esm/webOnlyStyleProps.native.js
 var nonAnimatableWebViewProps = /* @__PURE__ */ toStylePropsObject("backgroundAttachment backgroundBlendMode backgroundClip backgroundOrigin backgroundRepeat borderBlockStyle borderBlockEndStyle borderBlockStartStyle borderInlineStyle borderInlineEndStyle borderInlineStartStyle borderBottomStyle borderLeftStyle borderRightStyle borderTopStyle contain containerType containerName content float maskBorderMode maskBorderRepeat maskClip maskComposite maskMode maskOrigin maskRepeat maskType objectFit overflowBlock overflowInline overflowX overflowY scrollbarWidth textWrap touchAction transformStyle willChange");
 var nonAnimatableWebTextProps = /* @__PURE__ */ toStylePropsObject("whiteSpace wordWrap textOverflow WebkitBoxOrient");
 var webOnlyStylePropsView = /* @__PURE__ */ toStylePropsObject(nonAnimatableWebViewProps, "transition transitionProperty transitionDuration transitionTimingFunction transitionDelay transitionBehavior backdropFilter WebkitBackdropFilter borderTop borderRight borderBottom borderLeft backgroundPosition backgroundSize borderImage caretColor clipPath mask maskBorder maskBorderOutset maskBorderSlice maskBorderSource maskBorderWidth maskImage maskPosition maskSize objectPosition textEmphasis userSelect overflowWrap wordWrap resize");
 var webOnlyStylePropsText = /* @__PURE__ */ toStylePropsObject(nonAnimatableWebTextProps, "textDecorationDistance WebkitLineClamp");
 
-// node_modules/.pnpm/@tamagui+helpers@3.3.1_react@19.3.0/node_modules/@tamagui/helpers/dist/esm/validStyleProps.native.js
+// node_modules/.pnpm/@tamagui+helpers@3.3.3_react@19.3.0/node_modules/@tamagui/helpers/dist/esm/validStyleProps.native.js
 var cssShorthandLonghands = toStylePropsObject("borderWidth borderStyle borderColor borderTopWidth borderTopStyle borderTopColor borderRightWidth borderRightStyle borderRightColor borderBottomWidth borderBottomStyle borderBottomColor borderLeftWidth borderLeftStyle borderLeftColor outlineWidth outlineStyle outlineColor outlineOffset");
 var textColors = toStylePropsObject(toStylePropsObject("color textDecorationColor"), "textShadowColor");
 var inputColors = toStylePropsObject("placeholderTextColor selectionColor cursorColor selectionHandleColor");
@@ -20090,13 +20102,13 @@ var nonAnimatableStyleProps = toStylePropsObject(nonAnimatableViewProps, nonAnim
 var stylePropsUnitless = toStylePropsObject(void 0, void 0, void 0, enableCSSGrid ? cssGridProps : void 0, "aspectRatio flex flexGrow flexShrink fontWeight opacity zIndex scale scaleX scaleY shadowOpacity");
 var stylePropsTransform = toStylePropsObject("x y scale perspective scaleX scaleY skewX skewY matrix rotate rotateY rotateX rotateZ");
 var stylePropsTextOnly = toStylePropsObject(toStylePropsObject(nonAnimatableFontProps, "fontSize fontWeight letterSpacing lineHeight"), nonAnimatableTextOnlyProps, textColors, "textShadow textShadowOffset textShadowRadius textDecoration verticalAlign", void 0, void 0);
-var stylePropsView = toStylePropsObject(nonAnimatableViewProps, "borderBottomWidth borderLeftWidth borderRightWidth borderBlockWidth borderBlockEndWidth borderBlockStartWidth borderInlineWidth borderInlineEndWidth borderInlineStartWidth borderTopWidth borderWidth transform transformOrigin borderEndWidth borderStartWidth bottom end flexBasis gap columnGap rowGap left margin marginBlock marginBlockEnd marginBlockStart marginInline marginInlineStart marginInlineEnd marginBottom marginEnd marginHorizontal marginLeft marginRight marginStart marginTop marginVertical padding paddingBottom paddingInline paddingBlock paddingBlockEnd paddingBlockStart paddingInlineEnd paddingInlineStart paddingEnd paddingHorizontal paddingLeft paddingRight paddingStart paddingTop paddingVertical right start top inset insetBlock insetBlockEnd insetBlockStart insetInline insetInlineEnd insetInlineStart shadowOffset backgroundColor borderColor borderBlockStartColor borderBlockEndColor borderBlockColor borderBottomColor borderInlineColor borderInlineStartColor borderInlineEndColor borderTopColor borderLeftColor borderRightColor borderEndColor borderStartColor shadowColor outlineColor", void 0, "borderRadius borderTopLeftRadius borderTopRightRadius borderBottomLeftRadius borderBottomRightRadius borderTopStartRadius borderTopEndRadius borderBottomStartRadius borderBottomEndRadius borderStartStartRadius borderStartEndRadius borderEndStartRadius borderEndEndRadius width height minWidth minHeight maxWidth maxHeight blockSize minBlockSize maxBlockSize inlineSize minInlineSize maxInlineSize shadowRadius", stylePropsTransform, stylePropsUnitless, isAndroid ? { elevationAndroid: true } : void 0, "boxShadow border borderBlock borderInline filter background backgroundImage experimental_backgroundImage outline outlineOffset outlineWidth", "fill stroke strokeWidth", void 0, void 0, void 0);
+var stylePropsView = toStylePropsObject(nonAnimatableViewProps, "borderBottomWidth borderLeftWidth borderRightWidth borderBlockWidth borderBlockEndWidth borderBlockStartWidth borderInlineWidth borderInlineEndWidth borderInlineStartWidth borderTopWidth borderWidth transform transformOrigin borderEndWidth borderStartWidth bottom end flexBasis gap columnGap rowGap left margin marginBlock marginBlockEnd marginBlockStart marginInline marginInlineStart marginInlineEnd marginBottom marginEnd marginHorizontal marginLeft marginRight marginStart marginTop marginVertical padding paddingBottom paddingInline paddingBlock paddingBlockEnd paddingBlockStart paddingInlineEnd paddingInlineStart paddingEnd paddingHorizontal paddingLeft paddingRight paddingStart paddingTop paddingVertical right start top inset insetBlock insetBlockEnd insetBlockStart insetInline insetInlineEnd insetInlineStart shadowOffset backgroundColor borderColor borderBlockStartColor borderBlockEndColor borderBlockColor borderBottomColor borderInlineColor borderInlineStartColor borderInlineEndColor borderTopColor borderLeftColor borderRightColor borderEndColor borderStartColor shadowColor outlineColor", void 0, "borderRadius borderTopLeftRadius borderTopRightRadius borderBottomLeftRadius borderBottomRightRadius borderTopStartRadius borderTopEndRadius borderBottomStartRadius borderBottomEndRadius borderStartStartRadius borderStartEndRadius borderEndStartRadius borderEndEndRadius width height minWidth minHeight maxWidth maxHeight blockSize minBlockSize maxBlockSize inlineSize minInlineSize maxInlineSize shadowRadius", stylePropsTransform, stylePropsUnitless, isAndroid2 ? { elevationAndroid: true } : void 0, "boxShadow border borderBlock borderInline filter background backgroundImage experimental_backgroundImage outline outlineOffset outlineWidth", "fill stroke strokeWidth", void 0, void 0, void 0);
 var stylePropsText = toStylePropsObject(stylePropsView, stylePropsTextOnly);
 var stylePropsInput = toStylePropsObject(stylePropsText, inputColors);
 var stylePropsAll = toStylePropsObject(stylePropsInput, cssStyleProps, cssGridProps, webOnlyStylePropsView, nonAnimatableWebTextProps, "font", nonAnimatableUnitlessProps, webOnlyUnitlessProps);
 var validStyles = stylePropsView;
 
-// node_modules/.pnpm/@tamagui+helpers@3.3.1_react@19.3.0/node_modules/@tamagui/helpers/dist/esm/withStaticProperties.native.js
+// node_modules/.pnpm/@tamagui+helpers@3.3.3_react@19.3.0/node_modules/@tamagui/helpers/dist/esm/withStaticProperties.native.js
 var Decorated = /* @__PURE__ */ Symbol();
 var withStaticProperties = /* @__PURE__ */ __name(function withStaticProperties2(component, staticProps) {
   var out = (function() {
@@ -20110,12 +20122,12 @@ var withStaticProperties = /* @__PURE__ */ __name(function withStaticProperties2
   return out;
 }, "withStaticProperties2");
 
-// node_modules/.pnpm/@tamagui+helpers-tamagui@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-na_1b02617690e18dbb2990bcc3b47ad0fe/node_modules/@tamagui/helpers-tamagui/dist/esm/prevent.native.js
+// node_modules/.pnpm/@tamagui+helpers-tamagui@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-na_8e032ce10ccb3938396fc882f8ea7ea2/node_modules/@tamagui/helpers-tamagui/dist/esm/prevent.native.js
 var prevent = /* @__PURE__ */ __name(function prevent2(e) {
   return [e.preventDefault(), e.stopPropagation()];
 }, "prevent2");
 
-// node_modules/.pnpm/@tamagui+helpers-tamagui@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-na_1b02617690e18dbb2990bcc3b47ad0fe/node_modules/@tamagui/helpers-tamagui/dist/esm/useCurrentColor.native.js
+// node_modules/.pnpm/@tamagui+helpers-tamagui@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-na_8e032ce10ccb3938396fc882f8ea7ea2/node_modules/@tamagui/helpers-tamagui/dist/esm/useCurrentColor.native.js
 import { getVariable, useTheme } from "@tamagui/core/native";
 var useCurrentColor = /* @__PURE__ */ __name(function useCurrentColor2(colorProp) {
   var _theme_colorProp, _theme_color;
@@ -20124,7 +20136,7 @@ var useCurrentColor = /* @__PURE__ */ __name(function useCurrentColor2(colorProp
   return out;
 }, "useCurrentColor2");
 
-// node_modules/.pnpm/@tamagui+font-size@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-g_57df17de6896da889890f11b2b518cce/node_modules/@tamagui/font-size/dist/esm/getFontSize.native.js
+// node_modules/.pnpm/@tamagui+font-size@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-g_e9d41042f3051e1f3bca9c6f3bdee7da/node_modules/@tamagui/font-size/dist/esm/getFontSize.native.js
 import { getConfig, isVariable } from "@tamagui/core/native";
 var getFontSize = /* @__PURE__ */ __name(function getFontSize2(inSize, opts) {
   var res = getFontSizeVariable(inSize, opts);
@@ -20169,7 +20181,7 @@ var getFontSizeToken = /* @__PURE__ */ __name(function getFontSizeToken2(inSize,
   return (_sizeTokens_tokenIndex = sizeTokens[tokenIndex]) !== null && _sizeTokens_tokenIndex !== void 0 ? _sizeTokens_tokenIndex : size3;
 }, "getFontSizeToken2");
 
-// node_modules/.pnpm/@tamagui+helpers-tamagui@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-na_1b02617690e18dbb2990bcc3b47ad0fe/node_modules/@tamagui/helpers-tamagui/dist/esm/getIcon.native.js
+// node_modules/.pnpm/@tamagui+helpers-tamagui@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-na_8e032ce10ccb3938396fc882f8ea7ea2/node_modules/@tamagui/helpers-tamagui/dist/esm/getIcon.native.js
 import React4 from "react";
 var getIcon = /* @__PURE__ */ __name(function getIcon2(el, props) {
   if (!el) return el;
@@ -20182,7 +20194,7 @@ var getIcon = /* @__PURE__ */ __name(function getIcon2(el, props) {
   return /* @__PURE__ */ React4.createElement(el, props);
 }, "getIcon2");
 
-// node_modules/.pnpm/@tamagui+helpers-tamagui@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-na_1b02617690e18dbb2990bcc3b47ad0fe/node_modules/@tamagui/helpers-tamagui/dist/esm/useGetThemedIcon.native.js
+// node_modules/.pnpm/@tamagui+helpers-tamagui@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-na_8e032ce10ccb3938396fc882f8ea7ea2/node_modules/@tamagui/helpers-tamagui/dist/esm/useGetThemedIcon.native.js
 var getThemedIconSize = /* @__PURE__ */ __name(function getThemedIconSize2(size3) {
   var scaleIcon = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : 1;
   if (typeof size3 === "number") return size3 * scaleIcon;
@@ -20199,7 +20211,7 @@ var useGetThemedIcon = /* @__PURE__ */ __name(function useGetThemedIcon2(props) 
   };
 }, "useGetThemedIcon2");
 
-// node_modules/.pnpm/@tamagui+stacks@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_eac650b732ad928ce77f3298de800ca2/node_modules/@tamagui/stacks/dist/esm/Stacks.native.js
+// node_modules/.pnpm/@tamagui+stacks@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_f3a61bb1abbfb31df1cb843fb0b3663d/node_modules/@tamagui/stacks/dist/esm/Stacks.native.js
 import { View, styled } from "@tamagui/core/native";
 var YStack = styled(View, { flexDirection: "column" });
 YStack["displayName"] = "YStack";
@@ -20211,11 +20223,11 @@ var ZStack = styled(YStack, { position: "relative" }, {
 });
 ZStack["displayName"] = "ZStack";
 
-// node_modules/.pnpm/@tamagui+stacks@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_eac650b732ad928ce77f3298de800ca2/node_modules/@tamagui/stacks/dist/esm/NestingContext.native.js
+// node_modules/.pnpm/@tamagui+stacks@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_f3a61bb1abbfb31df1cb843fb0b3663d/node_modules/@tamagui/stacks/dist/esm/NestingContext.native.js
 import React5 from "react";
 var ButtonNestingContext = /* @__PURE__ */ React5.createContext(false);
 
-// node_modules/.pnpm/@tamagui+text@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestur_1c2a59ee5717a3de1beb86c0c3a24a05/node_modules/@tamagui/text/dist/esm/Emphasis.native.js
+// node_modules/.pnpm/@tamagui+text@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestur_beca9419debf232b1acdb83f1a00d94b/node_modules/@tamagui/text/dist/esm/Emphasis.native.js
 import { Text, styled as styled2 } from "@tamagui/core/native";
 var Strong = styled2(Text, {
   render: "strong",
@@ -20227,7 +20239,7 @@ var Em = styled2(Text, {
   fontStyle: "italic"
 });
 
-// node_modules/.pnpm/@tamagui+get-font-sized@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-nat_aea212f23f1b0df60563f012b535aec2/node_modules/@tamagui/get-font-sized/dist/esm/index.native.js
+// node_modules/.pnpm/@tamagui+get-font-sized@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-nat_641d0e3686b21660d9d4cd10fe857e6d/node_modules/@tamagui/get-font-sized/dist/esm/index.native.js
 import { styled as styled3 } from "@tamagui/core/native";
 var getFontSized = styled3.dynamic(function() {
   var sizeTokenIn = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : true, env = arguments.length > 1 ? arguments[1] : void 0;
@@ -20263,7 +20275,7 @@ var getFontSized = styled3.dynamic(function() {
   };
 });
 
-// node_modules/.pnpm/@tamagui+text@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestur_1c2a59ee5717a3de1beb86c0c3a24a05/node_modules/@tamagui/text/dist/esm/SizableText.native.js
+// node_modules/.pnpm/@tamagui+text@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestur_beca9419debf232b1acdb83f1a00d94b/node_modules/@tamagui/text/dist/esm/SizableText.native.js
 import { Text as Text2, styled as styled4 } from "@tamagui/core/native";
 var SizableTextFrame = styled4(Text2, {
   displayName: "SizableText",
@@ -20295,7 +20307,7 @@ var SizableText = SizableTextFrame.resolve(function(props, env) {
 });
 SizableText.staticConfig.inlineProps = /* @__PURE__ */ new Set([...SizableText.staticConfig.inlineProps || [], "maxFontSizeMultiplier"]);
 
-// node_modules/.pnpm/@tamagui+text@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestur_1c2a59ee5717a3de1beb86c0c3a24a05/node_modules/@tamagui/text/dist/esm/Paragraph.native.js
+// node_modules/.pnpm/@tamagui+text@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestur_beca9419debf232b1acdb83f1a00d94b/node_modules/@tamagui/text/dist/esm/Paragraph.native.js
 import { styled as styled5 } from "@tamagui/core/native";
 var Paragraph = styled5(SizableText, {
   displayName: "Paragraph",
@@ -20307,7 +20319,7 @@ var Paragraph = styled5(SizableText, {
   size: true
 });
 
-// node_modules/.pnpm/@tamagui+text@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestur_1c2a59ee5717a3de1beb86c0c3a24a05/node_modules/@tamagui/text/dist/esm/Headings.native.js
+// node_modules/.pnpm/@tamagui+text@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestur_beca9419debf232b1acdb83f1a00d94b/node_modules/@tamagui/text/dist/esm/Headings.native.js
 import { styled as styled6 } from "@tamagui/core/native";
 var Heading = styled6(Paragraph, {
   render: "span",
@@ -20354,7 +20366,7 @@ var H6 = styled6(Heading, {
   defaultVariants: { unstyled: process.env.TAMAGUI_HEADLESS === "1" ? true : false }
 });
 
-// node_modules/.pnpm/@tamagui+text@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestur_1c2a59ee5717a3de1beb86c0c3a24a05/node_modules/@tamagui/text/dist/esm/wrapChildrenInText.native.js
+// node_modules/.pnpm/@tamagui+text@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestur_beca9419debf232b1acdb83f1a00d94b/node_modules/@tamagui/text/dist/esm/wrapChildrenInText.native.js
 import { jsx as jsx2 } from "react/jsx-runtime";
 import React6 from "react";
 function wrapChildrenInText(TextComponent, propsIn, extraProps) {
@@ -20399,7 +20411,7 @@ function wrapChildrenInText(TextComponent, propsIn, extraProps) {
 }
 __name(wrapChildrenInText, "wrapChildrenInText");
 
-// node_modules/.pnpm/@tamagui+text@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestur_1c2a59ee5717a3de1beb86c0c3a24a05/node_modules/@tamagui/text/dist/esm/types.native.js
+// node_modules/.pnpm/@tamagui+text@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestur_beca9419debf232b1acdb83f1a00d94b/node_modules/@tamagui/text/dist/esm/types.native.js
 import { stylePropsTextOnly as stylePropsTextOnly2 } from "@tamagui/core/native";
 var textParentProps = {
   ...stylePropsTextOnly2,
@@ -20411,7 +20423,7 @@ var textParentProps = {
 };
 var textParentInlineProps = new Set(Object.keys(textParentProps));
 
-// node_modules/.pnpm/@tamagui+button@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_0a18c219ed3c78eedd880723b799e6e2/node_modules/@tamagui/button/dist/esm/Button.native.js
+// node_modules/.pnpm/@tamagui+button@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_ee5656626c445af87a7a9d23e22ba12d/node_modules/@tamagui/button/dist/esm/Button.native.js
 import { Text as Text3, View as View2, splitStyleProps, styled as styled7 } from "@tamagui/core/native";
 import { useContext as useContext2 } from "react";
 var ButtonFrame = styled7(View2, {
@@ -20505,7 +20517,7 @@ function useButton(propsIn) {
 }
 __name(useButton, "useButton");
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/Button.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/Button.native.js
 import { Theme, createStyledContext, createStyledHOC, resolveSizing, styled as styled8, withStaticProperties as withStaticProperties3 } from "@tamagui/core/native";
 import React7 from "react";
 var ButtonContext = createStyledContext({ size: "md" });
@@ -20633,27 +20645,26 @@ var Button2 = withStaticProperties3(ButtonComponent, {
   Text: ButtonText2
 });
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/Select.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/Select.native.js
 import { jsx as jsx18 } from "react/jsx-runtime";
 import { createStyledContext as createStyledContext6, styled as styled15, withStaticProperties as withStaticProperties4 } from "@tamagui/core/native";
 
-// node_modules/.pnpm/@tamagui+select@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_011aa23dda7cad68fed5ea681677d47e/node_modules/@tamagui/select/dist/esm/Select.native.js
+// node_modules/.pnpm/@tamagui+select@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_3ae5d67e8ecdf4970a1babdf4ea12916/node_modules/@tamagui/select/dist/esm/Select.native.js
 import { Fragment as Fragment5, jsx as jsx17, jsxs as jsxs2 } from "react/jsx-runtime";
 
-// node_modules/.pnpm/@tamagui+adapt@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_8b7b03dee3bee52e129914dbfe3351eb/node_modules/@tamagui/adapt/dist/esm/Adapt.native.js
-init_index_native5();
+// node_modules/.pnpm/@tamagui+adapt@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_ea594db77caa9a83b1ea54958ff47d8e/node_modules/@tamagui/adapt/dist/esm/Adapt.native.js
 import { Fragment, jsx as jsx6 } from "react/jsx-runtime";
 import { createStyledContext as createStyledContext2, useMedia } from "@tamagui/core/native";
 
-// node_modules/.pnpm/@tamagui+z-index-stack@3.3.1_react@19.3.0/node_modules/@tamagui/z-index-stack/dist/esm/useStackedZIndex.native.js
+// node_modules/.pnpm/@tamagui+z-index-stack@3.3.3_react@19.3.0/node_modules/@tamagui/z-index-stack/dist/esm/useStackedZIndex.native.js
 import { useContext as useContext3, useEffect as useEffect2, useId as useId2, useMemo } from "react";
 
-// node_modules/.pnpm/@tamagui+z-index-stack@3.3.1_react@19.3.0/node_modules/@tamagui/z-index-stack/dist/esm/context.native.js
+// node_modules/.pnpm/@tamagui+z-index-stack@3.3.3_react@19.3.0/node_modules/@tamagui/z-index-stack/dist/esm/context.native.js
 import { createContext as createContext2 } from "react";
 var ZIndexStackContext = createContext2(1);
 var ZIndexHardcodedContext = createContext2(void 0);
 
-// node_modules/.pnpm/@tamagui+z-index-stack@3.3.1_react@19.3.0/node_modules/@tamagui/z-index-stack/dist/esm/useStackedZIndex.native.js
+// node_modules/.pnpm/@tamagui+z-index-stack@3.3.3_react@19.3.0/node_modules/@tamagui/z-index-stack/dist/esm/useStackedZIndex.native.js
 var ZIndicesByContext = {};
 var CurrentPortalZIndices = {};
 var useStackedZIndex = /* @__PURE__ */ __name(function useStackedZIndex2(props) {
@@ -20723,7 +20734,7 @@ var useStackedZIndex = /* @__PURE__ */ __name(function useStackedZIndex2(props) 
   }
 }, "useStackedZIndex2");
 
-// node_modules/.pnpm/@tamagui+z-index-stack@3.3.1_react@19.3.0/node_modules/@tamagui/z-index-stack/dist/esm/StackZIndex.native.js
+// node_modules/.pnpm/@tamagui+z-index-stack@3.3.3_react@19.3.0/node_modules/@tamagui/z-index-stack/dist/esm/StackZIndex.native.js
 import { jsx as jsx5 } from "react/jsx-runtime";
 import { useContext as useContext4 } from "react";
 var StackZIndexContext = /* @__PURE__ */ __name(function StackZIndexContext2(param) {
@@ -20742,7 +20753,7 @@ var StackZIndexContext = /* @__PURE__ */ __name(function StackZIndexContext2(par
   return content;
 }, "StackZIndexContext2");
 
-// node_modules/.pnpm/@tamagui+adapt@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_8b7b03dee3bee52e129914dbfe3351eb/node_modules/@tamagui/adapt/dist/esm/Adapt.native.js
+// node_modules/.pnpm/@tamagui+adapt@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_ea594db77caa9a83b1ea54958ff47d8e/node_modules/@tamagui/adapt/dist/esm/Adapt.native.js
 import React8, { createContext as createContext3, useContext as useContext5, useId as useId3 } from "react";
 function createAdaptSlotStore() {
   var listeners = /* @__PURE__ */ new Set();
@@ -20938,12 +20949,12 @@ var AdaptParent = /* @__PURE__ */ __name(function AdaptParent2(param) {
       setPresent(false);
     }
   }, []);
-  useIsomorphicLayoutEffect(function() {
+  useIsomorphicLayoutEffect2(function() {
     if (shouldStartExit) {
       setExiting(true);
     }
   }, [shouldStartExit]);
-  useIsomorphicLayoutEffect(function() {
+  useIsomorphicLayoutEffect2(function() {
     rawActiveRef.current = rawActive;
     openRef.current = open;
     if (rawActive) {
@@ -20963,7 +20974,7 @@ var AdaptParent = /* @__PURE__ */ __name(function AdaptParent2(param) {
     rawActive,
     targetHidden
   ]);
-  useIsomorphicLayoutEffect(function() {
+  useIsomorphicLayoutEffect2(function() {
     if (rawActive) {
       setPresent(true);
     } else if (!active) {
@@ -21064,7 +21075,7 @@ var AdaptContents = /* @__PURE__ */ __name(function AdaptContents2(param) {
   if (!(context2 === null || context2 === void 0 ? void 0 : context2.Contents)) {
     throw new Error(process.env.NODE_ENV === "production" ? `tamagui.dev/docs/intro/errors#warning-002` : `You're rendering a Tamagui <Adapt /> component without nesting it inside a parent that is able to adapt.`);
   }
-  useIsomorphicLayoutEffect(function() {
+  useIsomorphicLayoutEffect2(function() {
     if (!context2.active) return;
     context2.registerContents();
     return function() {
@@ -21089,7 +21100,7 @@ var Adapt = withStaticProperties(/* @__PURE__ */ __name(function Adapt2(props) {
   var context2 = useAdaptContext(scope);
   var enabled = context2.active;
   var isRenderCallback = typeof children === "function";
-  useIsomorphicLayoutEffect(function() {
+  useIsomorphicLayoutEffect2(function() {
     context2.setAdaptConfig({
       when,
       platform: platform2
@@ -21102,7 +21113,7 @@ var Adapt = withStaticProperties(/* @__PURE__ */ __name(function Adapt2(props) {
     platform2,
     context2.setAdaptConfig
   ]);
-  useIsomorphicLayoutEffect(function() {
+  useIsomorphicLayoutEffect2(function() {
     if (!enabled || !isRenderCallback) return;
     context2.registerRenderCallback();
     return function() {
@@ -21146,7 +21157,7 @@ __name(AdaptSlotContents, "AdaptSlotContents");
 function AdaptSlotPublisher(param) {
   var { isActive, slot: slot2, children } = param;
   var publishedRef = React8.useRef(null);
-  useIsomorphicLayoutEffect(function() {
+  useIsomorphicLayoutEffect2(function() {
     if (!slot2) return;
     var published = publishedRef.current;
     if (published && published.isActive === isActive && published.element === children) {
@@ -21163,7 +21174,7 @@ function AdaptSlotPublisher(param) {
     }
     slot2.notify();
   });
-  useIsomorphicLayoutEffect(function() {
+  useIsomorphicLayoutEffect2(function() {
     return function() {
       var _publishedRef_current;
       if ((_publishedRef_current = publishedRef.current) === null || _publishedRef_current === void 0 ? void 0 : _publishedRef_current.isActive) {
@@ -21194,8 +21205,8 @@ var useAdaptIsActiveGiven = /* @__PURE__ */ __name(function useAdaptIsActiveGive
   if (platform2 === "touch") enabled = isTouchable;
   else if (platform2 === "native") enabled = !isWeb;
   else if (platform2 === "web") enabled = isWeb;
-  else if (platform2 === "ios") enabled = isIos;
-  else if (platform2 === "android") enabled = isAndroid;
+  else if (platform2 === "ios") enabled = isIos2;
+  else if (platform2 === "android") enabled = isAndroid2;
   if (platform2 && enabled == false) {
     return false;
   }
@@ -21214,7 +21225,7 @@ function useAdaptTarget(scope) {
   var context2 = useAdaptContext(scope);
   var targetScope = useAdaptTargetScope();
   var isTarget = scope !== void 0 || targetScope === context2.scopeName;
-  useIsomorphicLayoutEffect(function() {
+  useIsomorphicLayoutEffect2(function() {
     if (!context2.active || !isTarget) return;
     context2.registerTarget();
     return function() {
@@ -21273,7 +21284,7 @@ function getAdaptRenderState(context2) {
 }
 __name(getAdaptRenderState, "getAdaptRenderState");
 
-// node_modules/.pnpm/@tamagui+compose-refs@3.3.1_react@19.3.0/node_modules/@tamagui/compose-refs/dist/esm/compose-refs.native.js
+// node_modules/.pnpm/@tamagui+compose-refs@3.3.3_react@19.3.0/node_modules/@tamagui/compose-refs/dist/esm/compose-refs.native.js
 import * as React9 from "react";
 function setRef(ref, value) {
   if (typeof ref === "function") {
@@ -21313,20 +21324,19 @@ function createRefComponent(render) {
 }
 __name(createRefComponent, "createRefComponent");
 
-// node_modules/.pnpm/@tamagui+select@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_011aa23dda7cad68fed5ea681677d47e/node_modules/@tamagui/select/dist/esm/Select.native.js
-init_index_native5();
+// node_modules/.pnpm/@tamagui+select@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_3ae5d67e8ecdf4970a1babdf4ea12916/node_modules/@tamagui/select/dist/esm/Select.native.js
 import { Text as Text5, View as View7, createChangeEventDetails as createChangeEventDetails3, createStyledContext as createStyledContext5, createStyledHOC as createStyledHOC7, styled as styled14 } from "@tamagui/core/native";
 
-// node_modules/.pnpm/@tamagui+focus-scope@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native_fb96c8285343512a5bc9cbf5d3f4a954/node_modules/@tamagui/focus-scope/dist/esm/FocusScope.native.js
+// node_modules/.pnpm/@tamagui+focus-scope@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native_7482313baf49dc8b0903a25e6a98ae0e/node_modules/@tamagui/focus-scope/dist/esm/FocusScope.native.js
 import "react";
 var FocusScope = createRefComponent(function(props, _ref) {
   return props.children;
 });
 
-// node_modules/.pnpm/@tamagui+focus-scope@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native_fb96c8285343512a5bc9cbf5d3f4a954/node_modules/@tamagui/focus-scope/dist/esm/FocusScopeController.native.js
+// node_modules/.pnpm/@tamagui+focus-scope@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native_7482313baf49dc8b0903a25e6a98ae0e/node_modules/@tamagui/focus-scope/dist/esm/FocusScopeController.native.js
 import { jsx as jsx8 } from "react/jsx-runtime";
 
-// node_modules/.pnpm/@tamagui+create-context@3.3.1_react@19.3.0/node_modules/@tamagui/create-context/dist/esm/create-context.native.js
+// node_modules/.pnpm/@tamagui+create-context@3.3.3_react@19.3.0/node_modules/@tamagui/create-context/dist/esm/create-context.native.js
 import { jsx as jsx7 } from "react/jsx-runtime";
 import * as React10 from "react";
 function createContext5(rootComponentName, defaultContext) {
@@ -21442,7 +21452,7 @@ function composeContextScopes() {
 }
 __name(composeContextScopes, "composeContextScopes");
 
-// node_modules/.pnpm/@tamagui+use-event@3.3.1_react@19.3.0/node_modules/@tamagui/use-event/dist/esm/useGet.native.js
+// node_modules/.pnpm/@tamagui+use-event@3.3.3_react@19.3.0/node_modules/@tamagui/use-event/dist/esm/useGet.native.js
 import * as React11 from "react";
 var useIsomorphicInsertionEffect = React11.useInsertionEffect || React11.useLayoutEffect;
 function useGet(currentValue, initialValue2, forwardToFunction) {
@@ -21462,7 +21472,7 @@ function useGet(currentValue, initialValue2, forwardToFunction) {
 }
 __name(useGet, "useGet");
 
-// node_modules/.pnpm/@tamagui+use-event@3.3.1_react@19.3.0/node_modules/@tamagui/use-event/dist/esm/useEvent.native.js
+// node_modules/.pnpm/@tamagui+use-event@3.3.3_react@19.3.0/node_modules/@tamagui/use-event/dist/esm/useEvent.native.js
 function useEvent(callback) {
   return useGet(callback, defaultValue, true);
 }
@@ -21471,7 +21481,7 @@ var defaultValue = /* @__PURE__ */ __name(function defaultValue2() {
   throw new Error("Cannot call an event handler while rendering.");
 }, "defaultValue2");
 
-// node_modules/.pnpm/@tamagui+focus-scope@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native_fb96c8285343512a5bc9cbf5d3f4a954/node_modules/@tamagui/focus-scope/dist/esm/FocusScopeController.native.js
+// node_modules/.pnpm/@tamagui+focus-scope@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native_7482313baf49dc8b0903a25e6a98ae0e/node_modules/@tamagui/focus-scope/dist/esm/FocusScopeController.native.js
 import * as React12 from "react";
 var FOCUS_SCOPE_CONTROLLER_NAME = "FocusScopeController";
 var [createFocusScopeControllerContext, createFocusScopeControllerScope] = createContextScope(FOCUS_SCOPE_CONTROLLER_NAME);
@@ -21510,7 +21520,7 @@ function FocusScopeController(props) {
 __name(FocusScopeController, "FocusScopeController");
 var FocusScopeControllerComponent = FocusScopeController;
 
-// node_modules/.pnpm/@tamagui+focusable@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-g_16625465b33d7e63bcc46bfb796ff359/node_modules/@tamagui/focusable/dist/esm/registerFocusable.native.js
+// node_modules/.pnpm/@tamagui+focusable@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-g_260a598220bf2650c82d79d715f5bcda/node_modules/@tamagui/focusable/dist/esm/registerFocusable.native.js
 var InputsMap = /* @__PURE__ */ new Map();
 var registerFocusable = /* @__PURE__ */ __name(function registerFocusable2(id, input) {
   if (process.env.NODE_ENV === "development") {
@@ -21539,15 +21549,15 @@ var focusFocusable = /* @__PURE__ */ __name(function focusFocusable2(id) {
   }
 }, "focusFocusable2");
 
-// node_modules/.pnpm/@tamagui+use-controllable-state@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__r_77f0468057821ed2a317e021cb1beb3f/node_modules/@tamagui/use-controllable-state/dist/esm/useControllableState.native.js
+// node_modules/.pnpm/@tamagui+use-controllable-state@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__r_3dc091a25537fb33155753f13d049cec/node_modules/@tamagui/use-controllable-state/dist/esm/useControllableState.native.js
 import * as React13 from "react";
 
-// node_modules/.pnpm/@tamagui+start-transition@3.3.1_react@19.3.0/node_modules/@tamagui/start-transition/dist/esm/index.native.js
+// node_modules/.pnpm/@tamagui+start-transition@3.3.3_react@19.3.0/node_modules/@tamagui/start-transition/dist/esm/index.native.js
 var startTransition = /* @__PURE__ */ __name(function startTransition2(callback) {
   callback();
 }, "startTransition2");
 
-// node_modules/.pnpm/@tamagui+use-controllable-state@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__r_77f0468057821ed2a317e021cb1beb3f/node_modules/@tamagui/use-controllable-state/dist/esm/useControllableState.native.js
+// node_modules/.pnpm/@tamagui+use-controllable-state@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__r_3dc091a25537fb33155753f13d049cec/node_modules/@tamagui/use-controllable-state/dist/esm/useControllableState.native.js
 var emptyCallbackFn = /* @__PURE__ */ __name(function emptyCallbackFn2(_3) {
   return _3();
 }, "emptyCallbackFn2");
@@ -21606,10 +21616,10 @@ __name(useControllableState, "useControllableState");
 var idFn = /* @__PURE__ */ __name(function idFn2() {
 }, "idFn2");
 
-// node_modules/.pnpm/@tamagui+select@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_011aa23dda7cad68fed5ea681677d47e/node_modules/@tamagui/select/dist/esm/Select.native.js
+// node_modules/.pnpm/@tamagui+select@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_3ae5d67e8ecdf4970a1babdf4ea12916/node_modules/@tamagui/select/dist/esm/Select.native.js
 import * as React18 from "react";
 
-// node_modules/.pnpm/@tamagui+select@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_011aa23dda7cad68fed5ea681677d47e/node_modules/@tamagui/select/dist/esm/context.native.js
+// node_modules/.pnpm/@tamagui+select@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_3ae5d67e8ecdf4970a1babdf4ea12916/node_modules/@tamagui/select/dist/esm/context.native.js
 init_index_native6();
 import { jsx as jsx11 } from "react/jsx-runtime";
 import { createStyledContext as createStyledContext3 } from "@tamagui/core/native";
@@ -21635,25 +21645,24 @@ var ForwardSelectContext = /* @__PURE__ */ __name(function ForwardSelectContext2
   });
 }, "ForwardSelectContext2");
 
-// node_modules/.pnpm/@tamagui+select@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_011aa23dda7cad68fed5ea681677d47e/node_modules/@tamagui/select/dist/esm/SelectContent.native.js
+// node_modules/.pnpm/@tamagui+select@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_3ae5d67e8ecdf4970a1babdf4ea12916/node_modules/@tamagui/select/dist/esm/SelectContent.native.js
 var SelectContent = /* @__PURE__ */ __name(function SelectContent2(param) {
   var { children } = param;
   return children;
 }, "SelectContent2");
 
-// node_modules/.pnpm/@tamagui+select@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_011aa23dda7cad68fed5ea681677d47e/node_modules/@tamagui/select/dist/esm/SelectImpl.native.js
+// node_modules/.pnpm/@tamagui+select@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_3ae5d67e8ecdf4970a1babdf4ea12916/node_modules/@tamagui/select/dist/esm/SelectImpl.native.js
 import { Fragment as Fragment3, jsx as jsx12 } from "react/jsx-runtime";
 var SelectInlineImpl = /* @__PURE__ */ __name(function SelectInlineImpl2(props) {
   return /* @__PURE__ */ jsx12(Fragment3, { children: props.children });
 }, "SelectInlineImpl2");
 
-// node_modules/.pnpm/@tamagui+select@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_011aa23dda7cad68fed5ea681677d47e/node_modules/@tamagui/select/dist/esm/SelectItem.native.js
+// node_modules/.pnpm/@tamagui+select@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_3ae5d67e8ecdf4970a1babdf4ea12916/node_modules/@tamagui/select/dist/esm/SelectItem.native.js
 import { jsx as jsx13 } from "react/jsx-runtime";
-init_index_native5();
 import { View as View3, createChangeEventDetails, createStyledContext as createStyledContext4, createStyledHOC as createStyledHOC2, styled as styled9 } from "@tamagui/core/native";
 import * as React15 from "react";
 
-// node_modules/.pnpm/@tamagui+select@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_011aa23dda7cad68fed5ea681677d47e/node_modules/@tamagui/select/dist/esm/selectionController.native.js
+// node_modules/.pnpm/@tamagui+select@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_3ae5d67e8ecdf4970a1babdf4ea12916/node_modules/@tamagui/select/dist/esm/selectionController.native.js
 function getSelectLabelText(label) {
   if (typeof label === "string" || typeof label === "number") {
     return String(label);
@@ -22029,7 +22038,7 @@ function getSelectOptionProps(mode, selected, disabled, platform2) {
 }
 __name(getSelectOptionProps, "getSelectOptionProps");
 
-// node_modules/.pnpm/@tamagui+select@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_011aa23dda7cad68fed5ea681677d47e/node_modules/@tamagui/select/dist/esm/SelectItem.native.js
+// node_modules/.pnpm/@tamagui+select@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_3ae5d67e8ecdf4970a1babdf4ea12916/node_modules/@tamagui/select/dist/esm/SelectItem.native.js
 var ITEM_NAME = "SelectItem";
 var { Provider: SelectItemContextProvider, useStyledContext: useSelectItemContext } = createStyledContext4(null, ITEM_NAME);
 var SelectItemFrame = styled9(View3, {
@@ -22053,7 +22062,7 @@ var SelectItem = createStyledHOC2(SelectItemFrame, /* @__PURE__ */ __name(functi
     disabled,
     textValue: textValueProp
   });
-  useIsomorphicLayoutEffect(function() {
+  useIsomorphicLayoutEffect2(function() {
     var registration = registry.registerItem(initialRegistration.current);
     registrationRef.current = registration;
     registration.setNode(itemNodeRef.current);
@@ -22062,7 +22071,7 @@ var SelectItem = createStyledHOC2(SelectItemFrame, /* @__PURE__ */ __name(functi
       registration.unregister();
     };
   }, [registry]);
-  useIsomorphicLayoutEffect(function() {
+  useIsomorphicLayoutEffect2(function() {
     var _registrationRef_current;
     (_registrationRef_current = registrationRef.current) === null || _registrationRef_current === void 0 ? void 0 : _registrationRef_current.update({
       value,
@@ -22074,7 +22083,7 @@ var SelectItem = createStyledHOC2(SelectItemFrame, /* @__PURE__ */ __name(functi
     textValueProp,
     value
   ]);
-  useIsomorphicLayoutEffect(function() {
+  useIsomorphicLayoutEffect2(function() {
     var _registrationRef_current;
     (_registrationRef_current = registrationRef.current) === null || _registrationRef_current === void 0 ? void 0 : _registrationRef_current.setNode(itemNodeRef.current);
   });
@@ -22275,9 +22284,9 @@ var SelectItem = createStyledHOC2(SelectItemFrame, /* @__PURE__ */ __name(functi
   });
 }, "SelectItem2"), { disableTheme: true });
 
-// node_modules/.pnpm/@tamagui+select@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_011aa23dda7cad68fed5ea681677d47e/node_modules/@tamagui/select/dist/esm/SelectItemText.native.js
+// node_modules/.pnpm/@tamagui+select@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_3ae5d67e8ecdf4970a1babdf4ea12916/node_modules/@tamagui/select/dist/esm/SelectItemText.native.js
 import { Fragment as Fragment4, jsx as jsx14 } from "react/jsx-runtime";
-import { Text as Text4, createStyledHOC as createStyledHOC3, styled as styled10, useIsomorphicLayoutEffect as useIsomorphicLayoutEffect2 } from "@tamagui/core/native";
+import { Text as Text4, createStyledHOC as createStyledHOC3, styled as styled10, useIsomorphicLayoutEffect as useIsomorphicLayoutEffect3 } from "@tamagui/core/native";
 import * as React16 from "react";
 var ITEM_TEXT_NAME = "SelectItemText";
 var SelectItemTextFrame = styled10(Text4, { displayName: ITEM_TEXT_NAME });
@@ -22298,7 +22307,7 @@ var SelectItemText = createStyledHOC3(SelectItemTextFrame, /* @__PURE__ */ __nam
     ...itemTextProps,
     ref: composedRefs
   });
-  useIsomorphicLayoutEffect2(function() {
+  useIsomorphicLayoutEffect3(function() {
     return itemParentContext.registry.registerLabel(itemContext.value, label.current, itemContext.textValue);
   }, [
     itemContext.textValue,
@@ -22312,7 +22321,7 @@ var SelectItemText = createStyledHOC3(SelectItemTextFrame, /* @__PURE__ */ __nam
   return /* @__PURE__ */ jsx14(Fragment4, { children: contents.current });
 }, "SelectItemText2"));
 
-// node_modules/.pnpm/@tamagui+select@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_011aa23dda7cad68fed5ea681677d47e/node_modules/@tamagui/select/dist/esm/SelectScrollButton.native.js
+// node_modules/.pnpm/@tamagui+select@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_3ae5d67e8ecdf4970a1babdf4ea12916/node_modules/@tamagui/select/dist/esm/SelectScrollButton.native.js
 import { View as View4, createStyledHOC as createStyledHOC4, styled as styled11 } from "@tamagui/core/native";
 var SelectScrollButtonFrame = styled11(View4, { displayName: "SelectScrollButton" });
 var SelectScrollUpButton = createStyledHOC4(SelectScrollButtonFrame, function(_props) {
@@ -22322,9 +22331,8 @@ var SelectScrollDownButton = createStyledHOC4(SelectScrollButtonFrame, function(
   return null;
 });
 
-// node_modules/.pnpm/@tamagui+select@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_011aa23dda7cad68fed5ea681677d47e/node_modules/@tamagui/select/dist/esm/SelectTrigger.native.js
+// node_modules/.pnpm/@tamagui+select@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_3ae5d67e8ecdf4970a1babdf4ea12916/node_modules/@tamagui/select/dist/esm/SelectTrigger.native.js
 import { jsx as jsx15 } from "react/jsx-runtime";
-init_index_native5();
 import { View as View5, createChangeEventDetails as createChangeEventDetails2, createStyledHOC as createStyledHOC5, styled as styled12 } from "@tamagui/core/native";
 import * as React17 from "react";
 var SelectTriggerFrame = styled12(View5, {
@@ -22387,14 +22395,14 @@ var SelectTrigger = createStyledHOC5(SelectTriggerFrame, /* @__PURE__ */ __name(
   });
 }, "SelectTrigger2"));
 
-// node_modules/.pnpm/@tamagui+select@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_011aa23dda7cad68fed5ea681677d47e/node_modules/@tamagui/select/dist/esm/SelectViewport.native.js
+// node_modules/.pnpm/@tamagui+select@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_3ae5d67e8ecdf4970a1babdf4ea12916/node_modules/@tamagui/select/dist/esm/SelectViewport.native.js
 import { jsx as jsx16 } from "react/jsx-runtime";
 import { Theme as Theme2, View as View6, createStyledHOC as createStyledHOC6, styled as styled13, useThemeName } from "@tamagui/core/native";
 
-// node_modules/.pnpm/@tamagui+select@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_011aa23dda7cad68fed5ea681677d47e/node_modules/@tamagui/select/dist/esm/constants.native.js
+// node_modules/.pnpm/@tamagui+select@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_3ae5d67e8ecdf4970a1babdf4ea12916/node_modules/@tamagui/select/dist/esm/constants.native.js
 var VIEWPORT_NAME = "SelectViewport";
 
-// node_modules/.pnpm/@tamagui+select@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_011aa23dda7cad68fed5ea681677d47e/node_modules/@tamagui/select/dist/esm/SelectViewport.native.js
+// node_modules/.pnpm/@tamagui+select@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_3ae5d67e8ecdf4970a1babdf4ea12916/node_modules/@tamagui/select/dist/esm/SelectViewport.native.js
 var SelectViewportFrame = styled13(View6, {
   displayName: VIEWPORT_NAME,
   position: "relative"
@@ -22436,7 +22444,7 @@ var SelectViewport = createStyledHOC6(SelectViewportFrame, /* @__PURE__ */ __nam
 }, "SelectViewport2"));
 SelectViewport.displayName = VIEWPORT_NAME;
 
-// node_modules/.pnpm/@tamagui+select@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_011aa23dda7cad68fed5ea681677d47e/node_modules/@tamagui/select/dist/esm/Select.native.js
+// node_modules/.pnpm/@tamagui+select@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_3ae5d67e8ecdf4970a1babdf4ea12916/node_modules/@tamagui/select/dist/esm/Select.native.js
 var SelectValueFrame = styled14(Text5, { displayName: "SelectValue" });
 var SelectValue = createStyledHOC7(SelectValueFrame, /* @__PURE__ */ __name(function SelectValue2(propsIn, forwardedRef) {
   var _ref;
@@ -22449,7 +22457,7 @@ var SelectValue = createStyledHOC7(SelectValueFrame, /* @__PURE__ */ __name(func
   var [, rerender] = React18.useReducer(function(version) {
     return version + 1;
   }, 0);
-  useIsomorphicLayoutEffect(function() {
+  useIsomorphicLayoutEffect2(function() {
     return itemParentContext.registry.subscribe(rerender);
   }, [itemParentContext.registry]);
   var registeredValue = context2.mode === "multiple" ? context2.selectedValues.map(function(value, index) {
@@ -22496,7 +22504,7 @@ var SelectIndicator = createStyledHOC7(SelectIndicatorFrame, /* @__PURE__ */ __n
   var context2 = useSelectContext(scope);
   var [layout, setLayout] = React18.useState(null);
   var rafRef = React18.useRef(0);
-  useIsomorphicLayoutEffect(function() {
+  useIsomorphicLayoutEffect2(function() {
     var update = /* @__PURE__ */ __name(function update2(index) {
       if (typeof index !== "number") return;
       cancelAnimationFrame(rafRef.current);
@@ -22708,7 +22716,7 @@ function SelectInner(props) {
   var itemNodes = registry.getNodes();
   listRef.current.length = itemNodes.length;
   for (var i = 0; i < itemNodes.length; i++) listRef.current[i] = itemNodes[i];
-  useIsomorphicLayoutEffect(function() {
+  useIsomorphicLayoutEffect2(function() {
     selectedIndexRef.current = selectedIndex;
   });
   var shouldRenderWebNative = isWeb && (native === true || native === "web" || Array.isArray(native) && native.includes("web"));
@@ -22871,7 +22879,7 @@ function SelectInner(props) {
 }
 __name(SelectInner, "SelectInner");
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/Select.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/Select.native.js
 var IconGlyph = styled15(SizableText, {
   displayName: "SelectIconGlyph",
   color: "color",
@@ -23228,11 +23236,11 @@ var Select2 = withStaticProperties4(SelectRoot2, {
   ...selectParts
 });
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/Sheet.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/Sheet.native.js
 import { jsx as jsx34 } from "react/jsx-runtime";
 import { createRefComponent as createRefComponent6, styled as styled18, withStaticProperties as withStaticProperties5 } from "@tamagui/core/native";
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/SheetContext.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/SheetContext.native.js
 import { createStyledContext as createStyledContext7 } from "@tamagui/core/native";
 import React19 from "react";
 var SheetContext = createStyledContext7({}, "Sheet__");
@@ -23253,23 +23261,20 @@ function useAnimatedPosition() {
 }
 __name(useAnimatedPosition, "useAnimatedPosition");
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/Sheet.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/Sheet.native.js
 import { jsx as jsx32, jsxs as jsxs6 } from "react/jsx-runtime";
-init_index_native5();
 import { View as View12, createRefComponent as createRefComponent5, createStyledHOC as createStyledHOC9, styled as styled17 } from "@tamagui/core/native";
 
-// node_modules/.pnpm/@tamagui+portal@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_9ac14869c4eba741b6c7dffa5ffe2288/node_modules/@tamagui/portal/dist/esm/GorhomPortalItem.native.js
-init_index_native5();
-init_index_native6();
+// node_modules/.pnpm/@tamagui+portal@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_a3c7294eb32b56d5b710bd20f27fb05b/node_modules/@tamagui/portal/dist/esm/GorhomPortalItem.native.js
 import { jsx as jsx20 } from "react/jsx-runtime";
+init_index_native6();
 import { useEvent as useEvent2 } from "@tamagui/core/native";
 import { Theme as Theme3, useThemeName as useThemeName2 } from "@tamagui/core/native";
 import { useEffect as useEffect6, useId as useId6 } from "react";
 
-// node_modules/.pnpm/@tamagui+portal@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_9ac14869c4eba741b6c7dffa5ffe2288/node_modules/@tamagui/portal/dist/esm/GorhomPortal.native.js
-init_index_native5();
-init_index_native6();
+// node_modules/.pnpm/@tamagui+portal@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_a3c7294eb32b56d5b710bd20f27fb05b/node_modules/@tamagui/portal/dist/esm/GorhomPortal.native.js
 import { Fragment as Fragment7, jsx as jsx19, jsxs as jsxs3 } from "react/jsx-runtime";
+init_index_native6();
 import React20, { createContext as createContext8, memo, useCallback as useCallback5, useContext as useContext8, useMemo as useMemo6, useReducer as useReducer2 } from "react";
 var ACTIONS = /* @__PURE__ */ (function(ACTIONS2) {
   ACTIONS2[ACTIONS2["REGISTER_HOST"] = 0] = "REGISTER_HOST";
@@ -23411,7 +23416,7 @@ function PortalHostNonNative(props) {
   var { name, forwardProps, render = defaultRenderer } = props;
   var state8 = usePortalState(name);
   var { registerHost: registerHost3, deregisterHost: deregisterHost3 } = usePortal(props.name);
-  useIsomorphicLayoutEffect(function() {
+  useIsomorphicLayoutEffect2(function() {
     registerHost3();
     return function() {
       deregisterHost3();
@@ -23434,7 +23439,7 @@ function PortalHostNonNative(props) {
 }
 __name(PortalHostNonNative, "PortalHostNonNative");
 
-// node_modules/.pnpm/@tamagui+portal@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_9ac14869c4eba741b6c7dffa5ffe2288/node_modules/@tamagui/portal/dist/esm/GorhomPortalItem.native.js
+// node_modules/.pnpm/@tamagui+portal@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_a3c7294eb32b56d5b710bd20f27fb05b/node_modules/@tamagui/portal/dist/esm/GorhomPortalItem.native.js
 var GorhomPortalItem = /* @__PURE__ */ __name(function GorhomPortalItem2(props) {
   var { name: _providedName, hostName = "root", handleOnMount: _providedHandleOnMount, handleOnUnmount: _providedHandleOnUnmount, handleOnUpdate: _providedHandleOnUpdate, children, passThrough } = props;
   var portalState = getPortal().state;
@@ -23494,7 +23499,7 @@ var GorhomPortalItemFallback = /* @__PURE__ */ __name(function GorhomPortalItemF
       addUpdatePortal3(name, themedChildren);
     }
   });
-  useIsomorphicLayoutEffect(function() {
+  useIsomorphicLayoutEffect2(function() {
     if (passThrough) return;
     handleOnMount();
     return function() {
@@ -23508,7 +23513,7 @@ var GorhomPortalItemFallback = /* @__PURE__ */ __name(function GorhomPortalItemF
   return passThrough ? children : null;
 }, "GorhomPortalItemFallback2");
 
-// node_modules/.pnpm/@tamagui+portal@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_9ac14869c4eba741b6c7dffa5ffe2288/node_modules/@tamagui/portal/dist/esm/helpers.native.js
+// node_modules/.pnpm/@tamagui+portal@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_a3c7294eb32b56d5b710bd20f27fb05b/node_modules/@tamagui/portal/dist/esm/helpers.native.js
 import { getTokenValue } from "@tamagui/core/native";
 var getStackedZIndexProps = /* @__PURE__ */ __name(function getStackedZIndexProps2(propsIn) {
   return {
@@ -23520,7 +23525,7 @@ var resolveViewZIndex = /* @__PURE__ */ __name(function resolveViewZIndex2(zInde
   return typeof zIndex === "undefined" ? void 0 : typeof zIndex === "number" ? zIndex : getTokenValue(zIndex, "zIndex");
 }, "resolveViewZIndex2");
 
-// node_modules/.pnpm/@tamagui+portal@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_9ac14869c4eba741b6c7dffa5ffe2288/node_modules/@tamagui/portal/dist/esm/Portal.native.js
+// node_modules/.pnpm/@tamagui+portal@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_a3c7294eb32b56d5b710bd20f27fb05b/node_modules/@tamagui/portal/dist/esm/Portal.native.js
 init_index_native6();
 import { jsx as jsx21 } from "react/jsx-runtime";
 import { View as View8 } from "@tamagui/core/native";
@@ -23552,8 +23557,7 @@ var Portal = /* @__PURE__ */ __name(function Portal2(propsIn) {
   });
 }, "Portal2");
 
-// node_modules/.pnpm/@tamagui+portal@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_9ac14869c4eba741b6c7dffa5ffe2288/node_modules/@tamagui/portal/dist/esm/constants.native.js
-init_index_native5();
+// node_modules/.pnpm/@tamagui+portal@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_a3c7294eb32b56d5b710bd20f27fb05b/node_modules/@tamagui/portal/dist/esm/constants.native.js
 init_index_native6();
 var isTeleportEnabled = /* @__PURE__ */ __name(function isTeleportEnabled2() {
   var state8 = getPortal().state;
@@ -23562,51 +23566,51 @@ var isTeleportEnabled = /* @__PURE__ */ __name(function isTeleportEnabled2() {
 var needsPortalRepropagation = /* @__PURE__ */ __name(function needsPortalRepropagation2() {
   if (isWeb) return false;
   if (isTeleportEnabled()) return false;
-  return isAndroid || isIos;
+  return isAndroid2 || isIos2;
 }, "needsPortalRepropagation2");
 var allPortalHosts = /* @__PURE__ */ new Map();
 var portalListeners = {};
 
-// node_modules/.pnpm/@tamagui+remove-scroll@3.3.1_react@19.3.0/node_modules/@tamagui/remove-scroll/dist/esm/RemoveScroll.native.js
+// node_modules/.pnpm/@tamagui+remove-scroll@3.3.3_react@19.3.0/node_modules/@tamagui/remove-scroll/dist/esm/RemoveScroll.native.js
 var RemoveScroll = /* @__PURE__ */ __name(function RemoveScroll2(props) {
   return props.children;
 }, "RemoveScroll2");
 
-// node_modules/.pnpm/@tamagui+use-did-finish-ssr@3.3.1_react@19.3.0/node_modules/@tamagui/use-did-finish-ssr/dist/esm/index.native.js
+// node_modules/.pnpm/@tamagui+use-did-finish-ssr@3.3.3_react@19.3.0/node_modules/@tamagui/use-did-finish-ssr/dist/esm/index.native.js
 import * as React21 from "react";
 
-// node_modules/.pnpm/@tamagui+use-did-finish-ssr@3.3.1_react@19.3.0/node_modules/@tamagui/use-did-finish-ssr/dist/esm/ClientOnly.native.js
+// node_modules/.pnpm/@tamagui+use-did-finish-ssr@3.3.3_react@19.3.0/node_modules/@tamagui/use-did-finish-ssr/dist/esm/ClientOnly.native.js
 import { jsx as jsx22 } from "react/jsx-runtime";
 import { createContext as createContext9, useContext as useContext9 } from "react";
 var ClientOnlyContext = /* @__PURE__ */ createContext9(false);
 
-// node_modules/.pnpm/@tamagui+use-did-finish-ssr@3.3.1_react@19.3.0/node_modules/@tamagui/use-did-finish-ssr/dist/esm/index.native.js
+// node_modules/.pnpm/@tamagui+use-did-finish-ssr@3.3.3_react@19.3.0/node_modules/@tamagui/use-did-finish-ssr/dist/esm/index.native.js
 function useDidFinishSSR() {
   React21.useContext(ClientOnlyContext);
   return true;
 }
 __name(useDidFinishSSR, "useDidFinishSSR");
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/Sheet.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/Sheet.native.js
 import { useContext as useContext16, useEffect as useEffect12, useMemo as useMemo13, useRef as useRef15 } from "react";
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/constants.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/constants.native.js
 var SHEET_CONTAINER_NAME = "SheetContainer";
 var SHEET_BACKGROUND_NAME = "SheetBackground";
 var SHEET_HANDLE_NAME = "SheetHandle";
 var SHEET_OVERLAY_NAME = "SheetOverlay";
 var SHEET_OVERLAY_MARKER = /* @__PURE__ */ Symbol("SheetOverlay");
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/nativeSheet.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/nativeSheet.native.js
 init_react_native();
 import { jsx as jsx23 } from "react/jsx-runtime";
 import { createRefComponent as createRefComponent2 } from "@tamagui/core/native";
 import { useMemo as useMemo7, useRef as useRef7, useState as useState4 } from "react";
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/useSheetOpenState.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/useSheetOpenState.native.js
 import React22 from "react";
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/useSheetController.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/useSheetController.native.js
 import { createStyledContext as createStyledContext8 } from "@tamagui/core/native";
 var useSheetController = /* @__PURE__ */ __name(function useSheetController2(scope) {
   var controller = SheetControllerContext.useStyledContext(scope);
@@ -23621,7 +23625,7 @@ var useSheetController = /* @__PURE__ */ __name(function useSheetController2(sco
 }, "useSheetController2");
 var SheetControllerContext = createStyledContext8(null, "SheetController__");
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/useSheetOpenState.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/useSheetOpenState.native.js
 var useSheetOpenState = /* @__PURE__ */ __name(function useSheetOpenState2(props) {
   var strategy2 = arguments.length > 1 && arguments[1] !== void 0 ? arguments[1] : "most-recent-wins";
   var _ref, _ref1, _props_open, _props_defaultOpen;
@@ -23682,7 +23686,7 @@ var useSheetOpenState = /* @__PURE__ */ __name(function useSheetOpenState2(props
   };
 }, "useSheetOpenState2");
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/useSheetState.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/useSheetState.native.js
 import React23 from "react";
 function useSheetState(props, state8) {
   var _props_snapPointsMode, _props_snapPoints, _props_dismissOnOverlayPress, _props_dismissOnSnapToBottom, _props_scope;
@@ -23782,7 +23786,7 @@ function useSheetState(props, state8) {
 }
 __name(useSheetState, "useSheetState");
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/nativeSheet.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/nativeSheet.native.js
 var nativeSheets = {};
 function getNativeSheet(platform2) {
   var _nativeSheets_platform;
@@ -23856,14 +23860,14 @@ function setupNativeSheet(platform2, Renderer) {
 }
 __name(setupNativeSheet, "setupNativeSheet");
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/SheetImplementationCustom.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/SheetImplementationCustom.native.js
 import { jsx as jsx29, jsxs as jsxs4 } from "react/jsx-runtime";
 
-// node_modules/.pnpm/@tamagui+animate-presence@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-n_496925a565ad998a765d832426b643a6/node_modules/@tamagui/animate-presence/dist/esm/AnimatePresence.native.js
+// node_modules/.pnpm/@tamagui+animate-presence@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-n_6f455d14561886f3ab7887640ba84ba3/node_modules/@tamagui/animate-presence/dist/esm/AnimatePresence.native.js
 import { Fragment as Fragment8, jsx as jsx26 } from "react/jsx-runtime";
 import { Children, isValidElement, useContext as useContext13, useInsertionEffect as useInsertionEffect2, useMemo as useMemo10, useRef as useRef10, useState as useState5 } from "react";
 
-// node_modules/.pnpm/@tamagui+use-constant@3.3.1_react@19.3.0/node_modules/@tamagui/use-constant/dist/esm/index.native.js
+// node_modules/.pnpm/@tamagui+use-constant@3.3.3_react@19.3.0/node_modules/@tamagui/use-constant/dist/esm/index.native.js
 import * as React24 from "react";
 function useConstant(fn) {
   if (typeof document === "undefined") {
@@ -23879,7 +23883,7 @@ function useConstant(fn) {
 }
 __name(useConstant, "useConstant");
 
-// node_modules/.pnpm/@tamagui+use-force-update@3.3.1_react@19.3.0/node_modules/@tamagui/use-force-update/dist/esm/index.native.js
+// node_modules/.pnpm/@tamagui+use-force-update@3.3.3_react@19.3.0/node_modules/@tamagui/use-force-update/dist/esm/index.native.js
 import React25 from "react";
 var isServerSide = false;
 function useForceUpdate() {
@@ -23889,14 +23893,14 @@ function useForceUpdate() {
 }
 __name(useForceUpdate, "useForceUpdate");
 
-// node_modules/.pnpm/@tamagui+animate-presence@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-n_496925a565ad998a765d832426b643a6/node_modules/@tamagui/animate-presence/dist/esm/LayoutGroupContext.native.js
+// node_modules/.pnpm/@tamagui+animate-presence@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-n_6f455d14561886f3ab7887640ba84ba3/node_modules/@tamagui/animate-presence/dist/esm/LayoutGroupContext.native.js
 import React26 from "react";
 var LayoutGroupContext = /* @__PURE__ */ React26.createContext({});
 
-// node_modules/.pnpm/@tamagui+animate-presence@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-n_496925a565ad998a765d832426b643a6/node_modules/@tamagui/animate-presence/dist/esm/PresenceChild.native.js
+// node_modules/.pnpm/@tamagui+animate-presence@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-n_6f455d14561886f3ab7887640ba84ba3/node_modules/@tamagui/animate-presence/dist/esm/PresenceChild.native.js
 import { jsx as jsx25 } from "react/jsx-runtime";
 
-// node_modules/.pnpm/@tamagui+use-presence@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-nativ_caf048561c0db20c0f7e93725570ff4e/node_modules/@tamagui/use-presence/dist/esm/PresenceContext.native.js
+// node_modules/.pnpm/@tamagui+use-presence@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-nativ_717cfcb6046033719f15a483b81cf89c/node_modules/@tamagui/use-presence/dist/esm/PresenceContext.native.js
 import { jsx as jsx24 } from "react/jsx-runtime";
 import * as React27 from "react";
 var PresenceContext = /* @__PURE__ */ React27.createContext(null);
@@ -23908,7 +23912,7 @@ var ResetPresence = /* @__PURE__ */ __name(function ResetPresence2(props) {
   });
 }, "ResetPresence2");
 
-// node_modules/.pnpm/@tamagui+use-presence@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-nativ_caf048561c0db20c0f7e93725570ff4e/node_modules/@tamagui/use-presence/dist/esm/usePresence.native.js
+// node_modules/.pnpm/@tamagui+use-presence@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-nativ_717cfcb6046033719f15a483b81cf89c/node_modules/@tamagui/use-presence/dist/esm/usePresence.native.js
 import * as React28 from "react";
 function usePresence(registration) {
   var context2 = React28.useContext(PresenceContext);
@@ -23953,7 +23957,7 @@ function isPresent(context2) {
 }
 __name(isPresent, "isPresent");
 
-// node_modules/.pnpm/@tamagui+animate-presence@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-n_496925a565ad998a765d832426b643a6/node_modules/@tamagui/animate-presence/dist/esm/PresenceChild.native.js
+// node_modules/.pnpm/@tamagui+animate-presence@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-n_6f455d14561886f3ab7887640ba84ba3/node_modules/@tamagui/animate-presence/dist/esm/PresenceChild.native.js
 import * as React29 from "react";
 import { useId as useId7 } from "react";
 var PresenceChild = /* @__PURE__ */ React29.memo(function(param) {
@@ -24026,7 +24030,7 @@ function newChildrenMap() {
 }
 __name(newChildrenMap, "newChildrenMap");
 
-// node_modules/.pnpm/@tamagui+animate-presence@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-n_496925a565ad998a765d832426b643a6/node_modules/@tamagui/animate-presence/dist/esm/AnimatePresence.native.js
+// node_modules/.pnpm/@tamagui+animate-presence@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-n_6f455d14561886f3ab7887640ba84ba3/node_modules/@tamagui/animate-presence/dist/esm/AnimatePresence.native.js
 var getChildKey = /* @__PURE__ */ __name(function getChildKey2(child) {
   var _child_key;
   return (_child_key = child.key) !== null && _child_key !== void 0 ? _child_key : "";
@@ -24131,7 +24135,7 @@ var AnimatePresence = /* @__PURE__ */ __name(function AnimatePresence2(param) {
 }, "AnimatePresence2");
 AnimatePresence.displayName = "AnimatePresence";
 
-// node_modules/.pnpm/@tamagui+animation-helpers@3.3.1/node_modules/@tamagui/animation-helpers/dist/esm/transitionResolver.native.js
+// node_modules/.pnpm/@tamagui+animation-helpers@3.3.3/node_modules/@tamagui/animation-helpers/dist/esm/transitionResolver.native.js
 var slot = /* @__PURE__ */ Symbol.for("tamagui.transitionResolver");
 function getTransitionResolver() {
   var _globalThis_slot;
@@ -24139,17 +24143,16 @@ function getTransitionResolver() {
 }
 __name(getTransitionResolver, "getTransitionResolver");
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/SheetImplementationCustom.native.js
-init_index_native5();
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/SheetImplementationCustom.native.js
 import { LayoutMeasurementController as LayoutMeasurementController3, View as View10, createRefComponent as createRefComponent3, formatDiagnostic, useAnimatedNumber, useAnimatedNumberStyle, useAnimationDriver, useDidFinishSSR as useDidFinishSSR2, useEvent as useEvent3, useThemeName as useThemeName3 } from "@tamagui/core/native";
 import React33, { useState as useState8 } from "react";
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/contexts.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/contexts.native.js
 import React30 from "react";
 var ParentSheetContext = React30.createContext({ zIndex: 1e5 });
 var SheetInsideSheetContext = React30.createContext(null);
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/gestureState.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/gestureState.native.js
 init_index_native6();
 var SHEET_GESTURE_STATE_KEY = "__tamagui_sheet_gesture_state__";
 function getSheetGestureHandlerState() {
@@ -24167,7 +24170,7 @@ function getGestureHandlerState() {
 }
 __name(getGestureHandlerState, "getGestureHandlerState");
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/SheetDragSurface.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/SheetDragSurface.native.js
 init_react_native();
 import { jsx as jsx27 } from "react/jsx-runtime";
 import * as React31 from "react";
@@ -24202,14 +24205,14 @@ function SheetDragSurface(param) {
 }
 __name(SheetDragSurface, "SheetDragSurface");
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/stableViewportHeight.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/stableViewportHeight.native.js
 init_react_native();
 function getStableViewportHeight() {
   return react_native_exports.Dimensions.get("screen").height;
 }
 __name(getStableViewportHeight, "getStableViewportHeight");
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/GestureSheetContext.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/GestureSheetContext.native.js
 import { jsx as jsx28 } from "react/jsx-runtime";
 import { createContext as createContext11, useContext as useContext14 } from "react";
 var GestureSheetContext = /* @__PURE__ */ createContext11(null);
@@ -24233,7 +24236,7 @@ function GestureSheetProvider(param) {
 }
 __name(GestureSheetProvider, "GestureSheetProvider");
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/helpers.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/helpers.native.js
 function resisted(y, minY) {
   var maxOverflow = arguments.length > 2 && arguments[2] !== void 0 ? arguments[2] : 25;
   if (y >= minY) {
@@ -24245,7 +24248,7 @@ function resisted(y, minY) {
 }
 __name(resisted, "resisted");
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/keyboardAvoidance.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/keyboardAvoidance.native.js
 function getKeyboardAdjustedSheetY(param) {
   var { sheetY, screenSize, isKeyboardVisible, keyboardHeight, shouldTranslate, safeAreaTop } = param;
   if (!shouldTranslate || !isKeyboardVisible || keyboardHeight <= 0 || screenSize <= 0 || sheetY >= screenSize) {
@@ -24295,7 +24298,7 @@ function getKeyboardOccludedHeight(param) {
 }
 __name(getKeyboardOccludedHeight, "getKeyboardOccludedHeight");
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/webViewport.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/webViewport.native.js
 var MIN_KEYBOARD_HEIGHT = 80;
 function isEditableElement(el) {
   if (!el) return false;
@@ -24360,8 +24363,7 @@ function getWebKeyboardBottomInset() {
 }
 __name(getWebKeyboardBottomInset, "getWebKeyboardBottomInset");
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/useGestureHandlerPan.native.js
-init_index_native5();
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/useGestureHandlerPan.native.js
 import { useCallback as useCallback6, useEffect as useEffect9, useMemo as useMemo12, useRef as useRef11 } from "react";
 var AT_TOP_THRESHOLD = 5;
 var SCROLL_HANDOFF_THRESHOLD = 160;
@@ -24607,7 +24609,7 @@ function useGestureHandlerPan(config) {
 }
 __name(useGestureHandlerPan, "useGestureHandlerPan");
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/useKeyboardControllerSheet.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/useKeyboardControllerSheet.native.js
 init_react_native();
 import { useCallback as useCallback7, useEffect as useEffect10, useRef as useRef12, useState as useState6 } from "react";
 var isKeyboardControllerEnabled2 = /* @__PURE__ */ __name(function isKeyboardControllerEnabled22() {
@@ -24684,7 +24686,7 @@ function useKeyboardControllerSheet(options) {
 }
 __name(useKeyboardControllerSheet, "useKeyboardControllerSheet");
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/useSafeAreaInsets.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/useSafeAreaInsets.native.js
 init_index_native6();
 var import_react_native_safe_area_context = __toESM(require_react_native_safe_area_context(), 1);
 import * as React32 from "react";
@@ -24704,7 +24706,7 @@ function useSafeAreaInsets() {
 }
 __name(useSafeAreaInsets, "useSafeAreaInsets");
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/useSheetProviderProps.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/useSheetProviderProps.native.js
 import { useConfiguration } from "@tamagui/core/native";
 function useSheetProviderProps(props, state8) {
   var { maxContentSize, ...sheetState } = useSheetState(props, state8);
@@ -24759,7 +24761,7 @@ function useSheetProviderProps(props, state8) {
 }
 __name(useSheetProviderProps, "useSheetProviderProps");
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/SheetImplementationCustom.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/SheetImplementationCustom.native.js
 var hiddenSize = 10000.1;
 var rnghRootStyleOpen = {
   width: "100%",
@@ -24877,7 +24879,7 @@ var SheetImplementationCustom = createRefComponent3(/* @__PURE__ */ __name(funct
   });
   var keyboardStableFrameHeight = isWebKbSheet && isKeyboardVisible && frameSize > 0 ? frameSize : isNativeKbFitSheet && isKeyboardVisible && preKeyboardFrameSize.current > 0 ? preKeyboardFrameSize.current : 0;
   var AnimatedView = (_animationDriver_View = animationDriver.View) !== null && _animationDriver_View !== void 0 ? _animationDriver_View : View10;
-  useIsomorphicLayoutEffect(function() {
+  useIsomorphicLayoutEffect2(function() {
     if (!(sheetInsideSheet && open)) return;
     sheetInsideSheet(true);
     return function() {
@@ -25037,7 +25039,7 @@ var SheetImplementationCustom = createRefComponent3(/* @__PURE__ */ __name(funct
     } : resolvedConfig;
     animatedNumber.setValue(toValue, springConfig, animationCompleteCallback);
   });
-  useIsomorphicLayoutEffect(function() {
+  useIsomorphicLayoutEffect2(function() {
     if (hasntMeasured && screenSize && frameSize) {
       at.current = screenSize;
       animatedNumber.setValue(screenSize, { type: "direct" });
@@ -25467,11 +25469,11 @@ function getYPositions(mode, point, screenSize, frameSize) {
 }
 __name(getYPositions, "getYPositions");
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/SheetScrollView.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/SheetScrollView.native.js
 import { jsx as jsx31, jsxs as jsxs5 } from "react/jsx-runtime";
 import { View as View11, createRefComponent as createRefComponent4, createStyledHOC as createStyledHOC8, isWeb as isWeb2 } from "@tamagui/core/native";
 
-// node_modules/.pnpm/@tamagui+scroll-view@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native_cb5a05a393ca6f07368525c91946ea02/node_modules/@tamagui/scroll-view/dist/esm/ScrollView.native.js
+// node_modules/.pnpm/@tamagui+scroll-view@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native_037ebf738e5c211c8450fae5c09038a4/node_modules/@tamagui/scroll-view/dist/esm/ScrollView.native.js
 init_react_native();
 import { jsx as jsx30 } from "react/jsx-runtime";
 import { styled as styled16, useStyle } from "@tamagui/core/native";
@@ -25489,10 +25491,10 @@ var ScrollView = styled16(ScrollViewNative, {
   scrollEnabled: true
 }, { neverFlatten: true });
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/SheetScrollView.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/SheetScrollView.native.js
 import React35, { useEffect as useEffect11, useRef as useRef14, useState as useState9 } from "react";
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/useSheetScrollViewGestures.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/useSheetScrollViewGestures.native.js
 import { useRef as useRef13 } from "react";
 function useSheetScrollViewGestures(param) {
   var { scrollBridge, hasScrollableContent, scrollEnabled, setScrollEnabled } = param;
@@ -25619,7 +25621,7 @@ function useSheetScrollViewGestures(param) {
 }
 __name(useSheetScrollViewGestures, "useSheetScrollViewGestures");
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/SheetScrollView.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/SheetScrollView.native.js
 var SHEET_SCROLL_VIEW_NAME = "SheetScrollView";
 var sheetContentStyle = { minHeight: "100%" };
 var SheetScrollViewCustom = createRefComponent4(function(param, ref) {
@@ -25918,7 +25920,7 @@ var SheetScrollView = createStyledHOC8(ScrollView, function(propsIn, ref) {
   displayName: SHEET_SCROLL_VIEW_NAME
 });
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/useSheetOffscreenSize.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/useSheetOffscreenSize.native.js
 var useSheetOffscreenSize = /* @__PURE__ */ __name(function useSheetOffscreenSize2(context2) {
   var _snapPoints_position;
   if (context2.onlyShowContainer) return 0;
@@ -25955,7 +25957,7 @@ var useSheetOffscreenSize = /* @__PURE__ */ __name(function useSheetOffscreenSiz
   return offscreenSize2;
 }, "useSheetOffscreenSize2");
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/Sheet.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/Sheet.native.js
 var SheetHandleFrame = styled17(XStack, {
   displayName: SHEET_HANDLE_NAME,
   variants: { open: {
@@ -26164,7 +26166,7 @@ var Sheet = withStaticProperties(SheetRoot, {
   ...sheetParts
 });
 
-// node_modules/.pnpm/@tamagui+sheet@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_4dff51e1345be362f3dc2174de77a95c/node_modules/@tamagui/sheet/dist/esm/SheetController.native.js
+// node_modules/.pnpm/@tamagui+sheet@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f0290dca359c983b774481cad5a17726/node_modules/@tamagui/sheet/dist/esm/SheetController.native.js
 import { jsx as jsx33 } from "react/jsx-runtime";
 import React36, { useId as useId8, useRef as useRef16 } from "react";
 import { useEvent as useEvent4 } from "@tamagui/core/native";
@@ -26205,7 +26207,7 @@ var SheetController = /* @__PURE__ */ __name(function SheetController2(param) {
   });
 }, "SheetController2");
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/Sheet.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/Sheet.native.js
 var SheetHandleFrame2 = styled18(Sheet.Handle, {
   displayName: "SheetHandle",
   height: 10,
@@ -26271,17 +26273,17 @@ var Sheet2 = withStaticProperties5(SheetRoot3, {
   ...sheetParts2
 });
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/Input.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/Input.native.js
 import { jsx as jsx36 } from "react/jsx-runtime";
 import { Theme as Theme4, createStyledHOC as createStyledHOC11, isWeb as isWeb3, styled as styled21 } from "@tamagui/core/native";
 
-// node_modules/.pnpm/@tamagui+input@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_164d47e2dbc5bcb5f45ad729190a5d34/node_modules/@tamagui/input/dist/esm/Input.native.js
+// node_modules/.pnpm/@tamagui+input@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_388939a178db5869683646f90588ddac/node_modules/@tamagui/input/dist/esm/Input.native.js
 init_react_native();
 import { jsx as jsx35 } from "react/jsx-runtime";
 import React38 from "react";
 import { createStyledHOC as createStyledHOC10, styled as styled19 } from "@tamagui/core/native";
 
-// node_modules/.pnpm/@tamagui+element@3.3.1_react@19.3.0/node_modules/@tamagui/element/dist/esm/useNativeRef.native.js
+// node_modules/.pnpm/@tamagui+element@3.3.3_react@19.3.0/node_modules/@tamagui/element/dist/esm/useNativeRef.native.js
 import * as React37 from "react";
 function useNativeRef(forwardedRef) {
   var ref = React37.useRef(null);
@@ -26302,13 +26304,13 @@ function useNativeInputRef(forwardedRef) {
 }
 __name(useNativeInputRef, "useNativeInputRef");
 
-// node_modules/.pnpm/@tamagui+element@3.3.1_react@19.3.0/node_modules/@tamagui/element/dist/esm/index.native.js
+// node_modules/.pnpm/@tamagui+element@3.3.3_react@19.3.0/node_modules/@tamagui/element/dist/esm/index.native.js
 function getWebElement() {
   throw new Error("getWebElement is only available on web");
 }
 __name(getWebElement, "getWebElement");
 
-// node_modules/.pnpm/@tamagui+input@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_164d47e2dbc5bcb5f45ad729190a5d34/node_modules/@tamagui/input/dist/esm/shared.native.js
+// node_modules/.pnpm/@tamagui+input@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_388939a178db5869683646f90588ddac/node_modules/@tamagui/input/dist/esm/shared.native.js
 import { getVariableValue, resolveTextMetrics } from "@tamagui/core/native";
 var defaultStyles = {
   outlineWidth: 0,
@@ -26343,7 +26345,7 @@ var styledBody = [{
   variants: { disabled: { true: {} } }
 }, { isInput: true }];
 
-// node_modules/.pnpm/@tamagui+input@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_164d47e2dbc5bcb5f45ad729190a5d34/node_modules/@tamagui/input/dist/esm/Input.native.js
+// node_modules/.pnpm/@tamagui+input@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_388939a178db5869683646f90588ddac/node_modules/@tamagui/input/dist/esm/Input.native.js
 var NativeTextInput = react_native_exports.TextInput;
 var StyledInput = styled19(NativeTextInput, styledBody[0], styledBody[1]).resolve(resolveMultilineInputSize);
 var Input = createStyledHOC10(StyledInput, function(props, forwardedRef) {
@@ -26516,7 +26518,7 @@ var Input = createStyledHOC10(StyledInput, function(props, forwardedRef) {
   });
 });
 
-// node_modules/.pnpm/@tamagui+input@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_164d47e2dbc5bcb5f45ad729190a5d34/node_modules/@tamagui/input/dist/esm/TextArea.native.js
+// node_modules/.pnpm/@tamagui+input@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_388939a178db5869683646f90588ddac/node_modules/@tamagui/input/dist/esm/TextArea.native.js
 import { styled as styled20 } from "@tamagui/core/native";
 var TextAreaFrame = styled20(Input, {
   displayName: "TextArea",
@@ -26528,7 +26530,7 @@ var TextAreaFrame = styled20(Input, {
 });
 var TextArea = TextAreaFrame.resolve(resolveTextAreaSize);
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/Input.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/Input.native.js
 var inputSize = {
   xs: {
     paddingInline: "2",
@@ -26626,11 +26628,11 @@ var TextArea2 = createStyledHOC11(TextAreaFrame2, /* @__PURE__ */ __name(functio
   }) : textArea;
 }, "TextArea2"), { disableTheme: true });
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/ToggleGroup.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/ToggleGroup.native.js
 import { jsx as jsx40 } from "react/jsx-runtime";
 import { createRefComponent as createRefComponent7, styled as styled25, withStaticProperties as withStaticProperties6 } from "@tamagui/core/native";
 
-// node_modules/.pnpm/@tamagui+toggle-group@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-nativ_d2c0541acf61fb44f5985c7f6413fe98/node_modules/@tamagui/toggle-group/dist/esm/context.native.js
+// node_modules/.pnpm/@tamagui+toggle-group@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-nativ_68aa78d48c5271909273c1fee7eca72d/node_modules/@tamagui/toggle-group/dist/esm/context.native.js
 import { createStyledContext as createStyledContext9 } from "@tamagui/core/native";
 var context = createStyledContext9({
   color: void 0,
@@ -26640,11 +26642,10 @@ var useToggleGroupItem = /* @__PURE__ */ __name(function useToggleGroupItem2() {
   return context.useStyledContext();
 }, "useToggleGroupItem2");
 
-// node_modules/.pnpm/@tamagui+toggle-group@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-nativ_d2c0541acf61fb44f5985c7f6413fe98/node_modules/@tamagui/toggle-group/dist/esm/ToggleGroup.native.js
+// node_modules/.pnpm/@tamagui+toggle-group@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-nativ_68aa78d48c5271909273c1fee7eca72d/node_modules/@tamagui/toggle-group/dist/esm/ToggleGroup.native.js
 import { jsx as jsx39 } from "react/jsx-runtime";
-init_index_native5();
 
-// node_modules/.pnpm/@tamagui+roving-focus@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-nativ_8422de09e59a0f92f991aca4195954a9/node_modules/@tamagui/roving-focus/dist/esm/RovingFocusGroup.native.js
+// node_modules/.pnpm/@tamagui+roving-focus@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-nativ_18e0f3c5402970644f7486d37b747b0f/node_modules/@tamagui/roving-focus/dist/esm/RovingFocusGroup.native.js
 import { View as View13, styled as styled22 } from "@tamagui/core/native";
 var ITEM_NAME2 = "RovingFocusGroupItem";
 var RovingFocusGroupItem = styled22(View13, { displayName: ITEM_NAME2 });
@@ -26653,7 +26654,7 @@ var RovingFocusGroupFrame = styled22(View13, { displayName: GROUP_NAME2 });
 var RovingFocusGroup = withStaticProperties(RovingFocusGroupFrame, { Item: RovingFocusGroupItem });
 RovingFocusGroup.displayName = GROUP_NAME2;
 
-// node_modules/.pnpm/@tamagui+use-direction@3.3.1_react@19.3.0/node_modules/@tamagui/use-direction/dist/esm/useDirection.native.js
+// node_modules/.pnpm/@tamagui+use-direction@3.3.3_react@19.3.0/node_modules/@tamagui/use-direction/dist/esm/useDirection.native.js
 import { jsx as jsx37 } from "react/jsx-runtime";
 import * as React39 from "react";
 var DirectionContext = /* @__PURE__ */ React39.createContext(void 0);
@@ -26663,11 +26664,11 @@ function useDirection(localDir) {
 }
 __name(useDirection, "useDirection");
 
-// node_modules/.pnpm/@tamagui+toggle-group@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-nativ_d2c0541acf61fb44f5985c7f6413fe98/node_modules/@tamagui/toggle-group/dist/esm/ToggleGroup.native.js
+// node_modules/.pnpm/@tamagui+toggle-group@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-nativ_68aa78d48c5271909273c1fee7eca72d/node_modules/@tamagui/toggle-group/dist/esm/ToggleGroup.native.js
 import { View as View15, createStyledContext as createStyledContext10, createStyledHOC as createStyledHOC12, styled as styled24 } from "@tamagui/core/native";
 import React40 from "react";
 
-// node_modules/.pnpm/@tamagui+toggle-group@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-nativ_d2c0541acf61fb44f5985c7f6413fe98/node_modules/@tamagui/toggle-group/dist/esm/Toggle.native.js
+// node_modules/.pnpm/@tamagui+toggle-group@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-nativ_68aa78d48c5271909273c1fee7eca72d/node_modules/@tamagui/toggle-group/dist/esm/Toggle.native.js
 import { jsx as jsx38 } from "react/jsx-runtime";
 import { View as View14, styled as styled23 } from "@tamagui/core/native";
 import "react";
@@ -26707,7 +26708,7 @@ var Toggle = createRefComponent(/* @__PURE__ */ __name(function Toggle2(props, f
   });
 }, "Toggle2"));
 
-// node_modules/.pnpm/@tamagui+toggle-group@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-nativ_d2c0541acf61fb44f5985c7f6413fe98/node_modules/@tamagui/toggle-group/dist/esm/ToggleGroup.native.js
+// node_modules/.pnpm/@tamagui+toggle-group@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-nativ_68aa78d48c5271909273c1fee7eca72d/node_modules/@tamagui/toggle-group/dist/esm/ToggleGroup.native.js
 var TOGGLE_GROUP_NAME = "ToggleGroup";
 var TOGGLE_GROUP_ITEM_NAME = "ToggleGroupItem";
 var TOGGLE_GROUP_CONTEXT = "ToggleGroup";
@@ -26878,7 +26879,7 @@ var ToggleGroupImpl = createStyledHOC12(ToggleGroupFrame, function(propsIn, forw
   });
 });
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/ToggleGroup.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/ToggleGroup.native.js
 var toggleGroupItemSize = {
   xs: {
     width: 26,
@@ -26930,14 +26931,14 @@ var ToggleGroupRoot = createRefComponent7(/* @__PURE__ */ __name(function Toggle
 }, "ToggleGroup$1"));
 var ToggleGroup2 = withStaticProperties6(ToggleGroupRoot, { Item: ToggleGroupItem2 });
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/Accordion.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/Accordion.native.js
 import { jsx as jsx44 } from "react/jsx-runtime";
 
-// node_modules/.pnpm/@tamagui+accordion@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-g_13bfea2908642e928e083fe5e9f7bc8a/node_modules/@tamagui/accordion/dist/esm/Accordion.native.js
+// node_modules/.pnpm/@tamagui+accordion@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-g_cf87681d85bb81e71ff5cbc8fe805b8d/node_modules/@tamagui/accordion/dist/esm/Accordion.native.js
 import { jsx as jsx43 } from "react/jsx-runtime";
 import { View as View17, createRefComponent as createRefComponent10, createStyledContext as createStyledContext13, createStyledHOC as createStyledHOC14, styled as styled27 } from "@tamagui/core/native";
 
-// node_modules/.pnpm/@tamagui+collapsible@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native_62749b7de3cd0933d08a5e63efa189f2/node_modules/@tamagui/collapsible/dist/esm/Collapsible.native.js
+// node_modules/.pnpm/@tamagui+collapsible@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native_2080aae66d37c56ae0dcda5550631730/node_modules/@tamagui/collapsible/dist/esm/Collapsible.native.js
 import { jsx as jsx41 } from "react/jsx-runtime";
 import { createRefComponent as createRefComponent8, createStyledHOC as createStyledHOC13 } from "@tamagui/core/native";
 import { View as View16, createStyledContext as createStyledContext11, styled as styled26 } from "@tamagui/core/native";
@@ -27016,10 +27017,9 @@ var Collapsible = withStaticProperties(_Collapsible, {
   Content: CollapsibleContent
 });
 
-// node_modules/.pnpm/@tamagui+collection@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-_1e89d65f02f8337c543df26850de271b/node_modules/@tamagui/collection/dist/esm/Collection.native.js
+// node_modules/.pnpm/@tamagui+collection@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-_68c88239818e4f5eb2dde961fe3346f2/node_modules/@tamagui/collection/dist/esm/Collection.native.js
 import { jsx as jsx42 } from "react/jsx-runtime";
 import { Slot, createRefComponent as createRefComponent9, createStyledContext as createStyledContext12 } from "@tamagui/core/native";
-init_index_native5();
 import React42 from "react";
 function createCollection(name) {
   var { Provider: CollectionProviderImpl, useStyledContext: useCollectionContext } = createStyledContext12({
@@ -27098,8 +27098,7 @@ function createCollection(name) {
 }
 __name(createCollection, "createCollection");
 
-// node_modules/.pnpm/@tamagui+accordion@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-g_13bfea2908642e928e083fe5e9f7bc8a/node_modules/@tamagui/accordion/dist/esm/Accordion.native.js
-init_index_native5();
+// node_modules/.pnpm/@tamagui+accordion@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-g_cf87681d85bb81e71ff5cbc8fe805b8d/node_modules/@tamagui/accordion/dist/esm/Accordion.native.js
 import * as React43 from "react";
 var ACCORDION_NAME = "Accordion";
 var ACCORDION_KEYS = [
@@ -27408,7 +27407,7 @@ var HeightAnimator = createStyledHOC14(View17, function(props, ref) {
       setPinned(true);
     }
   }
-  useIsomorphicLayoutEffect(function() {
+  useIsomorphicLayoutEffect2(function() {
     if (!pinned) return;
     if (isWeb) {
       var _outerRef_current;
@@ -27428,7 +27427,7 @@ var HeightAnimator = createStyledHOC14(View17, function(props, ref) {
       return clearTimeout(settleTimerRef.current);
     };
   }, []);
-  useIsomorphicLayoutEffect(function() {
+  useIsomorphicLayoutEffect2(function() {
     var _el_getBoundingClientRect;
     if (!fixed || !open) return;
     var el = innerRef.current;
@@ -27500,7 +27499,7 @@ var Accordion = withStaticProperties(AccordionComponent, {
   HeightAnimator
 });
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/Accordion.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/Accordion.native.js
 import { createRefComponent as createRefComponent11, styled as styled28, withStaticProperties as withStaticProperties7 } from "@tamagui/core/native";
 var AccordionTrigger3 = styled28(Accordion.Trigger, {
   displayName: "AccordionTrigger",
@@ -27527,18 +27526,17 @@ var Accordion2 = withStaticProperties7(AccordionRoot, {
   Content: AccordionContent3
 });
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/AlertDialog.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/AlertDialog.native.js
 import { jsx as jsx49 } from "react/jsx-runtime";
 
-// node_modules/.pnpm/@tamagui+alert-dialog@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-nativ_019430780fc7c2085467bb7e6ede1e16/node_modules/@tamagui/alert-dialog/dist/esm/AlertDialog.native.js
+// node_modules/.pnpm/@tamagui+alert-dialog@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-nativ_923bf9e1f1916423cee847845abf7a44/node_modules/@tamagui/alert-dialog/dist/esm/AlertDialog.native.js
 import { jsx as jsx47, jsxs as jsxs8 } from "react/jsx-runtime";
 import { Slottable, View as View19, createStyledContext as createStyledContext15, createStyledHOC as createStyledHOC16, styled as styled30 } from "@tamagui/core/native";
-init_index_native5();
 
-// node_modules/.pnpm/@tamagui+dialog@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_34258ab159be276fcb0e25b953d736d5/node_modules/@tamagui/dialog/dist/esm/Dialog.native.js
+// node_modules/.pnpm/@tamagui+dialog@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_d8d182d699ded60723f41e60daddb992/node_modules/@tamagui/dialog/dist/esm/Dialog.native.js
 import { Fragment as Fragment10, jsx as jsx46, jsxs as jsxs7 } from "react/jsx-runtime";
 
-// node_modules/.pnpm/@tamagui+animate@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-ges_e8f9f601ef26ffa2a2c79f183bf7583a/node_modules/@tamagui/animate/dist/esm/Animate.native.js
+// node_modules/.pnpm/@tamagui+animate@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-ges_ee2a147d1425743ab6baf33d6fdd0819/node_modules/@tamagui/animate/dist/esm/Animate.native.js
 import { Fragment as Fragment9, jsx as jsx45 } from "react/jsx-runtime";
 import { startTransition as startTransition3, useEffect as useEffect14, useState as useState11 } from "react";
 function Animate(param) {
@@ -27577,11 +27575,10 @@ function Animate(param) {
 }
 __name(Animate, "Animate");
 
-// node_modules/.pnpm/@tamagui+dialog@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_34258ab159be276fcb0e25b953d736d5/node_modules/@tamagui/dialog/dist/esm/Dialog.native.js
-init_index_native5();
+// node_modules/.pnpm/@tamagui+dialog@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_d8d182d699ded60723f41e60daddb992/node_modules/@tamagui/dialog/dist/esm/Dialog.native.js
 import { LayoutMeasurementController as LayoutMeasurementController4, Theme as Theme5, View as View18, createRefComponent as createRefComponent13, createStyledContext as createStyledContext14, createStyledHOC as createStyledHOC15, getExpandedShorthand, styled as styled29, useThemeName as useThemeName4 } from "@tamagui/core/native";
 
-// node_modules/.pnpm/@tamagui+dismissable@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native_3ce960ddd160be8930f573626167c8e7/node_modules/@tamagui/dismissable/dist/esm/Dismissable.native.js
+// node_modules/.pnpm/@tamagui+dismissable@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native_34487cceb130707bc4257e1c0ae530a0/node_modules/@tamagui/dismissable/dist/esm/Dismissable.native.js
 import { createRefComponent as createRefComponent12 } from "@tamagui/core/native";
 import "react";
 function dispatchDiscreteCustomEvent(_target, _event) {
@@ -27594,7 +27591,7 @@ var DismissableBranch = createRefComponent12(function(props, _ref) {
   return props.children;
 });
 
-// node_modules/.pnpm/@tamagui+dialog@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_34258ab159be276fcb0e25b953d736d5/node_modules/@tamagui/dialog/dist/esm/Dialog.native.js
+// node_modules/.pnpm/@tamagui+dialog@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_d8d182d699ded60723f41e60daddb992/node_modules/@tamagui/dialog/dist/esm/Dialog.native.js
 import * as React44 from "react";
 var DialogContext = createStyledContext14({}, "Dialog__");
 var { useStyledContext: useDialogContext, Provider: DialogProvider } = DialogContext;
@@ -27752,12 +27749,12 @@ function useDialogPartPresence(context2, options) {
   var partPresenceId = `${context2.contentId}-${options.id}-${reactId}`;
   var keepMounted = options.forceMount || context2.keepChildrenMounted;
   var isPresent2 = context2.open || !isFullyHidden;
-  useIsomorphicLayoutEffect(function() {
+  useIsomorphicLayoutEffect2(function() {
     if (context2.open && isFullyHidden) {
       setIsFullyHidden(false);
     }
   }, [context2.open, isFullyHidden]);
-  useIsomorphicLayoutEffect(function() {
+  useIsomorphicLayoutEffect2(function() {
     if (options.disabled) return;
     context2.setPartPresence(partPresenceId, isPresent2);
     return function() {
@@ -28034,7 +28031,7 @@ var DialogTitle = createStyledHOC15(DialogTitleFrame, /* @__PURE__ */ __name(fun
   var { scope, ...titleProps } = props;
   var context2 = useDialogContext(scope);
   var setTitlePresent = context2.setTitlePresent;
-  useIsomorphicLayoutEffect(function() {
+  useIsomorphicLayoutEffect2(function() {
     setTitlePresent(true);
     return function() {
       setTitlePresent(false);
@@ -28051,7 +28048,7 @@ var DialogDescription = createStyledHOC15(DialogDescriptionFrame, /* @__PURE__ *
   var { scope, ...descriptionProps } = props;
   var context2 = useDialogContext(scope);
   var setDescriptionPresent = context2.setDescriptionPresent;
-  useIsomorphicLayoutEffect(function() {
+  useIsomorphicLayoutEffect2(function() {
     setDescriptionPresent(true);
     return function() {
       setDescriptionPresent(false);
@@ -28237,17 +28234,16 @@ var Dialog = withStaticProperties(createRefComponent13(/* @__PURE__ */ __name(fu
   Adapt
 });
 
-// node_modules/.pnpm/@tamagui+alert-dialog@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-nativ_019430780fc7c2085467bb7e6ede1e16/node_modules/@tamagui/alert-dialog/dist/esm/AlertDialog.native.js
+// node_modules/.pnpm/@tamagui+alert-dialog@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-nativ_923bf9e1f1916423cee847845abf7a44/node_modules/@tamagui/alert-dialog/dist/esm/AlertDialog.native.js
 import * as React46 from "react";
 
-// node_modules/.pnpm/@tamagui+alert-dialog@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-nativ_019430780fc7c2085467bb7e6ede1e16/node_modules/@tamagui/alert-dialog/dist/esm/alertDialogPart.native.js
+// node_modules/.pnpm/@tamagui+alert-dialog@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-nativ_923bf9e1f1916423cee847845abf7a44/node_modules/@tamagui/alert-dialog/dist/esm/alertDialogPart.native.js
 var ALERT_DIALOG_PART = /* @__PURE__ */ Symbol("AlertDialogPart");
 var markAlertDialogPart = /* @__PURE__ */ __name(function markAlertDialogPart2(component, part) {
   Object.assign(component.staticConfig, { [ALERT_DIALOG_PART]: part });
 }, "markAlertDialogPart2");
 
-// node_modules/.pnpm/@tamagui+alert-dialog@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-nativ_019430780fc7c2085467bb7e6ede1e16/node_modules/@tamagui/alert-dialog/dist/esm/useNativeAlertDialog.native.js
-init_index_native5();
+// node_modules/.pnpm/@tamagui+alert-dialog@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-nativ_923bf9e1f1916423cee847845abf7a44/node_modules/@tamagui/alert-dialog/dist/esm/useNativeAlertDialog.native.js
 import { isTamaguiElement } from "@tamagui/core/native";
 init_react_native();
 import * as React45 from "react";
@@ -28302,7 +28298,7 @@ var useNativeAlertDialog = /* @__PURE__ */ __name(function useNativeAlertDialog2
       }
     }
   });
-  useIsomorphicLayoutEffect(function() {
+  useIsomorphicLayoutEffect2(function() {
     if (!open || !native) return;
     if (title || description) {
       react_native_exports.Alert.alert(title, description, buttons);
@@ -28356,7 +28352,7 @@ function getStringChildren(child) {
 }
 __name(getStringChildren, "getStringChildren");
 
-// node_modules/.pnpm/@tamagui+alert-dialog@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-nativ_019430780fc7c2085467bb7e6ede1e16/node_modules/@tamagui/alert-dialog/dist/esm/AlertDialog.native.js
+// node_modules/.pnpm/@tamagui+alert-dialog@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-nativ_923bf9e1f1916423cee847845abf7a44/node_modules/@tamagui/alert-dialog/dist/esm/AlertDialog.native.js
 var getAlertDialogScope = /* @__PURE__ */ __name(function getAlertDialogScope2(scope) {
   return scope;
 }, "getAlertDialogScope2");
@@ -28541,10 +28537,10 @@ var AlertDialog = withStaticProperties(AlertDialogInner, {
 });
 AlertDialog.displayName = ROOT_NAME;
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/AlertDialog.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/AlertDialog.native.js
 import { createRefComponent as createRefComponent15, styled as styled32, withStaticProperties as withStaticProperties9 } from "@tamagui/core/native";
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/Dialog.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/Dialog.native.js
 import { jsx as jsx48 } from "react/jsx-runtime";
 import { createRefComponent as createRefComponent14, styled as styled31, withStaticProperties as withStaticProperties8 } from "@tamagui/core/native";
 var dialogOverlayStyles = { backgroundColor: "background" };
@@ -28582,7 +28578,7 @@ var Dialog22 = withStaticProperties8(DialogRoot, {
   Content: DialogContent3
 });
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/AlertDialog.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/AlertDialog.native.js
 var AlertDialogOverlay3 = styled32(AlertDialog.Overlay, {
   displayName: "AlertDialogOverlay",
   ...dialogOverlayStyles
@@ -28606,13 +28602,12 @@ var AlertDialog2 = withStaticProperties9(AlertDialogRoot, {
   Content: AlertDialogContent3
 });
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/Popover.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/Popover.native.js
 import { jsx as jsx52 } from "react/jsx-runtime";
 import { createRefComponent as createRefComponent18, styled as styled34, withStaticProperties as withStaticProperties10 } from "@tamagui/core/native";
 
-// node_modules/.pnpm/@tamagui+popover@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-ges_a3848370cd8dd94e061ce283054764ea/node_modules/@tamagui/popover/dist/esm/Popover.native.js
+// node_modules/.pnpm/@tamagui+popover@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-ges_5c77641df2f228a0382d6a8bc376d72f/node_modules/@tamagui/popover/dist/esm/Popover.native.js
 import { Fragment as Fragment12, jsx as jsx51, jsxs as jsxs9 } from "react/jsx-runtime";
-init_index_native5();
 import { View as View21, createRefComponent as createRefComponent17, createStyledContext as createStyledContext17, createStyledHOC as createStyledHOC18, useCreateShallowSetState, useEvent as useEvent5 } from "@tamagui/core/native";
 
 // node_modules/.pnpm/@floating-ui+utils@0.2.12/node_modules/@floating-ui/utils/dist/floating-ui.utils.mjs
@@ -29262,7 +29257,7 @@ var ORIGIN$1 = {
   x: 0,
   y: 0
 };
-var isAndroid2 = react_native_exports.Platform.OS === "android";
+var isAndroid3 = react_native_exports.Platform.OS === "android";
 function isView(reference) {
   return "measure" in reference;
 }
@@ -29296,7 +29291,7 @@ var createPlatform = /* @__PURE__ */ __name((_ref) => {
             const method = sameScrollView ? "measure" : "measureInWindow";
             if (isView(reference)) {
               reference[method]((x2, y2, width2, height2) => {
-                y2 = isAndroid2 && !sameScrollView && react_native_exports.StatusBar.currentHeight ? y2 + react_native_exports.StatusBar.currentHeight : y2;
+                y2 = isAndroid3 && !sameScrollView && react_native_exports.StatusBar.currentHeight ? y2 + react_native_exports.StatusBar.currentHeight : y2;
                 const referenceRect = {
                   width: width2,
                   height: height2,
@@ -29620,13 +29615,13 @@ var arrow2 = /* @__PURE__ */ __name((options, deps) => {
   };
 }, "arrow");
 
-// node_modules/.pnpm/@tamagui+floating@3.3.1_react-dom@19.3.0_react@19.3.0__react-native@0.88.1_@babel+core@_06971e44f75c5bae73c22185631e0869/node_modules/@tamagui/floating/dist/esm/Floating.native.js
+// node_modules/.pnpm/@tamagui+floating@3.3.3_react-dom@19.3.0_react@19.3.0__react-native@0.88.1_@babel+core@_0226f64bb487f163f3379a59b3ed8cdd/node_modules/@tamagui/floating/dist/esm/Floating.native.js
 var getOverflowAncestors = /* @__PURE__ */ __name(function getOverflowAncestors2() {
   return [];
 }, "getOverflowAncestors2");
 var platform = null;
 
-// node_modules/.pnpm/@tamagui+floating@3.3.1_react-dom@19.3.0_react@19.3.0__react-native@0.88.1_@babel+core@_06971e44f75c5bae73c22185631e0869/node_modules/@tamagui/floating/dist/esm/useFloating.native.js
+// node_modules/.pnpm/@tamagui+floating@3.3.3_react-dom@19.3.0_react@19.3.0__react-native@0.88.1_@babel+core@_0226f64bb487f163f3379a59b3ed8cdd/node_modules/@tamagui/floating/dist/esm/useFloating.native.js
 import React48 from "react";
 var FloatingOverrideContext = /* @__PURE__ */ React48.createContext(null);
 var useFloating2 = /* @__PURE__ */ __name(function useFloating22(props) {
@@ -29648,15 +29643,13 @@ var useFloating2 = /* @__PURE__ */ __name(function useFloating22(props) {
   });
 }, "useFloating2");
 
-// node_modules/.pnpm/@tamagui+popper@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_c120b574219461e19c2e20db2be6534b/node_modules/@tamagui/popper/dist/esm/Popper.native.js
+// node_modules/.pnpm/@tamagui+popper@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_7c344f17277764a60fdfc74a551cd69a/node_modules/@tamagui/popper/dist/esm/Popper.native.js
 import { jsx as jsx50 } from "react/jsx-runtime";
 import { flushSync } from "react-dom";
-init_index_native5();
 import { LayoutMeasurementController as LayoutMeasurementController5, View as View20, createRefComponent as createRefComponent16, createStyledContext as createStyledContext16, createStyledHOC as createStyledHOC17, registerLayoutNode as registerLayoutNode2, styled as styled33 } from "@tamagui/core/native";
 import * as React50 from "react";
 
-// node_modules/.pnpm/@tamagui+popper@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_c120b574219461e19c2e20db2be6534b/node_modules/@tamagui/popper/dist/esm/useRepositionOnNative.native.js
-init_index_native5();
+// node_modules/.pnpm/@tamagui+popper@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_7c344f17277764a60fdfc74a551cd69a/node_modules/@tamagui/popper/dist/esm/useRepositionOnNative.native.js
 init_react_native();
 import * as React49 from "react";
 var useRepositionOnNative = /* @__PURE__ */ __name(function useRepositionOnNative2(update, passThrough) {
@@ -29678,7 +29671,7 @@ var useRepositionOnNative = /* @__PURE__ */ __name(function useRepositionOnNativ
       hideSubscription.remove();
     };
   }, []);
-  useIsomorphicLayoutEffect(function() {
+  useIsomorphicLayoutEffect2(function() {
     if (passThrough) return;
     update();
   }, [
@@ -29688,7 +29681,7 @@ var useRepositionOnNative = /* @__PURE__ */ __name(function useRepositionOnNativ
   ]);
 }, "useRepositionOnNative2");
 
-// node_modules/.pnpm/@tamagui+popper@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_c120b574219461e19c2e20db2be6534b/node_modules/@tamagui/popper/dist/esm/Popper.native.js
+// node_modules/.pnpm/@tamagui+popper@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_7c344f17277764a60fdfc74a551cd69a/node_modules/@tamagui/popper/dist/esm/Popper.native.js
 var PopperContextFast = createStyledContext16({}, "Popper__");
 var PopperPositionContext = createStyledContext16;
 var { useStyledContext: usePopperContext, Provider: PopperProviderFast } = PopperContextFast;
@@ -29994,7 +29987,7 @@ var PopperContent = createRefComponent16(/* @__PURE__ */ __name(function PopperC
   }, []);
   var contentRefs = useComposedRefs(safeSetFloating, forwardedRef);
   var [needsMeasure, setNeedsMeasure] = React50.useState(animatePos);
-  useIsomorphicLayoutEffect(function() {
+  useIsomorphicLayoutEffect2(function() {
     if (needsMeasure && x && y) setNeedsMeasure(false);
   }, [
     needsMeasure,
@@ -30114,7 +30107,7 @@ var PopperArrow = createRefComponent16(/* @__PURE__ */ __name(function PopperArr
     else arrowStyle.width = size3 + overlap;
     if (oppSide === "top" || oppSide === "bottom") arrowStyle.left = 0;
     if (oppSide === "left" || oppSide === "right") arrowStyle.top = 0;
-    useIsomorphicLayoutEffect(function() {
+    useIsomorphicLayoutEffect2(function() {
       var _context_onArrowSize;
       (_context_onArrowSize = context2.onArrowSize) === null || _context_onArrowSize === void 0 || _context_onArrowSize.call(context2, size3);
     }, [size3, context2.onArrowSize]);
@@ -30153,17 +30146,17 @@ var PopperArrow = createRefComponent16(/* @__PURE__ */ __name(function PopperArr
   });
 }, "PopperArrow2"));
 
-// node_modules/.pnpm/@tamagui+popover@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-ges_a3848370cd8dd94e061ce283054764ea/node_modules/@tamagui/popover/dist/esm/Popover.native.js
+// node_modules/.pnpm/@tamagui+popover@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-ges_5c77641df2f228a0382d6a8bc376d72f/node_modules/@tamagui/popover/dist/esm/Popover.native.js
 import * as React52 from "react";
 
-// node_modules/.pnpm/@tamagui+popover@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-ges_a3848370cd8dd94e061ce283054764ea/node_modules/@tamagui/popover/dist/esm/useFloatingContext.native.js
+// node_modules/.pnpm/@tamagui+popover@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-ges_5c77641df2f228a0382d6a8bc376d72f/node_modules/@tamagui/popover/dist/esm/useFloatingContext.native.js
 import React51 from "react";
 var useFloatingContext = /* @__PURE__ */ __name(function useFloatingContext2() {
   return React51.useCallback(function() {
   }, []);
 }, "useFloatingContext2");
 
-// node_modules/.pnpm/@tamagui+popover@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-ges_a3848370cd8dd94e061ce283054764ea/node_modules/@tamagui/popover/dist/esm/Popover.native.js
+// node_modules/.pnpm/@tamagui+popover@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-ges_5c77641df2f228a0382d6a8bc376d72f/node_modules/@tamagui/popover/dist/esm/Popover.native.js
 var needsRepropagation2 = needsPortalRepropagation();
 var openPopovers = /* @__PURE__ */ new Set();
 var hasOpenPopovers = /* @__PURE__ */ __name(function hasOpenPopovers2() {
@@ -30387,7 +30380,7 @@ var PopoverContent = createStyledHOC18(PopperContentFrame, /* @__PURE__ */ __nam
   var composedRefs = useComposedRefs(forwardedRef, React52.useRef(null));
   var isRightClickOutsideRef = React52.useRef(false);
   var [isFullyHidden, setIsFullyHidden] = React52.useState(!open);
-  useIsomorphicLayoutEffect(function() {
+  useIsomorphicLayoutEffect2(function() {
     if (open && isFullyHidden) setIsFullyHidden(false);
   }, [open, isFullyHidden]);
   if (!forceMount && !context2.keepChildrenMounted) {
@@ -30727,7 +30720,7 @@ function getState4(open) {
 }
 __name(getState4, "getState");
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/Popover.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/Popover.native.js
 import "react";
 var PopoverContent3 = styled34(Popover.Content, {
   displayName: "PopoverContent",
@@ -30758,11 +30751,11 @@ var Popover22 = withStaticProperties10(PopoverRoot, {
   FocusScope: Popover.FocusScope
 });
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/Slider.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/Slider.native.js
 import { jsx as jsx56 } from "react/jsx-runtime";
 import { createRefComponent as createRefComponent21, createStyledContext as createStyledContext19, styled as styled37, withStaticProperties as withStaticProperties11 } from "@tamagui/core/native";
 
-// node_modules/.pnpm/@tamagui+slider@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_c56528a8f12241159a672f1eb88035ba/node_modules/@tamagui/slider/dist/esm/constants.native.js
+// node_modules/.pnpm/@tamagui+slider@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_e14f03c9d9db3f140de21bae08990918/node_modules/@tamagui/slider/dist/esm/constants.native.js
 import { createStyledContext as createStyledContext18 } from "@tamagui/core/native";
 var SLIDER_NAME = "Slider";
 var sliderContextKeys = [
@@ -30807,13 +30800,12 @@ var BACK_KEYS = {
   ]
 };
 
-// node_modules/.pnpm/@tamagui+slider@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_c56528a8f12241159a672f1eb88035ba/node_modules/@tamagui/slider/dist/esm/SliderImpl.native.js
-init_index_native5();
+// node_modules/.pnpm/@tamagui+slider@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_e14f03c9d9db3f140de21bae08990918/node_modules/@tamagui/slider/dist/esm/SliderImpl.native.js
 import { jsx as jsx54 } from "react/jsx-runtime";
 import { createRefComponent as createRefComponent19, styled as styled35 } from "@tamagui/core/native";
 import * as React53 from "react";
 
-// node_modules/.pnpm/@tamagui+slider@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_c56528a8f12241159a672f1eb88035ba/node_modules/@tamagui/slider/dist/esm/SliderResponder.native.js
+// node_modules/.pnpm/@tamagui+slider@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_e14f03c9d9db3f140de21bae08990918/node_modules/@tamagui/slider/dist/esm/SliderResponder.native.js
 init_react_native();
 import { jsx as jsx53 } from "react/jsx-runtime";
 var SliderResponder = /* @__PURE__ */ __name(function SliderResponder2(param) {
@@ -30844,7 +30836,7 @@ var SliderResponder = /* @__PURE__ */ __name(function SliderResponder2(param) {
   });
 }, "SliderResponder2");
 
-// node_modules/.pnpm/@tamagui+slider@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_c56528a8f12241159a672f1eb88035ba/node_modules/@tamagui/slider/dist/esm/SliderImpl.native.js
+// node_modules/.pnpm/@tamagui+slider@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_e14f03c9d9db3f140de21bae08990918/node_modules/@tamagui/slider/dist/esm/SliderImpl.native.js
 var SliderFrameBase = styled35(YStack, {
   position: "relative",
   justifyContent: "center",
@@ -30914,13 +30906,12 @@ var SliderImpl = createRefComponent19(function(props, forwardedRef) {
   });
 });
 
-// node_modules/.pnpm/@tamagui+slider@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_c56528a8f12241159a672f1eb88035ba/node_modules/@tamagui/slider/dist/esm/Slider.native.js
+// node_modules/.pnpm/@tamagui+slider@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_e14f03c9d9db3f140de21bae08990918/node_modules/@tamagui/slider/dist/esm/Slider.native.js
 import { jsx as jsx55, jsxs as jsxs10 } from "react/jsx-runtime";
-init_index_native5();
 import { createRefComponent as createRefComponent20, createStyledHOC as createStyledHOC19, getConfig as getConfig2, getVariableValue as getVariableValue2, resolveTextMetrics as resolveTextMetrics2, styled as styled36, useConfiguration as useConfiguration2, useCreateShallowSetState as useCreateShallowSetState2 } from "@tamagui/core/native";
 import * as React54 from "react";
 
-// node_modules/.pnpm/@tamagui+slider@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_c56528a8f12241159a672f1eb88035ba/node_modules/@tamagui/slider/dist/esm/helpers.native.js
+// node_modules/.pnpm/@tamagui+slider@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_e14f03c9d9db3f140de21bae08990918/node_modules/@tamagui/slider/dist/esm/helpers.native.js
 function getNextSortedValues() {
   var prevValues = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : [], nextValue = arguments.length > 1 ? arguments[1] : void 0, atIndex = arguments.length > 2 ? arguments[2] : void 0;
   var nextValues = [...prevValues];
@@ -30995,7 +30986,7 @@ function roundValue(value, decimalCount) {
 }
 __name(roundValue, "roundValue");
 
-// node_modules/.pnpm/@tamagui+slider@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_c56528a8f12241159a672f1eb88035ba/node_modules/@tamagui/slider/dist/esm/Slider.native.js
+// node_modules/.pnpm/@tamagui+slider@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_e14f03c9d9db3f140de21bae08990918/node_modules/@tamagui/slider/dist/esm/Slider.native.js
 var getTrackPosition = /* @__PURE__ */ __name(function getTrackPosition2(event, offset3, orientation) {
   var { locationX, locationY, pageX, pageY } = event.nativeEvent;
   if (isWeb) return orientation === "horizontal" ? locationX : locationY;
@@ -31072,7 +31063,7 @@ var SliderVertical = createRefComponent20(function(props, forwardedRef) {
   var setState = useCreateShallowSetState2(setState_);
   var sliderRef = React54.useRef(null);
   var configuration = useConfiguration2();
-  var insets = isIos && configuration.insets ? configuration.insets : {
+  var insets = isIos2 && configuration.insets ? configuration.insets : {
     top: 0,
     bottom: 0
   };
@@ -31085,7 +31076,7 @@ var SliderVertical = createRefComponent20(function(props, forwardedRef) {
     (_sliderRef_current = sliderRef.current) === null || _sliderRef_current === void 0 || _sliderRef_current.measure(function(_x, _y, _width, height, _pageX, pageY) {
       setState({
         size: height,
-        offset: pageY + (isIos ? insets.top : 0)
+        offset: pageY + (isIos2 ? insets.top : 0)
       });
     });
   }, "measure2");
@@ -31400,7 +31391,7 @@ var Track = SliderTrack;
 var Range = SliderActive;
 var Thumb = SliderThumb;
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/Slider.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/Slider.native.js
 var SliderSizeContext = createStyledContext19({
   size: "md",
   orientation: "horizontal"
@@ -31508,7 +31499,7 @@ var Slider2 = withStaticProperties11(SliderRoot, {
   Thumb: SliderThumb3
 });
 
-// node_modules/.pnpm/@tamagui+switch@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_656812009df709a9bd3a0fd40c71291c/node_modules/@tamagui/switch/dist/esm/useSwitchNative.native.js
+// node_modules/.pnpm/@tamagui+switch@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_f65ef4bca0abb890f3efdbc2c539dfca/node_modules/@tamagui/switch/dist/esm/useSwitchNative.native.js
 import { jsx as jsx57 } from "react/jsx-runtime";
 import { shouldRenderNativePlatform as shouldRenderNativePlatform2 } from "@tamagui/core/native";
 init_react_native();
@@ -31544,7 +31535,7 @@ function useSwitchNative(props) {
 }
 __name(useSwitchNative, "useSwitchNative");
 
-// node_modules/.pnpm/@tamagui+switch@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_656812009df709a9bd3a0fd40c71291c/node_modules/@tamagui/switch/dist/esm/StyledContext.native.js
+// node_modules/.pnpm/@tamagui+switch@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_f65ef4bca0abb890f3efdbc2c539dfca/node_modules/@tamagui/switch/dist/esm/StyledContext.native.js
 import { createStyledContext as createStyledContext20 } from "@tamagui/core/native";
 var SwitchStyledContext = createStyledContext20({
   active: false,
@@ -31553,11 +31544,11 @@ var SwitchStyledContext = createStyledContext20({
   size: void 0
 });
 
-// node_modules/.pnpm/@tamagui+switch@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_656812009df709a9bd3a0fd40c71291c/node_modules/@tamagui/switch/dist/esm/Switch.native.js
+// node_modules/.pnpm/@tamagui+switch@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_f65ef4bca0abb890f3efdbc2c539dfca/node_modules/@tamagui/switch/dist/esm/Switch.native.js
 import { Fragment as Fragment13, jsx as jsx58, jsxs as jsxs11 } from "react/jsx-runtime";
 import { View as View23, composeEventHandlers as composeEventHandlers2, createStyledHOC as createStyledHOC20, getVariableValue as getVariableValue3, isWeb as isWeb4, styled as styled38, withStaticProperties as withStaticProperties12 } from "@tamagui/core/native";
 
-// node_modules/.pnpm/@tamagui+switch-headless@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-na_782adfae9e638851c600b9c3f7ae643a/node_modules/@tamagui/switch-headless/dist/esm/useSwitch.native.js
+// node_modules/.pnpm/@tamagui+switch-headless@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-na_008f52813f0790f3f770943640b41d13/node_modules/@tamagui/switch-headless/dist/esm/useSwitch.native.js
 function useSwitch(props, param, ref) {
   var [checked, setChecked] = param;
   return {
@@ -31572,7 +31563,7 @@ function useSwitch(props, param, ref) {
 }
 __name(useSwitch, "useSwitch");
 
-// node_modules/.pnpm/@tamagui+switch@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_656812009df709a9bd3a0fd40c71291c/node_modules/@tamagui/switch/dist/esm/Switch.native.js
+// node_modules/.pnpm/@tamagui+switch@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_f65ef4bca0abb890f3efdbc2c539dfca/node_modules/@tamagui/switch/dist/esm/Switch.native.js
 import * as React56 from "react";
 var SwitchThumbFrame = styled38(View23, {
   displayName: "SwitchThumb",
@@ -31683,7 +31674,7 @@ var Switch2 = createSwitch({
 });
 var SwitchThumb = Switch2.Thumb;
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/Switch.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/Switch.native.js
 import { resolveSizing as resolveSizing2, styled as styled39 } from "@tamagui/core/native";
 var THUMB_INSET = 2;
 var getSwitchTrackSize = styled39.dynamic(function(val, env) {
@@ -31744,16 +31735,14 @@ var Switch3 = createSwitch({
 });
 var SwitchThumb2 = Switch3.Thumb;
 
-// node_modules/.pnpm/@tamagui+checkbox@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-ge_5f9b6ffc26e00d4dedeba1133e853640/node_modules/@tamagui/checkbox/dist/esm/Checkbox.native.js
+// node_modules/.pnpm/@tamagui+checkbox@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-ge_b6440180f34879fe443d08228d7fe0be/node_modules/@tamagui/checkbox/dist/esm/Checkbox.native.js
 import { jsx as jsx62, jsxs as jsxs12 } from "react/jsx-runtime";
 
-// node_modules/.pnpm/@tamagui+checkbox-headless@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-_19bec9378414765e1d8812783ca2ba7b/node_modules/@tamagui/checkbox-headless/dist/esm/useCheckbox.native.js
+// node_modules/.pnpm/@tamagui+checkbox-headless@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-_ada0a6641f0ccff34364e48909fe47e2/node_modules/@tamagui/checkbox-headless/dist/esm/useCheckbox.native.js
 import { jsx as jsx61 } from "react/jsx-runtime";
-init_index_native5();
 
-// node_modules/.pnpm/@tamagui+label@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_9d82a5d634f0b5d0bf52ff37435584a4/node_modules/@tamagui/label/dist/esm/Label.native.js
+// node_modules/.pnpm/@tamagui+label@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_0fd6a89f232e9cb71799e290a807fd33/node_modules/@tamagui/label/dist/esm/Label.native.js
 import { jsx as jsx59 } from "react/jsx-runtime";
-init_index_native5();
 import { createStyledHOC as createStyledHOC21, styled as styled40 } from "@tamagui/core/native";
 import * as React57 from "react";
 var NAME2 = "Label";
@@ -31780,7 +31769,7 @@ var Label = createStyledHOC21(LabelFrame, /* @__PURE__ */ __name(function Label2
   var backupId = React57.useId();
   var id = idProp !== null && idProp !== void 0 ? idProp : backupId;
   if (isWeb) {
-    useIsomorphicLayoutEffect(function() {
+    useIsomorphicLayoutEffect2(function() {
       if (htmlFor) {
         var element = document.getElementById(htmlFor);
         var label = ref.current;
@@ -31849,13 +31838,13 @@ var useLabelContext = /* @__PURE__ */ __name(function useLabelContext2(element) 
   return context2.id;
 }, "useLabelContext2");
 
-// node_modules/.pnpm/@tamagui+checkbox-headless@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-_19bec9378414765e1d8812783ca2ba7b/node_modules/@tamagui/checkbox-headless/dist/esm/useCheckbox.native.js
+// node_modules/.pnpm/@tamagui+checkbox-headless@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-_ada0a6641f0ccff34364e48909fe47e2/node_modules/@tamagui/checkbox-headless/dist/esm/useCheckbox.native.js
 import React60, { useMemo as useMemo19 } from "react";
 
-// node_modules/.pnpm/@tamagui+checkbox-headless@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-_19bec9378414765e1d8812783ca2ba7b/node_modules/@tamagui/checkbox-headless/dist/esm/BubbleInput.native.js
+// node_modules/.pnpm/@tamagui+checkbox-headless@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-_ada0a6641f0ccff34364e48909fe47e2/node_modules/@tamagui/checkbox-headless/dist/esm/BubbleInput.native.js
 import { jsx as jsx60 } from "react/jsx-runtime";
 
-// node_modules/.pnpm/@tamagui+use-previous@3.3.1_react@19.3.0/node_modules/@tamagui/use-previous/dist/esm/index.native.js
+// node_modules/.pnpm/@tamagui+use-previous@3.3.3_react@19.3.0/node_modules/@tamagui/use-previous/dist/esm/index.native.js
 import * as React58 from "react";
 function usePrevious(value) {
   var ref = React58.useRef({
@@ -31872,10 +31861,10 @@ function usePrevious(value) {
 }
 __name(usePrevious, "usePrevious");
 
-// node_modules/.pnpm/@tamagui+checkbox-headless@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-_19bec9378414765e1d8812783ca2ba7b/node_modules/@tamagui/checkbox-headless/dist/esm/BubbleInput.native.js
+// node_modules/.pnpm/@tamagui+checkbox-headless@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-_ada0a6641f0ccff34364e48909fe47e2/node_modules/@tamagui/checkbox-headless/dist/esm/BubbleInput.native.js
 import * as React59 from "react";
 
-// node_modules/.pnpm/@tamagui+checkbox-headless@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-_19bec9378414765e1d8812783ca2ba7b/node_modules/@tamagui/checkbox-headless/dist/esm/utils.native.js
+// node_modules/.pnpm/@tamagui+checkbox-headless@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-_ada0a6641f0ccff34364e48909fe47e2/node_modules/@tamagui/checkbox-headless/dist/esm/utils.native.js
 function isIndeterminate(checked) {
   return checked === "indeterminate";
 }
@@ -31885,7 +31874,7 @@ function getState5(checked) {
 }
 __name(getState5, "getState");
 
-// node_modules/.pnpm/@tamagui+checkbox-headless@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-_19bec9378414765e1d8812783ca2ba7b/node_modules/@tamagui/checkbox-headless/dist/esm/BubbleInput.native.js
+// node_modules/.pnpm/@tamagui+checkbox-headless@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-_ada0a6641f0ccff34364e48909fe47e2/node_modules/@tamagui/checkbox-headless/dist/esm/BubbleInput.native.js
 var BubbleInput = /* @__PURE__ */ __name(function BubbleInput2(props) {
   var { checked, bubbles = true, control, isHidden, ...inputProps } = props;
   var ref = React59.useRef(null);
@@ -31928,7 +31917,7 @@ var BubbleInput = /* @__PURE__ */ __name(function BubbleInput2(props) {
   });
 }, "BubbleInput2");
 
-// node_modules/.pnpm/@tamagui+checkbox-headless@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-_19bec9378414765e1d8812783ca2ba7b/node_modules/@tamagui/checkbox-headless/dist/esm/useCheckbox.native.js
+// node_modules/.pnpm/@tamagui+checkbox-headless@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-_ada0a6641f0ccff34364e48909fe47e2/node_modules/@tamagui/checkbox-headless/dist/esm/useCheckbox.native.js
 function useCheckbox(props, param, ref) {
   var [checked, setChecked] = param;
   var { labelledBy: ariaLabelledby, name, required, disabled, value = "on", onCheckedChange, ...checkboxProps } = props;
@@ -31986,18 +31975,18 @@ function useCheckbox(props, param, ref) {
 }
 __name(useCheckbox, "useCheckbox");
 
-// node_modules/.pnpm/@tamagui+checkbox@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-ge_5f9b6ffc26e00d4dedeba1133e853640/node_modules/@tamagui/checkbox/dist/esm/Checkbox.native.js
+// node_modules/.pnpm/@tamagui+checkbox@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-ge_b6440180f34879fe443d08228d7fe0be/node_modules/@tamagui/checkbox/dist/esm/Checkbox.native.js
 import { View as View24, createStyledHOC as createStyledHOC22, isWeb as isWeb5, shouldRenderNativePlatform as shouldRenderNativePlatform3, styled as styled41, withStaticProperties as withStaticProperties13 } from "@tamagui/core/native";
 import React61, { useMemo as useMemo20 } from "react";
 
-// node_modules/.pnpm/@tamagui+checkbox@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-ge_5f9b6ffc26e00d4dedeba1133e853640/node_modules/@tamagui/checkbox/dist/esm/CheckboxStyledContext.native.js
+// node_modules/.pnpm/@tamagui+checkbox@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-ge_b6440180f34879fe443d08228d7fe0be/node_modules/@tamagui/checkbox/dist/esm/CheckboxStyledContext.native.js
 import { createStyledContext as createStyledContext21 } from "@tamagui/core/native";
 var CheckboxStyledContext = createStyledContext21({
   active: false,
   disabled: false
 });
 
-// node_modules/.pnpm/@tamagui+checkbox@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-ge_5f9b6ffc26e00d4dedeba1133e853640/node_modules/@tamagui/checkbox/dist/esm/Checkbox.native.js
+// node_modules/.pnpm/@tamagui+checkbox@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-ge_b6440180f34879fe443d08228d7fe0be/node_modules/@tamagui/checkbox/dist/esm/Checkbox.native.js
 var CheckboxIndicatorFrame = styled41(View24, {
   displayName: "CheckboxIndicator",
   context: CheckboxStyledContext
@@ -32083,7 +32072,7 @@ var Checkbox2 = withStaticProperties13(createStyledHOC22(CheckboxFrame, /* @__PU
   return null;
 }) });
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/Checkbox.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/Checkbox.native.js
 import { resolveSizing as resolveSizing3, styled as styled42, withStaticProperties as withStaticProperties14 } from "@tamagui/core/native";
 var getCheckboxSize = styled42.dynamic(function(val, env) {
   var sizing = resolveSizing3(val, env);
@@ -32121,19 +32110,18 @@ var CheckboxIndicator = styled42(Checkbox2.Indicator, {
 });
 var Checkbox3 = withStaticProperties14(CheckboxFrame2, { Indicator: CheckboxIndicator });
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/RadioGroup.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/RadioGroup.native.js
 import { resolveSizing as resolveSizing4, styled as styled44, withStaticProperties as withStaticProperties16 } from "@tamagui/core/native";
 
-// node_modules/.pnpm/@tamagui+radio-group@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native_baddde1fa20ce421c81bd18daa42df11/node_modules/@tamagui/radio-group/dist/esm/RadioGroup.native.js
+// node_modules/.pnpm/@tamagui+radio-group@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native_e1c0d4f28d2d1176bb115a1314a182f1/node_modules/@tamagui/radio-group/dist/esm/RadioGroup.native.js
 import { Fragment as Fragment14, jsx as jsx65, jsxs as jsxs13 } from "react/jsx-runtime";
 import { View as View25, createStyledHOC as createStyledHOC23, isWeb as isWeb6, styled as styled43, withStaticProperties as withStaticProperties15 } from "@tamagui/core/native";
 
-// node_modules/.pnpm/@tamagui+radio-headless@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-nat_46e676913b8518c05ed1329048e2c962/node_modules/@tamagui/radio-headless/dist/esm/useRadioGroup.native.js
+// node_modules/.pnpm/@tamagui+radio-headless@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-nat_77f1a5d7011a9dab71661eab91100265/node_modules/@tamagui/radio-headless/dist/esm/useRadioGroup.native.js
 import { jsx as jsx64 } from "react/jsx-runtime";
-init_index_native5();
 import { useContext as useContext22, useEffect as useEffect24, useRef as useRef29, useState as useState19 } from "react";
 
-// node_modules/.pnpm/@tamagui+radio-headless@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-nat_46e676913b8518c05ed1329048e2c962/node_modules/@tamagui/radio-headless/dist/esm/BubbleInput.native.js
+// node_modules/.pnpm/@tamagui+radio-headless@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-nat_77f1a5d7011a9dab71661eab91100265/node_modules/@tamagui/radio-headless/dist/esm/BubbleInput.native.js
 import { jsx as jsx63 } from "react/jsx-runtime";
 import React62 from "react";
 var BubbleInput3 = /* @__PURE__ */ __name(function BubbleInput22(props) {
@@ -32177,13 +32165,13 @@ var BubbleInput3 = /* @__PURE__ */ __name(function BubbleInput22(props) {
   });
 }, "BubbleInput2");
 
-// node_modules/.pnpm/@tamagui+radio-headless@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-nat_46e676913b8518c05ed1329048e2c962/node_modules/@tamagui/radio-headless/dist/esm/utils.native.js
+// node_modules/.pnpm/@tamagui+radio-headless@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-nat_77f1a5d7011a9dab71661eab91100265/node_modules/@tamagui/radio-headless/dist/esm/utils.native.js
 function getState6(checked) {
   return checked ? "checked" : "unchecked";
 }
 __name(getState6, "getState");
 
-// node_modules/.pnpm/@tamagui+radio-headless@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-nat_46e676913b8518c05ed1329048e2c962/node_modules/@tamagui/radio-headless/dist/esm/useRadioGroup.native.js
+// node_modules/.pnpm/@tamagui+radio-headless@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-nat_77f1a5d7011a9dab71661eab91100265/node_modules/@tamagui/radio-headless/dist/esm/useRadioGroup.native.js
 function useRadioGroup(params) {
   var { value: valueProp, onValueChange, defaultValue: defaultValue3, required, disabled, name, native, accentColor, orientation, ref } = params;
   var [value, setValue] = useControllableState({
@@ -32343,7 +32331,7 @@ function useRadioGroupItemIndicator(params) {
 }
 __name(useRadioGroupItemIndicator, "useRadioGroupItemIndicator");
 
-// node_modules/.pnpm/@tamagui+radio-group@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native_baddde1fa20ce421c81bd18daa42df11/node_modules/@tamagui/radio-group/dist/esm/RadioGroup.native.js
+// node_modules/.pnpm/@tamagui+radio-group@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native_e1c0d4f28d2d1176bb115a1314a182f1/node_modules/@tamagui/radio-group/dist/esm/RadioGroup.native.js
 import React63 from "react";
 var RADIO_GROUP_ITEM_NAME = "RadioGroupItem";
 var RadioGroupItemFrame = styled43(View25, {
@@ -32447,7 +32435,7 @@ var RadioGroup = withStaticProperties15(RadioGroupComponent, {
 });
 RadioGroup.displayName = "RadioGroup";
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/RadioGroup.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/RadioGroup.native.js
 var getRadioSize = styled44.dynamic(function(val, env) {
   var sizing = resolveSizing4(val, env);
   if (!sizing) return;
@@ -32490,25 +32478,24 @@ var RadioGroup2 = withStaticProperties16(RadioGroupFrame2, {
   Indicator: RadioGroupIndicator2
 });
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/Tabs.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/Tabs.native.js
 import { jsx as jsx69 } from "react/jsx-runtime";
 import { Text as Text6, createStyledContext as createStyledContext23, createStyledHOC as createStyledHOC26, styled as styled47, withStaticProperties as withStaticProperties17 } from "@tamagui/core/native";
 
-// node_modules/.pnpm/@tamagui+tabs@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestur_a9042a4e55bdfc9e5c343f918d267785/node_modules/@tamagui/tabs/dist/esm/StyledContext.native.js
+// node_modules/.pnpm/@tamagui+tabs@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestur_2663af66476ee6360048709930c953c1/node_modules/@tamagui/tabs/dist/esm/StyledContext.native.js
 import { createStyledContext as createStyledContext22 } from "@tamagui/core/native";
 var { Provider: TabsProvider, useStyledContext: useTabsContext } = createStyledContext22();
 
-// node_modules/.pnpm/@tamagui+tabs@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestur_a9042a4e55bdfc9e5c343f918d267785/node_modules/@tamagui/tabs/dist/esm/Tabs.native.js
+// node_modules/.pnpm/@tamagui+tabs@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestur_2663af66476ee6360048709930c953c1/node_modules/@tamagui/tabs/dist/esm/Tabs.native.js
 import { jsx as jsx68 } from "react/jsx-runtime";
-init_index_native5();
 import { View as View26, createStyledHOC as createStyledHOC25, styled as styled46 } from "@tamagui/core/native";
 
-// node_modules/.pnpm/@tamagui+group@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_b0e65dd5241645f626ed5c6fd784e0f7/node_modules/@tamagui/group/dist/esm/Group.native.js
+// node_modules/.pnpm/@tamagui+group@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_43f14c757c3afd1d114565a48dad116a/node_modules/@tamagui/group/dist/esm/Group.native.js
 import { jsx as jsx67 } from "react/jsx-runtime";
 import { createStyledHOC as createStyledHOC24, mergeSlotStyleProps, styled as styled45 } from "@tamagui/core/native";
 import React65 from "react";
 
-// node_modules/.pnpm/@tamagui+group@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_b0e65dd5241645f626ed5c6fd784e0f7/node_modules/@tamagui/group/dist/esm/useIndexedChildren.native.js
+// node_modules/.pnpm/@tamagui+group@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_43f14c757c3afd1d114565a48dad116a/node_modules/@tamagui/group/dist/esm/useIndexedChildren.native.js
 import { jsx as jsx66 } from "react/jsx-runtime";
 import * as React64 from "react";
 var MaxIndexContext = /* @__PURE__ */ React64.createContext([]);
@@ -32562,7 +32549,7 @@ function parseIndexPath(indexPathString) {
 }
 __name(parseIndexPath, "parseIndexPath");
 
-// node_modules/.pnpm/@tamagui+group@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_b0e65dd5241645f626ed5c6fd784e0f7/node_modules/@tamagui/group/dist/esm/Group.native.js
+// node_modules/.pnpm/@tamagui+group@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_43f14c757c3afd1d114565a48dad116a/node_modules/@tamagui/group/dist/esm/Group.native.js
 var GROUP_NAME3 = "Group";
 var [createGroupContext, createGroupScope] = createContextScope(GROUP_NAME3);
 var [GroupProvider, useGroupContext] = createGroupContext(GROUP_NAME3);
@@ -32658,8 +32645,7 @@ function getZeroedRadius(isFirst, isLast, vertical) {
 }
 __name(getZeroedRadius, "getZeroedRadius");
 
-// node_modules/.pnpm/@tamagui+tabs-headless@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-nati_79861f15b1cd4b85fe3b7785335866db/node_modules/@tamagui/tabs-headless/dist/esm/useTabs.native.js
-init_index_native5();
+// node_modules/.pnpm/@tamagui+tabs-headless@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-nati_d2648e6e3de467d6a9cc5ec3fcd717c7/node_modules/@tamagui/tabs-headless/dist/esm/useTabs.native.js
 import * as React66 from "react";
 function makeTriggerId(baseId, value) {
   return `${baseId}-trigger-${value}`;
@@ -32776,7 +32762,7 @@ function useTabContent(props) {
 }
 __name(useTabContent, "useTabContent");
 
-// node_modules/.pnpm/@tamagui+tabs@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestur_a9042a4e55bdfc9e5c343f918d267785/node_modules/@tamagui/tabs/dist/esm/Tabs.native.js
+// node_modules/.pnpm/@tamagui+tabs@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestur_2663af66476ee6360048709930c953c1/node_modules/@tamagui/tabs/dist/esm/Tabs.native.js
 import { useEvent as useEvent6 } from "@tamagui/core/native";
 import * as React67 from "react";
 var TABS_CONTEXT = "TabsContext";
@@ -32976,7 +32962,7 @@ var Tabs2 = withStaticProperties(TabsComponent, {
   Content: TabsContent
 });
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/Tabs.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/Tabs.native.js
 var TabsContext = createStyledContext23({ size: "md" });
 var tabsTabSize = {
   xs: {
@@ -33097,11 +33083,11 @@ var Tabs3 = withStaticProperties17(TabsFrame2, {
   Content: TabsContent3
 });
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/ListItem.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/ListItem.native.js
 import { jsx as jsx71 } from "react/jsx-runtime";
 import { createStyledHOC as createStyledHOC27, resolveSizing as resolveSizing6, styled as styled49, withStaticProperties as withStaticProperties18 } from "@tamagui/core/native";
 
-// node_modules/.pnpm/@tamagui+list-item@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-g_f2b8317a8f70a8531e2788e229752b4d/node_modules/@tamagui/list-item/dist/esm/ListItem.native.js
+// node_modules/.pnpm/@tamagui+list-item@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-g_0b56d7d30056169280356a7434dffb51/node_modules/@tamagui/list-item/dist/esm/ListItem.native.js
 import { Fragment as Fragment15, jsx as jsx70, jsxs as jsxs14 } from "react/jsx-runtime";
 import { View as View27, createStyledContext as createStyledContext24, getConfig as getConfig3, resolveSizing as resolveSizing5, splitStyleProps as splitStyleProps2, styled as styled48 } from "@tamagui/core/native";
 var ListItemContext = createStyledContext24({
@@ -33195,7 +33181,7 @@ function useListItem(propsIn) {
 }
 __name(useListItem, "useListItem");
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/ListItem.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/ListItem.native.js
 var getListItemFrameSize = styled49.dynamic(function(val, env) {
   var sizing = resolveSizing6(val, env);
   if (!sizing) return;
@@ -33310,7 +33296,7 @@ var ListItem2 = withStaticProperties18(ListItemComponent, {
   Title: ListItemTitle2
 });
 
-// node_modules/.pnpm/@tamagui+card@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestur_df94ebb51a4420cd0dc6111e95adbaee/node_modules/@tamagui/card/dist/esm/Card.native.js
+// node_modules/.pnpm/@tamagui+card@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestur_3044ad029ab3a9ceb5bf89c370ceda74/node_modules/@tamagui/card/dist/esm/Card.native.js
 import { styled as styled50, withStaticProperties as withStaticProperties19 } from "@tamagui/core/native";
 var CardFrame = styled50(YStack, {
   displayName: "Card",
@@ -33344,7 +33330,7 @@ var Card = withStaticProperties19(CardFrame, {
   Background: CardBackground
 });
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/Card.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/Card.native.js
 import { createStyledContext as createStyledContext25, styled as styled51, withStaticProperties as withStaticProperties20 } from "@tamagui/core/native";
 var CardContext = createStyledContext25({ size: "md" });
 var cardRadius = {
@@ -33395,14 +33381,14 @@ var Card2 = withStaticProperties20(CardFrame2, {
   Background: CardBackground
 });
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/Progress.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/Progress.native.js
 import { styled as styled53, withStaticProperties as withStaticProperties21 } from "@tamagui/core/native";
 
-// node_modules/.pnpm/@tamagui+progress@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-ge_f970f9210794504d1a79e7adad18400f/node_modules/@tamagui/progress/dist/esm/Progress.native.js
+// node_modules/.pnpm/@tamagui+progress@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-ge_bcac8e0b2113ef28d3f3efa7affa56b4/node_modules/@tamagui/progress/dist/esm/Progress.native.js
 import { jsx as jsx72 } from "react/jsx-runtime";
 import { createStyledHOC as createStyledHOC28, getVariableValue as getVariableValue4, isWeb as isWeb7, styled as styled52 } from "@tamagui/core/native";
 
-// node_modules/.pnpm/@tamagui+get-token@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-g_9bd3c0c9b19fe6cd77fad735af720569/node_modules/@tamagui/get-token/dist/esm/index.native.js
+// node_modules/.pnpm/@tamagui+get-token@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-g_b78d32282935fa9e8957c6bc9233f914/node_modules/@tamagui/get-token/dist/esm/index.native.js
 import { getTokens } from "@tamagui/core/native";
 var resolveToken = /* @__PURE__ */ __name(function resolveToken2(type, input) {
   var _tokens_key;
@@ -33415,7 +33401,7 @@ var getSize = /* @__PURE__ */ __name(function getSize2(size3) {
   return resolveToken("size", size3);
 }, "getSize2");
 
-// node_modules/.pnpm/@tamagui+progress@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-ge_f970f9210794504d1a79e7adad18400f/node_modules/@tamagui/progress/dist/esm/Progress.native.js
+// node_modules/.pnpm/@tamagui+progress@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-ge_bcac8e0b2113ef28d3f3efa7affa56b4/node_modules/@tamagui/progress/dist/esm/Progress.native.js
 import { useState as useState22 } from "react";
 var PROGRESS_NAME = "Progress";
 var [createProgressContext, createProgressScope] = createContextScope(PROGRESS_NAME);
@@ -33536,7 +33522,7 @@ var Progress = withStaticProperties(createStyledHOC28(ProgressFrame, /* @__PURE_
   });
 }, "Progress2")), { Indicator: ProgressIndicator });
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/Progress.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/Progress.native.js
 var ProgressIndicator3 = styled53(ProgressIndicator, {
   displayName: "ProgressIndicator",
   backgroundColor: "background"
@@ -33548,18 +33534,17 @@ var ProgressFrame2 = styled53(Progress, {
 });
 var Progress3 = withStaticProperties21(ProgressFrame2, { Indicator: ProgressIndicator3 });
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/Label.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/Label.native.js
 import { styled as styled54 } from "@tamagui/core/native";
 var Label3 = styled54(Label, {
   displayName: "Label",
   color: "color press:color-press"
 });
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/Separator.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/Separator.native.js
 import { styled as styled56 } from "@tamagui/core/native";
 
-// node_modules/.pnpm/@tamagui+separator@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-g_6723e600e83393438a56dfb29a29fc67/node_modules/@tamagui/separator/dist/esm/Separator.native.js
-init_index_native5();
+// node_modules/.pnpm/@tamagui+separator@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-g_aebca91a7611133c8647757747f99fe3/node_modules/@tamagui/separator/dist/esm/Separator.native.js
 import { View as View28, styled as styled55 } from "@tamagui/core/native";
 var Separator = styled55(View28, {
   displayName: "Separator",
@@ -33592,23 +33577,22 @@ var Separator = styled55(View28, {
   } } }
 });
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/Separator.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/Separator.native.js
 var Separator2 = styled56(Separator, {
   displayName: "Separator",
   borderColor: "background-focus"
 });
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/Toast.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/Toast.native.js
 import { jsx as jsx75, jsxs as jsxs16 } from "react/jsx-runtime";
 
-// node_modules/.pnpm/@tamagui+toast@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_24e985b021e1ba325261deac0d67ce2e/node_modules/@tamagui/toast/dist/esm/ToastComposable.native.js
+// node_modules/.pnpm/@tamagui+toast@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_9db216f1cd011114edd4ade8ce4a8bc9/node_modules/@tamagui/toast/dist/esm/ToastComposable.native.js
 import { jsx as jsx74, jsxs as jsxs15 } from "react/jsx-runtime";
 import { View as View30, createRefComponent as createRefComponent22, createStyledContext as createStyledContext26, createStyledHOC as createStyledHOC29, styled as styled58, useEvent as useEvent8 } from "@tamagui/core/native";
-init_index_native5();
 init_index_native6();
 import * as React71 from "react";
 
-// node_modules/.pnpm/@tamagui+toast@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_24e985b021e1ba325261deac0d67ce2e/node_modules/@tamagui/toast/dist/esm/ToastState.native.js
+// node_modules/.pnpm/@tamagui+toast@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_9db216f1cd011114edd4ade8ce4a8bc9/node_modules/@tamagui/toast/dist/esm/ToastState.native.js
 function _class_call_check3(instance, Constructor) {
   if (!(instance instanceof Constructor)) throw new TypeError("Cannot call a class as a function");
 }
@@ -33882,7 +33866,7 @@ var toast = Object.assign(toastFunction, {
   getToasts
 });
 
-// node_modules/.pnpm/@tamagui+toast@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_24e985b021e1ba325261deac0d67ce2e/node_modules/@tamagui/toast/dist/esm/createNativeToast.native.js
+// node_modules/.pnpm/@tamagui+toast@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_9db216f1cd011114edd4ade8ce4a8bc9/node_modules/@tamagui/toast/dist/esm/createNativeToast.native.js
 init_index_native6();
 var createNativeToast = /* @__PURE__ */ __name(function createNativeToast2(title, param) {
   var { message, duration, burntOptions } = param;
@@ -33904,7 +33888,7 @@ async function requestNotificationPermission() {
 }
 __name(requestNotificationPermission, "requestNotificationPermission");
 
-// node_modules/.pnpm/@tamagui+toast@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_24e985b021e1ba325261deac0d67ce2e/node_modules/@tamagui/toast/dist/esm/dispatchNativeToast.native.js
+// node_modules/.pnpm/@tamagui+toast@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_9db216f1cd011114edd4ade8ce4a8bc9/node_modules/@tamagui/toast/dist/esm/dispatchNativeToast.native.js
 function dispatchNativeToast(toast2, opts) {
   var _toast_type, _toast_duration;
   var titleText = typeof toast2.title === "function" ? toast2.title() : toast2.title;
@@ -33927,7 +33911,7 @@ function dispatchNativeToast(toast2, opts) {
 }
 __name(dispatchNativeToast, "dispatchNativeToast");
 
-// node_modules/.pnpm/@tamagui+toast@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_24e985b021e1ba325261deac0d67ce2e/node_modules/@tamagui/toast/dist/esm/useAnimatedDragGesture.native.js
+// node_modules/.pnpm/@tamagui+toast@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_9db216f1cd011114edd4ade8ce4a8bc9/node_modules/@tamagui/toast/dist/esm/useAnimatedDragGesture.native.js
 init_index_native6();
 init_react_native();
 import * as React68 from "react";
@@ -34113,8 +34097,7 @@ function useAnimatedDragGesture(options) {
 }
 __name(useAnimatedDragGesture, "useAnimatedDragGesture");
 
-// node_modules/.pnpm/@tamagui+toast@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_24e985b021e1ba325261deac0d67ce2e/node_modules/@tamagui/toast/dist/esm/useToastAnimations.native.js
-init_index_native5();
+// node_modules/.pnpm/@tamagui+toast@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_9db216f1cd011114edd4ade8ce4a8bc9/node_modules/@tamagui/toast/dist/esm/useToastAnimations.native.js
 import { View as View29, useAnimatedNumber as useAnimatedNumber2, useAnimatedNumbersStyle, useAnimationDriver as useAnimationDriver2, useEvent as useEvent7 } from "@tamagui/core/native";
 import * as React69 from "react";
 var SPRING_CONFIG = {
@@ -34315,8 +34298,7 @@ function useToastAnimations() {
 }
 __name(useToastAnimations, "useToastAnimations");
 
-// node_modules/.pnpm/@tamagui+toast@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_24e985b021e1ba325261deac0d67ce2e/node_modules/@tamagui/toast/dist/esm/useReducedMotion.native.js
-init_index_native5();
+// node_modules/.pnpm/@tamagui+toast@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_9db216f1cd011114edd4ade8ce4a8bc9/node_modules/@tamagui/toast/dist/esm/useReducedMotion.native.js
 import * as React70 from "react";
 var cachedResult = null;
 function getReducedMotion() {
@@ -34361,7 +34343,7 @@ function useReducedMotion(forceReducedMotion) {
 }
 __name(useReducedMotion, "useReducedMotion");
 
-// node_modules/.pnpm/@tamagui+toast@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_24e985b021e1ba325261deac0d67ce2e/node_modules/@tamagui/toast/dist/esm/ToastItemFrame.native.js
+// node_modules/.pnpm/@tamagui+toast@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_9db216f1cd011114edd4ade8ce4a8bc9/node_modules/@tamagui/toast/dist/esm/ToastItemFrame.native.js
 import { jsx as jsx73 } from "react/jsx-runtime";
 import { styled as styled57 } from "@tamagui/core/native";
 var ToastPositionWrapper = styled57(YStack, {
@@ -34406,7 +34388,7 @@ var DefaultCloseIcon = /* @__PURE__ */ __name(function DefaultCloseIcon2() {
   });
 }, "DefaultCloseIcon2");
 
-// node_modules/.pnpm/@tamagui+toast@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_24e985b021e1ba325261deac0d67ce2e/node_modules/@tamagui/toast/dist/esm/ToastComposable.native.js
+// node_modules/.pnpm/@tamagui+toast@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_9db216f1cd011114edd4ade8ce4a8bc9/node_modules/@tamagui/toast/dist/esm/ToastComposable.native.js
 var VISIBLE_TOASTS_AMOUNT = 4;
 var VIEWPORT_OFFSET = 16;
 var TOAST_GAP = 14;
@@ -35271,7 +35253,7 @@ var Toast = withStaticProperties(ToastRoot, {
   Icon: ToastIcon
 });
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/Toast.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/Toast.native.js
 import { createRefComponent as createRefComponent23, styled as styled59, withStaticProperties as withStaticProperties22 } from "@tamagui/core/native";
 var ToastItem2 = styled59(Toast.Item, {
   displayName: "ToastItem",
@@ -35405,12 +35387,12 @@ var Toast2 = withStaticProperties22(ToastRoot3, {
   Icon: BehaviorIcon
 });
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/Surface.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/Surface.native.js
 import { jsx as jsx76 } from "react/jsx-runtime";
 import { Theme as Theme6, styled as styled60 } from "@tamagui/core/native";
 import { forwardRef } from "react";
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/facets.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/facets.native.js
 var filled = { true: { backgroundColor: "background" } };
 var outlined2 = { true: {
   borderWidth: 1,
@@ -35441,7 +35423,7 @@ var facets = {
   interactive
 };
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/components/Surface.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/components/Surface.native.js
 var SurfaceFrame = styled60(YStack, {
   displayName: "Surface",
   variants: {
@@ -35466,14 +35448,14 @@ var Surface = /* @__PURE__ */ forwardRef(/* @__PURE__ */ __name(function Surface
   });
 }, "Surface2"));
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/theme-update.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/theme-update.native.js
 import { ThemeUpdate as ThemeUpdate$1 } from "@tamagui/core/theme-update";
 var ThemeUpdate = ThemeUpdate$1;
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/index.native.js
-import { ClientOnly as ClientOnly2, ComponentContext, Configuration, FontLanguage, GroupContext, Theme as Theme8, View as View37, _withStableStyle, createComponent, createFont, createShorthands, createStyledContext as createStyledContext32, createStyledHOC as createStyledHOC40, createTokens, createVariable, getCSSStylesAtomic, getConfig as getConfig5, getMedia, getThemes, getToken, getTokenValue as getTokenValue3, getTokens as getTokens2, getVariable as getVariable2, getVariableValue as getVariableValue5, html, insertFont, isBrowser, isChrome, isClient, isServer as isServer2, isTamaguiComponent, isTamaguiElement as isTamaguiElement2, isTouchable as isTouchable2, isVariable as isVariable2, isWeb as isWeb16, isWebTouchable, matchMedia, mediaObjectToString, mediaQueryConfig, mediaState, setConfig, setNativeStyleEngine, setupDev, splitStyleProps as splitStyleProps3, style, styled as styled76, useAnimatedNumber as useAnimatedNumber3, useAnimatedNumberReaction, useAnimatedNumberStyle as useAnimatedNumberStyle2, useAnimatedNumbersStyle as useAnimatedNumbersStyle2, useAnimationDriver as useAnimationDriver3, useClientValue, useConfiguration as useConfiguration3, useDidFinishSSR as useDidFinishSSR3, useEvent as useEvent10, useGet as useGet2, useIsTouchDevice as useIsTouchDevice3, useIsomorphicLayoutEffect as useIsomorphicLayoutEffect4, useMedia as useMedia2, useStyle as useStyle2, useTheme as useTheme3, useThemeName as useThemeName6, variableToString as variableToString2, withStaticProperties as withStaticProperties30 } from "@tamagui/core/native";
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/index.native.js
+import { ClientOnly as ClientOnly2, ComponentContext, Configuration, FontLanguage, GroupContext, Theme as Theme8, View as View37, _withStableStyle, createComponent, createFont, createShorthands, createStyledContext as createStyledContext32, createStyledHOC as createStyledHOC40, createTokens, createVariable, getCSSStylesAtomic, getConfig as getConfig5, getMedia, getThemes, getToken, getTokenValue as getTokenValue3, getTokens as getTokens2, getVariable as getVariable2, getVariableValue as getVariableValue5, html, insertFont, isBrowser, isChrome, isClient, isServer as isServer2, isTamaguiComponent, isTamaguiElement as isTamaguiElement2, isTouchable as isTouchable2, isVariable as isVariable2, isWeb as isWeb16, isWebTouchable, matchMedia, mediaObjectToString, mediaQueryConfig, mediaState, setConfig, setNativeStyleEngine, setupDev, splitStyleProps as splitStyleProps3, style, styled as styled76, useAnimatedNumber as useAnimatedNumber3, useAnimatedNumberReaction, useAnimatedNumberStyle as useAnimatedNumberStyle2, useAnimatedNumbersStyle as useAnimatedNumbersStyle2, useAnimationDriver as useAnimationDriver3, useClientValue, useConfiguration as useConfiguration3, useDidFinishSSR as useDidFinishSSR3, useEvent as useEvent10, useGet as useGet2, useIsTouchDevice as useIsTouchDevice3, useIsomorphicLayoutEffect as useIsomorphicLayoutEffect5, useMedia as useMedia2, useStyle as useStyle2, useTheme as useTheme3, useThemeName as useThemeName6, variableToString as variableToString2, withStaticProperties as withStaticProperties30 } from "@tamagui/core/native";
 
-// node_modules/.pnpm/@tamagui+spacer@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_d050a9003cafd37ed8e08a22da2dd5dd/node_modules/@tamagui/spacer/dist/esm/Spacer.native.js
+// node_modules/.pnpm/@tamagui+spacer@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_ecc9f317fc45470065e6e742666c425c/node_modules/@tamagui/spacer/dist/esm/Spacer.native.js
 import { View as View31, styled as styled61 } from "@tamagui/core/native";
 var getSpacerSize = styled61.dynamic(function(size3, env) {
   if (size3 === false) return;
@@ -35506,14 +35488,14 @@ var Spacer = styled61(View31, {
   defaultVariants: { size: true }
 });
 
-// node_modules/.pnpm/@tamagui+avatar@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_7be8d1e00e06f348854b846054a6e5ab/node_modules/@tamagui/avatar/dist/esm/Avatar.native.js
+// node_modules/.pnpm/@tamagui+avatar@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_671adbd5b2dacf23f9dba9619dcc122e/node_modules/@tamagui/avatar/dist/esm/Avatar.native.js
 import { jsx as jsx78 } from "react/jsx-runtime";
 import { createRefComponent as createRefComponent24, createStyledHOC as createStyledHOC31, styled as styled66 } from "@tamagui/core/native";
 
-// node_modules/.pnpm/@tamagui+image@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_60f02438a8d8d6d9b96b9b260bfe010f/node_modules/@tamagui/image/dist/esm/Image.native.js
+// node_modules/.pnpm/@tamagui+image@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f58bbafd5825a4ab13b06743b41db7ea/node_modules/@tamagui/image/dist/esm/Image.native.js
 init_react_native();
 
-// node_modules/.pnpm/@tamagui+image@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_60f02438a8d8d6d9b96b9b260bfe010f/node_modules/@tamagui/image/dist/esm/createImage.native.js
+// node_modules/.pnpm/@tamagui+image@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f58bbafd5825a4ab13b06743b41db7ea/node_modules/@tamagui/image/dist/esm/createImage.native.js
 import { jsx as jsx77 } from "react/jsx-runtime";
 import { createStyledHOC as createStyledHOC30, getTokenValue as getTokenValue2, styled as styled62 } from "@tamagui/core/native";
 var defaultObjectFitMap = /* @__PURE__ */ __name(function defaultObjectFitMap2(objectFit) {
@@ -35632,13 +35614,13 @@ function createImage(options) {
 }
 __name(createImage, "createImage");
 
-// node_modules/.pnpm/@tamagui+image@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_60f02438a8d8d6d9b96b9b260bfe010f/node_modules/@tamagui/image/dist/esm/Image.native.js
+// node_modules/.pnpm/@tamagui+image@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_f58bbafd5825a4ab13b06743b41db7ea/node_modules/@tamagui/image/dist/esm/Image.native.js
 var Image = createImage({ Component: react_native_exports.Image });
 
-// node_modules/.pnpm/@tamagui+shapes@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_562ad2709ce6e8903e1bff3e25a8ebfd/node_modules/@tamagui/shapes/dist/esm/Square.native.js
+// node_modules/.pnpm/@tamagui+shapes@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_d660f3695da066df99e3f758368dfa28/node_modules/@tamagui/shapes/dist/esm/Square.native.js
 import { styled as styled64 } from "@tamagui/core/native";
 
-// node_modules/.pnpm/@tamagui+shapes@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_562ad2709ce6e8903e1bff3e25a8ebfd/node_modules/@tamagui/shapes/dist/esm/getShapeSize.native.js
+// node_modules/.pnpm/@tamagui+shapes@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_d660f3695da066df99e3f758368dfa28/node_modules/@tamagui/shapes/dist/esm/getShapeSize.native.js
 import { styled as styled63 } from "@tamagui/core/native";
 var getShapeSize = styled63.dynamic(function(size3, env) {
   var key = typeof size3 === "string" ? size3.replace(/^\$/, "") : size3;
@@ -35656,7 +35638,7 @@ var getShapeSize = styled63.dynamic(function(size3, env) {
   };
 });
 
-// node_modules/.pnpm/@tamagui+shapes@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_562ad2709ce6e8903e1bff3e25a8ebfd/node_modules/@tamagui/shapes/dist/esm/Square.native.js
+// node_modules/.pnpm/@tamagui+shapes@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_d660f3695da066df99e3f758368dfa28/node_modules/@tamagui/shapes/dist/esm/Square.native.js
 var Square = styled64(YStack, {
   displayName: "Square",
   alignItems: "center",
@@ -35668,14 +35650,14 @@ var Square = styled64(YStack, {
   }
 }, { memo: true });
 
-// node_modules/.pnpm/@tamagui+shapes@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_562ad2709ce6e8903e1bff3e25a8ebfd/node_modules/@tamagui/shapes/dist/esm/Circle.native.js
+// node_modules/.pnpm/@tamagui+shapes@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_d660f3695da066df99e3f758368dfa28/node_modules/@tamagui/shapes/dist/esm/Circle.native.js
 import { styled as styled65 } from "@tamagui/core/native";
 var Circle = styled65(Square, {
   displayName: "Circle",
   borderRadius: 1e8
 });
 
-// node_modules/.pnpm/@tamagui+avatar@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gest_7be8d1e00e06f348854b846054a6e5ab/node_modules/@tamagui/avatar/dist/esm/Avatar.native.js
+// node_modules/.pnpm/@tamagui+avatar@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gest_671adbd5b2dacf23f9dba9619dcc122e/node_modules/@tamagui/avatar/dist/esm/Avatar.native.js
 import * as React72 from "react";
 var AVATAR_NAME = "Avatar";
 var [createAvatarContext, createAvatarScope] = createContextScope(AVATAR_NAME);
@@ -35779,11 +35761,11 @@ var Avatar = withStaticProperties(createRefComponent24(function(props, forwarded
 });
 Avatar.displayName = AVATAR_NAME;
 
-// node_modules/.pnpm/@tamagui+field@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_33d68f9fbff1e60631fbb71e3d20d1d1/node_modules/@tamagui/field/dist/esm/Field.native.js
+// node_modules/.pnpm/@tamagui+field@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_b01b7540a85dde757c1207f60ddbbd74/node_modules/@tamagui/field/dist/esm/Field.native.js
 import { jsx as jsx80 } from "react/jsx-runtime";
-import { Text as Text7, View as View33, createStyledHOC as createStyledHOC33, isWeb as isWeb9, styled as styled68, useIsomorphicLayoutEffect as useIsomorphicLayoutEffect3, withStaticProperties as withStaticProperties23 } from "@tamagui/core/native";
+import { Text as Text7, View as View33, createStyledHOC as createStyledHOC33, isWeb as isWeb9, styled as styled68, useIsomorphicLayoutEffect as useIsomorphicLayoutEffect4, withStaticProperties as withStaticProperties23 } from "@tamagui/core/native";
 
-// node_modules/.pnpm/@tamagui+form@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestur_8a0797bcede62acfa6b103697578d3a3/node_modules/@tamagui/form/dist/esm/Form.native.js
+// node_modules/.pnpm/@tamagui+form@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestur_ef958b7fc7d7027b03dd7a0e929b5fda/node_modules/@tamagui/form/dist/esm/Form.native.js
 import { jsx as jsx79 } from "react/jsx-runtime";
 import { View as View32, createStyledContext as createStyledContext27, createStyledHOC as createStyledHOC32, isWeb as isWeb8, styled as styled67 } from "@tamagui/core/native";
 import * as React73 from "react";
@@ -36092,14 +36074,14 @@ var FormComponent = createStyledHOC32(FormFrame, /* @__PURE__ */ __name(function
 }, "Form"));
 var Form2 = withStaticProperties(FormComponent, { Trigger: FormTrigger });
 
-// node_modules/.pnpm/@tamagui+field@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_33d68f9fbff1e60631fbb71e3d20d1d1/node_modules/@tamagui/field/dist/esm/Field.native.js
+// node_modules/.pnpm/@tamagui+field@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_b01b7540a85dde757c1207f60ddbbd74/node_modules/@tamagui/field/dist/esm/Field.native.js
 import * as React75 from "react";
 
-// node_modules/.pnpm/@tamagui+field@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_33d68f9fbff1e60631fbb71e3d20d1d1/node_modules/@tamagui/field/dist/esm/FieldContext.native.js
+// node_modules/.pnpm/@tamagui+field@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_b01b7540a85dde757c1207f60ddbbd74/node_modules/@tamagui/field/dist/esm/FieldContext.native.js
 import { createStyledContext as createStyledContext28 } from "@tamagui/core/native";
 import * as React74 from "react";
 
-// node_modules/.pnpm/@tamagui+field@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_33d68f9fbff1e60631fbb71e3d20d1d1/node_modules/@tamagui/field/dist/esm/validation.native.js
+// node_modules/.pnpm/@tamagui+field@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_b01b7540a85dde757c1207f60ddbbd74/node_modules/@tamagui/field/dist/esm/validation.native.js
 function createDefaultValidityState() {
   var valid = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : null;
   return {
@@ -36199,7 +36181,7 @@ function createValidationCommitter(commit) {
 }
 __name(createValidationCommitter, "createValidationCommitter");
 
-// node_modules/.pnpm/@tamagui+field@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_33d68f9fbff1e60631fbb71e3d20d1d1/node_modules/@tamagui/field/dist/esm/FieldContext.native.js
+// node_modules/.pnpm/@tamagui+field@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_b01b7540a85dde757c1207f60ddbbd74/node_modules/@tamagui/field/dist/esm/FieldContext.native.js
 var noop = /* @__PURE__ */ __name(function noop2() {
 }, "noop2");
 var unregister = /* @__PURE__ */ __name(function unregister2() {
@@ -36251,7 +36233,7 @@ var FieldStyledContext = createStyledContext28({
   disabled: false
 }, "Field");
 
-// node_modules/.pnpm/@tamagui+field@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_33d68f9fbff1e60631fbb71e3d20d1d1/node_modules/@tamagui/field/dist/esm/Field.native.js
+// node_modules/.pnpm/@tamagui+field@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_b01b7540a85dde757c1207f60ddbbd74/node_modules/@tamagui/field/dist/esm/Field.native.js
 var fieldStateVariants = {
   valid: { true: {} },
   invalid: { true: {} },
@@ -37111,7 +37093,7 @@ var FieldLabel = createStyledHOC33(FieldLabelFrame, /* @__PURE__ */ __name(funct
   var id = idProp !== null && idProp !== void 0 ? idProp : `field-label-${generatedId}`;
   var text = getText(children);
   var disabled = root.state.disabled || itemDisabled;
-  useIsomorphicLayoutEffect3(function() {
+  useIsomorphicLayoutEffect4(function() {
     return association.registerLabel(id, text);
   }, [
     association.registerLabel,
@@ -37147,7 +37129,7 @@ var FieldDescription = createStyledHOC33(FieldDescriptionFrame, /* @__PURE__ */ 
   var id = idProp !== null && idProp !== void 0 ? idProp : `field-description-${generatedId}`;
   var text = getText(children);
   var disabled = root.state.disabled || itemDisabled;
-  useIsomorphicLayoutEffect3(function() {
+  useIsomorphicLayoutEffect4(function() {
     return association.registerMessage(id, text);
   }, [
     association.registerMessage,
@@ -37171,7 +37153,7 @@ var FieldError = createStyledHOC33(FieldErrorFrame, /* @__PURE__ */ __name(funct
   var rendered = match === true || !disabled && (typeof match === "string" ? Boolean(root.validityData.state[match]) : root.state.valid === false);
   var message = children !== null && children !== void 0 ? children : root.state.errors.join("\n");
   var text = getText(message);
-  useIsomorphicLayoutEffect3(function() {
+  useIsomorphicLayoutEffect4(function() {
     if (!rendered) {
       return;
     }
@@ -37234,20 +37216,20 @@ var Field2 = withStaticProperties23(FieldComponent, {
   useFieldControl
 });
 
-// node_modules/.pnpm/@tamagui+menu@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestur_c1893851bfc99e4209a01ff176335ab1/node_modules/@tamagui/menu/dist/esm/Menu.native.js
+// node_modules/.pnpm/@tamagui+menu@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestur_75fe8a52ae6ab7aaaab980e4943776d5/node_modules/@tamagui/menu/dist/esm/Menu.native.js
 import { Fragment as Fragment18, jsx as jsx85 } from "react/jsx-runtime";
 
-// node_modules/.pnpm/@tamagui+create-menu@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native_91dea85132d9a737bf32d3a1e177a736/node_modules/@tamagui/create-menu/dist/esm/createBaseMenu.native.js
+// node_modules/.pnpm/@tamagui+create-menu@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native_f2a78ac7da5556dfbecc35d796fd21b0/node_modules/@tamagui/create-menu/dist/esm/createBaseMenu.native.js
 import { Fragment as Fragment16, jsx as jsx81, jsxs as jsxs17 } from "react/jsx-runtime";
 import { createRefComponent as createRefComponent25, createStyledHOC as createStyledHOC34 } from "@tamagui/core/native";
 
-// node_modules/.pnpm/@tamagui+focus-guard@3.3.1_react@19.3.0/node_modules/@tamagui/focus-guard/dist/esm/FocusGuard.native.js
+// node_modules/.pnpm/@tamagui+focus-guard@3.3.3_react@19.3.0/node_modules/@tamagui/focus-guard/dist/esm/FocusGuard.native.js
 function useFocusGuards() {
   return null;
 }
 __name(useFocusGuards, "useFocusGuards");
 
-// node_modules/.pnpm/@tamagui+use-callback-ref@3.3.1_react@19.3.0/node_modules/@tamagui/use-callback-ref/dist/esm/index.native.js
+// node_modules/.pnpm/@tamagui+use-callback-ref@3.3.3_react@19.3.0/node_modules/@tamagui/use-callback-ref/dist/esm/index.native.js
 import * as React76 from "react";
 function useCallbackRef(callback) {
   var callbackRef = React76.useRef(callback);
@@ -37266,7 +37248,7 @@ function useCallbackRef(callback) {
 }
 __name(useCallbackRef, "useCallbackRef");
 
-// node_modules/.pnpm/@tamagui+create-menu@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native_91dea85132d9a737bf32d3a1e177a736/node_modules/@tamagui/create-menu/dist/esm/createBaseMenu.native.js
+// node_modules/.pnpm/@tamagui+create-menu@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native_f2a78ac7da5556dfbecc35d796fd21b0/node_modules/@tamagui/create-menu/dist/esm/createBaseMenu.native.js
 import { Text as Text8, Theme as Theme7, View as View34, composeEventHandlers as composeEventHandlers3, composeRefs as composeRefs2, createStyledContext as createStyledContext29, isWeb as isWeb10, styled as styled69, useComposedRefs as useComposedRefs2, useIsTouchDevice, useThemeName as useThemeName5, withStaticProperties as withStaticProperties24 } from "@tamagui/core/native";
 import * as React77 from "react";
 import { useId as useId17 } from "react";
@@ -38441,10 +38423,10 @@ function isPointerInGraceArea(event, area) {
 }
 __name(isPointerInGraceArea, "isPointerInGraceArea");
 
-// node_modules/.pnpm/@tamagui+create-menu@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native_91dea85132d9a737bf32d3a1e177a736/node_modules/@tamagui/create-menu/dist/esm/createNativeMenu/createNativeMenu.native.js
+// node_modules/.pnpm/@tamagui+create-menu@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native_f2a78ac7da5556dfbecc35d796fd21b0/node_modules/@tamagui/create-menu/dist/esm/createNativeMenu/createNativeMenu.native.js
 init_index_native6();
 import { Fragment as Fragment17, jsx as jsx82 } from "react/jsx-runtime";
-import { isIos as isIos2, isWeb as isWeb11, withStaticProperties as withStaticProperties25 } from "@tamagui/core/native";
+import { isIos as isIos3, isWeb as isWeb11, withStaticProperties as withStaticProperties25 } from "@tamagui/core/native";
 import React78 from "react";
 var MAPPED_TYPES = [
   "SubContent",
@@ -38563,7 +38545,7 @@ var createNativeMenu = /* @__PURE__ */ __name(function createNativeMenu2(MenuTyp
     return createWebStubs();
   }
   var isContextMenu = MenuType === "ContextMenu";
-  var isAndroid5 = !isIos2 && !isWeb11;
+  var isAndroid6 = !isIos3 && !isWeb11;
   var resolved = null;
   var warned = false;
   function resolve() {
@@ -38723,7 +38705,7 @@ var createNativeMenu = /* @__PURE__ */ __name(function createNativeMenu2(MenuTyp
       }
       result.push(child);
     });
-    if (isIos2 && shouldReverseOnIos && !isContextMenu) {
+    if (isIos3 && shouldReverseOnIos && !isContextMenu) {
       result.reverse();
     }
     return result;
@@ -38826,7 +38808,7 @@ var createNativeMenu = /* @__PURE__ */ __name(function createNativeMenu2(MenuTyp
         release: releaseTriggerBoundary
       })
     });
-    if (isAndroid5) {
+    if (isAndroid6) {
       return /* @__PURE__ */ jsx82(NativeMenuContext.Provider, {
         value: true,
         children: content
@@ -38860,7 +38842,7 @@ var createNativeMenu = /* @__PURE__ */ __name(function createNativeMenu2(MenuTyp
   }) };
 }, "createNativeMenu2");
 
-// node_modules/.pnpm/@tamagui+create-menu@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native_91dea85132d9a737bf32d3a1e177a736/node_modules/@tamagui/create-menu/dist/esm/createNativeMenu/withNativeMenu.native.js
+// node_modules/.pnpm/@tamagui+create-menu@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native_f2a78ac7da5556dfbecc35d796fd21b0/node_modules/@tamagui/create-menu/dist/esm/createNativeMenu/withNativeMenu.native.js
 init_index_native6();
 import { jsx as jsx83 } from "react/jsx-runtime";
 import { isWeb as isWeb12 } from "@tamagui/core/native";
@@ -38883,14 +38865,14 @@ function withNativeMenu(param) {
 }
 __name(withNativeMenu, "withNativeMenu");
 
-// node_modules/.pnpm/@tamagui+menu@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestur_c1893851bfc99e4209a01ff176335ab1/node_modules/@tamagui/menu/dist/esm/Menu.native.js
+// node_modules/.pnpm/@tamagui+menu@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestur_75fe8a52ae6ab7aaaab980e4943776d5/node_modules/@tamagui/menu/dist/esm/Menu.native.js
 import { isWeb as isWeb14, withStaticProperties as withStaticProperties27 } from "@tamagui/core/native";
 import React80 from "react";
 
-// node_modules/.pnpm/@tamagui+menu@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestur_c1893851bfc99e4209a01ff176335ab1/node_modules/@tamagui/menu/dist/esm/createNonNativeMenu.native.js
+// node_modules/.pnpm/@tamagui+menu@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestur_75fe8a52ae6ab7aaaab980e4943776d5/node_modules/@tamagui/menu/dist/esm/createNonNativeMenu.native.js
 import { jsx as jsx84 } from "react/jsx-runtime";
 import { createStyledHOC as createStyledHOC35 } from "@tamagui/core/native";
-import { Slot as Slot2, View as View35, composeEventHandlers as composeEventHandlers4, composeRefs as composeRefs3, createStyledContext as createStyledContext30, isAndroid as isAndroid3, isWeb as isWeb13, styled as styled70, useEvent as useEvent9, useIsTouchDevice as useIsTouchDevice2, withStaticProperties as withStaticProperties26 } from "@tamagui/core/native";
+import { Slot as Slot2, View as View35, composeEventHandlers as composeEventHandlers4, composeRefs as composeRefs3, createStyledContext as createStyledContext30, isAndroid as isAndroid4, isWeb as isWeb13, styled as styled70, useEvent as useEvent9, useIsTouchDevice as useIsTouchDevice2, withStaticProperties as withStaticProperties26 } from "@tamagui/core/native";
 import * as React79 from "react";
 import { useId as useId19 } from "react";
 var DROPDOWN_MENU_CONTEXT = "MenuContext";
@@ -39270,8 +39252,8 @@ function createNonNativeMenu() {
   var PORTAL_NAME = "MenuPortal";
   var MenuPortal = /* @__PURE__ */ __name(function MenuPortal2(props) {
     var { scope, children, ...portalProps } = props;
-    var context2 = isAndroid3 ? useMenuContext2(scope) : null;
-    var content = isAndroid3 ? /* @__PURE__ */ jsx84(MenuProvider2, {
+    var context2 = isAndroid4 ? useMenuContext2(scope) : null;
+    var content = isAndroid4 ? /* @__PURE__ */ jsx84(MenuProvider2, {
       ...context2,
       children
     }) : children;
@@ -39434,7 +39416,7 @@ function createNonNativeMenu() {
 }
 __name(createNonNativeMenu, "createNonNativeMenu");
 
-// node_modules/.pnpm/@tamagui+menu@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestur_c1893851bfc99e4209a01ff176335ab1/node_modules/@tamagui/menu/dist/esm/Menu.native.js
+// node_modules/.pnpm/@tamagui+menu@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestur_75fe8a52ae6ab7aaaab980e4943776d5/node_modules/@tamagui/menu/dist/esm/Menu.native.js
 function createMenu() {
   var { Menu: NativeMenuRoot } = createNativeMenu("Menu");
   var NonNativeMenu = createNonNativeMenu();
@@ -39582,16 +39564,16 @@ function createMenu() {
 }
 __name(createMenu, "createMenu");
 
-// node_modules/.pnpm/@tamagui+menu@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestur_c1893851bfc99e4209a01ff176335ab1/node_modules/@tamagui/menu/dist/esm/index.native.js
+// node_modules/.pnpm/@tamagui+menu@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestur_75fe8a52ae6ab7aaaab980e4943776d5/node_modules/@tamagui/menu/dist/esm/index.native.js
 var Menu = createMenu();
 
-// node_modules/.pnpm/@tamagui+context-menu@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-nativ_f2548147d84c3f9f6f209012abae553e/node_modules/@tamagui/context-menu/dist/esm/ContextMenu.native.js
+// node_modules/.pnpm/@tamagui+context-menu@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-nativ_04e3759cbaef615ee112ad1f8db0149a/node_modules/@tamagui/context-menu/dist/esm/ContextMenu.native.js
 import { withStaticProperties as withStaticProperties29 } from "@tamagui/core/native";
 import React82 from "react";
 
-// node_modules/.pnpm/@tamagui+context-menu@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-nativ_f2548147d84c3f9f6f209012abae553e/node_modules/@tamagui/context-menu/dist/esm/createNonNativeContextMenu.native.js
+// node_modules/.pnpm/@tamagui+context-menu@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-nativ_04e3759cbaef615ee112ad1f8db0149a/node_modules/@tamagui/context-menu/dist/esm/createNonNativeContextMenu.native.js
 import { Fragment as Fragment19, jsx as jsx86, jsxs as jsxs18 } from "react/jsx-runtime";
-import { Slot as Slot3, View as View36, composeEventHandlers as composeEventHandlers5, composeRefs as composeRefs4, createStyledContext as createStyledContext31, createStyledHOC as createStyledHOC36, isAndroid as isAndroid4, isWeb as isWeb15, withStaticProperties as withStaticProperties28 } from "@tamagui/core/native";
+import { Slot as Slot3, View as View36, composeEventHandlers as composeEventHandlers5, composeRefs as composeRefs4, createStyledContext as createStyledContext31, createStyledHOC as createStyledHOC36, isAndroid as isAndroid5, isWeb as isWeb15, withStaticProperties as withStaticProperties28 } from "@tamagui/core/native";
 import React81, { useId as useId20 } from "react";
 var CONTEXTMENU_CONTEXT = "ContextMenuContext";
 function createNonNativeContextMenu() {
@@ -39764,8 +39746,8 @@ function createNonNativeContextMenu() {
   var PORTAL_NAME = "ContextMenuPortal";
   var ContextMenuPortal = /* @__PURE__ */ __name(function ContextMenuPortal2(props) {
     var { scope, children, ...portalProps } = props;
-    var context2 = isAndroid4 ? useContextMenuContext(scope) : null;
-    var content = isAndroid4 ? /* @__PURE__ */ jsx86(ContextMenuProvider, {
+    var context2 = isAndroid5 ? useContextMenuContext(scope) : null;
+    var content = isAndroid5 ? /* @__PURE__ */ jsx86(ContextMenuProvider, {
       ...context2,
       children
     }) : children;
@@ -39952,7 +39934,7 @@ function createNonNativeContextMenu() {
 }
 __name(createNonNativeContextMenu, "createNonNativeContextMenu");
 
-// node_modules/.pnpm/@tamagui+context-menu@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-nativ_f2548147d84c3f9f6f209012abae553e/node_modules/@tamagui/context-menu/dist/esm/ContextMenu.native.js
+// node_modules/.pnpm/@tamagui+context-menu@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-nativ_04e3759cbaef615ee112ad1f8db0149a/node_modules/@tamagui/context-menu/dist/esm/ContextMenu.native.js
 var COMMON_PARAMS = {
   isRoot: false,
   scope: CONTEXTMENU_CONTEXT
@@ -40097,11 +40079,10 @@ function createContextMenu() {
 }
 __name(createContextMenu, "createContextMenu");
 
-// node_modules/.pnpm/@tamagui+context-menu@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-nativ_f2548147d84c3f9f6f209012abae553e/node_modules/@tamagui/context-menu/dist/esm/index.native.js
+// node_modules/.pnpm/@tamagui+context-menu@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-nativ_04e3759cbaef615ee112ad1f8db0149a/node_modules/@tamagui/context-menu/dist/esm/index.native.js
 var ContextMenu = createContextMenu();
 
-// node_modules/.pnpm/@tamagui+theme@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_339e3b610e16741aa99a5ffbc61b8f37/node_modules/@tamagui/theme/dist/esm/_mutateTheme.native.js
-init_index_native5();
+// node_modules/.pnpm/@tamagui+theme@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_31689ae1e3b76a1540856a38f6f3dd4f/node_modules/@tamagui/theme/dist/esm/_mutateTheme.native.js
 import { forceUpdateThemes, getConfig as getConfig4, updateConfig } from "@tamagui/core/native";
 import { ensureThemeVariable, proxyThemeToParents } from "@tamagui/web/internal-runtime";
 function mutateThemes(param) {
@@ -40191,7 +40172,7 @@ function insertThemeCSS(themes) {
 }
 __name(insertThemeCSS, "insertThemeCSS");
 
-// node_modules/.pnpm/@tamagui+theme@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_339e3b610e16741aa99a5ffbc61b8f37/node_modules/@tamagui/theme/dist/esm/addTheme.native.js
+// node_modules/.pnpm/@tamagui+theme@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_31689ae1e3b76a1540856a38f6f3dd4f/node_modules/@tamagui/theme/dist/esm/addTheme.native.js
 function addTheme(props) {
   return _mutateTheme({
     ...props,
@@ -40201,7 +40182,7 @@ function addTheme(props) {
 }
 __name(addTheme, "addTheme");
 
-// node_modules/.pnpm/@tamagui+theme@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_339e3b610e16741aa99a5ffbc61b8f37/node_modules/@tamagui/theme/dist/esm/updateTheme.native.js
+// node_modules/.pnpm/@tamagui+theme@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_31689ae1e3b76a1540856a38f6f3dd4f/node_modules/@tamagui/theme/dist/esm/updateTheme.native.js
 function updateTheme(param) {
   var { name, theme } = param;
   return _mutateTheme({
@@ -40213,7 +40194,7 @@ function updateTheme(param) {
 }
 __name(updateTheme, "updateTheme");
 
-// node_modules/.pnpm/@tamagui+theme@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-gestu_339e3b610e16741aa99a5ffbc61b8f37/node_modules/@tamagui/theme/dist/esm/replaceTheme.native.js
+// node_modules/.pnpm/@tamagui+theme@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-gestu_31689ae1e3b76a1540856a38f6f3dd4f/node_modules/@tamagui/theme/dist/esm/replaceTheme.native.js
 function replaceTheme(param) {
   var { name, theme } = param;
   var next = _mutateTheme({
@@ -40226,7 +40207,7 @@ function replaceTheme(param) {
 }
 __name(replaceTheme, "replaceTheme");
 
-// node_modules/.pnpm/@tamagui+tooltip@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-ges_c6e147b3d063c1206b5da89b5f7959d6/node_modules/@tamagui/tooltip/dist/esm/Tooltip.native.js
+// node_modules/.pnpm/@tamagui+tooltip@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-ges_0475249d0f70bc748486812b36f56b5c/node_modules/@tamagui/tooltip/dist/esm/Tooltip.native.js
 var RenderChildren = /* @__PURE__ */ __name(function RenderChildren2(props) {
   return props.children;
 }, "RenderChildren2");
@@ -40246,13 +40227,13 @@ var Tooltip = withStaticProperties(RenderChildren, {
   Trigger: RenderChildren
 });
 
-// node_modules/.pnpm/@tamagui+tooltip@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-ges_c6e147b3d063c1206b5da89b5f7959d6/node_modules/@tamagui/tooltip/dist/esm/TooltipSimple.native.js
+// node_modules/.pnpm/@tamagui+tooltip@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-ges_0475249d0f70bc748486812b36f56b5c/node_modules/@tamagui/tooltip/dist/esm/TooltipSimple.native.js
 var RenderChildren3 = /* @__PURE__ */ __name(function RenderChildren22(props) {
   return props.children;
 }, "RenderChildren2");
 var TooltipSimple = RenderChildren3;
 
-// node_modules/.pnpm/@tamagui+use-debounce@3.3.1_react@19.3.0/node_modules/@tamagui/use-debounce/dist/esm/index.native.js
+// node_modules/.pnpm/@tamagui+use-debounce@3.3.3_react@19.3.0/node_modules/@tamagui/use-debounce/dist/esm/index.native.js
 import * as React83 from "react";
 function debounce(func, wait, leading) {
   var timeout;
@@ -40314,11 +40295,10 @@ function useDebounceValue(val) {
 }
 __name(useDebounceValue, "useDebounceValue");
 
-// node_modules/.pnpm/@tamagui+use-window-dimensions@3.3.1_react@19.3.0/node_modules/@tamagui/use-window-dimensions/dist/esm/index.native.js
-init_index_native5();
+// node_modules/.pnpm/@tamagui+use-window-dimensions@3.3.3_react@19.3.0/node_modules/@tamagui/use-window-dimensions/dist/esm/index.native.js
 import React84 from "react";
 
-// node_modules/.pnpm/@tamagui+use-window-dimensions@3.3.1_react@19.3.0/node_modules/@tamagui/use-window-dimensions/dist/esm/helpers.native.js
+// node_modules/.pnpm/@tamagui+use-window-dimensions@3.3.3_react@19.3.0/node_modules/@tamagui/use-window-dimensions/dist/esm/helpers.native.js
 init_react_native();
 function getWindowSize() {
   return react_native_exports.Dimensions.get("window");
@@ -40345,7 +40325,7 @@ function subscribe(cb) {
 }
 __name(subscribe, "subscribe");
 
-// node_modules/.pnpm/@tamagui+use-window-dimensions@3.3.1_react@19.3.0/node_modules/@tamagui/use-window-dimensions/dist/esm/initialValue.native.js
+// node_modules/.pnpm/@tamagui+use-window-dimensions@3.3.3_react@19.3.0/node_modules/@tamagui/use-window-dimensions/dist/esm/initialValue.native.js
 var initialValue = {
   width: 800,
   height: 600,
@@ -40357,7 +40337,7 @@ function configureInitialWindowDimensions(next) {
 }
 __name(configureInitialWindowDimensions, "configureInitialWindowDimensions");
 
-// node_modules/.pnpm/@tamagui+use-window-dimensions@3.3.1_react@19.3.0/node_modules/@tamagui/use-window-dimensions/dist/esm/index.native.js
+// node_modules/.pnpm/@tamagui+use-window-dimensions@3.3.3_react@19.3.0/node_modules/@tamagui/use-window-dimensions/dist/esm/index.native.js
 function useWindowDimensions2() {
   var { serverValue = initialValue } = arguments.length > 0 && arguments[0] !== void 0 ? arguments[0] : {};
   return React84.useSyncExternalStore(subscribe, getWindowSize, function() {
@@ -40366,8 +40346,7 @@ function useWindowDimensions2() {
 }
 __name(useWindowDimensions2, "useWindowDimensions");
 
-// node_modules/.pnpm/@tamagui+visually-hidden@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-na_56516548260b301b4d1c26047a747a06/node_modules/@tamagui/visually-hidden/dist/esm/VisuallyHidden.native.js
-init_index_native5();
+// node_modules/.pnpm/@tamagui+visually-hidden@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-na_91d1f43b1bc5ea013b9d724b0ce5e5c7/node_modules/@tamagui/visually-hidden/dist/esm/VisuallyHidden.native.js
 import { jsx as jsx87 } from "react/jsx-runtime";
 import { Text as Text9, createStyledHOC as createStyledHOC37, styled as styled71 } from "@tamagui/core/native";
 var VisuallyHiddenFrame = styled71(Text9, {
@@ -40422,7 +40401,7 @@ var VisuallyHidden = createStyledHOC37(VisuallyHiddenFrame, /* @__PURE__ */ __na
   }
   var a11yProps = isWeb ? { "aria-hidden": false } : {
     accessible: true,
-    ...isAndroid && { importantForAccessibility: "yes" }
+    ...isAndroid2 && { importantForAccessibility: "yes" }
   };
   return /* @__PURE__ */ jsx87(VisuallyHiddenFrame, {
     ref: forwardedRef,
@@ -40431,7 +40410,7 @@ var VisuallyHidden = createStyledHOC37(VisuallyHiddenFrame, /* @__PURE__ */ __na
   });
 }, "VisuallyHidden2"));
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/createTamagui.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/createTamagui.native.js
 import { createTamagui as createTamagui$1 } from "@tamagui/core/native";
 var createTamagui = process.env.NODE_ENV !== "development" ? createTamagui$1 : function(conf) {
   var tamaguiConfig = createTamagui$1(conf);
@@ -40456,7 +40435,7 @@ Expected a subset of: ${expected.join(", ")}
   return tamaguiConfig;
 };
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/views/TamaguiProvider.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/views/TamaguiProvider.native.js
 import { jsx as jsx88 } from "react/jsx-runtime";
 import { TamaguiProvider as TamaguiProvider$1 } from "@tamagui/core/native";
 var TamaguiProvider = /* @__PURE__ */ __name(function TamaguiProvider2(param) {
@@ -40473,7 +40452,7 @@ var TamaguiProvider = /* @__PURE__ */ __name(function TamaguiProvider2(param) {
   });
 }, "TamaguiProvider2");
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/views/Anchor.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/views/Anchor.native.js
 import { jsx as jsx89 } from "react/jsx-runtime";
 import { createStyledHOC as createStyledHOC38, styled as styled72 } from "@tamagui/core/native";
 init_react_native();
@@ -40498,7 +40477,7 @@ var Anchor = createStyledHOC38(AnchorFrame, function(param, ref) {
   });
 });
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/views/EnsureFlexed.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/views/EnsureFlexed.native.js
 import { Text as Text10, styled as styled73 } from "@tamagui/core/native";
 var EnsureFlexed = styled73(Text10, {
   opacity: 0,
@@ -40510,7 +40489,7 @@ var EnsureFlexed = styled73(Text10, {
   pointerEvents: "none"
 });
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/views/Fieldset.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/views/Fieldset.native.js
 import { styled as styled74 } from "@tamagui/core/native";
 var Fieldset = styled74(YStack, {
   displayName: "Fieldset",
@@ -40524,7 +40503,7 @@ var Fieldset = styled74(YStack, {
   } } }
 });
 
-// node_modules/.pnpm/@tamagui+spinner@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-ges_0a4b64014a4f9a6aa43c732f47f82f00/node_modules/@tamagui/spinner/dist/esm/Spinner.native.js
+// node_modules/.pnpm/@tamagui+spinner@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-ges_603419984e832dbcdeff6ee4fb6f2419/node_modules/@tamagui/spinner/dist/esm/Spinner.native.js
 import { jsx as jsx90 } from "react/jsx-runtime";
 import { createStyledHOC as createStyledHOC39, useTheme as useTheme2, variableToString } from "@tamagui/core/native";
 init_react_native();
@@ -40545,7 +40524,7 @@ var Spinner = createStyledHOC39(YStack, function(props, ref) {
   });
 });
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/views/Text.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/views/Text.native.js
 import { Text as Text$1, styled as styled75 } from "@tamagui/core/native";
 var Text11 = styled75(Text$1, { color: "color" });
 export {
@@ -40958,7 +40937,7 @@ export {
   useGroupItem,
   useIsPresent,
   useIsTouchDevice3 as useIsTouchDevice,
-  useIsomorphicLayoutEffect4 as useIsomorphicLayoutEffect,
+  useIsomorphicLayoutEffect5 as useIsomorphicLayoutEffect,
   useLabelContext,
   useListItem,
   useMedia2 as useMedia,

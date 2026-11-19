@@ -27,7 +27,7 @@ const SITUATION_OPTIONS: { value: '' | AnimalSituation; label: string }[] = [
   { value: 'liberado', label: 'Liberados (aptos para embarque)' },
   { value: 'carencia', label: 'Em carência' },
   { value: 'libera7', label: 'Ficam livres em até 7 dias' },
-  { value: 'sem_historico', label: 'Sem histórico de vacina' },
+  { value: 'sem_historico', label: 'Sem histórico de medicamento' },
 ]
 
 export default function AnimaisListScreen() {

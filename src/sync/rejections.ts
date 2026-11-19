@@ -198,10 +198,10 @@ export function parseOpData(rejection: Pick<Rejection, 'opData'>): Record<string
 
 const ENTITY_LABEL: Record<string, string> = {
   farms: 'Fazenda',
-  vaccines: 'Vacina',
+  vaccines: 'Medicamento',
   animalTypes: 'Tipo de animal',
   animals: 'Animal',
-  vaccinations: 'Lançamento de vacina',
+  vaccinations: 'Lançamento de medicamento',
   herds: 'Rebanho',
   shipments: 'Embarque',
   shipmentAnimals: 'Animal no embarque',

@@ -16,18 +16,18 @@ type RejectionLike = { tableName: string; entity?: string; op: string; errorCode
 
 export const VACCINE_REJECTION_HINTS = {
   nameTaken:
-    'Já existe uma vacina com esse nome nesta conta (maiúsculas e acentos não contam). Toque em Corrigir e use outro nome, ou descarte se for a mesma vacina.',
+    'Já existe um medicamento com esse nome nesta conta (maiúsculas e acentos não contam). Toque em Corrigir e use outro nome, ou descarte se for o mesmo medicamento.',
   hasApplications:
-    'A vacina não foi excluída porque há lançamentos com ela. Descarte este aviso: a vacina volta para a lista com os lançamentos intactos.',
+    'O medicamento não foi excluído porque há lançamentos com ele. Descarte este aviso: o medicamento volta para a lista com os lançamentos intactos.',
   idTaken:
-    'Este cadastro de vacina já existe em outra conta e não pode ser reaproveitado. Toque em Corrigir para cadastrar de novo (um novo registro é criado) ou descarte.',
-  roleDelete: 'Só o master da conta pode excluir vacinas. Descarte este aviso: a vacina volta para a lista.',
+    'Este cadastro de medicamento já existe em outra conta e não pode ser reaproveitado. Toque em Corrigir para cadastrar de novo (um novo registro é criado) ou descarte.',
+  roleDelete: 'Só o master da conta pode excluir medicamentos. Descarte este aviso: o medicamento volta para a lista.',
   roleWrite:
-    'O administrador apenas consulta as vacinas; quem cadastra e edita é a própria conta (master ou usuário). Descarte este aviso: vale o que está no servidor.',
+    'O administrador apenas consulta os medicamentos; quem cadastra e edita é a própria conta (master ou usuário). Descarte este aviso: vale o que está no servidor.',
   accountMismatch:
-    'A vacina escolhida é de outra conta. Toque em Corrigir e escolha uma vacina da conta do animal; o lançamento continua guardado até lá.',
+    'O medicamento escolhido é de outra conta. Toque em Corrigir e escolha um medicamento da conta do animal; o lançamento continua guardado até lá.',
   remappedUnavailable:
-    'Esta vacina era do catálogo antigo e não existe na conta do animal. Toque em Corrigir e escolha uma vacina da conta; o lançamento continua guardado até lá.',
+    'Este medicamento era do catálogo antigo e não existe na conta do animal. Toque em Corrigir e escolha um medicamento da conta; o lançamento continua guardado até lá.',
 } as const
 
 export function vaccineRejectionGuidance(rejection: RejectionLike): RejectionGuidance | null {

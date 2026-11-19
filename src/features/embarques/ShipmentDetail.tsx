@@ -586,7 +586,7 @@ function LinkedAnimalRow({
             {photoLine}
           </Text>
         </YStack>
-        <WithdrawalBadge active={Boolean(row.inWithdrawal)} activeLabel={`Carência até ${formatDatePtBr(freeAt)}`} inactiveLabel={freeAt ? 'Livre' : 'Sem vacina'} />
+        <WithdrawalBadge active={Boolean(row.inWithdrawal)} activeLabel={`Carência até ${formatDatePtBr(freeAt)}`} inactiveLabel={freeAt ? 'Livre' : 'Sem medicamento'} />
       </XStack>
       {editable ? (
         <XStack gap={8} flexWrap="wrap">

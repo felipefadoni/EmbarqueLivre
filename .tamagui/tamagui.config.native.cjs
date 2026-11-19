@@ -27,7 +27,7 @@ __export(tamagui_config_exports, {
 });
 module.exports = __toCommonJS(tamagui_config_exports);
 
-// node_modules/.pnpm/@tamagui+themes@3.3.1/node_modules/@tamagui/themes/dist/esm/generated.native.js
+// node_modules/.pnpm/@tamagui+themes@3.3.3/node_modules/@tamagui/themes/dist/esm/generated.native.js
 function t(a, scheme) {
   var res = {};
   var _iteratorNormalCompletion = true, _didIteratorError = false, _iteratorError = void 0;
@@ -1900,7 +1900,7 @@ var themes = {
   dark_green_level4: n40
 };
 
-// node_modules/.pnpm/@tamagui+themes@3.3.1/node_modules/@tamagui/themes/dist/esm/tailwind-colors.native.js
+// node_modules/.pnpm/@tamagui+themes@3.3.3/node_modules/@tamagui/themes/dist/esm/tailwind-colors.native.js
 var tailwindColors = {
   white: "#ffffff",
   black: "#000000",
@@ -2192,7 +2192,7 @@ var tailwindColors = {
   "rose-950": "#4d0218"
 };
 
-// node_modules/.pnpm/@tamagui+themes@3.3.1/node_modules/@tamagui/themes/dist/esm/tokens.native.js
+// node_modules/.pnpm/@tamagui+themes@3.3.3/node_modules/@tamagui/themes/dist/esm/tokens.native.js
 var mauveColors = {
   "mauve-50": "#faf9fb",
   "mauve-100": "#eceaee",
@@ -2223,7 +2223,7 @@ var colorTokens = {
 };
 var tokens = { color: colorTokens };
 
-// node_modules/.pnpm/@tamagui+shorthands@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react-native-_d9e6060c2e74466069923ff810210fa6/node_modules/@tamagui/shorthands/dist/esm/v6.native.js
+// node_modules/.pnpm/@tamagui+shorthands@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react-native-_d5f694b723ad5a79def9f4310e960b05/node_modules/@tamagui/shorthands/dist/esm/v6.native.js
 var shorthands = createShorthands({
   text: "textAlign",
   b: "bottom",
@@ -2266,11 +2266,11 @@ function createShorthands(a) {
 }
 __name(createShorthands, "createShorthands");
 
-// node_modules/.pnpm/@tamagui+config@3.3.1_84638f8dce01ad74a0f3421c84b70f9a/node_modules/@tamagui/config/dist/esm/v6-base.native.js
+// node_modules/.pnpm/@tamagui+config@3.3.3_c268ff573df19acf9c28ae994d612a5c/node_modules/@tamagui/config/dist/esm/v6-base.native.js
 var import_web = require("@tamagui/core/native");
 var import_internal_runtime = require("@tamagui/web/internal-runtime");
 
-// node_modules/.pnpm/@tamagui+create-system-font@3.3.1_@expo+ui@58.0.27_react-dom@19.3.0_react@19.3.0__react_83306b004ec207563d107716fc4c1d54/node_modules/@tamagui/create-system-font/dist/esm/index.native.js
+// node_modules/.pnpm/@tamagui+create-system-font@3.3.3_@expo+ui@58.0.29_react-dom@19.3.0_react@19.3.0__react_b81beb4ab528c78bff0e7cebf78185a6/node_modules/@tamagui/create-system-font/dist/esm/index.native.js
 var import_core = require("@tamagui/core/native");
 var isWeb = false;
 var isNative = true;
@@ -2322,7 +2322,7 @@ var createSystemFont = /* @__PURE__ */ __name(function createSystemFont2() {
   });
 }, "createSystemFont2");
 
-// node_modules/.pnpm/@tamagui+config@3.3.1_84638f8dce01ad74a0f3421c84b70f9a/node_modules/@tamagui/config/dist/esm/fonts.native.js
+// node_modules/.pnpm/@tamagui+config@3.3.3_c268ff573df19acf9c28ae994d612a5c/node_modules/@tamagui/config/dist/esm/fonts.native.js
 var isNative2 = true;
 var fonts = {
   body: createSystemFont(),
@@ -2338,7 +2338,7 @@ var fonts = {
   })
 };
 
-// node_modules/.pnpm/@tamagui+config@3.3.1_84638f8dce01ad74a0f3421c84b70f9a/node_modules/@tamagui/config/dist/esm/media.native.js
+// node_modules/.pnpm/@tamagui+config@3.3.3_c268ff573df19acf9c28ae994d612a5c/node_modules/@tamagui/config/dist/esm/media.native.js
 var breakpoints = {
   100: 100,
   200: 200,
@@ -2412,7 +2412,7 @@ var mediaQueryDefaultActive = {
   "height-lg": false
 };
 
-// node_modules/.pnpm/@tamagui+config@3.3.1_84638f8dce01ad74a0f3421c84b70f9a/node_modules/@tamagui/config/dist/esm/settings.native.js
+// node_modules/.pnpm/@tamagui+config@3.3.3_c268ff573df19acf9c28ae994d612a5c/node_modules/@tamagui/config/dist/esm/settings.native.js
 var selectionStyles = /* @__PURE__ */ __name(function selectionStyles2(theme) {
   return theme.color5 ? {
     backgroundColor: theme.color5,
@@ -2431,7 +2431,7 @@ var settings = {
   styleCompat: "web"
 };
 
-// node_modules/.pnpm/@tamagui+config@3.3.1_84638f8dce01ad74a0f3421c84b70f9a/node_modules/@tamagui/config/dist/esm/v6-tailwind-scales.generated.native.js
+// node_modules/.pnpm/@tamagui+config@3.3.3_c268ff573df19acf9c28ae994d612a5c/node_modules/@tamagui/config/dist/esm/v6-tailwind-scales.generated.native.js
 var tailwindSpace = {
   "0": 0,
   "1": 4,
@@ -2594,7 +2594,7 @@ var tailwindLineHeight = {
   "9xl": 128
 };
 
-// node_modules/.pnpm/@tamagui+config@3.3.1_84638f8dce01ad74a0f3421c84b70f9a/node_modules/@tamagui/config/dist/esm/v6-base.native.js
+// node_modules/.pnpm/@tamagui+config@3.3.3_c268ff573df19acf9c28ae994d612a5c/node_modules/@tamagui/config/dist/esm/v6-base.native.js
 var tailwindContainerSize = {
   "3xs": 256,
   "2xs": 288,
@@ -2776,7 +2776,7 @@ function createV6Config(colors3) {
 }
 __name(createV6Config, "createV6Config");
 
-// node_modules/.pnpm/@tamagui+config@3.3.1_84638f8dce01ad74a0f3421c84b70f9a/node_modules/@tamagui/config/dist/esm/v6.native.js
+// node_modules/.pnpm/@tamagui+config@3.3.3_c268ff573df19acf9c28ae994d612a5c/node_modules/@tamagui/config/dist/esm/v6.native.js
 var colors2 = {
   themes,
   colorTokens: tokens.color
@@ -2787,7 +2787,7 @@ var tokens3 = {
 };
 var defaultConfig = createV6Config(colors2);
 
-// node_modules/.pnpm/tamagui@3.3.1_a6d4d9cd82ee0d96fa14bf453121500d/node_modules/tamagui/dist/esm/createTamagui.native.js
+// node_modules/.pnpm/tamagui@3.3.3_e80a7151ee15d837d3f24b3e5a57ac5f/node_modules/tamagui/dist/esm/createTamagui.native.js
 var import_core2 = require("@tamagui/core/native");
 var createTamagui = process.env.NODE_ENV !== "development" ? import_core2.createTamagui : function(conf) {
   var tamaguiConfig2 = (0, import_core2.createTamagui)(conf);
@@ -2830,7 +2830,7 @@ var brandClaro = {
   brandMuted: "#3A5247",
   brandError: "#8B1515",
   brandSuccess: "#075E26",
-  appBg: "#EEF6EF",
+  appBg: "#F4F7F5",
   cardBg: "#FFFFFF",
   tabBarBg: "#FFFFFF",
   tabInactive: "#7A8B80"
@@ -2845,7 +2845,7 @@ var brandEscuro = {
   brandMuted: "#CEE3CD",
   brandError: "#FF8A80",
   brandSuccess: "#8BE19A",
-  appBg: "#152821",
+  appBg: "#12241E",
   cardBg: "#243B32",
   tabBarBg: "#1C3C31",
   tabInactive: "#A8B8AF"

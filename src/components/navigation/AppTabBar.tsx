@@ -29,7 +29,7 @@ const ICONS: Record<string, { active: TabIcon; inactive: TabIcon }> = {
 
 const LABELS: Record<string, string> = {
 	index: "Dashboard",
-	lancamentos: "Vacinas",
+	lancamentos: "Medicamentos",
 	embarques: "Embarques",
 	configuracoes: "Menu",
 };

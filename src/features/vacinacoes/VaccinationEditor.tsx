@@ -158,7 +158,7 @@ export function VaccinationEditor({ vaccinationId, pendenciaId }: VaccinationEdi
   function validate(): boolean {
     const next: Record<string, string> = {}
     if (!animal?.id) next.animalId = 'Selecione o animal.'
-    if (!vaccineId) next.vaccineId = 'Selecione a vacina.'
+    if (!vaccineId) next.vaccineId = 'Selecione o medicamento.'
     else if (animal?.id && !vaccineOptions.some((option) => option.value === vaccineId)) next.vaccineId = VACCINE_PICKER_MESSAGES.wrongAccount
     if (!appliedAt) next.appliedAt = 'Informe a data de aplicação.'
     else if (appliedAt > todayIso()) next.appliedAt = 'A data de aplicação não pode ser no futuro.'
@@ -250,7 +250,7 @@ export function VaccinationEditor({ vaccinationId, pendenciaId }: VaccinationEdi
     <>
       <CadastroFormScreen
         error={formError}
-        submitLabel={isEdit ? 'Salvar alterações' : 'Informar vacina'}
+        submitLabel={isEdit ? 'Salvar alterações' : 'Informar medicamento'}
         submitting={saving}
         onSubmit={() => void onSubmit()}
         onDelete={isEdit ? () => setConfirmOpen(true) : undefined}
@@ -266,12 +266,12 @@ export function VaccinationEditor({ vaccinationId, pendenciaId }: VaccinationEdi
           }}
         />
         <SelectField
-          label="Vacina"
+          label="Medicamento"
           value={vaccineId}
           options={vaccineOptions}
           placeholder={
             vaccineOptions.length
-              ? 'Selecione a vacina'
+              ? 'Selecione o medicamento'
               : pickerAccountId
                 ? VACCINE_PICKER_MESSAGES.noneInAccount
                 : VACCINE_PICKER_MESSAGES.chooseAnimalFirst
@@ -311,7 +311,7 @@ export function VaccinationEditor({ vaccinationId, pendenciaId }: VaccinationEdi
             </Text>
           ) : (
             <Text fontSize={16} fontWeight="600" color="brandFg">
-              Selecione a vacina e a data para ver a carência.
+              Selecione o medicamento e a data para ver a carência.
             </Text>
           )}
           {showOfficial && original ? (
@@ -321,7 +321,7 @@ export function VaccinationEditor({ vaccinationId, pendenciaId }: VaccinationEdi
             </Text>
           ) : null}
           <Text fontSize={14} lineHeight="20px" fontWeight="500" color="brandMuted">
-            Prévia no aparelho: data de aplicação + dias de carência da vacina. O animal fica livre no próprio
+            Prévia no aparelho: data de aplicação + dias de carência do medicamento. O animal fica livre no próprio
             dia indicado. O valor oficial é calculado pelo servidor ao salvar.
           </Text>
         </YStack>
@@ -329,7 +329,7 @@ export function VaccinationEditor({ vaccinationId, pendenciaId }: VaccinationEdi
       <ConfirmDialog
         open={confirmOpen}
         title="Excluir lançamento?"
-        message="O lançamento desta vacina será removido e a carência do animal será recalculada. Esta ação não pode ser desfeita."
+        message="O lançamento deste medicamento será removido e a carência do animal será recalculada. Esta ação não pode ser desfeita."
         onCancel={() => setConfirmOpen(false)}
         onConfirm={() => void onDelete()}
         busy={deleting}

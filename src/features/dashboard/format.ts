@@ -38,6 +38,6 @@ export function aptosHints(
   } else if (s.emCarencia === 0) {
     hints.push('Nenhum animal em carência')
   }
-  if (s.semHistorico > 0) hints.push(`${s.semHistorico} sem vacina registrada (não aptos)`)
+  if (s.semHistorico > 0) hints.push(`${s.semHistorico} sem medicamento registrado (não aptos)`)
   return hints
 }

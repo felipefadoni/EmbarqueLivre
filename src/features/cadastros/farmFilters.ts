@@ -55,5 +55,5 @@ export function summarizeFarmFilters({ farmName, authorEmail }: FarmTextFilters,
 /** Filtro do catálogo de Vacinas (só admin): por enquanto só o e-mail de quem cadastrou. */
 export function summarizeVaccineFilters({ authorEmail }: { authorEmail: string }, contract: Contract = AUTHOR_CONTRACT) {
   const parts = [hasAuthorEmail('vaccines', contract) ? textFilterLabel('E-mail', authorEmail) : ''].filter(Boolean)
-  return { text: parts.join(' · ') || 'Todas as vacinas', activeCount: parts.length }
+  return { text: parts.join(' · ') || 'Todos os medicamentos', activeCount: parts.length }
 }

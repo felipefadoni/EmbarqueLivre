@@ -11,7 +11,7 @@ export type VaccineFormValues = { name: string; withdrawalDays: string }
 export type VaccineFormErrors = Partial<Record<keyof VaccineFormValues, string>>
 
 export const VACCINE_FORM_MESSAGES = {
-  nameRequired: 'Informe o nome da vacina.',
+  nameRequired: 'Informe o nome do medicamento.',
   nameLength: `O nome deve ter entre ${LIMITS.vaccineName.min} e ${LIMITS.vaccineName.max} caracteres.`,
   daysRequired: 'Informe os dias de carência.',
   daysInteger: `Informe um número inteiro entre ${LIMITS.withdrawalDays.min} e ${LIMITS.withdrawalDays.max}.`,

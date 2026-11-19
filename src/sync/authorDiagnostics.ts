@@ -23,7 +23,7 @@ const DIAG_ENTITIES: { table: AuthorTable; entity: SyncEntity; label: string }[]
   { table: 'farms', entity: 'farms', label: 'Fazendas' },
   { table: 'animals', entity: 'animals', label: 'Animais' },
   { table: 'herds', entity: 'herds', label: 'Rebanhos' },
-  { table: 'vaccinations', entity: 'vaccinations', label: 'Vacinações' },
+  { table: 'vaccinations', entity: 'vaccinations', label: 'Aplicações' },
   { table: 'shipments', entity: 'shipments', label: 'Embarques' },
 ]
 
@@ -64,7 +64,7 @@ export function authorDiagnosticsQuery(): { sql: string; params: unknown[] } {
   return { sql: parts.join('\nUNION ALL\n'), params: [] }
 }
 
-export const VACCINE_CATALOG_LABEL = 'Vacinas (catálogo)'
+export const VACCINE_CATALOG_LABEL = 'Medicamentos (catálogo)'
 
 /**
  * Catálogo de vacinas: autor na tabela só do admin vaccine_authors (LEFT JOIN por id). "Campo recebido" = a vacina tem
