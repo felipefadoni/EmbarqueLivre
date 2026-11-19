@@ -13,8 +13,11 @@ export const POWERSYNC_CONFIG = {
   /** Relativo a `${EXPO_PUBLIC_API_URL}/api/v1`. */
   tokenPath: process.env.EXPO_PUBLIC_POWERSYNC_TOKEN_PATH ?? '/powersync/token',
   uploadPath: process.env.EXPO_PUBLIC_POWERSYNC_UPLOAD_PATH ?? '/powersync/upload',
-  /** 'requests' exige PowerSync Service >= 1.24 (alpha). 'legacy' é o padrão estável. */
-  checkpointMode: (process.env.EXPO_PUBLIC_POWERSYNC_CHECKPOINT_MODE === 'requests' ? 'requests' : 'legacy') as
+  /**
+   * Checkpoint por cliente. 'requests' (Service >= 1.24; produção roda 1.28.1) deixa de ser global: um cliente com fila
+   * travada não segura o checkpoint dos outros, e o app confirma que o próprio lote chegou. 'legacy' só se a env pedir.
+   */
+  checkpointMode: (process.env.EXPO_PUBLIC_POWERSYNC_CHECKPOINT_MODE === 'legacy' ? 'legacy' : 'requests') as
     | 'requests'
     | 'legacy',
   dbFilename: 'embarquelivre.db',

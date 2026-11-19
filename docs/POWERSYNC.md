@@ -92,7 +92,7 @@ Observações:
 | `EXPO_PUBLIC_POWERSYNC_URL` | — | Serviço PowerSync. **Se definida, vence** o `powersyncUrl` do token; vazia = usa o do token |
 | `EXPO_PUBLIC_POWERSYNC_TOKEN_PATH` | `/powersync/token` | relativo a `/api/v1` |
 | `EXPO_PUBLIC_POWERSYNC_UPLOAD_PATH` | `/powersync/upload` | relativo a `/api/v1` |
-| `EXPO_PUBLIC_POWERSYNC_CHECKPOINT_MODE` | `legacy` | Padrão e valor do EAS production (não definido = `legacy`). `requests` é alpha (Service ≥ 1.24) e só para teste |
+| `EXPO_PUBLIC_POWERSYNC_CHECKPOINT_MODE` | `requests` | Não definido = `requests` (checkpoint por cliente; produção roda o Service 1.28.1, acima do mínimo 1.24). `legacy` só para voltar atrás |
 
 ### localhost × IP da rede
 
